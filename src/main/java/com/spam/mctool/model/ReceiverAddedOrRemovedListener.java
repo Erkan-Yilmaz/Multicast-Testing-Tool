@@ -7,8 +7,14 @@ package com.spam.mctool.model;
  */
 public interface ReceiverAddedOrRemovedListener {
 	
+	/**
+	 * @param e event containing the added receiver
+	 */
 	public void receiverAdded(com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent e);
 	
+	/**
+	 * @param e event containing the removed receiver
+	 */
 	public void receiverRemoved(com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent e);
 	
 }
