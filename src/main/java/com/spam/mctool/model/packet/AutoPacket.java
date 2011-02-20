@@ -32,8 +32,8 @@ public class AutoPacket implements Packet {
 	    // check the header
 		if(data.limit() >= 6 && data.getShort(0) == 1337 && data.getInt(2) == 0) {
 		    packet = new SpamPacket();
-		} else if(false) {
-			packet = null; //new HirschmannPacket();
+		//} else if(false) {
+		//	packet = null; //new HirschmannPacket();
 		} else {
 			throw new DataFormatException("Unsupported package header");
 		}
