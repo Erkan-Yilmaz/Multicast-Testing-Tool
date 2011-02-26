@@ -24,7 +24,7 @@ public interface ReceiverManager {
 	/**
 	 * @return collection of all receivers in the pool
 	 */
-	public java.util.Collection<com.spam.mctool.model.Receiver> getSenders();
+	public java.util.Collection<com.spam.mctool.model.Receiver> getReceiver();
 	
 	/**
 	 * stops all receivers in the pool
