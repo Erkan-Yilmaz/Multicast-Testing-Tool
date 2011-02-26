@@ -3,12 +3,12 @@ package com.spam.mctool.model;
 import org.junit.*;
 import static org.junit.Assert.*;
 
-class Event {
+class TestEvent {
 	public String name;
 }
 
-class Listener {
-	public void changed(Event e) {
+class TestListener {
+	public void changed(TestEvent e) {
 		name = e.name;		
 	}
 	
@@ -23,17 +23,17 @@ class Listener {
 public class SignalTest {
 	@Test
 	public void test_listeners() {
-		Signal<Listener> s = new Signal<Listener>() {
+		Signal<TestListener> s = new Signal<TestListener>() {
 			@Override
-			protected void fire(Object event, Listener l) {
-				l.changed((Event)event);
+			protected void fire(Object event, TestListener l) {
+				l.changed((TestEvent)event);
 			}
 		};
-		Listener a = new Listener();
-		Listener b = new Listener();
+		TestListener a = new TestListener();
+		TestListener b = new TestListener();
 		
 		s.addListener(a);		
-		Event e = new Event();
+		TestEvent e = new TestEvent();
 		e.name = "Keks";
 		s.fire(e);
 		assertEquals("Keks", a.name);
