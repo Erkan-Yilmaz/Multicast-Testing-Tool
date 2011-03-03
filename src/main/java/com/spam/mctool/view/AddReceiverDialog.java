@@ -6,7 +6,7 @@
 /*
  * AddReceiverDialog.java
  *
- * Created on Mar 3, 2011, 5:16:01 PM
+ * Created on Mar 3, 2011, 7:46:46 PM
  */
 
 package com.spam.mctool.view;
@@ -15,12 +15,13 @@ package com.spam.mctool.view;
  *
  * @author tobias
  */
-public class AddReceiverDialog extends javax.swing.JFrame {
+public class AddReceiverDialog extends javax.swing.JDialog {
 
     private static final long serialVersionUID = 1L;
 
 	/** Creates new form AddReceiverDialog */
-    public AddReceiverDialog() {
+    public AddReceiverDialog(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
     }
 
@@ -32,18 +33,19 @@ public class AddReceiverDialog extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Add Mulitcast Receiver");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/spam/mctool/view/Bundle"); // NOI18N
+        setTitle(bundle.getString("AddReceiverDialog.title")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 214, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 399, Short.MAX_VALUE)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
 
         pack();
@@ -55,7 +57,13 @@ public class AddReceiverDialog extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddReceiverDialog().setVisible(true);
+                AddReceiverDialog dialog = new AddReceiverDialog(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

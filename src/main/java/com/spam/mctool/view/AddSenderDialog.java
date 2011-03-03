@@ -6,7 +6,7 @@
 /*
  * AddSenderDialog.java
  *
- * Created on Mar 3, 2011, 5:11:50 PM
+ * Created on Mar 3, 2011, 7:46:30 PM
  */
 
 package com.spam.mctool.view;
@@ -15,11 +15,13 @@ package com.spam.mctool.view;
  *
  * @author tobias
  */
-public class AddSenderDialog extends javax.swing.JFrame {
+public class AddSenderDialog extends javax.swing.JDialog {
 
     private static final long serialVersionUID = 1L;
+
 	/** Creates new form AddSenderDialog */
-    public AddSenderDialog() {
+    public AddSenderDialog(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
     }
 
@@ -31,35 +33,17 @@ public class AddSenderDialog extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buCreate = new javax.swing.JButton();
-        buCancel = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Add Multicast Sender");
-
-        buCreate.setText("Create");
-
-        buCancel.setText("Cancel");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(buCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
-                .addComponent(buCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(326, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buCreate)
-                    .addComponent(buCancel))
-                .addContainerGap())
+            .addGap(0, 300, Short.MAX_VALUE)
         );
 
         pack();
@@ -71,14 +55,18 @@ public class AddSenderDialog extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddSenderDialog().setVisible(true);
+                AddSenderDialog dialog = new AddSenderDialog(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buCancel;
-    private javax.swing.JButton buCreate;
     // End of variables declaration//GEN-END:variables
 
 }

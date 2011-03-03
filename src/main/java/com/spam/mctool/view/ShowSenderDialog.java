@@ -4,9 +4,9 @@
  */
 
 /*
- * ReceiverDetails.java
+ * ShowSenderDialog.java
  *
- * Created on Mar 3, 2011, 5:21:09 PM
+ * Created on Mar 3, 2011, 7:48:01 PM
  */
 
 package com.spam.mctool.view;
@@ -15,12 +15,13 @@ package com.spam.mctool.view;
  *
  * @author tobias
  */
-public class ReceiverDetails extends javax.swing.JFrame {
+public class ShowSenderDialog extends javax.swing.JDialog {
 
     private static final long serialVersionUID = 1L;
 
-	/** Creates new form ReceiverDetails */
-    public ReceiverDetails() {
+	/** Creates new form ShowSenderDialog */
+    public ShowSenderDialog(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
     }
 
@@ -32,8 +33,7 @@ public class ReceiverDetails extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("ReceiverDetails");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -55,7 +55,13 @@ public class ReceiverDetails extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ReceiverDetails().setVisible(true);
+                ShowSenderDialog dialog = new ShowSenderDialog(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
