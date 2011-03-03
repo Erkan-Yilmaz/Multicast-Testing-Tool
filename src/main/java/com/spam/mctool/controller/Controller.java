@@ -3,11 +3,11 @@
  */
 package com.spam.mctool.controller;
 
-import java.util.Iterator;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
@@ -20,6 +20,7 @@ import com.spam.mctool.model.ReceiverManager;
 import com.spam.mctool.model.Sender;
 import com.spam.mctool.model.SenderAddedOrRemovedListener;
 import com.spam.mctool.model.SenderManager;
+import com.spam.mctool.view.GraphicalView;
 import com.spam.mctool.view.MctoolView;
 
 /**
@@ -44,6 +45,7 @@ public class Controller implements ProfileManager, StreamManager {
 		//this.senderManager = new SenderPool();
 		//this.receiverManager = new ReceiverPool();
 		viewers = new ArrayList<MctoolView>();
+		//viewers.add(new GraphicalView()); // Added by TST: damit überhaupt eine View instanziert wird.
 	}
 	
 	private void profileChanged(){
