@@ -16,7 +16,9 @@ import com.spam.mctool.model.SenderAddedOrRemovedListener;
 import com.spam.mctool.model.SenderDataChangeListener;
 
 /**
- * @author tobias
+ * @author Tobias Schoknecht, Tobias Stöckel
+ * 
+ * Represents the graphical user interface of the MCTool.
  *
  */
 public class GraphicalView implements MctoolView,
@@ -26,7 +28,8 @@ public class GraphicalView implements MctoolView,
 
 	private MainFrame mainFrame;
 	// TODO Add Dialogs
-	// TODO Add reference to controller
+	//private Controller controller;
+	//private Language language;
 
 	public void receiverAdded(ReceiverAddedOrRemovedEvent e) {
 		// TODO Auto-generated method stub
@@ -63,6 +66,9 @@ public class GraphicalView implements MctoolView,
 
 	}
 
+	/**
+	 * Initializes the graphical user interface and displays the main window.
+	 */
 	public void init(Controller c) {
 		// TODO Auto-generated method stub
 		mainFrame = new MainFrame();
