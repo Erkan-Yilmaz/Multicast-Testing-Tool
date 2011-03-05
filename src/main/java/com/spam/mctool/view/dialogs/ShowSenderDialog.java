@@ -4,23 +4,23 @@
  */
 
 /*
- * AddReceiverDialog.java
+ * ShowSenderDialog.java
  *
- * Created on Mar 3, 2011, 7:46:46 PM
+ * Created on Mar 3, 2011, 7:48:01 PM
  */
 
-package com.spam.mctool.view;
+package com.spam.mctool.view.dialogs;
 
 /**
  *
- * @author tobias
+ * @author Tobias Stöckel (Tobias.Stoeckel@de.ibm.com)
  */
-public class AddReceiverDialog extends javax.swing.JDialog {
+public class ShowSenderDialog extends javax.swing.JDialog {
 
     private static final long serialVersionUID = 1L;
 
-	/** Creates new form AddReceiverDialog */
-    public AddReceiverDialog(java.awt.Frame parent, boolean modal) {
+	/** Creates new form ShowSenderDialog */
+    public ShowSenderDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -34,8 +34,6 @@ public class AddReceiverDialog extends javax.swing.JDialog {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/spam/mctool/view/Bundle"); // NOI18N
-        setTitle(bundle.getString("AddReceiverDialog.title")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -57,7 +55,7 @@ public class AddReceiverDialog extends javax.swing.JDialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AddReceiverDialog dialog = new AddReceiverDialog(new javax.swing.JFrame(), true);
+                ShowSenderDialog dialog = new ShowSenderDialog(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);

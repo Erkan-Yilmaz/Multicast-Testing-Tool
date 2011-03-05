@@ -9,11 +9,11 @@
  * Created on Mar 3, 2011, 4:57:17 PM
  */
 
-package com.spam.mctool.view;
+package com.spam.mctool.view.main;
 
 /**
  *
- * @author tobias
+ * @author Tobias Stöckel (Tobias.Stoeckel@de.ibm.com)
  */
 public class MainFrame extends javax.swing.JFrame {
 
@@ -50,38 +50,35 @@ public class MainFrame extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tableSenders = new javax.swing.JTable();
         laSenders = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/spam/mctool/view/Bundle"); // NOI18N
         setTitle(bundle.getString("MainFrame.title")); // NOI18N
 
-        buActivate.setText(bundle.getString("MainFrame.buActivate.text")); // NOI18N
+        java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("com/spam/mctool/view/main/Bundle"); // NOI18N
+        buActivate.setText(bundle1.getString("MainFrame.buActivate.text")); // NOI18N
 
-        buDeactivate.setText(bundle.getString("MainFrame.buDeactivate.text")); // NOI18N
+        buDeactivate.setText(bundle1.getString("MainFrame.buDeactivate.text")); // NOI18N
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        buReceiverDetails.setText(bundle.getString("MainFrame.buReceiverDetails.text")); // NOI18N
+        buReceiverDetails.setText(bundle1.getString("MainFrame.buReceiverDetails.text")); // NOI18N
 
-        tableReceivers.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Group", "Port", "Packet Rate", "Lost Packets", "Interrupts", "max. Interrupt", "State"
-            }
-        ));
-        tableReceivers.setColumnSelectionAllowed(true);
+        tableReceivers.setModel(new ReceiverTableModel());
         jScrollPane1.setViewportView(tableReceivers);
-        tableReceivers.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-        buReceiverRemove.setText(bundle.getString("MainFrame.buReceiverRemove.text")); // NOI18N
+        buReceiverRemove.setText(bundle1.getString("MainFrame.buReceiverRemove.text")); // NOI18N
 
-        buReceiverEdit.setText(bundle.getString("MainFrame.buReceiverEdit.text")); // NOI18N
+        buReceiverEdit.setText(bundle1.getString("MainFrame.buReceiverEdit.text")); // NOI18N
 
-        buReceiverNew.setText(bundle.getString("MainFrame.buReceiverNew.text")); // NOI18N
+        buReceiverNew.setText(bundle1.getString("MainFrame.buReceiverNew.text")); // NOI18N
 
-        laReceivers.setText(bundle.getString("MainFrame.laReceivers.text")); // NOI18N
+        laReceivers.setText(bundle1.getString("MainFrame.laReceivers.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -120,30 +117,20 @@ public class MainFrame extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        buSenderNew.setText(bundle.getString("MainFrame.buSenderNew.text")); // NOI18N
+        buSenderNew.setText(bundle1.getString("MainFrame.buSenderNew.text")); // NOI18N
 
-        buSenderEdit.setText(bundle.getString("MainFrame.buSenderEdit.text")); // NOI18N
+        buSenderEdit.setText(bundle1.getString("MainFrame.buSenderEdit.text")); // NOI18N
 
-        buSenderRemove.setText(bundle.getString("MainFrame.buSenderRemove.text")); // NOI18N
+        buSenderRemove.setText(bundle1.getString("MainFrame.buSenderRemove.text")); // NOI18N
 
-        buSenderDetails.setText(bundle.getString("MainFrame.buSenderDetails.text")); // NOI18N
+        buSenderDetails.setText(bundle1.getString("MainFrame.buSenderDetails.text")); // NOI18N
 
-        tableSenders.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Group", "Port", "Packet Size", "TTL", "Packet Rate", "State"
-            }
-        ));
+        tableSenders.setModel(new SenderTableModel());
         tableSenders.setColumnSelectionAllowed(true);
         jScrollPane2.setViewportView(tableSenders);
         tableSenders.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-        laSenders.setText(bundle.getString("MainFrame.laSenders.text")); // NOI18N
+        laSenders.setText(bundle1.getString("MainFrame.laSenders.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -180,6 +167,22 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jMenu1.setText(bundle1.getString("MainFrame.jMenu1.text")); // NOI18N
+
+        jMenuItem1.setText(bundle1.getString("MainFrame.jMenuItem1.text")); // NOI18N
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText(bundle1.getString("MainFrame.jMenu2.text")); // NOI18N
+
+        jMenuItem2.setText(bundle1.getString("MainFrame.jMenuItem2.text")); // NOI18N
+        jMenu2.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -202,7 +205,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buActivate)
                     .addComponent(buDeactivate))
@@ -234,6 +237,11 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton buSenderEdit;
     private javax.swing.JButton buSenderNew;
     private javax.swing.JButton buSenderRemove;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -243,5 +251,21 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTable tableReceivers;
     private javax.swing.JTable tableSenders;
     // End of variables declaration//GEN-END:variables
+
+    public MainFrameState getSessionState() {
+        MainFrameState state = new MainFrameState();
+        state.setXPosition(this.getX());
+        state.setYPosition(this.getY());
+        state.setHeight(this.getHeight());
+        state.setWidth(this.getWidth());
+        state.setWindowState(this.getExtendedState());
+        return state;
+    }
+
+    public void setSessionState(MainFrameState state) {
+        this.setLocation(state.getXPosition(), state.getYPosition());
+        this.setSize(state.getWidth(), state.getHeight());
+        this.setExtendedState(state.getWindowState());
+    }
 
 }

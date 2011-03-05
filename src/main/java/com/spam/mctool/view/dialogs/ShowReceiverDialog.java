@@ -4,23 +4,23 @@
  */
 
 /*
- * EditReceiverDialog.java
+ * ShowReceiverDialog.java
  *
- * Created on Mar 3, 2011, 7:47:08 PM
+ * Created on Mar 3, 2011, 7:47:50 PM
  */
 
-package com.spam.mctool.view;
+package com.spam.mctool.view.dialogs;
 
 /**
  *
- * @author tobias
+ * @author Tobias Stöckel (Tobias.Stoeckel@de.ibm.com)
  */
-public class EditReceiverDialog extends javax.swing.JDialog {
+public class ShowReceiverDialog extends javax.swing.JDialog {
 
     private static final long serialVersionUID = 1L;
 
-	/** Creates new form EditReceiverDialog */
-    public EditReceiverDialog(java.awt.Frame parent, boolean modal) {
+	/** Creates new form ShowReceiverDialog */
+    public ShowReceiverDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -55,7 +55,7 @@ public class EditReceiverDialog extends javax.swing.JDialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                EditReceiverDialog dialog = new EditReceiverDialog(new javax.swing.JFrame(), true);
+                ShowReceiverDialog dialog = new ShowReceiverDialog(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);

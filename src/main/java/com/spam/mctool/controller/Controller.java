@@ -45,7 +45,9 @@ public class Controller implements ProfileManager, StreamManager {
 		//this.senderManager = new SenderPool();
 		//this.receiverManager = new ReceiverPool();
 		viewers = new ArrayList<MctoolView>();
-		//viewers.add(new GraphicalView()); // Added by TST: damit überhaupt eine View instanziert wird.
+		//viewers.add(new GraphicalView()); // Added by TST. uncomment to
+                                                    // display the gui upon
+                                                    // instantiation
 	}
 	
 	private void profileChanged(){
@@ -63,14 +65,14 @@ public class Controller implements ProfileManager, StreamManager {
 	}
 	
 	public void init(String[] args) {
-		//Add views here
-		
-		//Init all views
-		Iterator<MctoolView> it = viewers.iterator();
-		while(it.hasNext()){
-			MctoolView curView = it.next();
-			curView.init(this);
-		}
+                //Add views here
+
+                //Init all views
+                Iterator<MctoolView> it = viewers.iterator();
+                while(it.hasNext()){
+                        MctoolView curView = it.next();
+                        curView.init(this);
+                }
 	}
 
 	public void setCurrentProfile(Profile currentProfile) {

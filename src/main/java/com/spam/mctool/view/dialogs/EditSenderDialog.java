@@ -9,11 +9,11 @@
  * Created on Mar 3, 2011, 7:47:26 PM
  */
 
-package com.spam.mctool.view;
+package com.spam.mctool.view.dialogs;
 
 /**
  *
- * @author tobias
+ * @author Tobias Stöckel (Tobias.Stoeckel@de.ibm.com)
  */
 public class EditSenderDialog extends javax.swing.JDialog {
 
