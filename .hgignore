@@ -5,3 +5,9 @@ syntax: regexp
 ^target$
 syntax: regexp
 ^build$
+\.orig\..*$
+\.orig$
+\.chg\..*$
+\.rej$
+\.conflict\~$
+private.properties
