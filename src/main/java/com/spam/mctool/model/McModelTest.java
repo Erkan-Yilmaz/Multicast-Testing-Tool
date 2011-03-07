@@ -59,14 +59,14 @@ public class McModelTest implements SenderDataChangeListener, ReceiverDataChange
 	}
 
 	public void dataChanged(SenderDataChangedEvent e) {
-		Sender r = e.getSender();
+		Sender r = e.getSource();
 		String msg = "Sender:\n----------------------\n" +
 				"Sending Rates (MIN|AVG|MAX) pps: "+r.getMinPacketRate()+"|"+r.getAvgPacketRate()+"|"+r.getMaxPacketRate()+"\n";
 		System.out.println(msg);
 	}
 
 	public void dataChanged(ReceiverDataChangedEvent e) {
-		Receiver r = e.getReceiver();
+		Receiver r = e.getSource();
 		String msg = "Receiver:\n----------------------\n" +
 				"Traversal (MIN|AVG|MAX) ms: "+r.getMinTraversal()+"|"+r.getAvgTraversal()+"|"+r.getMaxTraversal()+"\n" +
 				"Receiving Rates (MIN|AVG|MAX) pps: "+r.getMinPacketRate()+"|"+r.getAvgPacketRate()+"|"+r.getMaxPacketRate()+"\n"+
