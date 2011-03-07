@@ -11,6 +11,8 @@
 
 package com.spam.mctool.view.dialogs;
 
+import com.spam.mctool.model.Receiver;
+
 /**
  *
  * @author Tobias Stöckel (Tobias.Stoeckel@de.ibm.com)
@@ -18,11 +20,17 @@ package com.spam.mctool.view.dialogs;
 public class EditReceiverDialog extends javax.swing.JDialog {
 
     private static final long serialVersionUID = 1L;
+    private Receiver receiver;
 
 	/** Creates new form EditReceiverDialog */
     public EditReceiverDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+    }
+
+    public EditReceiverDialog(java.awt.Frame parent, boolean modal, Receiver receiver) {
+        this(parent, modal);
+        this.receiver = receiver;
     }
 
     /** This method is called from within the constructor to

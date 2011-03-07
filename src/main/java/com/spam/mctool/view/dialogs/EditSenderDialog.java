@@ -11,6 +11,8 @@
 
 package com.spam.mctool.view.dialogs;
 
+import com.spam.mctool.model.Sender;
+
 /**
  *
  * @author Tobias Stöckel (Tobias.Stoeckel@de.ibm.com)
@@ -18,11 +20,17 @@ package com.spam.mctool.view.dialogs;
 public class EditSenderDialog extends javax.swing.JDialog {
 
     private static final long serialVersionUID = 1L;
+    private Sender sender;
 
 	/** Creates new form EditSenderDialog */
     public EditSenderDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+    }
+
+    public EditSenderDialog(java.awt.Frame parent, boolean modal, Sender sender) {
+        this(parent, modal);
+        this.sender = sender;
     }
 
     /** This method is called from within the constructor to

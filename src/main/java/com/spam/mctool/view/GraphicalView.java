@@ -13,8 +13,10 @@ import com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
 import com.spam.mctool.intermediates.SenderAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.SenderDataChangedEvent;
+import com.spam.mctool.model.Receiver;
 import com.spam.mctool.model.ReceiverAddedOrRemovedListener;
 import com.spam.mctool.model.ReceiverDataChangeListener;
+import com.spam.mctool.model.Sender;
 import com.spam.mctool.model.SenderAddedOrRemovedListener;
 import com.spam.mctool.model.SenderDataChangeListener;
 import javax.swing.UIManager;
@@ -99,8 +101,12 @@ public class GraphicalView implements MctoolView,
 
         // fire the update methods to load all model data to the gui
         profileChanged(new ProfileChangeEvent());
-        receiverAdded(new ReceiverAddedOrRemovedEvent());
-        senderAdded(new SenderAddedOrRemovedEvent());
+        for (Receiver r : streamManager.getReceivers()) {
+            this.receiverAdded(new ReceiverAddedOrRemovedEvent(r));
+        }
+        for (Sender s : streamManager.getSenders()) {
+            this.senderAdded(new SenderAddedOrRemovedEvent(s));
+        }
     }
 
     private void saveState() {

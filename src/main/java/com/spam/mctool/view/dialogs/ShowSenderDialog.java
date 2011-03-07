@@ -11,6 +11,8 @@
 
 package com.spam.mctool.view.dialogs;
 
+import com.spam.mctool.model.Sender;
+
 /**
  *
  * @author Tobias Stöckel (Tobias.Stoeckel@de.ibm.com)
@@ -18,11 +20,18 @@ package com.spam.mctool.view.dialogs;
 public class ShowSenderDialog extends javax.swing.JDialog {
 
     private static final long serialVersionUID = 1L;
+    private Sender sender;
 
 	/** Creates new form ShowSenderDialog */
     public ShowSenderDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        initData();
+    }
+
+    public ShowSenderDialog(java.awt.Frame parent, boolean modal, Sender sender) {
+        this(parent, modal);
+        this.sender = sender;
     }
 
     /** This method is called from within the constructor to
@@ -64,6 +73,10 @@ public class ShowSenderDialog extends javax.swing.JDialog {
                 dialog.setVisible(true);
             }
         });
+    }
+
+    private void initData() {
+        // TODO load data from sender to dialog components
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
