@@ -21,6 +21,7 @@ public class EditReceiverDialog extends javax.swing.JDialog {
 
     private static final long serialVersionUID = 1L;
     private Receiver receiver;
+    private int test;
 
 	/** Creates new form EditReceiverDialog */
     public EditReceiverDialog(java.awt.Frame parent, boolean modal) {
