@@ -1,9 +1,4 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * MainFrame.java
  *
  * Created on Mar 3, 2011, 4:57:17 PM
@@ -22,6 +17,7 @@ public class MainFrame extends javax.swing.JFrame {
     /** Creates new form MainFrame */
     public MainFrame() {
         initComponents();
+        this.jTable1.getColumn("Status").setCellRenderer(new StatusRenderer());
     }
 
     /** This method is called from within the constructor to
@@ -32,152 +28,570 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buActivate = new javax.swing.JButton();
-        buDeactivate = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        buReceiverDetails = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tableReceivers = new javax.swing.JTable();
-        buReceiverRemove = new javax.swing.JButton();
-        buReceiverEdit = new javax.swing.JButton();
-        buReceiverNew = new javax.swing.JButton();
-        laReceivers = new javax.swing.JLabel();
+        statusRenderer1 = new com.spam.mctool.view.main.StatusRenderer();
+        actionRenderer1 = new com.spam.mctool.view.main.ActionRenderer();
+        jSplitPane3 = new javax.swing.JSplitPane();
+        jSplitPane1 = new javax.swing.JSplitPane();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jSeparator11 = new javax.swing.JSeparator();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        buSenderNew = new javax.swing.JButton();
-        buSenderEdit = new javax.swing.JButton();
-        buSenderRemove = new javax.swing.JButton();
-        buSenderDetails = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tableSenders = new javax.swing.JTable();
-        laSenders = new javax.swing.JLabel();
+        jTable1 = new javax.swing.JTable();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jSplitPane2 = new javax.swing.JSplitPane();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jSeparator12 = new javax.swing.JSeparator();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jPanel10 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
+        jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jSeparator9 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem27 = new javax.swing.JMenuItem();
+        jMenuItem17 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem13 = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jCheckBoxMenuItem3 = new javax.swing.JCheckBoxMenuItem();
+        jCheckBoxMenuItem4 = new javax.swing.JCheckBoxMenuItem();
+        jSeparator6 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem16 = new javax.swing.JMenuItem();
+        jMenuItem19 = new javax.swing.JMenuItem();
+        jSeparator10 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem26 = new javax.swing.JMenuItem();
+        jMenuItem25 = new javax.swing.JMenuItem();
+        jMenuItem20 = new javax.swing.JMenuItem();
+        jMenuItem23 = new javax.swing.JMenuItem();
+        jSeparator7 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem24 = new javax.swing.JMenuItem();
+        jSeparator8 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem22 = new javax.swing.JMenuItem();
+        jMenuItem21 = new javax.swing.JMenuItem();
+        jMenuItem18 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem15 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/spam/mctool/view/Bundle"); // NOI18N
         setTitle(bundle.getString("MainFrame.title")); // NOI18N
 
+        jSplitPane3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jSplitPane3.setDividerLocation(252);
+        jSplitPane3.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        jSplitPane3.setResizeWeight(0.5);
+        jSplitPane3.setOneTouchExpandable(true);
+
+        jSplitPane1.setBorder(null);
+        jSplitPane1.setDividerLocation(500);
+        jSplitPane1.setResizeWeight(1.0);
+        jSplitPane1.setOneTouchExpandable(true);
+
         java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("com/spam/mctool/view/main/Bundle"); // NOI18N
-        buActivate.setText(bundle1.getString("MainFrame.buActivate.text")); // NOI18N
+        jLabel1.setText(bundle1.getString("MainFrame.jLabel1.text")); // NOI18N
 
-        buDeactivate.setText(bundle1.getString("MainFrame.buDeactivate.text")); // NOI18N
+        jLabel7.setText(bundle1.getString("MainFrame.jLabel7.text")); // NOI18N
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jLabel8.setText(bundle1.getString("MainFrame.jLabel8.text")); // NOI18N
 
-        buReceiverDetails.setText(bundle1.getString("MainFrame.buReceiverDetails.text")); // NOI18N
+        jLabel9.setText(bundle1.getString("MainFrame.jLabel9.text")); // NOI18N
 
-        tableReceivers.setModel(new ReceiverTableModel());
-        jScrollPane1.setViewportView(tableReceivers);
+        jLabel14.setText(bundle1.getString("MainFrame.jLabel14.text")); // NOI18N
 
-        buReceiverRemove.setText(bundle1.getString("MainFrame.buReceiverRemove.text")); // NOI18N
+        jLabel15.setText(bundle1.getString("MainFrame.jLabel15.text")); // NOI18N
 
-        buReceiverEdit.setText(bundle1.getString("MainFrame.buReceiverEdit.text")); // NOI18N
+        jLabel16.setText(bundle1.getString("MainFrame.jLabel16.text")); // NOI18N
 
-        buReceiverNew.setText(bundle1.getString("MainFrame.buReceiverNew.text")); // NOI18N
-
-        laReceivers.setText(bundle1.getString("MainFrame.laReceivers.text")); // NOI18N
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(buReceiverNew)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buReceiverRemove)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buReceiverEdit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buReceiverDetails))
-                    .addComponent(laReceivers))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator11, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                    .addComponent(jLabel1)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                        .addComponent(jLabel14))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                        .addComponent(jLabel15))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                        .addComponent(jLabel16)))
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(laReceivers)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buReceiverNew)
-                    .addComponent(buReceiverRemove)
-                    .addComponent(buReceiverEdit)
-                    .addComponent(buReceiverDetails))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jSeparator11, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel14))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel15))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel16))
+                .addContainerGap(149, Short.MAX_VALUE))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jSplitPane1.setRightComponent(jPanel4);
 
-        buSenderNew.setText(bundle1.getString("MainFrame.buSenderNew.text")); // NOI18N
+        jPanel2.setLayout(new java.awt.BorderLayout());
 
-        buSenderEdit.setText(bundle1.getString("MainFrame.buSenderEdit.text")); // NOI18N
+        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        buSenderRemove.setText(bundle1.getString("MainFrame.buSenderRemove.text")); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/play_green.png"))); // NOI18N
+        jButton1.setText(bundle1.getString("MainFrame.jButton1.text")); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton1);
 
-        buSenderDetails.setText(bundle1.getString("MainFrame.buSenderDetails.text")); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/stop_red.png"))); // NOI18N
+        jButton2.setText(bundle1.getString("MainFrame.jButton2.text")); // NOI18N
+        jPanel3.add(jButton2);
 
-        tableSenders.setModel(new SenderTableModel());
-        tableSenders.setColumnSelectionAllowed(true);
-        jScrollPane2.setViewportView(tableSenders);
-        tableSenders.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/add_green.png"))); // NOI18N
+        jButton3.setText(bundle1.getString("MainFrame.jButton3.text")); // NOI18N
+        jPanel3.add(jButton3);
 
-        laSenders.setText(bundle1.getString("MainFrame.laSenders.text")); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/edit.png"))); // NOI18N
+        jButton4.setText(bundle1.getString("MainFrame.jButton4.text")); // NOI18N
+        jPanel3.add(jButton4);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/delete.png"))); // NOI18N
+        jButton5.setText(bundle1.getString("MainFrame.jButton5.text")); // NOI18N
+        jPanel3.add(jButton5);
+
+        jPanel2.add(jPanel3, java.awt.BorderLayout.SOUTH);
+
+        jPanel5.setLayout(new java.awt.BorderLayout());
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Status", "Sender ID", "Group", "Conf. Rate", "Actions"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Double.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setRowHeight(20);
+        jScrollPane2.setViewportView(jTable1);
+        jTable1.getColumnModel().getColumn(0).setResizable(false);
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(30);
+        jTable1.getColumnModel().getColumn(0).setHeaderValue(bundle1.getString("MainFrame.jTable1.columnModel.title0_1")); // NOI18N
+        jTable1.getColumnModel().getColumn(0).setCellRenderer(statusRenderer1);
+        jTable1.getColumnModel().getColumn(1).setHeaderValue(bundle1.getString("MainFrame.jTable1.columnModel.title1_1")); // NOI18N
+        jTable1.getColumnModel().getColumn(2).setHeaderValue(bundle1.getString("MainFrame.jTable1.columnModel.title2_1")); // NOI18N
+        jTable1.getColumnModel().getColumn(3).setHeaderValue(bundle1.getString("MainFrame.jTable1.columnModel.title3_1")); // NOI18N
+        jTable1.getColumnModel().getColumn(4).setResizable(false);
+        jTable1.getColumnModel().getColumn(4).setPreferredWidth(60);
+        jTable1.getColumnModel().getColumn(4).setHeaderValue(bundle1.getString("MainFrame.jTable1.columnModel.title4")); // NOI18N
+        jTable1.getColumnModel().getColumn(4).setCellRenderer(actionRenderer1);
+
+        jPanel5.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+
+        jPanel2.add(jPanel5, java.awt.BorderLayout.CENTER);
+
+        jPanel9.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel3.setText(bundle1.getString("MainFrame.jLabel3.text")); // NOI18N
+        jPanel9.add(jLabel3);
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/sender.png"))); // NOI18N
+        jLabel5.setText(bundle1.getString("MainFrame.jLabel5.text")); // NOI18N
+        jPanel9.add(jLabel5);
+
+        jPanel2.add(jPanel9, java.awt.BorderLayout.NORTH);
+
+        jSplitPane1.setLeftComponent(jPanel2);
+
+        jSplitPane3.setTopComponent(jSplitPane1);
+
+        jSplitPane2.setBorder(null);
+        jSplitPane2.setDividerLocation(500);
+        jSplitPane2.setResizeWeight(1.0);
+        jSplitPane2.setOneTouchExpandable(true);
+
+        jLabel2.setText(bundle1.getString("MainFrame.jLabel2.text")); // NOI18N
+
+        jLabel10.setText(bundle1.getString("MainFrame.jLabel10.text")); // NOI18N
+
+        jLabel11.setText(bundle1.getString("MainFrame.jLabel11.text")); // NOI18N
+
+        jLabel12.setText(bundle1.getString("MainFrame.jLabel12.text")); // NOI18N
+
+        jLabel13.setText(bundle1.getString("MainFrame.jLabel13.text")); // NOI18N
+
+        jLabel17.setText(bundle1.getString("MainFrame.jLabel17.text")); // NOI18N
+
+        jLabel18.setText(bundle1.getString("MainFrame.jLabel18.text")); // NOI18N
+
+        jLabel19.setText(bundle1.getString("MainFrame.jLabel19.text")); // NOI18N
+
+        jLabel20.setText(bundle1.getString("MainFrame.jLabel20.text")); // NOI18N
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(buSenderNew)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buSenderRemove)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buSenderEdit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buSenderDetails))
-                    .addComponent(laSenders))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jSeparator12, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                        .addComponent(jLabel17))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                        .addComponent(jLabel18))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                        .addComponent(jLabel19))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                        .addComponent(jLabel20)))
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(laSenders)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buSenderNew)
-                    .addComponent(buSenderRemove)
-                    .addComponent(buSenderEdit)
-                    .addComponent(buSenderDetails))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jSeparator12, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel17))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel18))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel19))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel20))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
+
+        jSplitPane2.setRightComponent(jPanel6);
+
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/play_green.png"))); // NOI18N
+        jButton6.setText(bundle1.getString("MainFrame.jButton6.text")); // NOI18N
+        jPanel7.add(jButton6);
+
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/stop_red.png"))); // NOI18N
+        jButton7.setText(bundle1.getString("MainFrame.jButton7.text")); // NOI18N
+        jPanel7.add(jButton7);
+
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/add_green.png"))); // NOI18N
+        jButton8.setText(bundle1.getString("MainFrame.jButton8.text")); // NOI18N
+        jPanel7.add(jButton8);
+
+        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/edit.png"))); // NOI18N
+        jButton9.setText(bundle1.getString("MainFrame.jButton9.text")); // NOI18N
+        jPanel7.add(jButton9);
+
+        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/delete.png"))); // NOI18N
+        jButton10.setText(bundle1.getString("MainFrame.jButton10.text")); // NOI18N
+        jPanel7.add(jButton10);
+
+        jPanel1.add(jPanel7, java.awt.BorderLayout.PAGE_END);
+
+        jPanel8.setLayout(new java.awt.BorderLayout());
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Status", "Group", "Port", "Sender ID", "Packet Rate", "Actions"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable2.setRowHeight(20);
+        jScrollPane1.setViewportView(jTable2);
+        jTable2.getColumnModel().getColumn(0).setResizable(false);
+        jTable2.getColumnModel().getColumn(0).setPreferredWidth(30);
+        jTable2.getColumnModel().getColumn(0).setHeaderValue(bundle1.getString("MainFrame.jTable2.columnModel.title0_1")); // NOI18N
+        jTable2.getColumnModel().getColumn(0).setCellRenderer(statusRenderer1);
+        jTable2.getColumnModel().getColumn(1).setHeaderValue(bundle1.getString("MainFrame.jTable2.columnModel.title1_1")); // NOI18N
+        jTable2.getColumnModel().getColumn(2).setHeaderValue(bundle1.getString("MainFrame.jTable2.columnModel.title2_1")); // NOI18N
+        jTable2.getColumnModel().getColumn(3).setHeaderValue(bundle1.getString("MainFrame.jTable2.columnModel.title3_1")); // NOI18N
+        jTable2.getColumnModel().getColumn(4).setHeaderValue(bundle1.getString("MainFrame.jTable2.columnModel.title4")); // NOI18N
+        jTable2.getColumnModel().getColumn(5).setResizable(false);
+        jTable2.getColumnModel().getColumn(5).setHeaderValue(bundle1.getString("MainFrame.jTable2.columnModel.title5")); // NOI18N
+        jTable2.getColumnModel().getColumn(5).setCellRenderer(actionRenderer1);
+
+        jPanel8.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jPanel1.add(jPanel8, java.awt.BorderLayout.CENTER);
+
+        jPanel10.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel4.setText(bundle1.getString("MainFrame.jLabel4.text")); // NOI18N
+        jPanel10.add(jLabel4);
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/receiver.png"))); // NOI18N
+        jLabel6.setText(bundle1.getString("MainFrame.jLabel6.text")); // NOI18N
+        jPanel10.add(jLabel6);
+
+        jPanel1.add(jPanel10, java.awt.BorderLayout.NORTH);
+
+        jSplitPane2.setLeftComponent(jPanel1);
+
+        jSplitPane3.setRightComponent(jSplitPane2);
 
         jMenu1.setText(bundle1.getString("MainFrame.jMenu1.text")); // NOI18N
+
+        jMenuItem3.setText(bundle1.getString("MainFrame.jMenuItem3.text")); // NOI18N
+        jMenu1.add(jMenuItem3);
+
+        jMenuItem5.setText(bundle1.getString("MainFrame.jMenuItem5.text")); // NOI18N
+        jMenu1.add(jMenuItem5);
+
+        jMenuItem4.setText(bundle1.getString("MainFrame.jMenuItem4.text")); // NOI18N
+        jMenu1.add(jMenuItem4);
+        jMenu1.add(jSeparator1);
+
+        jMenuItem6.setText(bundle1.getString("MainFrame.jMenuItem6.text")); // NOI18N
+        jMenu1.add(jMenuItem6);
+        jMenu1.add(jSeparator2);
 
         jMenuItem1.setText(bundle1.getString("MainFrame.jMenuItem1.text")); // NOI18N
         jMenu1.add(jMenuItem1);
 
         jMenuBar1.add(jMenu1);
 
+        jMenu3.setText(bundle1.getString("MainFrame.jMenu3.text")); // NOI18N
+
+        jCheckBoxMenuItem1.setSelected(true);
+        jCheckBoxMenuItem1.setText(bundle1.getString("MainFrame.jCheckBoxMenuItem1.text")); // NOI18N
+        jMenu3.add(jCheckBoxMenuItem1);
+
+        jCheckBoxMenuItem2.setSelected(true);
+        jCheckBoxMenuItem2.setText(bundle1.getString("MainFrame.jCheckBoxMenuItem2.text")); // NOI18N
+        jMenu3.add(jCheckBoxMenuItem2);
+        jMenu3.add(jSeparator3);
+
+        jMenuItem8.setText(bundle1.getString("MainFrame.jMenuItem8.text")); // NOI18N
+        jMenu3.add(jMenuItem8);
+
+        jMenuItem7.setText(bundle1.getString("MainFrame.jMenuItem7.text")); // NOI18N
+        jMenu3.add(jMenuItem7);
+        jMenu3.add(jSeparator9);
+
+        jMenuItem27.setText(bundle1.getString("MainFrame.jMenuItem27.text")); // NOI18N
+        jMenu3.add(jMenuItem27);
+
+        jMenuItem17.setText(bundle1.getString("MainFrame.jMenuItem17.text")); // NOI18N
+        jMenu3.add(jMenuItem17);
+
+        jMenuItem9.setText(bundle1.getString("MainFrame.jMenuItem9.text")); // NOI18N
+        jMenu3.add(jMenuItem9);
+
+        jMenuItem14.setText(bundle1.getString("MainFrame.jMenuItem14.text")); // NOI18N
+        jMenu3.add(jMenuItem14);
+        jMenu3.add(jSeparator4);
+
+        jMenuItem10.setText(bundle1.getString("MainFrame.jMenuItem10.text")); // NOI18N
+        jMenu3.add(jMenuItem10);
+        jMenu3.add(jSeparator5);
+
+        jMenuItem11.setText(bundle1.getString("MainFrame.jMenuItem11.text")); // NOI18N
+        jMenu3.add(jMenuItem11);
+
+        jMenuItem12.setText(bundle1.getString("MainFrame.jMenuItem12.text")); // NOI18N
+        jMenu3.add(jMenuItem12);
+
+        jMenuItem13.setText(bundle1.getString("MainFrame.jMenuItem13.text")); // NOI18N
+        jMenu3.add(jMenuItem13);
+
+        jMenuBar1.add(jMenu3);
+
+        jMenu4.setText(bundle1.getString("MainFrame.jMenu4.text")); // NOI18N
+
+        jCheckBoxMenuItem3.setSelected(true);
+        jCheckBoxMenuItem3.setText(bundle1.getString("MainFrame.jCheckBoxMenuItem3.text")); // NOI18N
+        jMenu4.add(jCheckBoxMenuItem3);
+
+        jCheckBoxMenuItem4.setSelected(true);
+        jCheckBoxMenuItem4.setText(bundle1.getString("MainFrame.jCheckBoxMenuItem4.text")); // NOI18N
+        jMenu4.add(jCheckBoxMenuItem4);
+        jMenu4.add(jSeparator6);
+
+        jMenuItem16.setText(bundle1.getString("MainFrame.jMenuItem16.text")); // NOI18N
+        jMenu4.add(jMenuItem16);
+
+        jMenuItem19.setText(bundle1.getString("MainFrame.jMenuItem19.text")); // NOI18N
+        jMenu4.add(jMenuItem19);
+        jMenu4.add(jSeparator10);
+
+        jMenuItem26.setText(bundle1.getString("MainFrame.jMenuItem26.text")); // NOI18N
+        jMenu4.add(jMenuItem26);
+
+        jMenuItem25.setText(bundle1.getString("MainFrame.jMenuItem25.text")); // NOI18N
+        jMenu4.add(jMenuItem25);
+
+        jMenuItem20.setText(bundle1.getString("MainFrame.jMenuItem20.text")); // NOI18N
+        jMenu4.add(jMenuItem20);
+
+        jMenuItem23.setText(bundle1.getString("MainFrame.jMenuItem23.text")); // NOI18N
+        jMenu4.add(jMenuItem23);
+        jMenu4.add(jSeparator7);
+
+        jMenuItem24.setText(bundle1.getString("MainFrame.jMenuItem24.text")); // NOI18N
+        jMenu4.add(jMenuItem24);
+        jMenu4.add(jSeparator8);
+
+        jMenuItem22.setText(bundle1.getString("MainFrame.jMenuItem22.text")); // NOI18N
+        jMenu4.add(jMenuItem22);
+
+        jMenuItem21.setText(bundle1.getString("MainFrame.jMenuItem21.text")); // NOI18N
+        jMenu4.add(jMenuItem21);
+
+        jMenuItem18.setText(bundle1.getString("MainFrame.jMenuItem18.text")); // NOI18N
+        jMenu4.add(jMenuItem18);
+
+        jMenuBar1.add(jMenu4);
+
         jMenu2.setText(bundle1.getString("MainFrame.jMenu2.text")); // NOI18N
 
         jMenuItem2.setText(bundle1.getString("MainFrame.jMenuItem2.text")); // NOI18N
         jMenu2.add(jMenuItem2);
+
+        jMenuItem15.setText(bundle1.getString("MainFrame.jMenuItem15.text")); // NOI18N
+        jMenu2.add(jMenuItem15);
 
         jMenuBar1.add(jMenu2);
 
@@ -189,31 +603,23 @@ public class MainFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(buActivate)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buDeactivate))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jSplitPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 682, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buActivate)
-                    .addComponent(buDeactivate))
+                .addComponent(jSplitPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 473, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
     * @param args the command line arguments
@@ -227,29 +633,103 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buActivate;
-    private javax.swing.JButton buDeactivate;
-    private javax.swing.JButton buReceiverDetails;
-    private javax.swing.JButton buReceiverEdit;
-    private javax.swing.JButton buReceiverNew;
-    private javax.swing.JButton buReceiverRemove;
-    private javax.swing.JButton buSenderDetails;
-    private javax.swing.JButton buSenderEdit;
-    private javax.swing.JButton buSenderNew;
-    private javax.swing.JButton buSenderRemove;
+    private com.spam.mctool.view.main.ActionRenderer actionRenderer1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem3;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem4;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
+    private javax.swing.JMenuItem jMenuItem18;
+    private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem20;
+    private javax.swing.JMenuItem jMenuItem21;
+    private javax.swing.JMenuItem jMenuItem22;
+    private javax.swing.JMenuItem jMenuItem23;
+    private javax.swing.JMenuItem jMenuItem24;
+    private javax.swing.JMenuItem jMenuItem25;
+    private javax.swing.JMenuItem jMenuItem26;
+    private javax.swing.JMenuItem jMenuItem27;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel laReceivers;
-    private javax.swing.JLabel laSenders;
-    private javax.swing.JTable tableReceivers;
-    private javax.swing.JTable tableSenders;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator10;
+    private javax.swing.JSeparator jSeparator11;
+    private javax.swing.JSeparator jSeparator12;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
+    private javax.swing.JPopupMenu.Separator jSeparator6;
+    private javax.swing.JPopupMenu.Separator jSeparator7;
+    private javax.swing.JPopupMenu.Separator jSeparator8;
+    private javax.swing.JPopupMenu.Separator jSeparator9;
+    private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JSplitPane jSplitPane2;
+    private javax.swing.JSplitPane jSplitPane3;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
+    private com.spam.mctool.view.main.StatusRenderer statusRenderer1;
     // End of variables declaration//GEN-END:variables
 
     public MainFrameState getSessionState() {
@@ -267,5 +747,7 @@ public class MainFrame extends javax.swing.JFrame {
         this.setSize(state.getWidth(), state.getHeight());
         this.setExtendedState(state.getWindowState());
     }
+
+    
 
 }

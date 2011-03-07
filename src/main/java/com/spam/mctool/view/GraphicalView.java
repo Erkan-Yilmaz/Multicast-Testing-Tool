@@ -89,8 +89,8 @@ public class GraphicalView implements MctoolView,
                     e.printStackTrace();
                 }
 		mainFrame = new MainFrame();
-                loadState();
-                //attachObservers(); // Doesn't work yet, beacause the
+                //loadState();
+                //attachObservers(); // Doesn't work yet, beacause the Controller
                                      // doesn't instantiate a sender and receiver
                                      // pool yet.
 		mainFrame.setVisible(true);

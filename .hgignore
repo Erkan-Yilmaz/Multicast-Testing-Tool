@@ -11,3 +11,4 @@ syntax: regexp
 \.rej$
 \.conflict\~$
 private.properties
+private.xml
