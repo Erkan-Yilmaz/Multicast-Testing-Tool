@@ -19,11 +19,18 @@ public abstract class MulticastStream {
 	
 	protected int measuredPacketRate;
 	
+	protected int packetSize;
+	
 	protected byte[] data;
 	
 	protected int senderConfiguredPacketRate;
 	
 	protected long sentPacketCount = 0;
+	
+	protected int statsInterval = 10;
+	protected int statsGap = 2;
+	protected long statsCounter = 0;
+	protected double statsDistortionLimit = 0.3;
 	
 	protected NetworkInterface networkInterface;
 	
@@ -73,8 +80,10 @@ public abstract class MulticastStream {
 		
 		jobInterrupted = false;
 		workThread = new Thread(workJob);
+		workThread.setName("Worker Thread");
 		workThread.start();
 		analyzeThread = new Thread(analyzeJob);
+		analyzeThread.setName("Analyze Thread");
 		analyzeThread.start();
 	}
 	
@@ -82,10 +91,10 @@ public abstract class MulticastStream {
 	 * activates the multicast stream
 	 */
 	public void deactivate() {
-		exit();
 		jobInterrupted  = true;
 		workThread = null;
 		analyzeThread = null;
+		exit();
 	}
 
 	public InetAddress getGroup() {
@@ -138,6 +147,12 @@ public abstract class MulticastStream {
 
 	public long getSentPacketCount() {
 		return sentPacketCount;
+	}
+	public int getPacketSize() {
+		return packetSize;
+	}
+	public void setPacketSize(int packetSize) {
+		this.packetSize = packetSize;
 	}
 
 }

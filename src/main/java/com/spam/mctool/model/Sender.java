@@ -2,13 +2,14 @@ package com.spam.mctool.model;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
-import java.net.MulticastSocket;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+
+import com.spam.mctool.intermediates.SenderDataChangedEvent;
+import com.spam.mctool.model.packet.Packet;
+import com.spam.mctool.model.packet.SpamPacket;
 
 /**
  * Multicast sender class
@@ -18,26 +19,37 @@ public class Sender extends MulticastStream {
 	
 	protected int ttl;
 	
-	protected int packetSize;
+	protected long senderId;
 	
 	protected Queue<Long> sentTimes;
 	
-	private int floatingAvgInterval = 3;
+	protected long avgPacketRate = 0;
+	protected long minPacketRate = Long.MAX_VALUE;
+	protected long maxPacketRate = Long.MIN_VALUE;
+	
+	private List<SenderDataChangeListener> senderDataChangeListeners = new ArrayList<SenderDataChangeListener>();
 	
 	protected void init() {
+		senderId = (long) (Long.MAX_VALUE * Math.random());
 		sentTimes = new LinkedList<Long>();
 	}
 
 	@Override
 	protected void work() {
 		try {
-			DatagramPacket dp = new DatagramPacket(data, data.length, group, port);
+			// make the packet
+			Packet p = getPacket();
+			p.setSequenceNumber(sentPacketCount+1);
+			long dispatchTime = System.currentTimeMillis();
+			p.setDispatchTime(dispatchTime);
+			byte[] ba = p.toByteArray().array();
+			DatagramPacket dp = new DatagramPacket(ba, ba.length, group, port);
 			socket.send(dp);
-			sentTimes.add(System.nanoTime());
+			sentTimes.add(dispatchTime);
+			this.sentPacketCount++;
 			synchronized(sentTimes) {
 				sentTimes.notify();
 			}
-			this.sentPacketCount++;
 			Thread.sleep(1000/senderConfiguredPacketRate);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -50,18 +62,39 @@ public class Sender extends MulticastStream {
 	
 	@Override
 	protected void analyze() {
-		synchronized(sentTimes) {
-			if(sentTimes.size() >= floatingAvgInterval*2) {
-				double avg=0;
-				for(int i=1; i<floatingAvgInterval; i++) {
-					avg += -1*(sentTimes.poll()- sentTimes.poll());
+		if(sentTimes.size() >= statsInterval) {
+			statsCounter++;
+			if(statsCounter%statsGap == 0) {
+				long[] times = new long[statsInterval];
+				for(int i=0; i<statsInterval; i++) {
+					times[i] = sentTimes.poll();
 				}
-				avg /= floatingAvgInterval;
-
-				System.out.println("Avg: "+(1.0E9/avg));
 				
+				avgPacketRate = 0;
+				for(int i=0; i<statsInterval-1; i++) {
+					long packetRate = (long) (1E3 / (times[i+1]-times[i]));
+					
+					avgPacketRate += packetRate;
+					
+					if(packetRate > maxPacketRate) {
+						maxPacketRate = packetRate;
+					}
+					
+					if(packetRate < minPacketRate) {
+						minPacketRate = packetRate;
+					}
+				}
+				avgPacketRate = avgPacketRate/(statsInterval-1);
+				
+				fireSenderDataChangedEvent();
+			} else {
+				for(int i=0; i<statsInterval; i++) {
+					sentTimes.poll();
+				}
 			}
-			
+		}
+		
+		synchronized(sentTimes) {			
 			try {
 				sentTimes.wait();
 			} catch (InterruptedException e) {
@@ -69,34 +102,6 @@ public class Sender extends MulticastStream {
 				e.printStackTrace();
 			}
 		}
-	}
-	
-	public static void main(String... args) {
-		Sender s = new Sender();
-		try {
-			s.setNetworkInterface(NetworkInterface.getByName("wlan0"));
-		} catch (SocketException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		s.setData(new byte[] {1,2,3,4});
-		s.setSenderConfiguredPacketRate(1000);
-		s.setPort(8888);
-		try {
-			s.setGroupByString("224.0.0.1");
-		} catch (UnknownHostException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		s.activate();
-		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		s.deactivate();
-		System.out.println(s.sentPacketCount);
 	}
 	
 	public void setSenderConfiguredPacketRate(int pps) throws IllegalArgumentException {
@@ -110,9 +115,47 @@ public class Sender extends MulticastStream {
 
 	@Override
 	protected void exit() {
-		synchronized(sentTimes) {
-			sentTimes.notifyAll();
+		
+	}
+	
+	private Packet getPacket() {
+		Packet p = new SpamPacket();
+		p.setConfiguredPacketsPerSecond(senderConfiguredPacketRate);
+		p.setPayload(getData());
+		p.setSenderId(senderId);
+		p.setSenderMeasuredPacketRate(avgPacketRate);
+		return p;
+	}
+	
+	public long getAvgPacketRate() {
+		return avgPacketRate;
+	}
+
+	public long getMinPacketRate() {
+		return minPacketRate;
+	}
+
+	public long getMaxPacketRate() {
+		return maxPacketRate;
+	}
+
+	public void addSenderDataChangeListener(SenderDataChangeListener l) {
+		senderDataChangeListeners.add(l);
+	}
+	
+	public void removeSenderDataChangeListener(SenderDataChangeListener l) {
+		senderDataChangeListeners.remove(l);
+	}
+	
+	private void fireSenderDataChangedEvent() {
+		SenderDataChangedEvent e = new SenderDataChangedEvent(this);
+		for(SenderDataChangeListener l : senderDataChangeListeners) {
+			l.dataChanged(e);
 		}
+	}
+
+	public long getSenderId() {
+		return senderId;
 	}
 	
 }
