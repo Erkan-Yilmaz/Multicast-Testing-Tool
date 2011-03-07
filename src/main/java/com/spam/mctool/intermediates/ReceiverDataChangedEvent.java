@@ -3,15 +3,14 @@ package com.spam.mctool.intermediates;
 import com.spam.mctool.model.Receiver;
 
 public class ReceiverDataChangedEvent {
+	
+    private Receiver source;
 
-	Receiver receiver;
-	
-	public ReceiverDataChangedEvent(Receiver r) {
-		this.receiver = r;
-	}
-	
-	public Receiver getReceiver() {
-		return this.receiver;
-	}
-	
+    public ReceiverDataChangedEvent(Receiver source) {
+        this.source = source;
+    }
+
+    public Receiver getSource() {
+        return source;
+    }
 }
