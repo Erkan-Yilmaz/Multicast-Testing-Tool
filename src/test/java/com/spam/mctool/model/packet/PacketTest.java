@@ -1,6 +1,7 @@
 package com.spam.mctool.model.packet;
 
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.zip.DataFormatException;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -11,6 +12,86 @@ import static org.junit.Assert.*;
  * Tests the Packet implementations
  */
 public class PacketTest {
+	@Test
+	public void test_validHirschmannPackets() {
+		// test if a valid packet will be parsed correctly
+		
+		byte[] raw = {
+			'H','i','r','s','c','h','m','a','n','n',
+			' ','I','P',' ','T','e','s','t','-','M',
+			'u','l','t','i','c','a','s','t','\0',
+			(byte)0x7E, (byte)0xCD, 							// sender id
+			(byte)0x00, (byte)0x00, (byte)0x00, (byte)0xE6, 	// sequence number
+			(byte)0x00, (byte)0x01,								// pps
+			(byte)0x20,											// ttl
+			(byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, 	// reset 'bit'
+			(byte)0xDA, (byte)0x5F
+		};
+		
+		ByteBuffer data = ByteBuffer.wrap(raw);
+		Packet ap = new AutoPacket();
+		
+		for(int i=0 ; i<2 ; ++i){
+			try {
+				ap.fromByteArray(data);
+			} catch (DataFormatException e) {
+				fail(e.getMessage());
+			}
+			
+			assertEquals(0x7ECD, ap.getSenderId());
+			assertEquals(1, ap.getConfiguredPacketsPerSecond());
+			assertEquals(0xE6, ap.getSequenceNumber());
+			
+			// test if the byte rendering of the packet
+			// will still contain all the information
+			data = ap.toByteArray();
+			ap = new AutoPacket();
+		}
+	}
+	
+	@Test
+	public void test_invalidHirschmannPackets() {
+		byte[] raw = {
+			'H','i','r','s','c','h','m','a','n','n',
+			' ','I','P',' ','T','e','s','t','-','M',
+			'u','l','t','i','c','a','s','t','\0',
+			(byte)0x7E, (byte)0xCD, 							// sender id
+			(byte)0x00, (byte)0x00, (byte)0x00, (byte)0xE6, 	// sequence number
+			(byte)0x00, (byte)0x01,								// pps
+			(byte)0x20,											// ttl
+			(byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, 	// reset 'bit'
+			(byte)0xDA, (byte)0x5F,
+			(byte)0xFF						// this should not be part of the checksum
+		};
+		
+		ByteBuffer data = ByteBuffer.wrap(raw);
+		Packet ap = new AutoPacket();
+		
+		// make sure the 0xFF after the checksum is not use for the checksum
+		try {
+			ap.fromByteArray(data);
+		} catch(DataFormatException e) {
+			fail(e.getMessage());
+		}
+			
+		// change some stuff to make the checksum incorrect
+		raw[30] = 0x0A;
+		
+		for(int i=0 ; i<2 ; ++i){
+			try {
+				data.rewind();
+				ap.fromByteArray(data);
+			} catch (DataFormatException e) {
+				System.out.println(e.getMessage());
+				// truncate array to check underflows
+				raw = Arrays.copyOf(raw, raw.length-2);
+				data = ByteBuffer.wrap(raw);
+				continue;
+			}
+			fail("Exception should have been thrown");
+		}
+	}
+	
 	@Test
 	public void test_validSpamPackets() {
 		// test if a valid packet will be parsed correctly
@@ -84,11 +165,10 @@ public class PacketTest {
 	
 			try {
 				p.fromByteArray(data);
-			} catch (DataFormatException e) {			
-				System.out.println(e.getMessage());
+			} catch (DataFormatException e) {
 				continue;
 			}
 			fail("Exception should have been thrown");
 		}
-	}	
+	}
 }
