@@ -41,21 +41,168 @@ public class EditSenderDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        InterfaceCombo = new javax.swing.JComboBox();
+        OKButton = new javax.swing.JButton();
+        PortField = new javax.swing.JTextField();
+        CancelButton = new javax.swing.JButton();
+        InterfaceLabel = new javax.swing.JLabel();
+        PortLabel = new javax.swing.JLabel();
+        GroupLabel = new javax.swing.JLabel();
+        GroupField = new javax.swing.JTextField();
+        ActivateBox = new javax.swing.JCheckBox();
+        DataLabel = new javax.swing.JLabel();
+        DataField = new javax.swing.JTextField();
+        PacketRateLabel = new javax.swing.JLabel();
+        PacketRateField = new javax.swing.JTextField();
+        PacketSizeLabel = new javax.swing.JLabel();
+        TTLLabel = new javax.swing.JLabel();
+        TTLField = new javax.swing.JTextField();
+        PacketSizeField = new javax.swing.JTextField();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        InterfaceCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/spam/mctool/view/dialogs/Bundle"); // NOI18N
+        OKButton.setText(bundle.getString("EditSenderDialog.OKButton.text")); // NOI18N
+        OKButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OKButtonActionPerformed(evt);
+            }
+        });
+
+        PortField.setText(bundle.getString("EditSenderDialog.PortField.text")); // NOI18N
+        PortField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PortFieldActionPerformed(evt);
+            }
+        });
+
+        CancelButton.setText(bundle.getString("EditSenderDialog.CancelButton.text")); // NOI18N
+
+        InterfaceLabel.setText(bundle.getString("EditSenderDialog.InterfaceLabel.text")); // NOI18N
+
+        PortLabel.setText(bundle.getString("EditSenderDialog.PortLabel.text")); // NOI18N
+
+        GroupLabel.setText(bundle.getString("EditSenderDialog.GroupLabel.text")); // NOI18N
+
+        GroupField.setText(bundle.getString("EditSenderDialog.GroupField.text")); // NOI18N
+
+        ActivateBox.setText(bundle.getString("EditSenderDialog.ActivateBox.text")); // NOI18N
+        ActivateBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ActivateBoxActionPerformed(evt);
+            }
+        });
+
+        DataLabel.setText(bundle.getString("EditSenderDialog.DataLabel.text")); // NOI18N
+
+        DataField.setText(bundle.getString("EditSenderDialog.DataField.text")); // NOI18N
+
+        PacketRateLabel.setText(bundle.getString("EditSenderDialog.PacketRateLabel.text")); // NOI18N
+
+        PacketRateField.setText(bundle.getString("EditSenderDialog.PacketRateField.text")); // NOI18N
+        PacketRateField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PacketRateFieldActionPerformed(evt);
+            }
+        });
+
+        PacketSizeLabel.setText(bundle.getString("EditSenderDialog.PacketSizeLabel.text")); // NOI18N
+
+        TTLLabel.setText(bundle.getString("EditSenderDialog.TTLLabel.text")); // NOI18N
+
+        TTLField.setText(bundle.getString("EditSenderDialog.TTLField.text")); // NOI18N
+
+        PacketSizeField.setText(bundle.getString("EditSenderDialog.PacketSizeField.text")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(GroupField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(GroupLabel)
+                    .addComponent(PortLabel)
+                    .addComponent(PortField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(InterfaceLabel)
+                    .addComponent(InterfaceCombo, 0, 250, Short.MAX_VALUE)
+                    .addComponent(DataField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(DataLabel)
+                    .addComponent(PacketRateLabel)
+                    .addComponent(PacketRateField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(PacketSizeLabel)
+                    .addComponent(TTLLabel)
+                    .addComponent(TTLField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(PacketSizeField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(ActivateBox, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(OKButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(CancelButton)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(GroupLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(GroupField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(PortLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(PortField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(InterfaceLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(InterfaceCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(DataLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(DataField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(PacketRateLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(PacketRateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(PacketSizeLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(PacketSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(TTLLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TTLField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ActivateBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(OKButton)
+                    .addComponent(CancelButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
+        // TODO add your handling code here:
+}//GEN-LAST:event_OKButtonActionPerformed
+
+    private void ActivateBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActivateBoxActionPerformed
+        // TODO add your handling code here:
+}//GEN-LAST:event_ActivateBoxActionPerformed
+
+    private void PortFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PortFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PortFieldActionPerformed
+
+    private void PacketRateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PacketRateFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PacketRateFieldActionPerformed
 
     /**
     * @param args the command line arguments
@@ -74,7 +221,37 @@ public class EditSenderDialog extends javax.swing.JDialog {
         });
     }
 
+    private void loadData(){
+        this.GroupField.setText(this.sender.getGroup().toString());
+        this.GroupField.setEnabled(false);
+        this.PortField.setText(String.valueOf(this.sender.getPort()));
+        this.PortField.setEnabled(false);
+        this.DataField.setText(String.valueOf(this.sender.getData()));
+        this.DataField.setEnabled(false);
+        this.PacketRateField.setText(String.valueOf(this.sender.getSenderConfiguredPacketRate()));
+        this.PacketSizeField.setText(String.valueOf(this.sender.getPacketSize()));
+        this.InterfaceCombo.setEnabled(false);
+        //TODO: TTL, List of NetworkInterfaces
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox ActivateBox;
+    private javax.swing.JButton CancelButton;
+    private javax.swing.JTextField DataField;
+    private javax.swing.JLabel DataLabel;
+    private javax.swing.JTextField GroupField;
+    private javax.swing.JLabel GroupLabel;
+    private javax.swing.JComboBox InterfaceCombo;
+    private javax.swing.JLabel InterfaceLabel;
+    private javax.swing.JButton OKButton;
+    private javax.swing.JTextField PacketRateField;
+    private javax.swing.JLabel PacketRateLabel;
+    private javax.swing.JTextField PacketSizeField;
+    private javax.swing.JLabel PacketSizeLabel;
+    private javax.swing.JTextField PortField;
+    private javax.swing.JLabel PortLabel;
+    private javax.swing.JTextField TTLField;
+    private javax.swing.JLabel TTLLabel;
     // End of variables declaration//GEN-END:variables
 
 }

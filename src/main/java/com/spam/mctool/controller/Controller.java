@@ -45,7 +45,7 @@ public class Controller implements ProfileManager, StreamManager {
 		//this.senderManager = new SenderPool();
 		//this.receiverManager = new ReceiverPool();
 		viewers = new ArrayList<MctoolView>();
-		//viewers.add(new GraphicalView()); // Added by TST. uncomment to
+		viewers.add(new GraphicalView()); // Added by TST. uncomment to
                                                     // display the gui upon
                                                     // instantiation
 	}
