@@ -2,12 +2,16 @@ package com.spam.mctool.model;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
+import java.net.MulticastSocket;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import com.spam.mctool.intermediates.SenderDataChangedEvent;
+import com.spam.mctool.model.packet.HirschmannPacket;
 import com.spam.mctool.model.packet.Packet;
 import com.spam.mctool.model.packet.SpamPacket;
 
@@ -17,126 +21,95 @@ import com.spam.mctool.model.packet.SpamPacket;
  */
 public class Sender extends MulticastStream {
 	
-	protected int ttl;
+	public static enum PacketType {
+		SPAM("Spam Packet Format"),
+		HMANN("Hirschmann Packet Format");
+		
+		private String dispName;
+		
+		PacketType(String dispName) {
+			this.dispName = dispName;
+		}
+		
+		public String getDisplayName() {
+			return this.dispName;
+		}
+		
+		public static PacketType getByIdentifier(String ident) {
+			if(ident.equals("hmann")) {
+				return PacketType.HMANN;
+			} else {
+				return PacketType.SPAM;
+			}
+		}
+	}
+	
+	protected PacketType pType;
+	
+	protected byte ttl;
 	
 	protected long senderId;
 	
 	protected Queue<Long> sentTimes;
 	
-	protected long avgPacketRate = 0;
-	protected long minPacketRate = Long.MAX_VALUE;
-	protected long maxPacketRate = Long.MIN_VALUE;
-	
 	private List<SenderDataChangeListener> senderDataChangeListeners = new ArrayList<SenderDataChangeListener>();
 	
-	protected void init() {
-		senderId = (long) (Long.MAX_VALUE * Math.random());
-		sentTimes = new LinkedList<Long>();
+	protected Sender(ScheduledThreadPoolExecutor stpe) {
+		this.stpe = stpe;
+		this.senderId = (long) (Long.MAX_VALUE*Math.random());
 	}
-
+	
 	@Override
-	protected void work() {
+	public void activate() {
 		try {
-			// make the packet
-			Packet p = getPacket();
-			p.setSequenceNumber(sentPacketCount+1);
-			long dispatchTime = System.currentTimeMillis();
-			p.setDispatchTime(dispatchTime);
-			byte[] ba = p.toByteArray().array();
-			DatagramPacket dp = new DatagramPacket(ba, ba.length, group, port);
-			socket.send(dp);
-			sentTimes.add(dispatchTime);
-			this.sentPacketCount++;
-			synchronized(sentTimes) {
-				sentTimes.notify();
-			}
-			Thread.sleep(1000/senderConfiguredPacketRate);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+			this.socket = new MulticastSocket(this.getPort());
+			this.socket.setTimeToLive(this.getTtl());
+			this.socket.joinGroup(this.getGroup());
+			long period = (long) (1E3/this.senderConfiguredPacketRate);
+			this.sf = this.stpe.scheduleAtFixedRate(this, 0, period, TimeUnit.MILLISECONDS);
+			this.state = State.ACTIVE;
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	@Override
-	protected void analyze() {
-		if(sentTimes.size() >= statsInterval) {
-			statsCounter++;
-			if(statsCounter%statsGap == 0) {
-				long[] times = new long[statsInterval];
-				for(int i=0; i<statsInterval; i++) {
-					times[i] = sentTimes.poll();
-				}
-				
-				avgPacketRate = 0;
-				for(int i=0; i<statsInterval-1; i++) {
-					long packetRate = (long) (1E3 / (times[i+1]-times[i]));
-					
-					avgPacketRate += packetRate;
-					
-					if(packetRate > maxPacketRate) {
-						maxPacketRate = packetRate;
-					}
-					
-					if(packetRate < minPacketRate) {
-						minPacketRate = packetRate;
-					}
-				}
-				avgPacketRate = avgPacketRate/(statsInterval-1);
-				
-				fireSenderDataChangedEvent();
-			} else {
-				for(int i=0; i<statsInterval; i++) {
-					sentTimes.poll();
-				}
-			}
-		}
-		
-		synchronized(sentTimes) {			
-			try {
-				sentTimes.wait();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	public void deactivate() {
+		sf.cancel(true);
+		this.socket.close();
+		this.state = State.INACTIVE;
+	}
+	
+	public void run() {
+		try {
+			byte[] p = this.getPacket().toByteArray().array();
+			DatagramPacket dp = new DatagramPacket(p, p.length, this.getGroup(), this.getPort());
+			this.socket.send(dp);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
 	public void setSenderConfiguredPacketRate(int pps) throws IllegalArgumentException {
-		if(pps <= 0 || pps > 1000) {
-			this.senderConfiguredPacketRate = 1;
-			throw new IllegalArgumentException();
-		} else {
-			this.senderConfiguredPacketRate = pps;
-		}
-	}
-
-	@Override
-	protected void exit() {
-		
+		this.senderConfiguredPacketRate = pps;
 	}
 	
 	private Packet getPacket() {
-		Packet p = new SpamPacket();
+		Packet p;
+		switch(this.pType) {
+		case HMANN:
+			p = new HirschmannPacket();
+			break;
+		default:
+			p = new SpamPacket();
+		}
 		p.setConfiguredPacketsPerSecond(senderConfiguredPacketRate);
 		p.setPayload(getData());
 		p.setSenderId(senderId);
-		p.setSenderMeasuredPacketRate(avgPacketRate);
+		p.setDispatchTime(System.currentTimeMillis());
+		p.setSequenceNumber(++sentPacketCount);
+		p.setSenderMeasuredPacketRate(0);
 		return p;
-	}
-	
-	public long getAvgPacketRate() {
-		return avgPacketRate;
-	}
-
-	public long getMinPacketRate() {
-		return minPacketRate;
-	}
-
-	public long getMaxPacketRate() {
-		return maxPacketRate;
 	}
 
 	public void addSenderDataChangeListener(SenderDataChangeListener l) {
@@ -156,6 +129,22 @@ public class Sender extends MulticastStream {
 
 	public long getSenderId() {
 		return senderId;
+	}
+
+	public PacketType getpType() {
+		return pType;
+	}
+
+	public void setpType(PacketType pType) {
+		this.pType = pType;
+	}
+
+	public byte getTtl() {
+		return ttl;
+	}
+
+	public void setTtl(byte ttl) {
+		this.ttl = ttl;
 	}
 	
 }
