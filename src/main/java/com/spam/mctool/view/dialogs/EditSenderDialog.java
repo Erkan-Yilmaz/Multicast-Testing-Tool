@@ -41,82 +41,80 @@ public class EditSenderDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel4 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
-        jComboBox2 = new javax.swing.JComboBox();
-        jButton1 = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jComboBox5 = new javax.swing.JComboBox();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox();
-        jLabel8 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        InterfaceCombo = new javax.swing.JComboBox();
+        OKButton = new javax.swing.JButton();
+        PortField = new javax.swing.JTextField();
+        CancelButton = new javax.swing.JButton();
+        InterfaceLabel = new javax.swing.JLabel();
+        PortLabel = new javax.swing.JLabel();
+        GroupLabel = new javax.swing.JLabel();
+        GroupField = new javax.swing.JTextField();
+        ActivateBox = new javax.swing.JCheckBox();
+        DataLabel = new javax.swing.JLabel();
+        DataField = new javax.swing.JTextField();
+        PacketRateLabel = new javax.swing.JLabel();
+        PacketRateField = new javax.swing.JTextField();
+        PacketSizeLabel = new javax.swing.JLabel();
+        TTLLabel = new javax.swing.JLabel();
+        TTLField = new javax.swing.JTextField();
+        PacketSizeField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        InterfaceCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/spam/mctool/view/dialogs/Bundle"); // NOI18N
-        jLabel4.setText(bundle.getString("EditSenderDialog.jLabel4.text")); // NOI18N
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jButton1.setText(bundle.getString("EditSenderDialog.jButton1.text")); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        OKButton.setText(bundle.getString("EditSenderDialog.OKButton.text")); // NOI18N
+        OKButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                OKButtonActionPerformed(evt);
             }
         });
 
-        jLabel9.setText(bundle.getString("EditSenderDialog.jLabel9.text")); // NOI18N
-
-        jTextField2.setText(bundle.getString("EditSenderDialog.jTextField2.text")); // NOI18N
-
-        jButton2.setText(bundle.getString("EditSenderDialog.jButton2.text")); // NOI18N
-
-        jLabel3.setText(bundle.getString("EditSenderDialog.jLabel3.text")); // NOI18N
-
-        jLabel2.setText(bundle.getString("EditSenderDialog.jLabel2.text")); // NOI18N
-
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel1.setText(bundle.getString("EditSenderDialog.jLabel1.text")); // NOI18N
-
-        jTextField1.setText(bundle.getString("EditSenderDialog.jTextField1.text")); // NOI18N
-
-        jCheckBox1.setText(bundle.getString("EditSenderDialog.jCheckBox1.text")); // NOI18N
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        PortField.setText(bundle.getString("EditSenderDialog.PortField.text")); // NOI18N
+        PortField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                PortFieldActionPerformed(evt);
             }
         });
 
-        jLabel5.setText(bundle.getString("EditSenderDialog.jLabel5.text")); // NOI18N
+        CancelButton.setText(bundle.getString("EditSenderDialog.CancelButton.text")); // NOI18N
 
-        jTextField3.setText(bundle.getString("EditSenderDialog.jTextField3.text")); // NOI18N
+        InterfaceLabel.setText(bundle.getString("EditSenderDialog.InterfaceLabel.text")); // NOI18N
 
-        jLabel6.setText(bundle.getString("EditSenderDialog.jLabel6.text")); // NOI18N
+        PortLabel.setText(bundle.getString("EditSenderDialog.PortLabel.text")); // NOI18N
 
-        jTextField4.setText(bundle.getString("EditSenderDialog.jTextField4.text")); // NOI18N
+        GroupLabel.setText(bundle.getString("EditSenderDialog.GroupLabel.text")); // NOI18N
 
-        jLabel7.setText(bundle.getString("EditSenderDialog.jLabel7.text")); // NOI18N
+        GroupField.setText(bundle.getString("EditSenderDialog.GroupField.text")); // NOI18N
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ActivateBox.setText(bundle.getString("EditSenderDialog.ActivateBox.text")); // NOI18N
+        ActivateBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ActivateBoxActionPerformed(evt);
+            }
+        });
 
-        jLabel8.setText(bundle.getString("EditSenderDialog.jLabel8.text")); // NOI18N
+        DataLabel.setText(bundle.getString("EditSenderDialog.DataLabel.text")); // NOI18N
 
-        jTextField5.setText(bundle.getString("EditSenderDialog.jTextField5.text")); // NOI18N
+        DataField.setText(bundle.getString("EditSenderDialog.DataField.text")); // NOI18N
+
+        PacketRateLabel.setText(bundle.getString("EditSenderDialog.PacketRateLabel.text")); // NOI18N
+
+        PacketRateField.setText(bundle.getString("EditSenderDialog.PacketRateField.text")); // NOI18N
+        PacketRateField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PacketRateFieldActionPerformed(evt);
+            }
+        });
+
+        PacketSizeLabel.setText(bundle.getString("EditSenderDialog.PacketSizeLabel.text")); // NOI18N
+
+        TTLLabel.setText(bundle.getString("EditSenderDialog.TTLLabel.text")); // NOI18N
+
+        TTLField.setText(bundle.getString("EditSenderDialog.TTLField.text")); // NOI18N
+
+        PacketSizeField.setText(bundle.getString("EditSenderDialog.PacketSizeField.text")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -125,90 +123,86 @@ public class EditSenderDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(jLabel3)
-                    .addComponent(jComboBox1, 0, 250, Short.MAX_VALUE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel4)
-                    .addComponent(jComboBox2, 0, 250, Short.MAX_VALUE)
-                    .addComponent(jLabel6)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(jLabel7)
-                    .addComponent(jComboBox3, 0, 250, Short.MAX_VALUE)
-                    .addComponent(jLabel8)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(jLabel9)
-                    .addComponent(jComboBox5, 0, 250, Short.MAX_VALUE)
-                    .addComponent(jCheckBox1, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(GroupField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(GroupLabel)
+                    .addComponent(PortLabel)
+                    .addComponent(PortField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(InterfaceLabel)
+                    .addComponent(InterfaceCombo, 0, 250, Short.MAX_VALUE)
+                    .addComponent(DataField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(DataLabel)
+                    .addComponent(PacketRateLabel)
+                    .addComponent(PacketRateField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(PacketSizeLabel)
+                    .addComponent(TTLLabel)
+                    .addComponent(TTLField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(PacketSizeField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(ActivateBox, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(43, 43, 43)
-                        .addComponent(jButton1)
+                        .addComponent(OKButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)))
+                        .addComponent(CancelButton)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(GroupLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(GroupField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
+                .addComponent(PortLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PortField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
+                .addComponent(InterfaceLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(InterfaceCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
+                .addComponent(DataLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4)
+                .addComponent(DataField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(PacketRateLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PacketRateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel6)
+                .addComponent(PacketSizeLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel7)
+                .addComponent(PacketSizeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(TTLLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TTLField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox1)
+                .addComponent(ActivateBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(OKButton)
+                    .addComponent(CancelButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
         // TODO add your handling code here:
-}//GEN-LAST:event_jButton1ActionPerformed
+}//GEN-LAST:event_OKButtonActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void ActivateBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActivateBoxActionPerformed
         // TODO add your handling code here:
-}//GEN-LAST:event_jCheckBox1ActionPerformed
+}//GEN-LAST:event_ActivateBoxActionPerformed
+
+    private void PortFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PortFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PortFieldActionPerformed
+
+    private void PacketRateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PacketRateFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PacketRateFieldActionPerformed
 
     /**
     * @param args the command line arguments
@@ -227,28 +221,37 @@ public class EditSenderDialog extends javax.swing.JDialog {
         });
     }
 
+    private void loadData(){
+        this.GroupField.setText(this.sender.getGroup().toString());
+        this.GroupField.setEnabled(false);
+        this.PortField.setText(String.valueOf(this.sender.getPort()));
+        this.PortField.setEnabled(false);
+        this.DataField.setText(String.valueOf(this.sender.getData()));
+        this.DataField.setEnabled(false);
+        this.PacketRateField.setText(String.valueOf(this.sender.getSenderConfiguredPacketRate()));
+        this.PacketSizeField.setText(String.valueOf(this.sender.getPacketSize()));
+        this.InterfaceCombo.setEnabled(false);
+        //TODO: TTL, List of NetworkInterfaces
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox3;
-    private javax.swing.JComboBox jComboBox5;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JCheckBox ActivateBox;
+    private javax.swing.JButton CancelButton;
+    private javax.swing.JTextField DataField;
+    private javax.swing.JLabel DataLabel;
+    private javax.swing.JTextField GroupField;
+    private javax.swing.JLabel GroupLabel;
+    private javax.swing.JComboBox InterfaceCombo;
+    private javax.swing.JLabel InterfaceLabel;
+    private javax.swing.JButton OKButton;
+    private javax.swing.JTextField PacketRateField;
+    private javax.swing.JLabel PacketRateLabel;
+    private javax.swing.JTextField PacketSizeField;
+    private javax.swing.JLabel PacketSizeLabel;
+    private javax.swing.JTextField PortField;
+    private javax.swing.JLabel PortLabel;
+    private javax.swing.JTextField TTLField;
+    private javax.swing.JLabel TTLLabel;
     // End of variables declaration//GEN-END:variables
 
 }
