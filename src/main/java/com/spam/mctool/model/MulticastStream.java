@@ -53,7 +53,7 @@ public abstract class MulticastStream {
 			}
 		}
 	};
-	protected boolean jobInterrupted;
+	protected boolean jobInterrupted = true;
 	
 	protected abstract void init();
 	protected abstract void work();
@@ -154,5 +154,8 @@ public abstract class MulticastStream {
 	public void setPacketSize(int packetSize) {
 		this.packetSize = packetSize;
 	}
+        public boolean isActive() {
+            return !this.jobInterrupted;
+        }
 
 }
