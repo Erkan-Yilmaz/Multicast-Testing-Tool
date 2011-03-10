@@ -160,6 +160,8 @@ public class EditReceiverDialog extends javax.swing.JDialog {
         if(this.ActivateBox.isSelected()){
             this.receiver.activate();
         }
+
+        this.dispose();
     }//GEN-LAST:event_OKButtonActionPerformed
 
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed

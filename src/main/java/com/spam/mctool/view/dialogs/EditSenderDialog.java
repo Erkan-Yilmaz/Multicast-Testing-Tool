@@ -13,6 +13,7 @@ package com.spam.mctool.view.dialogs;
 
 import com.spam.mctool.model.Sender;
 import java.net.UnknownHostException;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -184,19 +185,28 @@ public class EditSenderDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
-       /* if(this.sender == null){
-            this.sender = new Sender();
-        }*/ //TODO find out why sender does not have constructor anymore......
-            //this.sender.setGroupByString(this.GroupField.getText());
-            this.sender.setPort(Integer.parseInt(this.PortField.getText()));
-            this.sender.setPacketSize(Integer.parseInt(this.PacketSizeField.getText()));
+        Map<String,String> senderMap = null;
+
+        if(this.sender == null){
+            senderMap.put("group", this.GroupField.getText());
+            senderMap.put("port", this.PortField.getText());
+            senderMap.put("pps", this.PacketRateField.getText());
+            senderMap.put("psize", this.PacketSizeField.getText());
+            senderMap.put("ttl", this.TTLField.getText());
+            senderMap.put("payload", this.DataField.getText());
+            senderMap.put("ptype", "spam");
+            //TODO Warum kein network interface in der map? - wie anders übergeben?
+        }
+        else{
             this.sender.setSenderConfiguredPacketRate(Integer.parseInt(this.PacketRateField.getText()));
-            //this.sender.setNetworkInterface(null);
-            //TODO setNetworkInterface
-            this.sender.setData(this.DataField.getText().getBytes());
+            this.sender.setPacketSize(Integer.parseInt(this.PacketSizeField.getText()));
+            //this.sender.setTtl(this.TTLField.getText().getBytes());
+            //TODO TTL byte - warum kein array? o.o
+        }
         if(this.ActivateBox.isSelected()){
             this.sender.activate();
         }
+        this.dispose();
 }//GEN-LAST:event_OKButtonActionPerformed
 
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
