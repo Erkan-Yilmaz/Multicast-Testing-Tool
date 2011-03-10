@@ -153,14 +153,10 @@ public class EditReceiverDialog extends javax.swing.JDialog {
         if(this.receiver == null){
             this.receiver = new Receiver();
         }
-        try {
-            this.receiver.setGroupByString(this.GroupField.getText());
-            this.receiver.setPort(Integer.parseInt(this.PortField.getText()));
-            //TODO Packet style + networkinterface
-            //this.receiver.setNetworkInterface(null);
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(EditReceiverDialog.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        //this.receiver.setGroupByString(this.GroupField.getText());
+        this.receiver.setPort(Integer.parseInt(this.PortField.getText()));
+        //TODO Packet style + networkinterface
+        //this.receiver.setNetworkInterface(null);
         if(this.ActivateBox.isSelected()){
             this.receiver.activate();
         }

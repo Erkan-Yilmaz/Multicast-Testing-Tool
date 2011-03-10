@@ -184,20 +184,16 @@ public class EditSenderDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
-        if(this.sender == null){
+       /* if(this.sender == null){
             this.sender = new Sender();
-        }
-        try {
-            this.sender.setGroupByString(this.GroupField.getText());
+        }*/ //TODO find out why sender does not have constructor anymore......
+            //this.sender.setGroupByString(this.GroupField.getText());
             this.sender.setPort(Integer.parseInt(this.PortField.getText()));
             this.sender.setPacketSize(Integer.parseInt(this.PacketSizeField.getText()));
             this.sender.setSenderConfiguredPacketRate(Integer.parseInt(this.PacketRateField.getText()));
             //this.sender.setNetworkInterface(null);
             //TODO setNetworkInterface
             this.sender.setData(this.DataField.getText().getBytes());
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(EditSenderDialog.class.getName()).log(Level.SEVERE, null, ex);
-        }
         if(this.ActivateBox.isSelected()){
             this.sender.activate();
         }
