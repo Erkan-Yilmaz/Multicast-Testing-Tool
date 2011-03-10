@@ -12,6 +12,9 @@
 package com.spam.mctool.view.dialogs;
 
 import com.spam.mctool.model.Sender;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,7 +23,7 @@ import com.spam.mctool.model.Sender;
 public class EditSenderDialog extends javax.swing.JDialog {
 
     private static final long serialVersionUID = 1L;
-    private Sender sender;
+    private Sender sender = null;
 
 	/** Creates new form EditSenderDialog */
     public EditSenderDialog(java.awt.Frame parent, boolean modal) {
@@ -63,6 +66,7 @@ public class EditSenderDialog extends javax.swing.JDialog {
 
         InterfaceCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        OKButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/check.png"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/spam/mctool/view/dialogs/Bundle"); // NOI18N
         OKButton.setText(bundle.getString("EditSenderDialog.OKButton.text")); // NOI18N
         OKButton.addActionListener(new java.awt.event.ActionListener() {
@@ -72,13 +76,14 @@ public class EditSenderDialog extends javax.swing.JDialog {
         });
 
         PortField.setText(bundle.getString("EditSenderDialog.PortField.text")); // NOI18N
-        PortField.addActionListener(new java.awt.event.ActionListener() {
+
+        CancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/delete.png"))); // NOI18N
+        CancelButton.setText(bundle.getString("EditSenderDialog.CancelButton.text")); // NOI18N
+        CancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PortFieldActionPerformed(evt);
+                CancelButtonActionPerformed(evt);
             }
         });
-
-        CancelButton.setText(bundle.getString("EditSenderDialog.CancelButton.text")); // NOI18N
 
         InterfaceLabel.setText(bundle.getString("EditSenderDialog.InterfaceLabel.text")); // NOI18N
 
@@ -89,11 +94,6 @@ public class EditSenderDialog extends javax.swing.JDialog {
         GroupField.setText(bundle.getString("EditSenderDialog.GroupField.text")); // NOI18N
 
         ActivateBox.setText(bundle.getString("EditSenderDialog.ActivateBox.text")); // NOI18N
-        ActivateBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ActivateBoxActionPerformed(evt);
-            }
-        });
 
         DataLabel.setText(bundle.getString("EditSenderDialog.DataLabel.text")); // NOI18N
 
@@ -102,11 +102,6 @@ public class EditSenderDialog extends javax.swing.JDialog {
         PacketRateLabel.setText(bundle.getString("EditSenderDialog.PacketRateLabel.text")); // NOI18N
 
         PacketRateField.setText(bundle.getString("EditSenderDialog.PacketRateField.text")); // NOI18N
-        PacketRateField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PacketRateFieldActionPerformed(evt);
-            }
-        });
 
         PacketSizeLabel.setText(bundle.getString("EditSenderDialog.PacketSizeLabel.text")); // NOI18N
 
@@ -189,20 +184,28 @@ public class EditSenderDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
-        // TODO add your handling code here:
+        if(this.sender == null){
+            this.sender = new Sender();
+        }
+        try {
+            this.sender.setGroupByString(this.GroupField.getText());
+            this.sender.setPort(Integer.parseInt(this.PortField.getText()));
+            this.sender.setPacketSize(Integer.parseInt(this.PacketSizeField.getText()));
+            this.sender.setSenderConfiguredPacketRate(Integer.parseInt(this.PacketRateField.getText()));
+            //this.sender.setNetworkInterface(null);
+            //TODO setNetworkInterface
+            this.sender.setData(this.DataField.getText().getBytes());
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(EditSenderDialog.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(this.ActivateBox.isSelected()){
+            this.sender.activate();
+        }
 }//GEN-LAST:event_OKButtonActionPerformed
 
-    private void ActivateBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActivateBoxActionPerformed
-        // TODO add your handling code here:
-}//GEN-LAST:event_ActivateBoxActionPerformed
-
-    private void PortFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PortFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_PortFieldActionPerformed
-
-    private void PacketRateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PacketRateFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_PacketRateFieldActionPerformed
+    private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_CancelButtonActionPerformed
 
     /**
     * @param args the command line arguments

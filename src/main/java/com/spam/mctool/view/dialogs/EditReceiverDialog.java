@@ -12,6 +12,9 @@
 package com.spam.mctool.view.dialogs;
 
 import com.spam.mctool.model.Receiver;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,7 +23,7 @@ import com.spam.mctool.model.Receiver;
 public class EditReceiverDialog extends javax.swing.JDialog {
 
     private static final long serialVersionUID = 1L;
-    private Receiver receiver;
+    private Receiver receiver = null;
     private int test;
 
 	/** Creates new form EditReceiverDialog */
@@ -71,12 +74,8 @@ public class EditReceiverDialog extends javax.swing.JDialog {
         InterfaceCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         ActivateBox.setText(bundle.getString("EditReceiverDialog.ActivateBox.text")); // NOI18N
-        ActivateBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ActivateBoxActionPerformed(evt);
-            }
-        });
 
+        OKButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/check.png"))); // NOI18N
         OKButton.setText(bundle.getString("EditReceiverDialog.OKButton.text")); // NOI18N
         OKButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,7 +83,13 @@ public class EditReceiverDialog extends javax.swing.JDialog {
             }
         });
 
+        CancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/delete.png"))); // NOI18N
         CancelButton.setText(bundle.getString("EditReceiverDialog.CancelButton.text")); // NOI18N
+        CancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CancelButtonActionPerformed(evt);
+            }
+        });
 
         PacketStyleLabel.setText(bundle.getString("EditReceiverDialog.PacketStyleLabel.text")); // NOI18N
 
@@ -144,13 +149,26 @@ public class EditReceiverDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ActivateBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActivateBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ActivateBoxActionPerformed
-
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
-        // TODO add your handling code here:
+        if(this.receiver == null){
+            this.receiver = new Receiver();
+        }
+        try {
+            this.receiver.setGroupByString(this.GroupField.getText());
+            this.receiver.setPort(Integer.parseInt(this.PortField.getText()));
+            //TODO Packet style + networkinterface
+            //this.receiver.setNetworkInterface(null);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(EditReceiverDialog.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(this.ActivateBox.isSelected()){
+            this.receiver.activate();
+        }
     }//GEN-LAST:event_OKButtonActionPerformed
+
+    private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_CancelButtonActionPerformed
 
     /**
     * @param args the command line arguments
