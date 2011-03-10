@@ -31,11 +31,6 @@ public abstract class MulticastStream implements Runnable {
 	
 	protected long sentPacketCount = 0;
 	
-	protected int statsInterval = 10;
-	protected int statsGap = 2;
-	protected long statsCounter = 0;
-	protected double statsDistortionLimit = 0.3;
-	
 	protected NetworkInterface networkInterface;
 	
 	protected MulticastSocket socket;
@@ -43,7 +38,7 @@ public abstract class MulticastStream implements Runnable {
 	protected volatile boolean jobInterrupted;
 	
 	protected ScheduledThreadPoolExecutor stpe;
-	protected ScheduledFuture sf;
+	protected ScheduledFuture sf, asf;
 	
 	/**
 	 * activates the multicast stream

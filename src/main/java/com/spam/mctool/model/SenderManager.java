@@ -10,6 +10,7 @@ public interface SenderManager {
 	/**
 	 * Create a new sender.
 	 * Param Description:
+	 * ninf - ip address of network interface to use for the socket
 	 * group - ip address for multicast group to send to
 	 * port - port for mulicast socket
 	 * pps - packets per second to send

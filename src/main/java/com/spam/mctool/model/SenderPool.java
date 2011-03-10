@@ -1,6 +1,7 @@
 package com.spam.mctool.model;
 
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -21,7 +22,9 @@ public class SenderPool implements SenderManager {
 	
 	public SenderPool() {
 		this.saorl = new LinkedList<SenderAddedOrRemovedListener>();
-		this.stfe = new ScheduledThreadPoolExecutor(20);
+		this.stfe = new ScheduledThreadPoolExecutor(30);
+		this.statsInterval = 1000;
+		this.statsTestamount = 0.5;
 	}
 
 	public Sender create(Map<String, String> params) throws IllegalArgumentException {
@@ -33,9 +36,11 @@ public class SenderPool implements SenderManager {
 		int psize;
 		byte[] payload;
 		Sender.PacketType ptype;
+		NetworkInterface ninf;
 		
 		try {
 			group = InetAddress.getByName(params.get("group"));
+			ninf = NetworkInterface.getByInetAddress(InetAddress.getByName(params.get("ninf")));
 			port = new Integer(params.get("port"));
 			ttl = new Byte(params.get("ttl"));
 			if(ttl<=0 || ttl>255) throw new Exception();
@@ -54,7 +59,7 @@ public class SenderPool implements SenderManager {
 			throw new IllegalArgumentException();
 		}
 		
-		sender = new Sender(this.stfe);
+		sender = new Sender(this.stfe, this.statsInterval, this.statsTestamount);
 		sender.setGroup(group);
 		sender.setPort(port);
 		sender.setTtl(ttl);
@@ -62,6 +67,7 @@ public class SenderPool implements SenderManager {
 		sender.setPacketSize(psize);
 		sender.setData(payload);
 		sender.setpType(ptype);
+		sender.setNetworkInterface(ninf);
 		
 		this.senders.add(sender);
 		this.fireSenderAddedEvent(sender);
@@ -121,23 +127,22 @@ public class SenderPool implements SenderManager {
 	public void setStatsInterval(int statsInterval) {
 		this.statsInterval = statsInterval;
 	}
-
+	
 	public static void main(String... args) {
 		SenderManager sm = new SenderPool();
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("group", "224.0.0.1");
 		params.put("port", "1234");
 		params.put("ttl", "127");
-		params.put("pps", "1");
+		params.put("ninf", "127.0.0.1");
+		params.put("pps", "1000");
 		params.put("psize", "300");
 		params.put("payload", "Hallo Welt");
 		params.put("ptype", "spam");
-		Sender s = sm.create(params);
-		params.put("payload", "Welt");
-		params.put("pps", "2");
-		Sender s2 = sm.create(params);
-		s.activate();
-		try { Thread.sleep(10*1000); } catch(Exception e) {}
+		for(int i=0; i<30; i++) {
+			sm.create(params).activate();
+		}
+		try { Thread.sleep(5*1000); } catch(Exception e) {}
 		sm.killAll();
 	}
 
