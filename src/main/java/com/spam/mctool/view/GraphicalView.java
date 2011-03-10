@@ -20,6 +20,8 @@ import com.spam.mctool.model.ReceiverDataChangeListener;
 import com.spam.mctool.model.Sender;
 import com.spam.mctool.model.SenderAddedOrRemovedListener;
 import com.spam.mctool.model.SenderDataChangeListener;
+import com.spam.mctool.model.SenderStatistics;
+
 import java.util.Set;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
@@ -90,10 +92,16 @@ public class GraphicalView implements MctoolView,
                         s.getPort(),
                         s.getGroup(),
                         s.getSenderConfiguredPacketRate(),
+                        /*
                         s.getMeasuredPacketRate(),
                         s.getAvgPacketRate(),
                         s.getMinPacketRate(),
                         s.getMaxPacketRate()
+                        */
+                        0,
+                        0,
+                        0,
+                        0
                     }
                 );
             } else {
@@ -138,6 +146,7 @@ public class GraphicalView implements MctoolView,
         // TODO nobody calls this method so far
 	public void dataChanged(SenderDataChangedEvent e) {
             Sender s = e.getSource();
+            SenderStatistics stats = e.getStatistics();
             int senderRow = getSenderRow(s);
             if(senderRow > -1) {
                 senderTable.setValueAt(s, senderRow, 0);
@@ -146,9 +155,14 @@ public class GraphicalView implements MctoolView,
                 senderTable.setValueAt(s.getGroup(), senderRow, 0);
                 senderTable.setValueAt(s.getSenderConfiguredPacketRate(), senderRow, 0);
                 senderTable.setValueAt(s.getMeasuredPacketRate(), senderRow, 0);
+                /*
                 senderTable.setValueAt(s.getAvgPacketRate(), senderRow, 0);
                 senderTable.setValueAt(s.getMinPacketRate(), senderRow, 0);
                 senderTable.setValueAt(s.getMaxPacketRate(), senderRow, 0);
+                */
+                senderTable.setValueAt(stats.getAvgPPS(), senderRow, 0);
+                senderTable.setValueAt(stats.getMinPPS(), senderRow, 0);
+                senderTable.setValueAt(stats.getMaxPPS(), senderRow, 0);
             }
 
 	}
@@ -233,12 +247,13 @@ public class GraphicalView implements MctoolView,
     }
 
     private void loadTableTestData() {
-        Sender s;
-        for(int i=0; i<20; i++) {
-            s = new Sender();
-            s.setPort(100 + i);
-            this.senderAdded(new SenderAddedOrRemovedEvent(s));
-        }
+    	// Bitte SenderManager nutzen
+        //Sender s;
+        //for(int i=0; i<20; i++) {
+        //    s = new Sender();
+        //    s.setPort(100 + i);
+        //    this.senderAdded(new SenderAddedOrRemovedEvent(s));
+        //}
     }
 
 }

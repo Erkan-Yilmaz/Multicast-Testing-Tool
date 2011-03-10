@@ -68,7 +68,7 @@ public class StatusRenderer extends javax.swing.JPanel implements TableCellRende
         if(value instanceof MulticastStream) {
             MulticastStream s = (MulticastStream)value;
             jLabel1.setText("");
-            if(s.isActive()) {
+            if(s.getState() == MulticastStream.State.ACTIVE) {
                 jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/play_green.png")));
                 if(s.getMeasuredPacketRate() == 0) {
                 //if(row % 2 == 0) {
