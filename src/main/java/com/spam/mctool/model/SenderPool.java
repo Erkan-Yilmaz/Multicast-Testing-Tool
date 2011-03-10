@@ -23,8 +23,8 @@ public class SenderPool implements SenderManager {
 	public SenderPool() {
 		this.saorl = new LinkedList<SenderAddedOrRemovedListener>();
 		this.stfe = new ScheduledThreadPoolExecutor(30);
-		this.statsInterval = 1000;
-		this.statsTestamount = 0.5;
+		this.statsInterval = 500;
+		this.statsTestamount = 0.3;
 	}
 
 	public Sender create(Map<String, String> params) throws IllegalArgumentException {
@@ -139,10 +139,10 @@ public class SenderPool implements SenderManager {
 		params.put("psize", "300");
 		params.put("payload", "Hallo Welt");
 		params.put("ptype", "spam");
-		for(int i=0; i<30; i++) {
+		for(int i=0; i<15; i++) {
 			sm.create(params).activate();
 		}
-		try { Thread.sleep(5*1000); } catch(Exception e) {}
+		try { Thread.sleep(30*1000); } catch(Exception e) {}
 		sm.killAll();
 	}
 

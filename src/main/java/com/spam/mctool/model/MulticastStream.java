@@ -19,6 +19,20 @@ public abstract class MulticastStream implements Runnable {
 	protected State state = State.INACTIVE;
 	protected InetAddress group;
 	
+	public static enum AnalyzingBehaviour {
+		LAZY(4), DEFAULT(2), EAGER(1);
+		private int div;
+	
+		AnalyzingBehaviour(int div) {
+			this.div = div;
+		}
+	
+		public int getDiv() {
+			return div;
+		}
+	}
+	protected AnalyzingBehaviour analyzingBehaviour;
+	
 	protected int port;
 	
 	protected int measuredPacketRate;

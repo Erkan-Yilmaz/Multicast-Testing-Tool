@@ -74,6 +74,7 @@ public class Sender extends MulticastStream {
 		this.sentTimes = new LinkedBlockingQueue<Short>();
 		this.senderId = (long) (Long.MAX_VALUE*Math.random());
 		this.analyzer = new AnalyzeSender();
+		this.analyzingBehaviour = AnalyzingBehaviour.LAZY;
 		this.statsInterval = statsInterval;
 		this.statsTestamount = statsTestamount;
 	}
@@ -140,32 +141,40 @@ public class Sender extends MulticastStream {
 	private class AnalyzeSender implements Runnable {
 		
 		private List<Short> data = new LinkedList<Short>();
+		private long counter = 0;
 
 		public void run() {
-			if(sentTimes.size()*statsTestamount>2) { 
+			if(sentTimes.size()*statsTestamount>2) {
 				data.clear();
 				sentTimes.drainTo(data);
-				data.remove(0);
-				int amount = (int) (data.size()*statsTestamount);
-				int step = data.size()/amount;
-				int pos = 0;
-				int valcnt = 0;
-				double avg = 0;
-				while(pos+step < data.size()) {
-					avg += data.get(pos);
-					valcnt++;
-					pos += step;
+				if(counter==0) {
+					data.remove(0);
 				}
-				avg /= valcnt; 
-				avg = 1.0E3 / avg;
-				avgPPS = Math.round(avg);
-				if(avgPPS < minPPS) {
-					minPPS = avgPPS;
+				counter++;
+				if(counter%analyzingBehaviour.getDiv() == 0) {
+					int amount = (int) (data.size()*statsTestamount);
+					int step = data.size()/amount;
+					int pos = 0;
+					int valcnt = 0;
+					double avg = 0;
+					while(pos+step < data.size()) {
+						avg += data.get(pos);
+						valcnt++;
+						pos += step;
+					}
+					avg /= valcnt; 
+					avg = 1.0E3 / avg;
+					avgPPS = Math.round(avg);
+					if(avgPPS < minPPS) {
+						minPPS = avgPPS;
+					}
+					if(avgPPS > maxPPS) {
+						maxPPS = avgPPS;
+					}
+					fireSenderDataChangedEvent();
+				} else {
+					data.clear();
 				}
-				if(avgPPS > maxPPS) {
-					maxPPS = avgPPS;
-				}
-				fireSenderDataChangedEvent();
 			}
 		}
 		
