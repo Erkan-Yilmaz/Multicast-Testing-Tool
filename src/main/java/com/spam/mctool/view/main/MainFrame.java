@@ -6,6 +6,9 @@
 
 package com.spam.mctool.view.main;
 
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /**
  *
  * @author Tobias Stöckel (Tobias.Stoeckel@de.ibm.com)
@@ -17,7 +20,6 @@ public class MainFrame extends javax.swing.JFrame {
     /** Creates new form MainFrame */
     public MainFrame() {
         initComponents();
-        this.jTable1.getColumn("Status").setCellRenderer(new StatusRenderer());
     }
 
     /** This method is called from within the constructor to
@@ -29,28 +31,27 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         statusRenderer1 = new com.spam.mctool.view.main.StatusRenderer();
-        actionRenderer1 = new com.spam.mctool.view.main.ActionRenderer();
+        twoColorRenderer1 = new com.spam.mctool.view.main.TwoColorRenderer();
         jSplitPane3 = new javax.swing.JSplitPane();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         jSeparator11 = new javax.swing.JSeparator();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        senderTable = new javax.swing.JTable();
         jPanel9 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -71,11 +72,12 @@ public class MainFrame extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        receiverTable = new javax.swing.JTable();
         jPanel10 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -131,13 +133,13 @@ public class MainFrame extends javax.swing.JFrame {
         setTitle(bundle.getString("MainFrame.title")); // NOI18N
 
         jSplitPane3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jSplitPane3.setDividerLocation(252);
+        jSplitPane3.setDividerLocation(267);
         jSplitPane3.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         jSplitPane3.setResizeWeight(0.5);
         jSplitPane3.setOneTouchExpandable(true);
 
         jSplitPane1.setBorder(null);
-        jSplitPane1.setDividerLocation(500);
+        jSplitPane1.setDividerLocation(590);
         jSplitPane1.setResizeWeight(1.0);
         jSplitPane1.setOneTouchExpandable(true);
 
@@ -148,13 +150,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel8.setText(bundle1.getString("MainFrame.jLabel8.text")); // NOI18N
 
-        jLabel9.setText(bundle1.getString("MainFrame.jLabel9.text")); // NOI18N
-
         jLabel14.setText(bundle1.getString("MainFrame.jLabel14.text")); // NOI18N
 
         jLabel15.setText(bundle1.getString("MainFrame.jLabel15.text")); // NOI18N
-
-        jLabel16.setText(bundle1.getString("MainFrame.jLabel16.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -163,20 +161,16 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator11, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                    .addComponent(jSeparator11, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
                     .addComponent(jLabel1)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                         .addComponent(jLabel14))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                        .addComponent(jLabel15))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
-                        .addComponent(jLabel16)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                        .addComponent(jLabel15)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -194,11 +188,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jLabel15))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel16))
-                .addContainerGap(149, Short.MAX_VALUE))
+                .addContainerGap(184, Short.MAX_VALUE))
         );
 
         jSplitPane1.setRightComponent(jPanel4);
@@ -224,6 +214,15 @@ public class MainFrame extends javax.swing.JFrame {
         jButton3.setText(bundle1.getString("MainFrame.jButton3.text")); // NOI18N
         jPanel3.add(jButton3);
 
+        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/preview.png"))); // NOI18N
+        jButton11.setText(bundle1.getString("MainFrame.jButton11.text")); // NOI18N
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton11);
+
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/edit.png"))); // NOI18N
         jButton4.setText(bundle1.getString("MainFrame.jButton4.text")); // NOI18N
         jPanel3.add(jButton4);
@@ -236,46 +235,53 @@ public class MainFrame extends javax.swing.JFrame {
 
         jPanel5.setLayout(new java.awt.BorderLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        senderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Status", "Sender ID", "Group", "Conf. Rate", "Actions"
+                "Status", "Sender ID", "Port", "Group", "Conf. Rate", "Measured Rate", "Avg. Rate", "Min Rate", "Max Rate"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Double.class, java.lang.Object.class
-            };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, true, true, true, true, true, true, true, true
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setRowHeight(20);
-        jScrollPane2.setViewportView(jTable1);
-        jTable1.getColumnModel().getColumn(0).setResizable(false);
-        jTable1.getColumnModel().getColumn(0).setPreferredWidth(30);
-        jTable1.getColumnModel().getColumn(0).setHeaderValue(bundle1.getString("MainFrame.jTable1.columnModel.title0_1")); // NOI18N
-        jTable1.getColumnModel().getColumn(0).setCellRenderer(statusRenderer1);
-        jTable1.getColumnModel().getColumn(1).setHeaderValue(bundle1.getString("MainFrame.jTable1.columnModel.title1_1")); // NOI18N
-        jTable1.getColumnModel().getColumn(2).setHeaderValue(bundle1.getString("MainFrame.jTable1.columnModel.title2_1")); // NOI18N
-        jTable1.getColumnModel().getColumn(3).setHeaderValue(bundle1.getString("MainFrame.jTable1.columnModel.title3_1")); // NOI18N
-        jTable1.getColumnModel().getColumn(4).setResizable(false);
-        jTable1.getColumnModel().getColumn(4).setPreferredWidth(60);
-        jTable1.getColumnModel().getColumn(4).setHeaderValue(bundle1.getString("MainFrame.jTable1.columnModel.title4")); // NOI18N
-        jTable1.getColumnModel().getColumn(4).setCellRenderer(actionRenderer1);
+        senderTable.setGridColor(javax.swing.UIManager.getDefaults().getColor("control"));
+        senderTable.setShowHorizontalLines(false);
+        jScrollPane2.setViewportView(senderTable);
+        senderTable.getColumnModel().getColumn(0).setResizable(false);
+        senderTable.getColumnModel().getColumn(0).setPreferredWidth(37);
+        senderTable.getColumnModel().getColumn(0).setHeaderValue(bundle1.getString("MainFrame.senderTable.columnModel.title0_1")); // NOI18N
+        senderTable.getColumnModel().getColumn(0).setCellRenderer(statusRenderer1);
+        senderTable.getColumnModel().getColumn(1).setPreferredWidth(60);
+        senderTable.getColumnModel().getColumn(1).setHeaderValue(bundle1.getString("MainFrame.senderTable.columnModel.title1_1")); // NOI18N
+        senderTable.getColumnModel().getColumn(1).setCellRenderer(twoColorRenderer1);
+        senderTable.getColumnModel().getColumn(2).setPreferredWidth(45);
+        senderTable.getColumnModel().getColumn(2).setHeaderValue(bundle1.getString("MainFrame.jTable1.columnModel.title4")); // NOI18N
+        senderTable.getColumnModel().getColumn(2).setCellRenderer(twoColorRenderer1);
+        senderTable.getColumnModel().getColumn(3).setPreferredWidth(95);
+        senderTable.getColumnModel().getColumn(3).setHeaderValue(bundle1.getString("MainFrame.jTable1.columnModel.title2_1")); // NOI18N
+        senderTable.getColumnModel().getColumn(3).setCellRenderer(twoColorRenderer1);
+        senderTable.getColumnModel().getColumn(4).setPreferredWidth(65);
+        senderTable.getColumnModel().getColumn(4).setHeaderValue(bundle1.getString("MainFrame.jTable1.columnModel.title3_1")); // NOI18N
+        senderTable.getColumnModel().getColumn(4).setCellRenderer(twoColorRenderer1);
+        senderTable.getColumnModel().getColumn(5).setPreferredWidth(85);
+        senderTable.getColumnModel().getColumn(5).setHeaderValue(bundle1.getString("MainFrame.senderTable.columnModel.title5")); // NOI18N
+        senderTable.getColumnModel().getColumn(5).setCellRenderer(twoColorRenderer1);
+        senderTable.getColumnModel().getColumn(6).setPreferredWidth(60);
+        senderTable.getColumnModel().getColumn(6).setHeaderValue(bundle1.getString("MainFrame.senderTable.columnModel.title6_1")); // NOI18N
+        senderTable.getColumnModel().getColumn(6).setCellRenderer(twoColorRenderer1);
+        senderTable.getColumnModel().getColumn(7).setPreferredWidth(60);
+        senderTable.getColumnModel().getColumn(7).setHeaderValue(bundle1.getString("MainFrame.jTable1.columnModel.title8")); // NOI18N
+        senderTable.getColumnModel().getColumn(7).setCellRenderer(twoColorRenderer1);
+        senderTable.getColumnModel().getColumn(8).setPreferredWidth(60);
+        senderTable.getColumnModel().getColumn(8).setHeaderValue(bundle1.getString("MainFrame.jTable1.columnModel.title7")); // NOI18N
+        senderTable.getColumnModel().getColumn(8).setCellRenderer(twoColorRenderer1);
 
         jPanel5.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
@@ -297,7 +303,7 @@ public class MainFrame extends javax.swing.JFrame {
         jSplitPane3.setTopComponent(jSplitPane1);
 
         jSplitPane2.setBorder(null);
-        jSplitPane2.setDividerLocation(500);
+        jSplitPane2.setDividerLocation(590);
         jSplitPane2.setResizeWeight(1.0);
         jSplitPane2.setOneTouchExpandable(true);
 
@@ -327,22 +333,22 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jSeparator12, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                    .addComponent(jSeparator12, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                         .addComponent(jLabel17))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                         .addComponent(jLabel18))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                         .addComponent(jLabel19))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                         .addComponent(jLabel20)))
                 .addContainerGap())
         );
@@ -369,7 +375,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(jLabel20))
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(143, Short.MAX_VALUE))
         );
 
         jSplitPane2.setRightComponent(jPanel6);
@@ -390,6 +396,10 @@ public class MainFrame extends javax.swing.JFrame {
         jButton8.setText(bundle1.getString("MainFrame.jButton8.text")); // NOI18N
         jPanel7.add(jButton8);
 
+        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/preview.png"))); // NOI18N
+        jButton12.setText(bundle1.getString("MainFrame.jButton12.text")); // NOI18N
+        jPanel7.add(jButton12);
+
         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/edit.png"))); // NOI18N
         jButton9.setText(bundle1.getString("MainFrame.jButton9.text")); // NOI18N
         jPanel7.add(jButton9);
@@ -402,33 +412,25 @@ public class MainFrame extends javax.swing.JFrame {
 
         jPanel8.setLayout(new java.awt.BorderLayout());
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        receiverTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Status", "Group", "Port", "Sender ID", "Packet Rate", "Actions"
+                "Status", "Group", "Sender ID", "Conf. Rate", "Measured Rate", "Lost Packets", "Faulty Packets", "Avg. Rate"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, true, true, true, true, true, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -439,19 +441,33 @@ public class MainFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable2.setRowHeight(20);
-        jScrollPane1.setViewportView(jTable2);
-        jTable2.getColumnModel().getColumn(0).setResizable(false);
-        jTable2.getColumnModel().getColumn(0).setPreferredWidth(30);
-        jTable2.getColumnModel().getColumn(0).setHeaderValue(bundle1.getString("MainFrame.jTable2.columnModel.title0_1")); // NOI18N
-        jTable2.getColumnModel().getColumn(0).setCellRenderer(statusRenderer1);
-        jTable2.getColumnModel().getColumn(1).setHeaderValue(bundle1.getString("MainFrame.jTable2.columnModel.title1_1")); // NOI18N
-        jTable2.getColumnModel().getColumn(2).setHeaderValue(bundle1.getString("MainFrame.jTable2.columnModel.title2_1")); // NOI18N
-        jTable2.getColumnModel().getColumn(3).setHeaderValue(bundle1.getString("MainFrame.jTable2.columnModel.title3_1")); // NOI18N
-        jTable2.getColumnModel().getColumn(4).setHeaderValue(bundle1.getString("MainFrame.jTable2.columnModel.title4")); // NOI18N
-        jTable2.getColumnModel().getColumn(5).setResizable(false);
-        jTable2.getColumnModel().getColumn(5).setHeaderValue(bundle1.getString("MainFrame.jTable2.columnModel.title5")); // NOI18N
-        jTable2.getColumnModel().getColumn(5).setCellRenderer(actionRenderer1);
+        receiverTable.setGridColor(javax.swing.UIManager.getDefaults().getColor("control"));
+        receiverTable.setShowHorizontalLines(false);
+        jScrollPane1.setViewportView(receiverTable);
+        receiverTable.getColumnModel().getColumn(0).setResizable(false);
+        receiverTable.getColumnModel().getColumn(0).setPreferredWidth(37);
+        receiverTable.getColumnModel().getColumn(0).setHeaderValue(bundle1.getString("MainFrame.receiverTable.columnModel.title0_1")); // NOI18N
+        receiverTable.getColumnModel().getColumn(0).setCellRenderer(statusRenderer1);
+        receiverTable.getColumnModel().getColumn(1).setPreferredWidth(95);
+        receiverTable.getColumnModel().getColumn(1).setHeaderValue(bundle1.getString("MainFrame.receiverTable.columnModel.title1_1")); // NOI18N
+        receiverTable.getColumnModel().getColumn(1).setCellRenderer(twoColorRenderer1);
+        receiverTable.getColumnModel().getColumn(2).setPreferredWidth(60);
+        receiverTable.getColumnModel().getColumn(2).setHeaderValue(bundle1.getString("MainFrame.jTable2.columnModel.title3_1")); // NOI18N
+        receiverTable.getColumnModel().getColumn(2).setCellRenderer(twoColorRenderer1);
+        receiverTable.getColumnModel().getColumn(3).setPreferredWidth(65);
+        receiverTable.getColumnModel().getColumn(3).setHeaderValue(bundle1.getString("MainFrame.jTable2.columnModel.title6")); // NOI18N
+        receiverTable.getColumnModel().getColumn(3).setCellRenderer(twoColorRenderer1);
+        receiverTable.getColumnModel().getColumn(4).setPreferredWidth(85);
+        receiverTable.getColumnModel().getColumn(4).setHeaderValue(bundle1.getString("MainFrame.receiverTable.columnModel.title4")); // NOI18N
+        receiverTable.getColumnModel().getColumn(4).setCellRenderer(twoColorRenderer1);
+        receiverTable.getColumnModel().getColumn(5).setPreferredWidth(70);
+        receiverTable.getColumnModel().getColumn(5).setHeaderValue(bundle1.getString("MainFrame.receiverTable.columnModel.title5")); // NOI18N
+        receiverTable.getColumnModel().getColumn(5).setCellRenderer(twoColorRenderer1);
+        receiverTable.getColumnModel().getColumn(6).setPreferredWidth(80);
+        receiverTable.getColumnModel().getColumn(6).setHeaderValue(bundle1.getString("MainFrame.jTable2.columnModel.title7")); // NOI18N
+        receiverTable.getColumnModel().getColumn(6).setCellRenderer(twoColorRenderer1);
+        receiverTable.getColumnModel().getColumn(7).setHeaderValue(bundle1.getString("MainFrame.jTable2.columnModel.title2_1")); // NOI18N
+        receiverTable.getColumnModel().getColumn(7).setCellRenderer(twoColorRenderer1);
 
         jPanel8.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -603,14 +619,14 @@ public class MainFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jSplitPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 682, Short.MAX_VALUE)
+                .addComponent(jSplitPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 753, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jSplitPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 473, Short.MAX_VALUE)
+                .addComponent(jSplitPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -620,6 +636,10 @@ public class MainFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton11ActionPerformed
 
     /**
     * @param args the command line arguments
@@ -633,9 +653,10 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.spam.mctool.view.main.ActionRenderer actionRenderer1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -655,7 +676,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -667,7 +687,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -727,9 +746,10 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JSplitPane jSplitPane3;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable receiverTable;
+    private javax.swing.JTable senderTable;
     private com.spam.mctool.view.main.StatusRenderer statusRenderer1;
+    private com.spam.mctool.view.main.TwoColorRenderer twoColorRenderer1;
     // End of variables declaration//GEN-END:variables
 
     public MainFrameState getSessionState() {
@@ -746,6 +766,14 @@ public class MainFrame extends javax.swing.JFrame {
         this.setLocation(state.getXPosition(), state.getYPosition());
         this.setSize(state.getWidth(), state.getHeight());
         this.setExtendedState(state.getWindowState());
+    }
+
+    public DefaultTableModel getReceiverTable() {
+        return (DefaultTableModel)this.receiverTable.getModel();
+    }
+
+    public DefaultTableModel getSenderTable() {
+        return (DefaultTableModel)this.senderTable.getModel();
     }
 
     

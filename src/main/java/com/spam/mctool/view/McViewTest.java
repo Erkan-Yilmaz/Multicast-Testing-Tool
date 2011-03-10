@@ -5,6 +5,7 @@
 
 package com.spam.mctool.view;
 
+import com.spam.mctool.intermediates.SenderAddedOrRemovedEvent;
 import com.spam.mctool.model.Sender;
 import com.spam.mctool.view.main.MainFrame;
 import javax.swing.UIManager;
@@ -21,7 +22,7 @@ public class McViewTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        MctoolView view = new GraphicalView();
+        GraphicalView view = new GraphicalView();
         view.init(null);
     }
 

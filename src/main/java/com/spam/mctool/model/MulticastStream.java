@@ -5,14 +5,18 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.NetworkInterface;
 import java.net.UnknownHostException;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 /**
  * Super class of sending and receiving multicast streams
  * @author Jeffrey Jedele
  *
  */
-public abstract class MulticastStream {
+public abstract class MulticastStream implements Runnable {
 	
+	public static enum State { ACTIVE, INACTIVE }
+	protected State state = State.INACTIVE;
 	protected InetAddress group;
 	
 	protected int port;
@@ -35,67 +39,21 @@ public abstract class MulticastStream {
 	protected NetworkInterface networkInterface;
 	
 	protected MulticastSocket socket;
+
+	protected volatile boolean jobInterrupted;
 	
-	protected Thread workThread;
-	protected Runnable workJob = new Runnable() {
-		public void run() {
-			while(!jobInterrupted) {
-				work();
-			}
-		}
-	};
-	
-	protected Thread analyzeThread;
-	protected Runnable analyzeJob = new Runnable() {
-		public void run() {
-			while(!jobInterrupted) {
-				analyze();
-			}
-		}
-	};
-	protected boolean jobInterrupted;
-	
-	protected abstract void init();
-	protected abstract void work();
-	protected abstract void analyze();
-	protected abstract void exit();
+	protected ScheduledThreadPoolExecutor stpe;
+	protected ScheduledFuture sf;
 	
 	/**
 	 * activates the multicast stream
 	 */
-	public void activate() {
-		init();
-		if(group == null || port == 0 || networkInterface == null) {
-			throw new IllegalStateException();
-		} else {
-			try {
-				socket = new MulticastSocket(port);
-				socket.setNetworkInterface(networkInterface);
-				socket.joinGroup(group);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		jobInterrupted = false;
-		workThread = new Thread(workJob);
-		workThread.setName("Worker Thread");
-		workThread.start();
-		analyzeThread = new Thread(analyzeJob);
-		analyzeThread.setName("Analyze Thread");
-		analyzeThread.start();
-	}
+	public abstract void activate();
 	
 	/**
 	 * activates the multicast stream
 	 */
-	public void deactivate() {
-		jobInterrupted  = true;
-		workThread = null;
-		analyzeThread = null;
-		exit();
-	}
+	public abstract void deactivate();
 
 	public InetAddress getGroup() {
 		return group;
@@ -105,10 +63,6 @@ public abstract class MulticastStream {
 		this.group = group;
 	}
 	
-	public void setGroupByString(String group) throws UnknownHostException {
-		this.group = InetAddress.getByName(group);
-	}
-
 	public int getPort() {
 		return port;
 	}
@@ -139,6 +93,10 @@ public abstract class MulticastStream {
 
 	public void setNetworkInterface(NetworkInterface networkInterface) {
 		this.networkInterface = networkInterface;
+	}
+
+	public State getState() {
+		return state;
 	}
 
 	public int getSenderConfiguredPacketRate() {

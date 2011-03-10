@@ -13,13 +13,18 @@ import com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
 import com.spam.mctool.intermediates.SenderAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.SenderDataChangedEvent;
+import com.spam.mctool.model.MulticastStream;
 import com.spam.mctool.model.Receiver;
 import com.spam.mctool.model.ReceiverAddedOrRemovedListener;
 import com.spam.mctool.model.ReceiverDataChangeListener;
 import com.spam.mctool.model.Sender;
 import com.spam.mctool.model.SenderAddedOrRemovedListener;
 import com.spam.mctool.model.SenderDataChangeListener;
+import com.spam.mctool.model.SenderStatistics;
+
+import java.util.Set;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * @author Tobias Schoknecht, Tobias Stöckel
@@ -36,24 +41,83 @@ public class GraphicalView implements MctoolView,
 	// TODO Add Dialogs
 	private StreamManager streamManager;
         private ProfileManager profileManager;
+        /**
+         * Model of the table representing the senders in the view
+         */
+        private DefaultTableModel senderTable;
+        /**
+         * Model of the table representing the receivers in the view
+         */
+        private DefaultTableModel receiverTable;
 
 	public void receiverAdded(ReceiverAddedOrRemovedEvent e) {
-		// TODO Auto-generated method stub
-
+            Receiver r = e.getSource();
+            if(getReceiverRow(r) == -1) {
+                // TODO add real receiver row to table
+                receiverTable.addRow (
+                    new Object[] {
+                        r,
+                        r.getGroup(),
+                        r.getSenderId(),
+                        r.getSenderConfiguredPacketRate(),
+                        r.getMeasuredPacketRate(),
+                        r.getLostPackets(),
+                        r.getFaultyPackets(),
+                        r.getAvgPacketRate()
+                    }
+                );
+            } else {
+                throw new RuntimeException("Receiver " + r + " already added to table!");
+            }
+            r.addReceiverDataChangeListener(this);
 	}
 
 	public void receiverRemoved(ReceiverAddedOrRemovedEvent e) {
-		// TODO Auto-generated method stub
-
+            Receiver r = e.getSource();
+            int receiverRow = getReceiverRow(r);
+            if(receiverRow > -1) {
+                receiverTable.removeRow(receiverRow);
+            } else {
+                throw new RuntimeException("Receiver " + r + " not found in table!");
+            }
 	}
 
 	public void senderAdded(SenderAddedOrRemovedEvent e) {
-		// TODO Auto-generated method stub
-
+            Sender s = e.getSource();
+            if(getSenderRow(s) == -1) {
+                senderTable.addRow (
+                    new Object[] {
+                        s,
+                        s.getSenderId(),
+                        s.getPort(),
+                        s.getGroup(),
+                        s.getSenderConfiguredPacketRate(),
+                        /*
+                        s.getMeasuredPacketRate(),
+                        s.getAvgPacketRate(),
+                        s.getMinPacketRate(),
+                        s.getMaxPacketRate()
+                        */
+                        0,
+                        0,
+                        0,
+                        0
+                    }
+                );
+            } else {
+                throw new RuntimeException("Sender " + s + " already added to table!");
+            }
+            s.addSenderDataChangeListener(this);
 	}
 
 	public void senderRemoved(SenderAddedOrRemovedEvent e) {
-		// TODO Auto-generated method stub
+            Sender s = e.getSource();
+            int senderRow = getSenderRow(s);
+            if(senderRow > -1) {
+                senderTable.removeRow(senderRow);
+            } else {
+                throw new RuntimeException("Sender " + s + " not found in table!");
+            }
 
 	}
 
@@ -64,13 +128,43 @@ public class GraphicalView implements MctoolView,
 
         // TODO nobody calls this method so far
 	public void dataChanged(ReceiverDataChangedEvent e) {
-		// TODO Auto-generated method stub
+            Receiver r = e.getSource();
+            int receiverRow = getReceiverRow(r);
+            if(receiverRow > -1) {
+                receiverTable.setValueAt(r, receiverRow, 0);
+                receiverTable.setValueAt(r.getGroup(), receiverRow, 0);
+                receiverTable.setValueAt(r.getSenderId(), receiverRow, 0);
+                receiverTable.setValueAt(r.getSenderConfiguredPacketRate(), receiverRow, 0);
+                receiverTable.setValueAt(r.getMeasuredPacketRate(), receiverRow, 0);
+                receiverTable.setValueAt(r.getLostPackets(), receiverRow, 0);
+                receiverTable.setValueAt(r.getFaultyPackets(), receiverRow, 0);
+                receiverTable.setValueAt(r.getAvgPacketRate(), receiverRow, 0);
+            }
 
 	}
 
         // TODO nobody calls this method so far
 	public void dataChanged(SenderDataChangedEvent e) {
-		// TODO Auto-generated method stub
+            Sender s = e.getSource();
+            SenderStatistics stats = e.getStatistics();
+            int senderRow = getSenderRow(s);
+            if(senderRow > -1) {
+                senderTable.setValueAt(s, senderRow, 0);
+                senderTable.setValueAt(s.getSenderId(), senderRow, 0);
+                senderTable.setValueAt(s.getPort(), senderRow, 0);
+                senderTable.setValueAt(s.getGroup(), senderRow, 0);
+                senderTable.setValueAt(s.getSenderConfiguredPacketRate(), senderRow, 0);
+                senderTable.setValueAt(s.getMeasuredPacketRate(), senderRow, 0);
+                /*
+                senderTable.setValueAt(s.getAvgPacketRate(), senderRow, 0);
+                senderTable.setValueAt(s.getMinPacketRate(), senderRow, 0);
+                senderTable.setValueAt(s.getMaxPacketRate(), senderRow, 0);
+                */
+                senderTable.setValueAt(stats.getAvgPPS(), senderRow, 0);
+                senderTable.setValueAt(stats.getMinPPS(), senderRow, 0);
+                senderTable.setValueAt(stats.getMaxPPS(), senderRow, 0);
+            }
+
 	}
 
 	/**
@@ -93,7 +187,10 @@ public class GraphicalView implements MctoolView,
                 //attachObservers(); // Doesn't work yet, beacause the Controller
                                      // doesn't instantiate a sender and receiver
                                      // pool yet.
+                senderTable = mainFrame.getSenderTable();
+                receiverTable =  mainFrame.getReceiverTable();
 		mainFrame.setVisible(true);
+                loadTableTestData();
 	}
 
     private void loadState() {
@@ -119,6 +216,44 @@ public class GraphicalView implements MctoolView,
         streamManager.addSenderAddedOrRemovedListener(this);
         streamManager.addReceiverAddedOrRemovedListener(this);
         profileManager.addProfileChangeListener(this);
+        for (Receiver r : streamManager.getReceivers()) {
+            r.addReceiverDataChangeListener(this);
+        }
+        for (Sender s : streamManager.getSenders()) {
+            s.addSenderDataChangeListener(this);
+        }
+    }
+
+    private int getSenderRow(Sender s) {
+        for(int i=0; i < senderTable.getRowCount(); i++) {
+            if(senderTable.getValueAt(i, 0) == s) {
+                // sender found in row i
+                return i;
+            }
+        }
+        // sender not found. returning -1
+        return -1;
+    }
+
+    private int getReceiverRow(Receiver r) {
+        for(int i=0; i < receiverTable.getRowCount(); i++) {
+            if(receiverTable.getValueAt(i, 0) == r) {
+                // sender found in row i
+                return i;
+            }
+        }
+        // sender not found. returning -1
+        return -1;
+    }
+
+    private void loadTableTestData() {
+    	// Bitte SenderManager nutzen
+        //Sender s;
+        //for(int i=0; i<20; i++) {
+        //    s = new Sender();
+        //    s.setPort(100 + i);
+        //    this.senderAdded(new SenderAddedOrRemovedEvent(s));
+        //}
     }
 
 }
