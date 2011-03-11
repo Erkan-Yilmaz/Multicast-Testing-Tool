@@ -1,242 +1,121 @@
 package com.spam.mctool.model;
 
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
-import java.util.zip.DataFormatException;
+import java.util.concurrent.LinkedBlockingQueue;
 
-import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
+import com.spam.mctool.model.ReceiverGroup.PacketContainer;
 import com.spam.mctool.model.packet.Packet;
-import com.spam.mctool.model.packet.SpamPacket;
 
-public class Receiver extends MulticastStream {
+public class Receiver {
 	
-	private class PacketContainer {
-		public Packet packet;
-		public long received;
+	protected long senderId;
+	protected long lastPacketNo = 0;
+	protected long lostPackets = 0;
+	protected long receivedPackets = 0;
+	protected int minPPS = Integer.MAX_VALUE;
+	protected int avgPPS = 0;
+	protected int maxPPS = Integer.MIN_VALUE;
+	protected int maxDelay = 0;
+	protected long minTraversal = Long.MAX_VALUE;
+	protected long avgTraversal = 0;
+	protected long maxTraversal = Long.MIN_VALUE;
+	protected LinkedSplitQueue<ReceiverGroup.PacketContainer> packetQueue;
+	protected MulticastStream.AnalyzingBehaviour abeh;
+	protected ReceiverStatistics lastStats;
+	protected long statsCounter = 0;
+	protected int statsStepSize = 1;
+	
+	Receiver(long senderId, MulticastStream.AnalyzingBehaviour abeh) {
+		this.senderId = senderId;
+		packetQueue = new LinkedSplitQueue<ReceiverGroup.PacketContainer>();
+		this.abeh = abeh;
+		this.lastStats = new ReceiverStatistics();
 	}
 	
-	private long lostPackets = 0;
-	private int faultyPackets = 0;
-	
-	private long avgTraversal = 0;
-	private long minTraversal = Long.MAX_VALUE;
-	private long maxTraversal = Long.MIN_VALUE;
-	
-	private long avgPacketRate = 0;
-	private long minPacketRate = Long.MAX_VALUE;
-	private long maxPacketRate = Long.MIN_VALUE;
-	
-	private long senderMeasuredRate = 0;
-	
-	private long senderConfiguredRate = 0;
-	private long senderId;
-	private String senderPayload;
-	
-	private long receivedCounter = 0;
-	private long lastPacket = -1;
-	
-	private Queue<PacketContainer> receivedPackets;
-	
-	private List<ReceiverDataChangeListener> receiverDataChangeListeners = new ArrayList<ReceiverDataChangeListener>();
-
-	@Override
-	protected void init() {
-		receivedPackets = new LinkedList<PacketContainer>();
+	public void addPacketContainer(PacketContainer p) {
+		packetQueue.enqueue(p);
+		if((lastPacketNo+1 != p.packet.getSequenceNumber()) && (receivedPackets > 0)) {
+			lostPackets++;
+		}
+		receivedPackets++;
+		lastPacketNo = p.packet.getSequenceNumber();
 	}
 	
-	@Override
-	protected void analyze() {
-		if((receivedPackets.size() >= statsInterval)) {
+	public ReceiverStatistics getStatistics() {
+		statsStepSize = abeh.getDynamicStatsStepWidth(avgPPS);
+		if(packetQueue.size()>statsStepSize*2) {
 			statsCounter++;
-			if(statsCounter%statsGap==0) {
-				PacketContainer[] packets = new PacketContainer[statsInterval];
-				// fetch packets
-				for(int i=0; i<statsInterval; i++) {
-					packets[i] = receivedPackets.poll();
-				}
-				
-				// traversal
-				avgTraversal = 0;
-				for(int i=0; i<statsInterval; i++) {
-					long trav = packets[i].received-packets[i].packet.getDispatchTime();
-					avgTraversal += trav;
-					if(trav > maxTraversal) {
-						maxTraversal = trav;
-					}
-					if(trav < minTraversal) {
-						minTraversal = trav;
-					}
-				}
-				avgTraversal = avgTraversal/statsInterval;
-				
-				// receiving intervals
-				avgPacketRate = 0;
-				for(int i=0; i<statsInterval-1; i++) {
-					long packetRate = (long) (1E3/(packets[i+1].received - packets[i].received));
-					avgPacketRate += packetRate;
-					if(packetRate > maxPacketRate) {
-						maxPacketRate = packetRate;
-					}
-					if(packetRate < minPacketRate) {
-						minPacketRate = packetRate;
-					}
-				}
-				avgPacketRate = avgPacketRate/(statsInterval-1);
-				
-				// sender measured rate
-				senderMeasuredRate = 0;
-				for(int i=0; i<statsInterval; i++) {
-					senderMeasuredRate += packets[i].packet.getSenderMeasuredPacketRate();
-				}
-				senderMeasuredRate /= statsInterval;
-				
-				// one time data updates
-				senderConfiguredRate = packets[statsInterval-1].packet.getConfiguredPacketsPerSecond();
-				senderPayload = new String(packets[statsInterval-1].packet.getPayload());
-				senderId = packets[statsInterval-1].packet.getSenderId();
-				
-				fireReceiverDataChangedEvent();
+			if(statsCounter%abeh.getDiv() == 0) {
+				return lastStats = calcNewStatistics();
 			} else {
-				for(int i=0; i<statsInterval; i++) {
-					receivedPackets.poll();
-				};
+				packetQueue.split();
 			}
 		}
-		if(!jobInterrupted) {
-			synchronized(receivedPackets) {
-				try {
-					receivedPackets.wait();
-				} catch (InterruptedException e) {}
+		
+		return lastStats;
+	}
+	
+	protected ReceiverStatistics calcNewStatistics() {
+		LinkedSplitQueue<ReceiverGroup.PacketContainer> data = packetQueue.split();
+		int step = statsStepSize;
+		data.setIteratorStepSize(step);
+		int div = data.size() / step;
+		double ppsavg = 0.0;
+		double travavg = 0.0;
+		PacketContainer last = null;
+		for(PacketContainer cur : data) {
+			if(last == null) {
+				last = cur;
+				continue;
 			}
-		}
-	}
-
-	@Override
-	protected void work() {
-		byte[] buffer = new byte[packetSize];
-		DatagramPacket dp = new DatagramPacket(buffer, buffer.length);
-		PacketContainer c = new PacketContainer();
-		try {
-			socket.receive(dp);
-			c.received = System.currentTimeMillis();
-			c.packet = getPacket(buffer);
-			// look for lost packets
-			if(!(c.packet.getSequenceNumber() == lastPacket+1)) {
-				if(!(lastPacket==-1)) {
-					lostPackets++;
-				}
+			
+			int delay = (int)(cur.receivedTime-last.receivedTime);
+			if(delay>maxDelay) {
+				maxDelay = delay;
 			}
-			lastPacket = c.packet.getSequenceNumber();
-			receivedPackets.add(c);
-			receivedCounter++;
-			synchronized(receivedPackets) {
-				receivedPackets.notify();
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ppsavg += (double)(delay)/(double)step;
+			travavg += cur.receivedTime - cur.packet.getDispatchTime();
+			last = cur;
 		}
-	}
-
-	@Override
-	protected void exit() {
-		synchronized(receivedPackets) {
-			receivedPackets.notifyAll();
+		ppsavg /= div;
+		ppsavg = 1.0E3 / Math.ceil(ppsavg);
+		travavg /= div;
+		
+		avgPPS = (int) Math.round(ppsavg);
+		if(avgPPS > maxPPS) {
+			maxPPS = avgPPS;
 		}
-		while(!receivedPackets.isEmpty()) {
-			if(receivedPackets.size()>=statsInterval) {
-				analyze();
-			} else {
-				receivedPackets.clear();
-			}
+		if(avgPPS < minPPS) {
+			minPPS = avgPPS;
 		}
-	}
-	
-	private Packet getPacket(byte[] buffer) {
-		Packet p = new SpamPacket();
-		try {
-			p.fromByteArray(ByteBuffer.wrap(buffer));
-		} catch (DataFormatException e) {
-			faultyPackets++;
+		avgTraversal = (int) Math.round(travavg);
+		if(avgTraversal > maxTraversal) {
+			maxTraversal = avgTraversal;
 		}
-		return p;
-	}
-	
-
-	public long getAvgTraversal() {
-		return avgTraversal;
-	}
-
-	public long getMinTraversal() {
-		return minTraversal;
-	}
-
-	public long getMaxTraversal() {
-		return maxTraversal;
-	}
-	
-	public long getAvgPacketRate() {
-		return avgPacketRate;
-	}
-
-	public long getMinPacketRate() {
-		return minPacketRate;
-	}
-
-	public long getMaxPacketRate() {
-		return maxPacketRate;
-	}
-
-	public long getLostPackets() {
-		return lostPackets;
-	}
-
-	public int getFaultyPackets() {
-		return faultyPackets;
-	}
-
-	public long getSenderMeasuredRate() {
-		return senderMeasuredRate;
-	}
-
-	public long getSenderConfiguredRate() {
-		return senderConfiguredRate;
-	}
-
-	public long getSenderId() {
-		return senderId;
-	}
-
-	public String getSenderPayload() {
-		return senderPayload;
-	}
-
-	public long getSenderPacketCount() {
-		return lastPacket;
-	}
-	
-	public long getReceivedPacketCount() {
-		return receivedCounter;
-	}
-
-	public void addReceiverDataChangeListener(ReceiverDataChangeListener l) {
-		receiverDataChangeListeners.add(l);
-	}
-	
-	public void removeReceiverDataChangeListener(ReceiverDataChangeListener l) {
-		receiverDataChangeListeners.remove(l);
-	}
-	
-	private void fireReceiverDataChangedEvent() {
-		ReceiverDataChangedEvent e = new ReceiverDataChangedEvent(this);
-		for(ReceiverDataChangeListener l : receiverDataChangeListeners) {
-			l.dataChanged(e);
+		if(avgTraversal < minTraversal) {
+			minTraversal = avgTraversal;
 		}
+		
+		ReceiverStatistics rs = new ReceiverStatistics();
+		rs.setSenderId(senderId);
+		rs.setSentPackets(lastPacketNo);
+		rs.setReceivedPackets(receivedPackets);
+		rs.setLostPackets(lostPackets);
+		rs.setMaxDelay(maxDelay);
+		rs.setConfiguredPPS(last.packet.getConfiguredPacketsPerSecond());
+		rs.setSenderMeasuredAvgPPS(last.packet.getSenderMeasuredPacketRate());
+		rs.setReceiverMeasuredMinPPS(minPPS);
+		rs.setReceiverMeasuredAvgPPS(avgPPS);
+		rs.setReceiverMeasuredMaxPPS(maxPPS);
+		rs.setMinTraversal(minTraversal);
+		rs.setAvgTraversal(avgTraversal);
+		rs.setMaxTraversal(maxTraversal);
+		//TODO Implement Packet Size
+		rs.setPacketSize(0);
+		rs.setPayload(new String(last.packet.getPayload()));
+		
+		return rs;
 	}
 
 }

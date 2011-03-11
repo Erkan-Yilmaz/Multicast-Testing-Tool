@@ -20,18 +20,48 @@ public abstract class MulticastStream implements Runnable {
 	protected InetAddress group;
 	
 	public static enum AnalyzingBehaviour {
-		LAZY(4), DEFAULT(2), EAGER(1);
+		LAZY(4, "lazy", 11.0/111.0, 100.0/111.0),
+		DEFAULT(2, "default", 49.0/999.0, 950.0/999.0),
+		EAGER(1, "eager", 19.0/999.0, 980.0/999.0);
+		
 		private int div;
+		private String ident;
+		private double inc;
+		private double init;
 	
-		AnalyzingBehaviour(int div) {
+		AnalyzingBehaviour(int div, String ident, double inc, double init) {
 			this.div = div;
+			this.ident = ident;
+			this.inc = inc;
+			this.init = init;
 		}
 	
 		public int getDiv() {
 			return div;
 		}
+		
+		public String getIdentifier() {
+			return ident;
+		}
+		
+		public int getDynamicStatsStepWidth(long pps) {
+			return (int)Math.ceil(pps*inc+init);
+		}
+		
+		public static AnalyzingBehaviour getByIdentifier(String ident) {
+			if(ident.equals("lazy")) {
+				return LAZY;
+			} else if(ident.equals("default")) {
+				return DEFAULT;
+			} else if(ident.equals("eager")) {
+				return EAGER;
+			} else {
+				throw new IllegalArgumentException();
+			}
+		}
 	}
 	protected AnalyzingBehaviour analyzingBehaviour;
+	protected int statsInterval;
 	
 	protected int port;
 	
@@ -120,6 +150,22 @@ public abstract class MulticastStream implements Runnable {
 	}
 	public void setPacketSize(int packetSize) {
 		this.packetSize = packetSize;
+	}
+
+	public AnalyzingBehaviour getAnalyzingBehaviour() {
+		return analyzingBehaviour;
+	}
+
+	public void setAnalyzingBehaviour(AnalyzingBehaviour analyzingBehaviour) {
+		this.analyzingBehaviour = analyzingBehaviour;
+	}
+
+	public int getStatsInterval() {
+		return statsInterval;
+	}
+
+	public void setStatsInterval(int statsInterval) {
+		this.statsInterval = statsInterval;
 	}
 
 }

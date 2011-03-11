@@ -7,14 +7,12 @@ package com.spam.mctool.model;
  */
 public class ReceiverStatistics {
 	private long senderId;
+	private long sentPackets;
 	private long receivedPackets;
 	private long lostPackets;
-	private long faultyPackets;
 	private long maxDelay;
 	private long configuredPPS;
-	private long senderMeasuredMinPPS;
 	private long senderMeasuredAvgPPS;
-	private long senderMeasuredMaxPPS;
 	private long receiverMeasuredMinPPS;
 	private long receiverMeasuredAvgPPS;
 	private long receiverMeasuredMaxPPS;
@@ -22,10 +20,13 @@ public class ReceiverStatistics {
 	private long avgTraversal;
 	private long maxTraversal;
 	private int packetSize;
-	private String payload;
+	private String payload = "";
 	
 	public long getSenderId() {
 		return senderId;
+	}
+	public long getSentPackets() {
+		return sentPackets;
 	}
 	public long getReceivedPackets() {
 		return receivedPackets;
@@ -33,23 +34,14 @@ public class ReceiverStatistics {
 	public long getLostPackets() {
 		return lostPackets;
 	}
-	public long getFaultyPackets() {
-		return faultyPackets;
-	}
 	public long getMaxDelay() {
 		return maxDelay;
 	}
 	public long getConfiguredPPS() {
 		return configuredPPS;
 	}
-	public long getSenderMeasuredMinPPS() {
-		return senderMeasuredMinPPS;
-	}
 	public long getSenderMeasuredAvgPPS() {
 		return senderMeasuredAvgPPS;
-	}
-	public long getSenderMeasuredMaxPPS() {
-		return senderMeasuredMaxPPS;
 	}
 	public long getReceiverMeasuredMinPPS() {
 		return receiverMeasuredMinPPS;
@@ -78,14 +70,14 @@ public class ReceiverStatistics {
 	void setSenderId(long senderId) {
 		this.senderId = senderId;
 	}
+	protected void setSentPackets(long sentPackets) {
+		this.sentPackets = sentPackets;
+	}
 	void setReceivedPackets(long receivedPackets) {
 		this.receivedPackets = receivedPackets;
 	}
 	void setLostPackets(long lostPackets) {
 		this.lostPackets = lostPackets;
-	}
-	void setFaultyPackets(long faultyPackets) {
-		this.faultyPackets = faultyPackets;
 	}
 	void setMaxDelay(long maxDelay) {
 		this.maxDelay = maxDelay;
@@ -93,14 +85,8 @@ public class ReceiverStatistics {
 	void setConfiguredPPS(long configuredPPS) {
 		this.configuredPPS = configuredPPS;
 	}
-	void setSenderMeasuredMinPPS(long senderMeasuredMinPPS) {
-		this.senderMeasuredMinPPS = senderMeasuredMinPPS;
-	}
 	void setSenderMeasuredAvgPPS(long senderMeasuredAvgPPS) {
 		this.senderMeasuredAvgPPS = senderMeasuredAvgPPS;
-	}
-	void setSenderMeasuredMaxPPS(long senderMeasuredMaxPPS) {
-		this.senderMeasuredMaxPPS = senderMeasuredMaxPPS;
 	}
 	void setReceiverMeasuredMinPPS(long receiverMeasuredMinPPS) {
 		this.receiverMeasuredMinPPS = receiverMeasuredMinPPS;
@@ -125,6 +111,18 @@ public class ReceiverStatistics {
 	}
 	void setPayload(String payload) {
 		this.payload = payload;
+	}
+	
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("--- Receiver Stats for: "+senderId+"---\n");
+		sb.append("Div (R.P.|L.P.|M.Del): "+receivedPackets+"|"+lostPackets+"|"+maxDelay+"\n");
+		sb.append("Sender (C.PPS|M.PPS|S.P|P.S): "+configuredPPS+"|"+senderMeasuredAvgPPS+"|"+sentPackets+"|"+packetSize+"\n");
+		sb.append("R.PPS (MIN|AVG|MAX): "+receiverMeasuredMinPPS+"|"+receiverMeasuredAvgPPS+"|"+receiverMeasuredMaxPPS+"\n");
+		sb.append("R.Trav (MIN|AVG|MAX): "+minTraversal+"|"+avgTraversal+"|"+maxTraversal+"\n");
+		sb.append("Payload: "+payload+"\n");
+		sb.append("-----------------------------------------------\n");
+		return sb.toString();
 	}
 	
 }

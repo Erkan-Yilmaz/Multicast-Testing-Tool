@@ -18,6 +18,7 @@ public interface SenderManager {
 	 * ttl - time to live of sent packets
 	 * payload - text to send along
 	 * ptype - type of packet format ("spam" | "hmann")
+	 * abeh - analyzing behaviour for data updates ("lazy" approx 4s | "default" approx 2s | "eager" approx 1s)
 	 * @param params see description above for possible values
 	 * @return the created sender
 	 */

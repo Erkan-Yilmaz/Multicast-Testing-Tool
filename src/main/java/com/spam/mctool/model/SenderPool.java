@@ -17,14 +17,13 @@ public class SenderPool implements SenderManager {
 	private ScheduledThreadPoolExecutor stfe;
 	private Set<Sender> senders = new HashSet<Sender>();
 	private List<SenderAddedOrRemovedListener> saorl;
-	private int statsInterval;
-	private double statsTestamount;
+	
+	private int threadPoolSize = 15;
+	private int statsInterval = 1000;
 	
 	public SenderPool() {
 		this.saorl = new LinkedList<SenderAddedOrRemovedListener>();
-		this.stfe = new ScheduledThreadPoolExecutor(30);
-		this.statsInterval = 500;
-		this.statsTestamount = 0.3;
+		this.stfe = new ScheduledThreadPoolExecutor(threadPoolSize);
 	}
 
 	public Sender create(Map<String, String> params) throws IllegalArgumentException {
@@ -37,6 +36,7 @@ public class SenderPool implements SenderManager {
 		byte[] payload;
 		Sender.PacketType ptype;
 		NetworkInterface ninf;
+		MulticastStream.AnalyzingBehaviour abeh;
 		
 		try {
 			group = InetAddress.getByName(params.get("group"));
@@ -54,12 +54,13 @@ public class SenderPool implements SenderManager {
 			}
 			payload = pstring.getBytes();
 			ptype = Sender.PacketType.getByIdentifier(params.get("ptype"));
+			abeh = MulticastStream.AnalyzingBehaviour.getByIdentifier(params.get("abeh"));
 		} catch(Exception e) {
 			e.printStackTrace();
 			throw new IllegalArgumentException();
 		}
 		
-		sender = new Sender(this.stfe, this.statsInterval, this.statsTestamount);
+		sender = new Sender(this.stfe);
 		sender.setGroup(group);
 		sender.setPort(port);
 		sender.setTtl(ttl);
@@ -68,6 +69,8 @@ public class SenderPool implements SenderManager {
 		sender.setData(payload);
 		sender.setpType(ptype);
 		sender.setNetworkInterface(ninf);
+		sender.setAnalyzingBehaviour(abeh);
+		sender.setStatsInterval(statsInterval);
 		
 		this.senders.add(sender);
 		this.fireSenderAddedEvent(sender);
@@ -135,11 +138,12 @@ public class SenderPool implements SenderManager {
 		params.put("port", "1234");
 		params.put("ttl", "127");
 		params.put("ninf", "127.0.0.1");
-		params.put("pps", "1000");
+		params.put("pps", "500");
 		params.put("psize", "300");
 		params.put("payload", "Hallo Welt");
 		params.put("ptype", "spam");
-		for(int i=0; i<15; i++) {
+		params.put("abeh", "default");
+		for(int i=0; i<1; i++) {
 			sm.create(params).activate();
 		}
 		try { Thread.sleep(30*1000); } catch(Exception e) {}

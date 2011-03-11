@@ -12,19 +12,19 @@ public interface ReceiverManager {
 	 * @param params See moddoc for possible values
 	 * @return the created receiver
 	 */
-	public com.spam.mctool.model.Receiver create(java.util.Map<String, String> params);
+	public com.spam.mctool.model.ReceiverGroup create(java.util.Map<String, String> params);
 	
 	/**
 	 * Remove a receiver.
 	 * @param receiver receiver to be removed
 	 */
-	public void remove(com.spam.mctool.model.Receiver receiver);
+	public void remove(com.spam.mctool.model.ReceiverGroup receiver);
 	
 	//TODO change return to type to collection in uml
 	/**
 	 * @return collection of all receivers in the pool
 	 */
-	public java.util.Collection<com.spam.mctool.model.Receiver> getReceiver();
+	public java.util.Collection<com.spam.mctool.model.ReceiverGroup> getReceiver();
 	
 	/**
 	 * stops all receivers in the pool

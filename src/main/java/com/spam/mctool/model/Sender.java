@@ -56,27 +56,24 @@ public class Sender extends MulticastStream {
 	
 	private long lastSent = 0;
 	private long nowSent = 0;
-	private BlockingQueue<Short> sentTimes;
+	private LinkedSplitQueue<Short> sentTimes;
 
 	private List<SenderDataChangeListener> senderDataChangeListeners = new ArrayList<SenderDataChangeListener>();
 	
 	private AnalyzeSender analyzer;
 	
-	private long statsInterval;
-	private double statsTestamount;
+	private int statsStepWidth;
 	
 	private long avgPPS;
 	private long minPPS = Integer.MAX_VALUE;
 	private long maxPPS = Integer.MIN_VALUE;
 	
-	protected Sender(ScheduledThreadPoolExecutor stpe, long statsInterval, double statsTestamount) {
+	protected Sender(ScheduledThreadPoolExecutor stpe) {
 		this.stpe = stpe;
-		this.sentTimes = new LinkedBlockingQueue<Short>();
+		this.sentTimes = new LinkedSplitQueue<Short>();
 		this.senderId = (long) (Long.MAX_VALUE*Math.random());
 		this.analyzer = new AnalyzeSender();
-		this.analyzingBehaviour = AnalyzingBehaviour.LAZY;
-		this.statsInterval = statsInterval;
-		this.statsTestamount = statsTestamount;
+		this.analyzingBehaviour = AnalyzingBehaviour.DEFAULT;
 	}
 	
 	@Override
@@ -86,6 +83,7 @@ public class Sender extends MulticastStream {
 			this.socket.setNetworkInterface(this.getNetworkInterface());
 			this.socket.setTimeToLive(this.getTtl());
 			this.socket.joinGroup(this.getGroup());
+			this.statsStepWidth = analyzingBehaviour.getDynamicStatsStepWidth(this.getSenderConfiguredPacketRate());
 			long period = (long) (1E3/this.senderConfiguredPacketRate);
 			this.sf = this.stpe.scheduleAtFixedRate(this, 0, period, TimeUnit.MILLISECONDS);
 			this.asf = this.stpe.scheduleWithFixedDelay(analyzer, statsInterval, statsInterval, TimeUnit.MILLISECONDS);
@@ -109,7 +107,7 @@ public class Sender extends MulticastStream {
 			this.socket.send(dp);
 			// no synchronization needed because usage of java concurrency api
 			nowSent = System.currentTimeMillis();
-			this.sentTimes.add((short)(nowSent-lastSent));
+			this.sentTimes.enqueue((short)(nowSent-lastSent));
 			lastSent = nowSent;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -140,30 +138,23 @@ public class Sender extends MulticastStream {
 	
 	private class AnalyzeSender implements Runnable {
 		
-		private List<Short> data = new LinkedList<Short>();
+		private LinkedSplitQueue<Short> data;
 		private long counter = 0;
 
 		public void run() {
-			if(sentTimes.size()*statsTestamount>2) {
-				data.clear();
-				sentTimes.drainTo(data);
-				if(counter==0) {
-					data.remove(0);
-				}
+			if(sentTimes.size()>statsStepWidth) {
+				data = sentTimes.split();
 				counter++;
 				if(counter%analyzingBehaviour.getDiv() == 0) {
-					int amount = (int) (data.size()*statsTestamount);
-					int step = data.size()/amount;
-					int pos = 0;
 					int valcnt = 0;
 					double avg = 0;
-					while(pos+step < data.size()) {
-						avg += data.get(pos);
+					data.setIteratorStepSize(statsStepWidth);
+					for(Short s : data) {
+						avg += s;
 						valcnt++;
-						pos += step;
 					}
 					avg /= valcnt; 
-					avg = 1.0E3 / avg;
+					avg = 1.0E3 / Math.ceil(avg);
 					avgPPS = Math.round(avg);
 					if(avgPPS < minPPS) {
 						minPPS = avgPPS;
@@ -173,7 +164,7 @@ public class Sender extends MulticastStream {
 					}
 					fireSenderDataChangedEvent();
 				} else {
-					data.clear();
+					sentTimes.split();
 				}
 			}
 		}
@@ -220,7 +211,7 @@ public class Sender extends MulticastStream {
 		this.ttl = ttl;
 	}
 
-	protected BlockingQueue<Short> getSentTimes() {
+	protected LinkedSplitQueue<Short> getSentTimes() {
 		return sentTimes;
 	}
 	
