@@ -3,6 +3,7 @@ package com.spam.mctool.model.packet;
 import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Arrays;
 import java.util.zip.DataFormatException;
 
 /**
@@ -51,12 +52,17 @@ public class HirschmannPacket implements Packet {
 	 */
 	public void fromByteArray(ByteBuffer data) throws DataFormatException 
 	{
+		minSize = 0;
+		senderID = 0;
+		configuredPacketsPerSeconds = 0;
+		sequenceNumber = 0;
+		
 		try {
 			data.order(ByteOrder.BIG_ENDIAN);
 			
 			// create data buffer to check for big endian checksums
 			ByteBuffer bigEndianCheckData = data.duplicate();
-			bigEndianCheckData.limit(SIZE-2);
+			bigEndianCheckData.limit(CONSTSIZE-2);
 			
 			// skip header
 			data.position(data.position()+HEADER.length);
@@ -110,14 +116,21 @@ public class HirschmannPacket implements Packet {
 	    return (short)(~sum);
 	}
 	
-	static final byte[] HEADER = {'H','i','r','s','c','h','m','a','n','n',
+	private static final byte[] HEADER = {'H','i','r','s','c','h','m','a','n','n',
 								  ' ','I','P',' ','T','e','s','t','-','M',
 								  'u','l','t','i','c','a','s','t','\0'};
-
-	private static final int SIZE = HEADER.length+2+4+2+1+4+2;
+	
+	private static final int CONSTSIZE = HEADER.length+2+4+2+1+4+2;
+	
+	/**
+	 * @return returns the size 
+	 */
+	public long getSize() {
+		return CONSTSIZE<minSize ? minSize : CONSTSIZE;
+	}
 	
 	private ByteBuffer createUncheckedByteArray(short ttl, long reset, ByteOrder endian) {
-		ByteBuffer data = ByteBuffer.allocate(SIZE);
+		ByteBuffer data = ByteBuffer.allocate((int) getSize());
 		data.order(endian);
 		data.put(HEADER);
 		
@@ -140,7 +153,7 @@ public class HirschmannPacket implements Packet {
 	{
 		ByteBuffer checkData = createUncheckedByteArray((short) 0xFF,0, ByteOrder.LITTLE_ENDIAN);
 		ByteBuffer data = createUncheckedByteArray((short) 0xFF,0, ByteOrder.BIG_ENDIAN);
-		data.putShort(SIZE-2,generateChecksum(checkData,ByteOrder.LITTLE_ENDIAN));
+		data.putShort(CONSTSIZE-2,generateChecksum(checkData,ByteOrder.LITTLE_ENDIAN));
 		
 		return data;
 	}
@@ -173,14 +186,13 @@ public class HirschmannPacket implements Packet {
 	 * @return the senderMeasuredPacketRate
 	 */
 	public long getSenderMeasuredPacketRate() {
-		return senderMeasuredPacketRate;
+		return 0;
 	}
 	/**
 	 * @param senderMeasuredPacketRate the senderMeasuredPacketRate to set
 	 */
-	public void setSenderMeasuredPacketRate(long senderMeasuredPacketRate) {
-		this.senderMeasuredPacketRate = senderMeasuredPacketRate;
-	}
+	public void setSenderMeasuredPacketRate(long senderMeasuredPacketRate) 
+	{}
 	/**
 	 * @return the sequenceNumber
 	 */
@@ -197,33 +209,52 @@ public class HirschmannPacket implements Packet {
 	 * @return the dispatchTime
 	 */
 	public long getDispatchTime() {
-		return dispatchTime;
+		return 0;
 	}
 	/**
 	 * @param dispatchTime the dispatchTime to set
 	 */
-	public void setDispatchTime(long dispatchTime) {
-		this.dispatchTime = dispatchTime;
-	}
+	public void setDispatchTime(long dispatchTime) {}
 	
 	/**
 	 * @param data  The payload's data
 	 */
-	public void setPayload(byte[] data) {
-	    payload = data;
-	}
+	public void setPayload(byte[] data) {}
 	
 	/**
 	 * @return      Returns the payload's data
 	 */
 	public byte[] getPayload() {
-	    return payload;
+	    return new byte[0];
+	}
+
+	/**
+	 * Set the size of the package.
+	 * Package may be bigger, e.g. if size is set to 1
+	 * because we need to send the header and other stuff
+	 * 
+	 * @param size  The packets minimum size
+	 */
+	public void setMinimumSize(long size) {
+		minSize = size;
 	}
 	
+	public static boolean isCorrectHeader(ByteBuffer data) {
+		if(data.remaining() >= HEADER.length) {
+			byte[] head = new byte[HEADER.length];
+			data.mark();
+			data.get(head);
+			data.reset();
+			
+			if(Arrays.equals(HEADER,head)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private long minSize;
 	private long senderID;
 	private long configuredPacketsPerSeconds;
-	private long senderMeasuredPacketRate;
 	private long sequenceNumber;
-	private long dispatchTime;
-	private byte[] payload;
 }

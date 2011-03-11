@@ -65,4 +65,16 @@ public interface Packet {
 	 * @return      Returns the payload's data
 	 */
 	public byte[] getPayload();
+	/**
+	 * @return      Returns the packet's size
+	 */
+	public long getSize();
+	/**
+	 * Set the size of the package.
+	 * Package may be bigger, e.g. if size is set to 1
+	 * because we need to send the header and other stuff
+	 * 
+	 * @param size  The packets minimum size
+	 */
+	public void setMinimumSize(long size);
 }
