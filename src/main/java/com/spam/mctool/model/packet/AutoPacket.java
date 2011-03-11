@@ -1,8 +1,6 @@
 package com.spam.mctool.model.packet;
 
 import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.util.Arrays;
 import java.util.zip.DataFormatException;
 
 /**
@@ -27,27 +25,12 @@ public class AutoPacket implements Packet {
 	 * @throws DataFormatException   thrown if badly formated data is passed
 	 */
 	public void fromByteArray(ByteBuffer data) throws DataFormatException 
-	{	
-		final byte[] header = HirschmannPacket.HEADER;
-		packet = null;
-		
-		data.order(ByteOrder.BIG_ENDIAN);
-		
-	    // check the header
-		if(data.remaining() >= 6 && data.getShort(0) == 1337 && data.getInt(2) == 0) {
-		    packet = new SpamPacket();
-		} else if(data.remaining() >= header.length) {
-			byte[] head = new byte[header.length];
-			data.mark();
-			data.get(head);
-			data.reset();
-			
-			if(Arrays.equals(header,head)) {
-				packet = new HirschmannPacket();
-			}
-		}
-		
-		if(packet == null) {
+	{
+		if(SpamPacket.isCorrectHeader(data)){
+			packet = new SpamPacket();
+		} else if (HirschmannPacket.isCorrectHeader(data)) {
+			packet = new HirschmannPacket();
+		} else {
 			throw new DataFormatException("Unsupported package header");
 		}
 		
@@ -149,13 +132,26 @@ public class AutoPacket implements Packet {
 		packet.setPayload(data);
 	}
 	/**
-	 * @param data
 	 * @see com.spam.mctool.model.packet.Packet#getPayload()
 	 */
 	public byte[] getPayload() {
 		return packet.getPayload();
 	}
+
+	/**
+	 * @see com.spam.mctool.model.packet.Packet#getSize()
+	 */
+	public long getSize() {
+		return packet.getSize();
+	}
+	
+	/**
+	 * @param size
+	 * @see com.spam.mctool.model.packet.Packet#setMinimumSize()
+	 */
+	public void setMinimumSize(long size) {
+		packet.setMinimumSize(size);
+	}
 	
 	private Packet packet;
-
 }

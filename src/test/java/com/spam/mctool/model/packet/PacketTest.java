@@ -48,7 +48,6 @@ public class PacketTest {
 			ap = new AutoPacket();
 		}
 	}
-	
 	@Test
 	public void test_invalidHirschmannPackets() {
 		byte[] raw = {
@@ -82,7 +81,6 @@ public class PacketTest {
 				data.rewind();
 				ap.fromByteArray(data);
 			} catch (DataFormatException e) {
-				System.out.println(e.getMessage());
 				// truncate array to check underflows
 				raw = Arrays.copyOf(raw, raw.length-2);
 				data = ByteBuffer.wrap(raw);
@@ -169,6 +167,40 @@ public class PacketTest {
 				continue;
 			}
 			fail("Exception should have been thrown");
+		}
+	}
+	
+
+	
+	@Test
+	public void test_packagePadding() {
+		Packet p = new SpamPacket();
+		
+		for(int i=0 ; i<2 ; ++i){
+			p.setMinimumSize(0);
+			long size = p.getSize();
+			
+			assertTrue(size > 0);
+			assertEquals(p.toByteArray().capacity(),size);
+			
+			// this should be big enough
+			p.setMinimumSize(1024);
+			size = p.getSize();
+			
+			assertEquals(1024,size);
+			assertEquals(p.toByteArray().capacity(),size);
+			
+			if(i == 0){
+				// do fun stuff with payload
+				p.setPayload(new byte[1024]);
+				p.setMinimumSize(512);
+				size = p.getSize();
+				
+				assertTrue(size >= 1024);
+				assertEquals(p.toByteArray().capacity(),size);
+			}
+			
+			p = new HirschmannPacket();
 		}
 	}
 }

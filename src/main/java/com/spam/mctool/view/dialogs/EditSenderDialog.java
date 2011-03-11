@@ -12,28 +12,40 @@
 package com.spam.mctool.view.dialogs;
 
 import com.spam.mctool.model.Sender;
-import java.net.UnknownHostException;
+import java.net.InetAddress;
+import java.net.InterfaceAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
- * @author Tobias Stöckel (Tobias.Stoeckel@de.ibm.com)
+ * @author Tobias Schoknecht (Tobias.Schoknecht@de.ibm.com)
  */
 public class EditSenderDialog extends javax.swing.JDialog {
 
     private static final long serialVersionUID = 1L;
     private Sender sender = null;
+    private Map<String,String> interfaceMap = null;
+    //TODO loglevel?
 
 	/** Creates new form EditSenderDialog */
     public EditSenderDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        loadNetInterfaces();
+        initPacketStyles();
     }
 
     public EditSenderDialog(java.awt.Frame parent, boolean modal, Sender sender) {
         this(parent, modal);
         this.sender = sender;
+        loadData();
     }
 
     /** This method is called from within the constructor to
@@ -61,6 +73,8 @@ public class EditSenderDialog extends javax.swing.JDialog {
         TTLLabel = new javax.swing.JLabel();
         TTLField = new javax.swing.JTextField();
         PacketSizeField = new javax.swing.JTextField();
+        PacketStyleLabel = new javax.swing.JLabel();
+        PacketStyleCombo = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -111,6 +125,10 @@ public class EditSenderDialog extends javax.swing.JDialog {
 
         PacketSizeField.setText(bundle.getString("EditSenderDialog.PacketSizeField.text")); // NOI18N
 
+        PacketStyleLabel.setText(bundle.getString("EditSenderDialog.PacketStyleLabel.text")); // NOI18N
+
+        PacketStyleCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -126,6 +144,8 @@ public class EditSenderDialog extends javax.swing.JDialog {
                     .addComponent(InterfaceCombo, 0, 250, Short.MAX_VALUE)
                     .addComponent(DataField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                     .addComponent(DataLabel)
+                    .addComponent(PacketStyleLabel)
+                    .addComponent(PacketStyleCombo, 0, 250, Short.MAX_VALUE)
                     .addComponent(PacketRateLabel)
                     .addComponent(PacketRateField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                     .addComponent(PacketSizeLabel)
@@ -160,6 +180,10 @@ public class EditSenderDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(DataField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(PacketStyleLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(PacketStyleCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(PacketRateLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PacketRateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -184,19 +208,29 @@ public class EditSenderDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
-       /* if(this.sender == null){
-            this.sender = new Sender();
-        }*/ //TODO find out why sender does not have constructor anymore......
-            //this.sender.setGroupByString(this.GroupField.getText());
-            this.sender.setPort(Integer.parseInt(this.PortField.getText()));
-            this.sender.setPacketSize(Integer.parseInt(this.PacketSizeField.getText()));
-            this.sender.setSenderConfiguredPacketRate(Integer.parseInt(this.PacketRateField.getText()));
-            //this.sender.setNetworkInterface(null);
-            //TODO setNetworkInterface
-            this.sender.setData(this.DataField.getText().getBytes());
-        if(this.ActivateBox.isSelected()){
-            this.sender.activate();
+        Map<String,String> senderMap = null;
+
+        if(this.sender == null){
+            senderMap.put("group", this.GroupField.getText());
+            senderMap.put("port", this.PortField.getText());
+            senderMap.put("pps", this.PacketRateField.getText());
+            senderMap.put("psize", this.PacketSizeField.getText());
+            senderMap.put("ttl", this.TTLField.getText());
+            senderMap.put("payload", this.DataField.getText());
+            senderMap.put("ptype", this.PacketStyleCombo.getSelectedItem().toString());
+            senderMap.put("ninf",this.interfaceMap.get(this.InterfaceCombo.getSelectedItem().toString()));
+            //TODO nach erstellen referenz ziehen und aktivieren oder parameter zur aktivierung mit geben
         }
+        else{
+            this.sender.setSenderConfiguredPacketRate(Integer.parseInt(this.PacketRateField.getText()));
+            this.sender.setPacketSize(Integer.parseInt(this.PacketSizeField.getText()));
+            //this.sender.setTtl(this.TTLField.getText().getBytes());
+            //TODO TTL byte - warum kein array? o.o
+            if(this.ActivateBox.isSelected()){
+                this.sender.activate();
+            }
+        }
+        this.dispose();
 }//GEN-LAST:event_OKButtonActionPerformed
 
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
@@ -230,7 +264,36 @@ public class EditSenderDialog extends javax.swing.JDialog {
         this.PacketRateField.setText(String.valueOf(this.sender.getSenderConfiguredPacketRate()));
         this.PacketSizeField.setText(String.valueOf(this.sender.getPacketSize()));
         this.InterfaceCombo.setEnabled(false);
-        //TODO: TTL, List of NetworkInterfaces
+        this.TTLField.setText(String.valueOf(this.sender.getTtl()));
+    }
+
+    private void loadNetInterfaces(){
+	Enumeration<NetworkInterface> interfaces = null;
+        try {
+            interfaces = NetworkInterface.getNetworkInterfaces();
+        } catch (SocketException ex) {
+            Logger.getLogger(EditSenderDialog.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        while (interfaces.hasMoreElements()) {
+            NetworkInterface networkInterface = interfaces.nextElement();
+
+            for (InterfaceAddress interfaceAddress : networkInterface.getInterfaceAddresses()) {
+                InetAddress address = interfaceAddress.getAddress();
+
+                Pattern p = Pattern.compile("/(([1-9][0-9]{0,2}|0)\\.([1-9][0-9]{0,2}|0)\\.([1-9][0-9]{0,2}|0)\\.([1-9][0-9]{0,2}|0))");
+                Matcher m = p.matcher(address.toString());
+
+                if(m.matches()){
+                        this.InterfaceCombo.addItem(networkInterface.getDisplayName() + " - " + m.group(1));
+                        this.interfaceMap.put(networkInterface.getDisplayName() + " - " + m.group(1), m.group(1));
+                }
+            }
+        }       
+    }
+
+    private void initPacketStyles(){
+        this.PacketStyleCombo.addItem("spam");
+        this.PacketStyleCombo.addItem("hmann");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -247,6 +310,8 @@ public class EditSenderDialog extends javax.swing.JDialog {
     private javax.swing.JLabel PacketRateLabel;
     private javax.swing.JTextField PacketSizeField;
     private javax.swing.JLabel PacketSizeLabel;
+    private javax.swing.JComboBox PacketStyleCombo;
+    private javax.swing.JLabel PacketStyleLabel;
     private javax.swing.JTextField PortField;
     private javax.swing.JLabel PortLabel;
     private javax.swing.JTextField TTLField;

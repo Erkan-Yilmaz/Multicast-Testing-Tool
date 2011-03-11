@@ -12,9 +12,16 @@
 package com.spam.mctool.view.dialogs;
 
 import com.spam.mctool.model.Receiver;
-import java.net.UnknownHostException;
+import java.net.InetAddress;
+import java.net.InterfaceAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -24,7 +31,7 @@ public class EditReceiverDialog extends javax.swing.JDialog {
 
     private static final long serialVersionUID = 1L;
     private Receiver receiver = null;
-    private int test;
+    private Map<String,String> interfaceMap = null;
 
 	/** Creates new form EditReceiverDialog */
     public EditReceiverDialog(java.awt.Frame parent, boolean modal) {
@@ -55,8 +62,6 @@ public class EditReceiverDialog extends javax.swing.JDialog {
         ActivateBox = new javax.swing.JCheckBox();
         OKButton = new javax.swing.JButton();
         CancelButton = new javax.swing.JButton();
-        PacketStyleLabel = new javax.swing.JLabel();
-        PacketStyleCombo = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -91,10 +96,6 @@ public class EditReceiverDialog extends javax.swing.JDialog {
             }
         });
 
-        PacketStyleLabel.setText(bundle.getString("EditReceiverDialog.PacketStyleLabel.text")); // NOI18N
-
-        PacketStyleCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -108,8 +109,6 @@ public class EditReceiverDialog extends javax.swing.JDialog {
                     .addComponent(PortField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                     .addComponent(InterfaceLabel)
                     .addComponent(InterfaceCombo, 0, 250, Short.MAX_VALUE)
-                    .addComponent(PacketStyleLabel)
-                    .addComponent(PacketStyleCombo, 0, 250, Short.MAX_VALUE)
                     .addComponent(ActivateBox, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(43, 43, 43)
@@ -133,10 +132,6 @@ public class EditReceiverDialog extends javax.swing.JDialog {
                 .addComponent(InterfaceLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(InterfaceCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(PacketStyleLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PacketStyleCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ActivateBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -160,6 +155,8 @@ public class EditReceiverDialog extends javax.swing.JDialog {
         if(this.ActivateBox.isSelected()){
             this.receiver.activate();
         }
+
+        this.dispose();
     }//GEN-LAST:event_OKButtonActionPerformed
 
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
@@ -189,7 +186,30 @@ public class EditReceiverDialog extends javax.swing.JDialog {
         this.PortField.setText(String.valueOf(this.receiver.getPort()));
         this.PortField.setEnabled(false);
         this.InterfaceCombo.setEnabled(false);
-        this.PacketStyleCombo.setEnabled(false);
+    }
+
+    private void loadNetInterfaces(){
+	Enumeration<NetworkInterface> interfaces = null;
+        try {
+            interfaces = NetworkInterface.getNetworkInterfaces();
+        } catch (SocketException ex) {
+            Logger.getLogger(EditSenderDialog.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        while (interfaces.hasMoreElements()) {
+            NetworkInterface networkInterface = interfaces.nextElement();
+
+            for (InterfaceAddress interfaceAddress : networkInterface.getInterfaceAddresses()) {
+                InetAddress address = interfaceAddress.getAddress();
+
+                Pattern p = Pattern.compile("/(([1-9][0-9]{0,2}|0)\\.([1-9][0-9]{0,2}|0)\\.([1-9][0-9]{0,2}|0)\\.([1-9][0-9]{0,2}|0))");
+                Matcher m = p.matcher(address.toString());
+
+                if(m.matches()){
+                        this.InterfaceCombo.addItem(networkInterface.getDisplayName() + " - " + m.group(1));
+                        this.interfaceMap.put(networkInterface.getDisplayName() + " - " + m.group(1), m.group(1));
+                }
+            }
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -200,8 +220,6 @@ public class EditReceiverDialog extends javax.swing.JDialog {
     private javax.swing.JComboBox InterfaceCombo;
     private javax.swing.JLabel InterfaceLabel;
     private javax.swing.JButton OKButton;
-    private javax.swing.JComboBox PacketStyleCombo;
-    private javax.swing.JLabel PacketStyleLabel;
     private javax.swing.JTextField PortField;
     private javax.swing.JLabel PortLabel;
     // End of variables declaration//GEN-END:variables

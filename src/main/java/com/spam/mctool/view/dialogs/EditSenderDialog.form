@@ -33,6 +33,8 @@
                   <Component id="InterfaceCombo" alignment="0" pref="250" max="32767" attributes="0"/>
                   <Component id="DataField" alignment="1" pref="250" max="32767" attributes="0"/>
                   <Component id="DataLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="PacketStyleLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="PacketStyleCombo" alignment="0" pref="250" max="32767" attributes="0"/>
                   <Component id="PacketRateLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="PacketRateField" alignment="0" pref="250" max="32767" attributes="0"/>
                   <Component id="PacketSizeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -70,6 +72,10 @@
               <Component id="DataLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="DataField" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="PacketStyleLabel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="PacketStyleCombo" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="PacketRateLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -228,6 +234,25 @@
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
           <ResourceString bundle="com/spam/mctool/view/dialogs/Bundle.properties" key="EditSenderDialog.PacketSizeField.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="PacketStyleLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="com/spam/mctool/view/dialogs/Bundle.properties" key="EditSenderDialog.PacketStyleLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="PacketStyleCombo">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="Item 1"/>
+            <StringItem index="1" value="Item 2"/>
+            <StringItem index="2" value="Item 3"/>
+            <StringItem index="3" value="Item 4"/>
+          </StringArray>
         </Property>
       </Properties>
     </Component>
