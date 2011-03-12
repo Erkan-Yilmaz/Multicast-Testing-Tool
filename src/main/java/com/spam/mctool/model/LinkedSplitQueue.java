@@ -92,4 +92,8 @@ public class LinkedSplitQueue<E> implements Iterable<E> {
 		this.iteratorStepSize = step;
 	}
 	
+	public synchronized E lookAtLastElement() {
+		return tail.data;
+	}
+	
 }

@@ -3,6 +3,7 @@ package com.spam.mctool.model;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.MulticastSocket;
+import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,18 +20,21 @@ public class ReceiverGroup extends MulticastStream {
 	ConcurrentHashMap<Long, Receiver> receivers;
 	byte[] buffer;
 	AnalyzeReceiverGroup analyzer;
+	long faultyPackets;
 	
 	protected ReceiverGroup(ScheduledThreadPoolExecutor stpe) {
-		receivers = new ConcurrentHashMap<Long, Receiver>(10);
+		this.receivers = new ConcurrentHashMap<Long, Receiver>(10);
 		this.stpe = stpe;
-		buffer = new byte[9000];
-		analyzer = new AnalyzeReceiverGroup();
+		this.buffer = new byte[10000];
+		this.analyzer = new AnalyzeReceiverGroup();
+		this.faultyPackets = 0;
 	}
 
 	@Override
 	public void activate() {
 		try {
 			socket = new MulticastSocket(getPort());
+			socket.setSoTimeout(statsInterval*2);
 			socket.setNetworkInterface(getNetworkInterface());
 			socket.joinGroup(group);
 			state = State.ACTIVE;
@@ -58,6 +62,7 @@ public class ReceiverGroup extends MulticastStream {
 			Packet p = new AutoPacket();
 			p.fromByteArray(buf);
 			con.packet = p;
+			con.size = dp.getLength();
 			// create new receiver for sender id if not exists
 			if(!receivers.containsKey(p.getSenderId())) {
 				synchronized(receivers) {
@@ -70,24 +75,33 @@ public class ReceiverGroup extends MulticastStream {
 			if(state == State.ACTIVE) {
 				stpe.execute(this);
 			}
+		} catch(SocketTimeoutException ste) {
+			// doesn't matter, schedule the next fetch
+			System.out.println("Timeout");
+			if(state == State.ACTIVE) {
+				stpe.execute(this);
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (DataFormatException dfe) {
-			dfe.printStackTrace();
+			faultyPackets++;
 		}
 	}
 	
 	protected static class PacketContainer {
-		public long receivedTime;
-		public Packet packet;
+		long receivedTime;
+		Packet packet;
+		int size;
 	}
 	
 	private class AnalyzeReceiverGroup implements Runnable {
 
 		public void run() {
 			for(Receiver r : receivers.values()) {
-				System.out.println(r.getStatistics());
+				if(r != null) {
+					System.out.println(r.getStatistics());
+				}
 			}
 		}
 		

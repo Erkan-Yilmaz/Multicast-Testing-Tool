@@ -19,8 +19,10 @@ public class ReceiverStatistics {
 	private long minTraversal;
 	private long avgTraversal;
 	private long maxTraversal;
-	private int packetSize;
+	private long packetSize;
 	private String payload = "";
+	private boolean alive;
+	private boolean changedAliveState;
 	
 	public long getSenderId() {
 		return senderId;
@@ -61,11 +63,17 @@ public class ReceiverStatistics {
 	public long getMaxTraversal() {
 		return maxTraversal;
 	}
-	public int getPacketSize() {
+	public long getPacketSize() {
 		return packetSize;
 	}
 	public String getPayload() {
 		return payload;
+	}
+	public boolean isAlive() {
+		return alive;
+	}
+	public boolean hasChangedAliveState() {
+		return changedAliveState;
 	}
 	void setSenderId(long senderId) {
 		this.senderId = senderId;
@@ -106,11 +114,19 @@ public class ReceiverStatistics {
 	void setMaxTraversal(long maxTraversal) {
 		this.maxTraversal = maxTraversal;
 	}
-	void setPacketSize(int packetSize) {
+	void setPacketSize(long packetSize) {
 		this.packetSize = packetSize;
 	}
 	void setPayload(String payload) {
 		this.payload = payload;
+	}
+	
+	void setAlive(boolean alive) {
+		this.alive = alive;
+	}
+	
+	void setChangedAliveState(boolean changedAliveState) {
+		this.changedAliveState = changedAliveState;
 	}
 	
 	public String toString() {
@@ -121,6 +137,7 @@ public class ReceiverStatistics {
 		sb.append("R.PPS (MIN|AVG|MAX): "+receiverMeasuredMinPPS+"|"+receiverMeasuredAvgPPS+"|"+receiverMeasuredMaxPPS+"\n");
 		sb.append("R.Trav (MIN|AVG|MAX): "+minTraversal+"|"+avgTraversal+"|"+maxTraversal+"\n");
 		sb.append("Payload: "+payload+"\n");
+		sb.append("Alive (Changed): "+alive+"|"+changedAliveState+"\n");
 		sb.append("-----------------------------------------------\n");
 		return sb.toString();
 	}

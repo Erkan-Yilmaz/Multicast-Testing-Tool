@@ -127,6 +127,7 @@ public class Sender extends MulticastStream {
 		default:
 			p = new SpamPacket();
 		}
+		p.setMinimumSize(packetSize);
 		p.setConfiguredPacketsPerSecond(senderConfiguredPacketRate);
 		p.setPayload(getData());
 		p.setSenderId(senderId);
