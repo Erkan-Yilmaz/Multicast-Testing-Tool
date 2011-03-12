@@ -8,9 +8,10 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 public class ReceiverPool implements ReceiverManager {
 	
-	int threadPoolSize = 15;
-	int statsInterval = 1000;
-	ScheduledThreadPoolExecutor stpe;
+	// internals
+	private int threadPoolSize = 15;
+	private int statsInterval = 1000;
+	private ScheduledThreadPoolExecutor stpe;
 	
 	public ReceiverPool() {
 		stpe = new ScheduledThreadPoolExecutor(threadPoolSize);

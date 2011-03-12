@@ -1,24 +1,26 @@
 package com.spam.mctool.intermediates;
 
-import java.util.Collection;
-
+import java.util.ArrayList;
+import java.util.List;
 import com.spam.mctool.model.Receiver;
-import com.spam.mctool.model.ReceiverStatistics;
+import com.spam.mctool.model.ReceiverGroup;
 
 public class ReceiverDataChangedEvent {
 	
-    private Receiver source;
-    private Collection<ReceiverStatistics> stats;
+    private ReceiverGroup source;
+    private List<Receiver> receivers;
 
-    public ReceiverDataChangedEvent(Receiver source) {
+    public ReceiverDataChangedEvent(ReceiverGroup source) {
         this.source = source;
+        this.receivers = new ArrayList<Receiver>();
     }
 
-    public Receiver getSource() {
+    public ReceiverGroup getSource() {
         return source;
     }
     
-    public Collection<ReceiverStatistics> getStatistics() {
-    	return stats;
+    public List<Receiver> getReceiverList() {
+    	return this.receivers;
     }
+    
 }
