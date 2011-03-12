@@ -1,5 +1,7 @@
 package com.spam.mctool.model.packet;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.zip.DataFormatException;
@@ -13,7 +15,7 @@ import static org.junit.Assert.*;
  */
 public class PacketTest {
 	@Test
-	public void test_validHirschmannPackets() {
+	public void testValidHirschmannPackets() {
 		// test if a valid packet will be parsed correctly
 		
 		byte[] raw = {
@@ -49,7 +51,7 @@ public class PacketTest {
 		}
 	}
 	@Test
-	public void test_invalidHirschmannPackets() {
+	public void testInvalidHirschmannPackets() {
 		byte[] raw = {
 			'H','i','r','s','c','h','m','a','n','n',
 			' ','I','P',' ','T','e','s','t','-','M',
@@ -91,7 +93,7 @@ public class PacketTest {
 	}
 	
 	@Test
-	public void test_validSpamPackets() {
+	public void testValidSpamPackets() {
 		// test if a valid packet will be parsed correctly
 		
 		byte[] raw = {
@@ -129,7 +131,7 @@ public class PacketTest {
 	}
 
 	@Test
-	public void test_invalidSpamPackets() {
+	public void testInvalidSpamPackets() {
 		// test that invalid packets will actually fail
 				
 		byte[][] errors = {
@@ -169,11 +171,9 @@ public class PacketTest {
 			fail("Exception should have been thrown");
 		}
 	}
-	
-
-	
+		
 	@Test
-	public void test_packagePadding() {
+	public void testPackagePadding() {
 		Packet p = new SpamPacket();
 		
 		for(int i=0 ; i<2 ; ++i){
@@ -201,6 +201,71 @@ public class PacketTest {
 			}
 			
 			p = new HirschmannPacket();
+		}
+	}
+	
+	private static class TestData {
+		public TestData(Packet p, String f, long c) {
+			packet = p;
+			field = f;
+			mask = c;
+		}
+		public Packet packet;
+		public String field;
+		public long mask;
+	}
+	
+	@Test
+	public void testIllegalArguments() 	
+		throws SecurityException, IllegalAccessException, 
+			   IllegalArgumentException, NoSuchMethodException 
+   {
+		SpamPacket sp = new SpamPacket();
+		HirschmannPacket hp = new HirschmannPacket();
+		
+		TestData[] data = {
+				new TestData(sp,"ConfiguredPacketsPerSecond",0xFFFFFFFFL),
+				new TestData(sp,"SenderMeasuredPacketRate",0xFFFFFFFFL),
+				new TestData(sp,"SenderId",0xFFFFFFFFL),
+				new TestData(sp,"SequenceNumber",0xFFFFFFFFL),
+				new TestData(hp,"ConfiguredPacketsPerSecond",0xFFFFL),
+				new TestData(hp,"SenderId",0xFFFFL),
+				new TestData(hp,"SequenceNumber",0xFFFFFFFFL)
+		};
+		
+		for(TestData td : data) {
+			Class<?> c = td.packet.getClass();
+			
+			for(long v : new long[] {0,1,2,3,4,9,12,td.mask,td.mask-1}){	
+				try {
+					c.getMethod("set"+td.field, long.class).invoke(td.packet, v);
+					assertEquals(v,c.getMethod("get"+td.field).invoke(td.packet));
+				} catch (InvocationTargetException e) {					
+					fail("Exceptions are bad");
+				}
+			}
+			for(long v : new long[] {-1,-2,-3,-4,-9,-12,-td.mask,td.mask+1,td.mask+2,td.mask+100}){
+				try {
+					c.getMethod("set"+td.field, long.class).invoke(td.packet, v);
+					c.getMethod("get"+td.field).invoke(td.packet);
+					fail("No exception thrown");
+				} catch (InvocationTargetException e) {
+					assertTrue(e.getCause() instanceof IllegalArgumentException);
+				}
+			}
+			
+			try {
+				hp.setSenderMeasuredPacketRate(0);
+				fail("No exception thrown");
+			}catch(UnsupportedOperationException e) {}
+			try {
+				hp.setPayload(new byte[0]);
+				fail("No exception thrown");
+			}catch(UnsupportedOperationException e) {}
+			try {
+				hp.setDispatchTime(0);
+				fail("No exception thrown");
+			}catch(UnsupportedOperationException e) {}
 		}
 	}
 }
