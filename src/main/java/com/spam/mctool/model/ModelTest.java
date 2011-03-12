@@ -20,7 +20,7 @@ public class ModelTest {
 		sp.put("pps", "100");
 		sp.put("ttl", "127");
 		sp.put("payload", "SPAM FOR THE WORLD");
-		for(int i=0; i<2; i++) {
+		for(int i=0; i<1; i++) {
 			sp.put("group", "224.0.0.1");
 			s = sm.create(sp);
 			s.activate();
@@ -30,24 +30,31 @@ public class ModelTest {
 		rp.put("ninf", "127.0.0.1");
 		rp.put("group", "224.0.0.1");
 		rp.put("port", "8888");
-		rp.put("abeh", "default");
+		rp.put("abeh", "lazy");
 		for(int i=0; i<1; i++) {
 			rp.put("group", "224.0.0.1");
 			rm.create(rp).activate();
 		}
 		
 		try {
-			Thread.sleep(10*1000);
+			Thread.sleep(3*1000);
 			s.deactivate();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			Thread.sleep(10*1000);
+			Thread.sleep(3*1000);
 			s.activate();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			Thread.sleep(2*1000);
+			sm.killAll();
+			rm.killAll();
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}

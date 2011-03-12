@@ -71,7 +71,7 @@ public class Sender extends MulticastStream {
 	protected Sender(ScheduledThreadPoolExecutor stpe) {
 		this.stpe = stpe;
 		this.sentTimes = new LinkedSplitQueue<Short>();
-		this.senderId = (long) (Long.MAX_VALUE*Math.random());
+		this.senderId = (long) (Integer.MAX_VALUE*Math.random());
 		this.analyzer = new AnalyzeSender();
 		this.analyzingBehaviour = AnalyzingBehaviour.DEFAULT;
 	}
