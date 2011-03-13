@@ -2,72 +2,46 @@ package com.spam.mctool.model;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
-import java.net.InetAddress;
 import java.net.MulticastSocket;
-import java.net.NetworkInterface;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
 import com.spam.mctool.intermediates.SenderDataChangedEvent;
 import com.spam.mctool.model.packet.HirschmannPacket;
 import com.spam.mctool.model.packet.Packet;
 import com.spam.mctool.model.packet.SpamPacket;
 
 /**
- * Multicast sender class
+ * This class represents a sender which sends in a multicast group.
  * @author Jeffrey Jedele
  */
 public class Sender extends MulticastStream {
 	
-	public static enum PacketType {
-		SPAM("Spam Packet Format"),
-		HMANN("Hirschmann Packet Format");
-		
-		private String dispName;
-		
-		PacketType(String dispName) {
-			this.dispName = dispName;
-		}
-		
-		public String getDisplayName() {
-			return this.dispName;
-		}
-		
-		public static PacketType getByIdentifier(String ident) {
-			if(ident.equals("hmann")) {
-				return PacketType.HMANN;
-			} else {
-				return PacketType.SPAM;
-			}
-		}
-	}
-	
-	protected PacketType pType;
-	
-	protected byte ttl;
-	
-	protected long senderId;
-	
+	// internals
+	private AnalyzeSender analyzer;
+	private LinkedSplitQueue<Short> sentTimes;
+	private List<SenderDataChangeListener> senderDataChangeListeners = new ArrayList<SenderDataChangeListener>();
 	private long lastSent = 0;
 	private long nowSent = 0;
-	private LinkedSplitQueue<Short> sentTimes;
-
-	private List<SenderDataChangeListener> senderDataChangeListeners = new ArrayList<SenderDataChangeListener>();
-	
-	private AnalyzeSender analyzer;
-	
+	// sender specific
+	private long senderId;
+	private byte ttl;
+	private PacketType pType;
+	private byte[] data;
+	private int packetSize;
+	private int senderConfiguredPacketRate;
+	// statistics
 	private int statsStepWidth;
-	
+	private long sentPacketCount = 0;
 	private long avgPPS;
 	private long minPPS = Integer.MAX_VALUE;
 	private long maxPPS = Integer.MIN_VALUE;
 	
+	/**
+	 * Used by the sender manager to create a new receiver.
+	 * @param stpe thread pool this is executed in
+	 */
 	protected Sender(ScheduledThreadPoolExecutor stpe) {
 		this.stpe = stpe;
 		this.sentTimes = new LinkedSplitQueue<Short>();
@@ -76,6 +50,9 @@ public class Sender extends MulticastStream {
 		this.analyzingBehaviour = AnalyzingBehaviour.DEFAULT;
 	}
 	
+	/**
+	 * Activates the stream and analyzing behaviour.
+	 */
 	@Override
 	public void activate() {
 		try {
@@ -93,6 +70,9 @@ public class Sender extends MulticastStream {
 		}
 	}
 	
+	/**
+	 * Deactivates the stream and analyzing behaviour.
+	 */
 	@Override
 	public void deactivate() {
 		sf.cancel(true);
@@ -100,6 +80,9 @@ public class Sender extends MulticastStream {
 		this.state = State.INACTIVE;
 	}
 	
+	/**
+	 * This is automatically run by the executing thread pool when the stream is active.
+	 */
 	public void run() {
 		try {
 			byte[] p = this.getPacket().toByteArray().array();
@@ -114,22 +97,17 @@ public class Sender extends MulticastStream {
 		}
 	}
 	
-	public void setSenderConfiguredPacketRate(int pps) throws IllegalArgumentException {
-		this.senderConfiguredPacketRate = pps;
-	}
-	
+	// this is used as packet factory for packets
 	private Packet getPacket() {
 		Packet p;
-		switch(this.pType) {
-		case HMANN:
+		if(pType == PacketType.HMANN) {
 			p = new HirschmannPacket();
-			break;
-		default:
+		} else {
 			p = new SpamPacket();
 		}
 		p.setMinimumSize(packetSize);
 		p.setConfiguredPacketsPerSecond(senderConfiguredPacketRate);
-		p.setPayload(getData());
+		p.setPayload(data);
 		p.setSenderId(senderId);
 		p.setDispatchTime(System.currentTimeMillis());
 		p.setSequenceNumber(++sentPacketCount);
@@ -137,10 +115,11 @@ public class Sender extends MulticastStream {
 		return p;
 	}
 	
+	// this is uses to analyze the queued sending intervals
 	private class AnalyzeSender implements Runnable {
 		
 		private LinkedSplitQueue<Short> data;
-		private long counter = 0;
+		private long counter = -1;
 
 		public void run() {
 			if(sentTimes.size()>statsStepWidth) {
@@ -157,63 +136,166 @@ public class Sender extends MulticastStream {
 					avg /= valcnt; 
 					avg = 1.0E3 / Math.ceil(avg);
 					avgPPS = Math.round(avg);
-					if(avgPPS < minPPS) {
-						minPPS = avgPPS;
-					}
-					if(avgPPS > maxPPS) {
-						maxPPS = avgPPS;
-					}
+					minPPS = Math.min(minPPS, avgPPS);
+					maxPPS = Math.max(maxPPS, avgPPS);
 					fireSenderDataChangedEvent();
 				} else {
 					sentTimes.split();
 				}
 			}
 		}
-		
-	}
-
-	public void addSenderDataChangeListener(SenderDataChangeListener l) {
-		senderDataChangeListeners.add(l);
 	}
 	
-	public void removeSenderDataChangeListener(SenderDataChangeListener l) {
-		senderDataChangeListeners.remove(l);
-	}
-	
+	// notifies all SenderDataChangeListeners about new statistical data
 	private void fireSenderDataChangedEvent() {
-		SenderStatistics stats = new SenderStatistics();
-		stats.setMinPPS(minPPS);
-		stats.setAvgPPS(avgPPS);
-		stats.setMaxPPS(maxPPS);
-		stats.setSentPackets(sentPacketCount);
-		SenderDataChangedEvent e = new SenderDataChangedEvent(this, stats);
+		SenderDataChangedEvent e = new SenderDataChangedEvent(this);
 		for(SenderDataChangeListener l : senderDataChangeListeners) {
 			l.dataChanged(e);
 		}
 	}
-
-	public long getSenderId() {
-		return senderId;
+	
+	/**
+	 * @param pps to send
+	 */
+	public void setSenderConfiguredPacketRate(int pps) {
+		this.senderConfiguredPacketRate = pps;
+	}
+	
+	/**
+	 * @return pps that are sent
+	 */
+	protected int getSenderConfiguredPacketRate() {
+		return senderConfiguredPacketRate;
 	}
 
+	/**
+	 * @param l new Listener to subscribe SenderDataChangedEvents
+	 */
+	public void addSenderDataChangeListener(SenderDataChangeListener l) {
+		senderDataChangeListeners.add(l);
+	}
+	
+	/**
+	 * @param l Listener to unsubscribe from SenderDataChangedEvents
+	 */
+	public void removeSenderDataChangeListener(SenderDataChangeListener l) {
+		senderDataChangeListeners.remove(l);
+	}
+
+	/**
+	 * @return the id number of this sender
+	 */
+	public int getSenderId() {
+		return (int)senderId;
+	}
+	
+	/**
+	 * @param senderId new id number for this sender
+	 */
+	public void setSenderId(int senderId) {
+		this.senderId = senderId; 
+	}
+
+	/**
+	 * @return type of packets this sender sends
+	 */
 	public PacketType getpType() {
 		return pType;
 	}
 
+	/**
+	 * @param pType type of packets to send
+	 */
 	public void setpType(PacketType pType) {
 		this.pType = pType;
 	}
 
+	/**
+	 * @return time to live of sent packets
+	 */
 	public byte getTtl() {
 		return ttl;
 	}
 
+	/**
+	 * @param ttl time to live of sent packets
+	 */
 	public void setTtl(byte ttl) {
 		this.ttl = ttl;
 	}
 
-	protected LinkedSplitQueue<Short> getSentTimes() {
-		return sentTimes;
+	/**
+	 * @return size of sent packets in byte
+	 */
+	protected int getPacketSize() {
+		return packetSize;
+	}
+
+	/**
+	 * @param packetSize size of sent packets in byte
+	 */
+	protected void setPacketSize(int packetSize) {
+		this.packetSize = packetSize;
+	}
+
+	/**
+	 * @return sent payload as byte array
+	 */
+	protected byte[] getPayload() {
+		return data;
+	}
+	
+	/**
+	 * @return sent payload as string or null if parsing is not possible
+	 */
+	public String getPayloadAsString() {
+		String s = null;
+		try {
+			s = new String(data);
+		} catch(Exception e) {}
+		return s;
+	}
+
+	/**
+	 * @param data sent payload from byte array
+	 */
+	public void setPayload(byte[] payload) {
+		this.data = payload;
+	}
+	
+	/**
+	 * @param payload sent payload from string
+	 */
+	public void setPayloadFromString(String payload) {
+		this.data = payload.getBytes();
+	}
+
+	/**
+	 * @return number of overall sent packets
+	 */
+	protected long getSentPacketCount() {
+		return sentPacketCount;
+	}
+
+	/**
+	 * @return average measured packets per second
+	 */
+	public long getAvgPPS() {
+		return avgPPS;
+	}
+
+	/**
+	 * @return minimum measured packets per second
+	 */
+	public long getMinPPS() {
+		return (minPPS==Long.MAX_VALUE) ? 0 : minPPS;
+	}
+
+	/**
+	 * @return maximum measured packets per second
+	 */
+	public long getMaxPPS() {
+		return (maxPPS==Long.MIN_VALUE) ? 0 : maxPPS;
 	}
 	
 }

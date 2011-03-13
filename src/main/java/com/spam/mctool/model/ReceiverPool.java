@@ -3,6 +3,8 @@ package com.spam.mctool.model;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
@@ -12,9 +14,11 @@ public class ReceiverPool implements ReceiverManager {
 	private int threadPoolSize = 15;
 	private int statsInterval = 1000;
 	private ScheduledThreadPoolExecutor stpe;
+	private List<ReceiverGroup> receiverGroups;
 	
 	public ReceiverPool() {
 		stpe = new ScheduledThreadPoolExecutor(threadPoolSize);
+		receiverGroups = new LinkedList<ReceiverGroup>();
 	}
 
 	public void addReceiverAddedOrRemovedListener(
@@ -58,18 +62,17 @@ public class ReceiverPool implements ReceiverManager {
 		rec.setNetworkInterface(ninf);
 		rec.setAnalyzingBehaviour(abeh);
 		rec.setStatsInterval(statsInterval);
+		receiverGroups.add(rec);
 	
 		return rec;
 	}
 
 	public Collection<ReceiverGroup> getReceiver() {
-		// TODO Auto-generated method stub
-		return null;
+		return receiverGroups;
 	}
 
 	public void killAll() {
-		// TODO Auto-generated method stub
-
+		stpe.shutdown();
 	}
 
 	public void remove(ReceiverGroup receiver) {

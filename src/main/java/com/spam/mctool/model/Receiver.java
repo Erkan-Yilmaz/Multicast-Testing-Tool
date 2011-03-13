@@ -1,7 +1,10 @@
 package com.spam.mctool.model;
 
 import java.util.Date;
+
+import com.spam.mctool.model.MulticastStream.PacketType;
 import com.spam.mctool.model.ReceiverGroup.PacketContainer;
+import com.spam.mctool.model.packet.HirschmannPacket;
 
 /**
  * This class represents the datastream of single sender in a multicast
@@ -37,6 +40,7 @@ public class Receiver {
 	private long maxTraversal = Long.MIN_VALUE;
 	private byte[] lastPayload;
 	private long lastPacketSize;
+	private PacketType lastPacketType;
 	
 	// is automatically created by ReceiverGroup when new sender id is discovered
 	Receiver(long senderId, MulticastStream.AnalyzingBehaviour abeh) {
@@ -92,6 +96,11 @@ public class Receiver {
 		senderSentPackets = last.packet.getSequenceNumber();
 		lastPayload = last.packet.getPayload();
 		lastPacketSize = last.packet.getSize();
+		if(last.packet instanceof HirschmannPacket) {
+			lastPacketType = PacketType.HMANN;
+		} else {
+			lastPacketType = PacketType.SPAM;
+		}
 	}
 	
 	/**
@@ -307,12 +316,19 @@ public class Receiver {
 	}
 	
 	/**
+	 * @return the types of packets received on this stream
+	 */
+	public PacketType getPacketType() {
+		return lastPacketType;
+	}
+	
+	/**
 	 * @return a meaningful string representation of the state of this receiver
 	 */
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		sb.append("--- Receiver Stats for: "+getSenderId()+"---\n");
-		sb.append("Div (R.P.|L.P.|M.Del): "+getReceivedPackets()+"|"+getLostPackets()+"|"+getMaxDelay()+"\n");
+		sb.append("Div (R.P.|L.P.|M.Del|P.Type): "+getReceivedPackets()+"|"+getLostPackets()+"|"+getMaxDelay()+"|"+getPacketType().getDisplayName()+"\n");
 		sb.append("Sender (C.PPS|M.PPS|S.P|P.S): "+getSenderConfiguredPPS()+"|"+getSenderMeasuredPPS()+"|"+getSenderSentPackets()+"|"+getPacketSize()+"\n");
 		sb.append("R.PPS (MIN|AVG|MAX): "+getMinPPS()+"|"+getAvgPPS()+"|"+getMaxPPS()+"\n");
 		sb.append("R.Trav (MIN|AVG|MAX): "+getMinTraversal()+"|"+getAvgTraversal()+"|"+getMaxTraversal()+"\n");

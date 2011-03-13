@@ -5,6 +5,8 @@ import java.net.DatagramPacket;
 import java.net.MulticastSocket;
 import java.nio.ByteBuffer;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -29,6 +31,7 @@ public class ReceiverGroup extends MulticastStream {
 	private byte[] buffer;
 	private AnalyzeReceiverGroup analyzer;
 	private long faultyPackets;
+	private List<ReceiverDataChangeListener> rdclListeners;
 	// overall statistics
 	private Object statsLock = new Object();
 	private long maxDelay = 0;
@@ -55,6 +58,7 @@ public class ReceiverGroup extends MulticastStream {
 		this.buffer = new byte[10000];
 		this.analyzer = new AnalyzeReceiverGroup();
 		this.faultyPackets = 0;
+		this.rdclListeners = new LinkedList<ReceiverDataChangeListener>();
 	}
 
 	@Override
@@ -128,8 +132,9 @@ public class ReceiverGroup extends MulticastStream {
 	// this is scheduled in the executor thread pool to analyze the data of the receivers
 	private class AnalyzeReceiverGroup implements Runnable {
 		public void run() {
+			ReceiverDataChangedEvent rdce = new ReceiverDataChangedEvent(ReceiverGroup.this);
+			
 			synchronized(statsLock) {
-				ReceiverDataChangedEvent rdce = new ReceiverDataChangedEvent(ReceiverGroup.this);
 				receivedPackets = lostPackets = senderConfiguredPPS = senderMeasuredPPS = senderSentPackets = avgPPS = avgTraversal = 0;
 				minPPS = minTraversal = Long.MAX_VALUE;
 				maxDelay = maxPPS = maxTraversal = Long.MIN_VALUE;
@@ -156,6 +161,44 @@ public class ReceiverGroup extends MulticastStream {
 				avgPPS /= valcnt;
 				avgTraversal /= valcnt;
 			}
+			
+			fireReceiverDataChangedEvent(rdce);
+		}
+	}
+	
+	/**
+	 * Add a new ReceiverDataChangeListener to the ReceiverGroup
+	 * @param l
+	 */
+	public void addReceiverDataChangeListener(ReceiverDataChangeListener l) {
+		this.rdclListeners.add(l);
+	}
+	
+	/**
+	 * Remove a ReceiverDataChangeListener from the ReceiverGroup
+	 * @param l
+	 */
+	public void removeReceiverDataChangeListener(ReceiverDataChangeListener l) {
+		this.rdclListeners.remove(l);
+	}
+	
+	// used to fire an event to all listeners
+	private void fireReceiverDataChangedEvent(ReceiverDataChangedEvent e) {
+		for(ReceiverDataChangeListener l : rdclListeners) {
+			l.dataChanged(e);
+		}
+	}
+	
+	/**
+	 * Removes a receiver from the list, no additional statistics will be send till new packets arrive
+	 * @param r a Receiver or a String with the sender id the Receiver listens to
+	 */
+	public void removeReceiver(Object r) {
+		if(r instanceof String) {
+			receivers.remove(r);
+		}
+		if(r instanceof Receiver) {
+			receivers.remove(((Receiver)r).getSenderId());
 		}
 	}
 

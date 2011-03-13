@@ -33,7 +33,7 @@ public class SenderPool implements SenderManager {
 		byte ttl;
 		int pps;
 		int psize;
-		byte[] payload;
+		String payload;
 		Sender.PacketType ptype;
 		NetworkInterface ninf;
 		MulticastStream.AnalyzingBehaviour abeh;
@@ -48,11 +48,7 @@ public class SenderPool implements SenderManager {
 			if(pps<=0 || pps>1000) throw new Exception();
 			psize = new Integer(params.get("psize"));
 			if(psize<150 || psize>9000) throw new Exception();
-			String pstring = params.get("payload");
-			if(pstring == null) {
-				pstring = "";
-			}
-			payload = pstring.getBytes();
+			payload = params.get("payload");
 			ptype = Sender.PacketType.getByIdentifier(params.get("ptype"));
 			abeh = MulticastStream.AnalyzingBehaviour.getByIdentifier(params.get("abeh"));
 		} catch(Exception e) {
@@ -66,7 +62,7 @@ public class SenderPool implements SenderManager {
 		sender.setTtl(ttl);
 		sender.setSenderConfiguredPacketRate(pps);
 		sender.setPacketSize(psize);
-		sender.setData(payload);
+		sender.setPayloadFromString(payload);
 		sender.setpType(ptype);
 		sender.setNetworkInterface(ninf);
 		sender.setAnalyzingBehaviour(abeh);
