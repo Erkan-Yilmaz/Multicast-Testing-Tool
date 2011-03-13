@@ -202,4 +202,116 @@ public class ReceiverGroup extends MulticastStream {
 		}
 	}
 
+	/**
+	 * @return exceptions that were caught
+	 */
+	public Map<Long, Exception> getExceptions() {
+		return exceptions;
+	}
+
+	/**
+	 * @return number of packets that could not be parsed
+	 */
+	public long getFaultyPackets() {
+		return faultyPackets;
+	}
+
+	/**
+	 * @return overall maximal delay for all receivers
+	 */
+	public long getMaxDelay() {
+		return maxDelay;
+	}
+
+	/**
+	 * @return overall received packets
+	 */
+	public long getReceivedPackets() {
+		return receivedPackets;
+	}
+
+	/**
+	 * @return overall lost packets
+	 */
+	public long getLostPackets() {
+		return lostPackets;
+	}
+
+	/**
+	 * @return sum of configured packet rates of all senders in this group
+	 */
+	public long getSenderConfiguredPPS() {
+		return senderConfiguredPPS;
+	}
+
+	/**
+	 * @return sum of measured packet rates from all senders in this group
+	 */
+	public long getSenderMeasuredPPS() {
+		return senderMeasuredPPS;
+	}
+
+	/**
+	 * @return sum of sent packets for all senders on this group
+	 */
+	public long getSenderSentPackets() {
+		return senderSentPackets;
+	}
+
+	/**
+	 * @return overall minimum measured pps
+	 */
+	public long getMinPPS() {
+		return minPPS;
+	}
+
+	/**
+	 * @return overall maximum measured pps
+	 */
+	public long getMaxPPS() {
+		return maxPPS;
+	}
+
+	/**
+	 * @return overall minimum traversal time in ms
+	 */
+	public long getMinTraversal() {
+		return minTraversal;
+	}
+
+	/**
+	 * @return overall maximum traversal time in ms
+	 */
+	public long getMaxTraversal() {
+		return maxTraversal;
+	}
+	
+	/**
+	 * @return overall measured pps
+	 */
+	public long getAvgPPS() {
+		return avgPPS;
+	}
+
+	/**
+	 * @return overall avg traversal time in ms
+	 */
+	public long getAvgTraversal() {
+		return avgTraversal;
+	}
+
+	/**
+	 * @return a meaningful string representation of the state of this receiver
+	 */
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("--- ReceiverGroup Stats for: "+group+"---\n");
+		sb.append("Div (R.P.|L.P.|M.Del): "+getReceivedPackets()+"|"+getLostPackets()+"|"+getMaxDelay()+"\n");
+		sb.append("Sender (C.PPS|M.PPS|S.P): "+getSenderConfiguredPPS()+"|"+getSenderMeasuredPPS()+"|"+getSenderSentPackets()+"\n");
+		sb.append("R.PPS (MIN|AVG|MAX): "+getMinPPS()+"|"+getAvgPPS()+"|"+getMaxPPS()+"\n");
+		sb.append("R.Trav (MIN|AVG|MAX): "+getMinTraversal()+"|"+getAvgTraversal()+"|"+getMaxTraversal()+"\n");
+		sb.append("-----------------------------------------------\n");
+		return sb.toString();
+	}
+
 }

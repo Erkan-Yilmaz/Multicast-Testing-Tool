@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.MulticastSocket;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import com.spam.mctool.intermediates.SenderDataChangedEvent;
@@ -24,6 +27,7 @@ public class Sender extends MulticastStream {
 	private List<SenderDataChangeListener> senderDataChangeListeners = new ArrayList<SenderDataChangeListener>();
 	private long lastSent = 0;
 	private long nowSent = 0;
+	private Map<Long, Exception> exceptions;
 	// sender specific
 	private long senderId;
 	private byte ttl;
@@ -48,6 +52,7 @@ public class Sender extends MulticastStream {
 		this.senderId = (long) (Integer.MAX_VALUE*Math.random());
 		this.analyzer = new AnalyzeSender();
 		this.analyzingBehaviour = AnalyzingBehaviour.DEFAULT;
+		this.exceptions = new LinkedHashMap<Long, Exception>();
 	}
 	
 	/**
@@ -56,17 +61,18 @@ public class Sender extends MulticastStream {
 	@Override
 	public void activate() {
 		try {
-			this.socket = new MulticastSocket(this.getPort());
-			this.socket.setNetworkInterface(this.getNetworkInterface());
-			this.socket.setTimeToLive(this.getTtl());
-			this.socket.joinGroup(this.getGroup());
-			this.statsStepWidth = analyzingBehaviour.getDynamicStatsStepWidth(this.getSenderConfiguredPacketRate());
+			// open the network socket and join group
+			socket = new MulticastSocket(port);
+			socket.setNetworkInterface(networkInterface);
+			socket.setTimeToLive(ttl);
+			socket.joinGroup(group);
+			// schedule sending and analyzing jobs
 			long period = (long) (1E3/this.senderConfiguredPacketRate);
-			this.sf = this.stpe.scheduleAtFixedRate(this, 0, period, TimeUnit.MILLISECONDS);
-			this.asf = this.stpe.scheduleWithFixedDelay(analyzer, statsInterval, statsInterval, TimeUnit.MILLISECONDS);
-			this.state = State.ACTIVE;
+			sf = this.stpe.scheduleAtFixedRate(this, 0, period, TimeUnit.MILLISECONDS);
+			asf = this.stpe.scheduleWithFixedDelay(analyzer, statsInterval, statsInterval, TimeUnit.MILLISECONDS);
+			state = State.ACTIVE;
 		} catch (IOException e) {
-			e.printStackTrace();
+			exceptions.put(System.currentTimeMillis(), e);
 		}
 	}
 	
@@ -123,9 +129,12 @@ public class Sender extends MulticastStream {
 
 		public void run() {
 			if(sentTimes.size()>statsStepWidth) {
+				// analyze if enough sending intervals are buffered
 				data = sentTimes.split();
 				counter++;
 				if(counter%analyzingBehaviour.getDiv() == 0) {
+					// if stats are to be calced new
+					statsStepWidth = analyzingBehaviour.getDynamicStatsStepWidth(avgPPS); //TODO check if this works
 					int valcnt = 0;
 					double avg = 0;
 					data.setIteratorStepSize(statsStepWidth);
@@ -140,6 +149,7 @@ public class Sender extends MulticastStream {
 					maxPPS = Math.max(maxPPS, avgPPS);
 					fireSenderDataChangedEvent();
 				} else {
+					// clear the buffer
 					sentTimes.split();
 				}
 			}
@@ -164,7 +174,7 @@ public class Sender extends MulticastStream {
 	/**
 	 * @return pps that are sent
 	 */
-	protected int getSenderConfiguredPacketRate() {
+	public int getSenderConfiguredPacketRate() {
 		return senderConfiguredPacketRate;
 	}
 
@@ -227,21 +237,21 @@ public class Sender extends MulticastStream {
 	/**
 	 * @return size of sent packets in byte
 	 */
-	protected int getPacketSize() {
+	public int getPacketSize() {
 		return packetSize;
 	}
 
 	/**
 	 * @param packetSize size of sent packets in byte
 	 */
-	protected void setPacketSize(int packetSize) {
+	public void setPacketSize(int packetSize) {
 		this.packetSize = packetSize;
 	}
 
 	/**
 	 * @return sent payload as byte array
 	 */
-	protected byte[] getPayload() {
+	public byte[] getPayload() {
 		return data;
 	}
 	
@@ -273,7 +283,7 @@ public class Sender extends MulticastStream {
 	/**
 	 * @return number of overall sent packets
 	 */
-	protected long getSentPacketCount() {
+	public long getSentPacketCount() {
 		return sentPacketCount;
 	}
 
@@ -298,4 +308,22 @@ public class Sender extends MulticastStream {
 		return (maxPPS==Long.MIN_VALUE) ? 0 : maxPPS;
 	}
 	
+	/**
+	 * @return caught exceptions
+	 */
+	public Map<Long, Exception> getExceptions() {
+		return Collections.unmodifiableMap(exceptions);
+	}
+	
+	/**
+	 * @return a meaningful string representation of this sender
+	 */
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("--- Sender Stats for: "+senderId+" ---\n");
+		sb.append("C.R.|P.Size|P.Sent|P.Type: "+getSenderConfiguredPacketRate()+"|"+getPacketSize()+"|"+getpType().getDisplayName()+"\n");
+		sb.append("PPS (MIN|AVG|MAX): "+getMinPPS()+"|"+getAvgPPS()+"|"+getMaxPPS()+"\n");
+		sb.append("----------------------------------------\n");
+		return sb.toString();
+	}
 }

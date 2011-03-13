@@ -4,8 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
+import com.spam.mctool.intermediates.SenderDataChangedEvent;
 
-public class ModelTest implements ReceiverDataChangeListener {
+public class ModelTest implements ReceiverDataChangeListener, SenderDataChangeListener {
 	
 	public static void main(String... args) {
 		SenderManager sm = new SenderPool();
@@ -19,13 +20,14 @@ public class ModelTest implements ReceiverDataChangeListener {
 		sp.put("port", "8888");
 		sp.put("ptype", "spam");
 		sp.put("psize", "1000");
-		sp.put("abeh", "eager");
-		sp.put("pps", "1000");
+		sp.put("abeh", "default");
+		sp.put("pps", "10");
 		sp.put("ttl", "127");
 		sp.put("payload", "SPAM FOR THE WORLD");
 		for(int i=0; i<1; i++) {
 			sp.put("group", "224.0.0.1");
 			s = sm.create(sp);
+			s.addSenderDataChangeListener(mt);
 			s.activate();
 		}
 		
@@ -33,7 +35,7 @@ public class ModelTest implements ReceiverDataChangeListener {
 		rp.put("ninf", "127.0.0.1");
 		rp.put("group", "224.0.0.1");
 		rp.put("port", "8888");
-		rp.put("abeh", "eager");
+		rp.put("abeh", "default");
 		for(int i=0; i<1; i++) {
 			rp.put("group", "224.0.0.1");
 			ReceiverGroup r = rm.create(rp);
@@ -67,9 +69,14 @@ public class ModelTest implements ReceiverDataChangeListener {
 	}
 
 	public void dataChanged(ReceiverDataChangedEvent e) {
+		System.out.println(e.getSource());
 		for(Receiver r : e.getReceiverList()) {
 			System.out.println(r);
 		}
+	}
+
+	public void dataChanged(SenderDataChangedEvent e) {
+		System.out.println(e.getSource());
 	}
 	
 }
