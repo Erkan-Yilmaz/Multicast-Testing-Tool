@@ -21,7 +21,7 @@ public class ModelTest implements ReceiverDataChangeListener, SenderDataChangeLi
 		sp.put("ptype", "spam");
 		sp.put("psize", "1000");
 		sp.put("abeh", "default");
-		sp.put("pps", "10");
+		sp.put("pps", "100");
 		sp.put("ttl", "127");
 		sp.put("payload", "SPAM FOR THE WORLD");
 		for(int i=0; i<1; i++) {

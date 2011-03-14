@@ -145,6 +145,11 @@ public class EditReceiverDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
+        /*
+         * 
+         *
+         *
+        */
         if(this.receiver == null){
             this.receiver = new Receiver();
         }

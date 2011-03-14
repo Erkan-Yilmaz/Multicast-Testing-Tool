@@ -253,7 +253,7 @@ public class EditSenderDialog extends javax.swing.JDialog {
         this.GroupField.setEnabled(false);
         this.PortField.setValue(this.sender.getPort());
         this.PortField.setEnabled(false);
-        this.DataField.setText(String.valueOf(this.sender.getData()));
+        this.DataField.setText(this.sender.getPayloadAsString());
         this.DataField.setEnabled(false);
         this.PacketRateField.setValue(this.sender.getSenderConfiguredPacketRate());
         this.PacketSizeField.setValue(this.sender.getPacketSize());
