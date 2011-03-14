@@ -118,6 +118,7 @@ public class LinkedSplitQueue<E> implements Iterable<E> {
 	 * @param step stepwidth to set
 	 */
 	public void setIteratorStepSize(int step) {
+		if(step<=0) step=1; // escape step widths of zero
 		this.iteratorStepSize = step;
 	}
 	

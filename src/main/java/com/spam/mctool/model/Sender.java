@@ -51,7 +51,6 @@ public class Sender extends MulticastStream {
 		this.sentTimes = new LinkedSplitQueue<Short>();
 		this.senderId = (long) (Integer.MAX_VALUE*Math.random());
 		this.analyzer = new AnalyzeSender();
-		this.analyzingBehaviour = AnalyzingBehaviour.DEFAULT;
 		this.exceptions = new LinkedHashMap<Long, Exception>();
 	}
 	
@@ -69,6 +68,8 @@ public class Sender extends MulticastStream {
 			// schedule sending and analyzing jobs
 			long period = (long) (1E3/this.senderConfiguredPacketRate);
 			sf = this.stpe.scheduleAtFixedRate(this, 0, period, TimeUnit.MILLISECONDS);
+			statsStepWidth = analyzingBehaviour.getDynamicStatsStepWidth(senderConfiguredPacketRate);
+			analyzer.counter = analyzingBehaviour.getDiv()-1;
 			asf = this.stpe.scheduleWithFixedDelay(analyzer, statsInterval, statsInterval, TimeUnit.MILLISECONDS);
 			state = State.ACTIVE;
 		} catch (IOException e) {
@@ -92,7 +93,7 @@ public class Sender extends MulticastStream {
 	public void run() {
 		try {
 			byte[] p = this.getPacket().toByteArray().array();
-			DatagramPacket dp = new DatagramPacket(p, p.length, this.getGroup(), this.getPort());
+			DatagramPacket dp = new DatagramPacket(p, packetSize, this.getGroup(), this.getPort());
 			this.socket.send(dp);
 			// no synchronization needed because usage of java concurrency api
 			nowSent = System.currentTimeMillis();
@@ -105,19 +106,24 @@ public class Sender extends MulticastStream {
 	
 	// this is used as packet factory for packets
 	private Packet getPacket() {
-		Packet p;
-		if(pType == PacketType.HMANN) {
-			p = new HirschmannPacket();
-		} else {
-			p = new SpamPacket();
+		Packet p = null;
+		try {
+			if(pType == PacketType.HMANN) {
+				p = new HirschmannPacket();
+			} else {
+				p = new SpamPacket();
+				p.setPayload(data);
+			}
+			p.setMinimumSize(packetSize);
+			p.setConfiguredPacketsPerSecond(senderConfiguredPacketRate);
+			p.setSenderId(senderId);
+			p.setDispatchTime(System.currentTimeMillis());
+			p.setSequenceNumber(++sentPacketCount);
+			p.setSenderMeasuredPacketRate(avgPPS);
+		} catch(Exception e) {
+			System.out.println(avgPPS);
+			System.out.println(e);
 		}
-		p.setMinimumSize(packetSize);
-		p.setConfiguredPacketsPerSecond(senderConfiguredPacketRate);
-		p.setPayload(data);
-		p.setSenderId(senderId);
-		p.setDispatchTime(System.currentTimeMillis());
-		p.setSequenceNumber(++sentPacketCount);
-		p.setSenderMeasuredPacketRate(avgPPS);
 		return p;
 	}
 	
@@ -125,7 +131,7 @@ public class Sender extends MulticastStream {
 	private class AnalyzeSender implements Runnable {
 		
 		private LinkedSplitQueue<Short> data;
-		private long counter = -1;
+		private long counter;
 
 		public void run() {
 			if(sentTimes.size()>statsStepWidth) {
@@ -134,7 +140,6 @@ public class Sender extends MulticastStream {
 				counter++;
 				if(counter%analyzingBehaviour.getDiv() == 0) {
 					// if stats are to be calced new
-					statsStepWidth = analyzingBehaviour.getDynamicStatsStepWidth(avgPPS); //TODO check if this works
 					int valcnt = 0;
 					double avg = 0;
 					data.setIteratorStepSize(statsStepWidth);
@@ -143,7 +148,7 @@ public class Sender extends MulticastStream {
 						valcnt++;
 					}
 					avg /= valcnt; 
-					avg = 1.0E3 / Math.ceil(avg);
+					avg = 1.0E3 / Math.round(avg);
 					avgPPS = Math.round(avg);
 					minPPS = Math.min(minPPS, avgPPS);
 					maxPPS = Math.max(maxPPS, avgPPS);
