@@ -1,6 +1,10 @@
 <?xml version="1.1" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.JSpinner" name="jSpinner1">
+    </Component>
+  </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
   </Properties>
@@ -25,10 +29,10 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="GroupField" alignment="0" pref="250" max="32767" attributes="1"/>
-                  <Component id="GroupLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="GroupLabel" min="-2" max="-2" attributes="0"/>
                   <Component id="PortLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="PortField" alignment="0" pref="250" max="32767" attributes="1"/>
+                  <Component id="GroupField" alignment="0" pref="250" max="32767" attributes="0"/>
+                  <Component id="PortField" alignment="0" pref="250" max="32767" attributes="0"/>
                   <Component id="InterfaceLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="InterfaceCombo" alignment="0" pref="250" max="32767" attributes="0"/>
                   <Component id="DataField" alignment="1" pref="250" max="32767" attributes="0"/>
@@ -38,9 +42,8 @@
                   <Component id="PacketRateLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="PacketRateField" alignment="0" pref="250" max="32767" attributes="0"/>
                   <Component id="PacketSizeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="TTLLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="TTLField" alignment="0" pref="250" max="32767" attributes="0"/>
                   <Component id="PacketSizeField" alignment="0" pref="250" max="32767" attributes="0"/>
+                  <Component id="TTLLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="ActivateBox" alignment="0" pref="250" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
@@ -48,6 +51,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="CancelButton" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="TTLField" alignment="0" pref="250" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -60,11 +64,11 @@
               <Component id="GroupLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="GroupField" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="PortLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="PortField" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="InterfaceLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="InterfaceCombo" min="-2" max="-2" attributes="0"/>
@@ -80,11 +84,11 @@
               <Component id="PacketRateLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="PacketRateField" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="PacketSizeLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="PacketSizeField" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="TTLLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="TTLField" min="-2" max="-2" attributes="0"/>
@@ -126,13 +130,6 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="OKButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="PortField">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="com/spam/mctool/view/dialogs/Bundle.properties" key="EditSenderDialog.PortField.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JButton" name="CancelButton">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -167,13 +164,6 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="GroupField">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="com/spam/mctool/view/dialogs/Bundle.properties" key="EditSenderDialog.GroupField.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JCheckBox" name="ActivateBox">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
@@ -202,13 +192,6 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="PacketRateField">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="com/spam/mctool/view/dialogs/Bundle.properties" key="EditSenderDialog.PacketRateField.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="PacketSizeLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
@@ -220,20 +203,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
           <ResourceString bundle="com/spam/mctool/view/dialogs/Bundle.properties" key="EditSenderDialog.TTLLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="TTLField">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="com/spam/mctool/view/dialogs/Bundle.properties" key="EditSenderDialog.TTLField.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="PacketSizeField">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="com/spam/mctool/view/dialogs/Bundle.properties" key="EditSenderDialog.PacketSizeField.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
@@ -255,6 +224,21 @@
           </StringArray>
         </Property>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="GroupField">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="com/spam/mctool/view/dialogs/Bundle.properties" key="EditSenderDialog.GroupField.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="PortField">
+    </Component>
+    <Component class="javax.swing.JSpinner" name="PacketRateField">
+    </Component>
+    <Component class="javax.swing.JSpinner" name="PacketSizeField">
+    </Component>
+    <Component class="javax.swing.JSpinner" name="TTLField">
     </Component>
   </SubComponents>
 </Form>
