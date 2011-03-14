@@ -1,242 +1,341 @@
 package com.spam.mctool.model;
 
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.zip.DataFormatException;
+import java.util.Date;
 
-import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
-import com.spam.mctool.model.packet.Packet;
-import com.spam.mctool.model.packet.SpamPacket;
+import com.spam.mctool.model.MulticastStream.PacketType;
+import com.spam.mctool.model.ReceiverGroup.PacketContainer;
+import com.spam.mctool.model.packet.HirschmannPacket;
 
-public class Receiver extends MulticastStream {
+/**
+ * This class represents the datastream of single sender in a multicast
+ * group on receiver side
+ * @author Jeffrey Jedele
+ */
+public class Receiver {
 	
-	private class PacketContainer {
-		public Packet packet;
-		public long received;
-	}
-	
-	private long lostPackets = 0;
-	private int faultyPackets = 0;
-	
-	private long avgTraversal = 0;
-	private long minTraversal = Long.MAX_VALUE;
-	private long maxTraversal = Long.MIN_VALUE;
-	
-	private long avgPacketRate = 0;
-	private long minPacketRate = Long.MAX_VALUE;
-	private long maxPacketRate = Long.MIN_VALUE;
-	
-	private long senderMeasuredRate = 0;
-	
-	private long senderConfiguredRate = 0;
+	// head data
 	private long senderId;
-	private String senderPayload;
+	private long lastReceivedTime = 0;
+	private boolean alive;
+	private boolean aliveStateChanged;
+	// internals
+	private LinkedSplitQueue<ReceiverGroup.PacketContainer> packetQueue;
+	private MulticastStream.AnalyzingBehaviour abeh;
+	private long statsCounter = -1;
+	private int statsStepSize = 1;
+	private long timeout = 2000;
+	private long lastPacketNo = 0;
+	// statistics
+	private int maxDelay = 0;
+	private long receivedPackets = 0;
+	private long lostPackets = 0;
+	private long senderConfiguredPPS = 0;
+	private long senderMeasuredPPS = 0;
+	private long senderSentPackets = 0;
+	private int minPPS = Integer.MAX_VALUE;
+	private int avgPPS = 0;
+	private int maxPPS = Integer.MIN_VALUE;
+	private long minTraversal = Long.MAX_VALUE;
+	private long avgTraversal = 0;
+	private long maxTraversal = Long.MIN_VALUE;
+	private byte[] lastPayload;
+	private long lastPacketSize;
+	private PacketType lastPacketType;
 	
-	private long receivedCounter = 0;
-	private long lastPacket = -1;
-	
-	private Queue<PacketContainer> receivedPackets;
-	
-	private List<ReceiverDataChangeListener> receiverDataChangeListeners = new ArrayList<ReceiverDataChangeListener>();
-
-	@Override
-	protected void init() {
-		receivedPackets = new LinkedList<PacketContainer>();
+	// is automatically created by ReceiverGroup when new sender id is discovered
+	Receiver(long senderId, MulticastStream.AnalyzingBehaviour abeh) {
+		this.senderId = senderId;
+		this.packetQueue = new LinkedSplitQueue<ReceiverGroup.PacketContainer>();
+		this.abeh = abeh;
+		this.lastPayload = new byte[1];
+		this.lastPacketSize = 0;
 	}
 	
-	@Override
-	protected void analyze() {
-		if((receivedPackets.size() >= statsInterval)) {
+	// calculated a new statistic object
+	private void calcNewStatistics() {
+		// split queue
+		LinkedSplitQueue<ReceiverGroup.PacketContainer> data = packetQueue.split();
+		data.setIteratorStepSize(statsStepSize);
+		int div = data.size() / statsStepSize;
+		// initialize the average counters
+		double ppsavg = 0.0;
+		double travavg = 0.0;
+		PacketContainer last = null;
+		for(PacketContainer cur : data) {
+			if(last == null) {
+				last = cur;
+				continue;
+			}
+			
+			int delay = (int)(cur.receivedTime-last.receivedTime);
+			if(delay>maxDelay) {
+				maxDelay = delay;
+			}
+			ppsavg += (double)(delay)/(double)statsStepSize;
+			travavg += cur.receivedTime - cur.packet.getDispatchTime();
+			last = cur;
+		}
+		ppsavg /= div;
+		// translate receiving time spans in pps
+		ppsavg = 1.0E3 / Math.ceil(ppsavg);
+		travavg /= div;
+		
+		// handle pps statistics
+		avgPPS = (int) Math.round(ppsavg);
+		maxPPS = Math.max(maxPPS, avgPPS);
+		minPPS = Math.min(minPPS, avgPPS);
+		
+		// handle traversal statistics
+		avgTraversal = (int) Math.round(travavg);
+		maxTraversal = Math.max(maxTraversal, avgTraversal);
+		minTraversal = Math.min(minTraversal, avgTraversal);
+		
+		// handle other statistics and data
+		senderConfiguredPPS = last.packet.getConfiguredPacketsPerSecond();
+		senderMeasuredPPS = last.packet.getSenderMeasuredPacketRate();
+		senderSentPackets = last.packet.getSequenceNumber();
+		lastPayload = last.packet.getPayload();
+		lastPacketSize = last.packet.getSize();
+		if(last.packet instanceof HirschmannPacket) {
+			lastPacketType = PacketType.HMANN;
+		} else {
+			lastPacketType = PacketType.SPAM;
+		}
+	}
+	
+	/**
+	 * Adds a new set of Packet, receiving time and size to the queue for later statistics calculation.
+	 * Automatically checks for lost packets in sender stream.
+	 * @param p ReceiverGroup.PacketContainer to add.
+	 */
+	public void addPacketContainer(PacketContainer p) {
+		packetQueue.enqueue(p);
+		// if new packet is not the direct descendant of last received packet and not the first, there must be lost packets
+		if((lastPacketNo+1 != p.packet.getSequenceNumber()) && (receivedPackets > 0)) {
+			lostPackets += p.packet.getSequenceNumber() - lastPacketNo;
+		}
+		receivedPackets++;
+		lastPacketNo = p.packet.getSequenceNumber();
+		lastReceivedTime = p.receivedTime;
+	}
+	
+	/**
+	 * Initiates a new statistical analysis round.
+	 * Dependent on the set MulticastStream.AnalyzingBehaviour this may calculate 
+	 * new statistics or only clear the cache.
+	 */
+	public void proposeStatisticsRenewal() {
+		statsStepSize = abeh.getDynamicStatsStepWidth(avgPPS);
+		if(packetQueue.size()>statsStepSize*2) {
+			// do something if queue provided at least two elements for the step width
 			statsCounter++;
-			if(statsCounter%statsGap==0) {
-				PacketContainer[] packets = new PacketContainer[statsInterval];
-				// fetch packets
-				for(int i=0; i<statsInterval; i++) {
-					packets[i] = receivedPackets.poll();
-				}
-				
-				// traversal
-				avgTraversal = 0;
-				for(int i=0; i<statsInterval; i++) {
-					long trav = packets[i].received-packets[i].packet.getDispatchTime();
-					avgTraversal += trav;
-					if(trav > maxTraversal) {
-						maxTraversal = trav;
-					}
-					if(trav < minTraversal) {
-						minTraversal = trav;
-					}
-				}
-				avgTraversal = avgTraversal/statsInterval;
-				
-				// receiving intervals
-				avgPacketRate = 0;
-				for(int i=0; i<statsInterval-1; i++) {
-					long packetRate = (long) (1E3/(packets[i+1].received - packets[i].received));
-					avgPacketRate += packetRate;
-					if(packetRate > maxPacketRate) {
-						maxPacketRate = packetRate;
-					}
-					if(packetRate < minPacketRate) {
-						minPacketRate = packetRate;
-					}
-				}
-				avgPacketRate = avgPacketRate/(statsInterval-1);
-				
-				// sender measured rate
-				senderMeasuredRate = 0;
-				for(int i=0; i<statsInterval; i++) {
-					senderMeasuredRate += packets[i].packet.getSenderMeasuredPacketRate();
-				}
-				senderMeasuredRate /= statsInterval;
-				
-				// one time data updates
-				senderConfiguredRate = packets[statsInterval-1].packet.getConfiguredPacketsPerSecond();
-				senderPayload = new String(packets[statsInterval-1].packet.getPayload());
-				senderId = packets[statsInterval-1].packet.getSenderId();
-				
-				fireReceiverDataChangedEvent();
+			if(statsCounter%abeh.getDiv() == 0) {
+				// calc new statistics
+				calcNewStatistics();
 			} else {
-				for(int i=0; i<statsInterval; i++) {
-					receivedPackets.poll();
-				};
+				// clear the cache
+				packetQueue.split();
 			}
 		}
-		if(!jobInterrupted) {
-			synchronized(receivedPackets) {
-				try {
-					receivedPackets.wait();
-				} catch (InterruptedException e) {}
-			}
+		
+		if( System.currentTimeMillis()-lastReceivedTime <= timeout ) {
+			aliveStateChanged = !alive;
+			alive = true;
+		} else {
+			aliveStateChanged = alive;
+			alive = false;
 		}
 	}
 
-	@Override
-	protected void work() {
-		byte[] buffer = new byte[packetSize];
-		DatagramPacket dp = new DatagramPacket(buffer, buffer.length);
-		PacketContainer c = new PacketContainer();
-		try {
-			socket.receive(dp);
-			c.received = System.currentTimeMillis();
-			c.packet = getPacket(buffer);
-			// look for lost packets
-			if(!(c.packet.getSequenceNumber() == lastPacket+1)) {
-				if(!(lastPacket==-1)) {
-					lostPackets++;
-				}
-			}
-			lastPacket = c.packet.getSequenceNumber();
-			receivedPackets.add(c);
-			receivedCounter++;
-			synchronized(receivedPackets) {
-				receivedPackets.notify();
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	/**
+	 * @return the set MulticastStream.AnalyzingBehaviour
+	 */
+	public MulticastStream.AnalyzingBehaviour getAnalyzingBehaviour() {
+		return abeh;
 	}
 
-	@Override
-	protected void exit() {
-		synchronized(receivedPackets) {
-			receivedPackets.notifyAll();
-		}
-		while(!receivedPackets.isEmpty()) {
-			if(receivedPackets.size()>=statsInterval) {
-				analyze();
-			} else {
-				receivedPackets.clear();
-			}
-		}
-	}
-	
-	private Packet getPacket(byte[] buffer) {
-		Packet p = new SpamPacket();
-		try {
-			p.fromByteArray(ByteBuffer.wrap(buffer));
-		} catch (DataFormatException e) {
-			faultyPackets++;
-		}
-		return p;
-	}
-	
-
-	public long getAvgTraversal() {
-		return avgTraversal;
+	/**
+	 * Can be used to adjust the analyzing granularity of this individual sender stream
+	 * @param abeh
+	 */
+	public void setAnalyzingBehaviour(MulticastStream.AnalyzingBehaviour abeh) {
+		this.abeh = abeh;
 	}
 
-	public long getMinTraversal() {
-		return minTraversal;
+	/**
+	 * @return timeout interval in ms
+	 */
+	public long getTimeout() {
+		return timeout;
 	}
 
-	public long getMaxTraversal() {
-		return maxTraversal;
-	}
-	
-	public long getAvgPacketRate() {
-		return avgPacketRate;
-	}
-
-	public long getMinPacketRate() {
-		return minPacketRate;
+	/**
+	 * Can be used to set a individual timeout span. If there are no new packets from the sender
+	 * in this span, it will be set to dead.
+	 * @param timeout in ms
+	 */
+	public void setTimeout(long timeout) {
+		this.timeout = timeout;
 	}
 
-	public long getMaxPacketRate() {
-		return maxPacketRate;
-	}
-
-	public long getLostPackets() {
-		return lostPackets;
-	}
-
-	public int getFaultyPackets() {
-		return faultyPackets;
-	}
-
-	public long getSenderMeasuredRate() {
-		return senderMeasuredRate;
-	}
-
-	public long getSenderConfiguredRate() {
-		return senderConfiguredRate;
-	}
-
+	/**
+	 * @return id of the sender this receiver analyzes
+	 */
 	public long getSenderId() {
 		return senderId;
 	}
 
-	public String getSenderPayload() {
-		return senderPayload;
+	/**
+	 * @return if receiver has received packets in the given timeout interval
+	 */
+	public boolean isAlive() {
+		return alive;
 	}
 
-	public long getSenderPacketCount() {
-		return lastPacket;
-	}
-	
-	public long getReceivedPacketCount() {
-		return receivedCounter;
+	/**
+	 * @return if alive state of this receiver has changed with this reporting cylce
+	 */
+	public boolean hasChangedAliveState() {
+		return aliveStateChanged;
 	}
 
-	public void addReceiverDataChangeListener(ReceiverDataChangeListener l) {
-		receiverDataChangeListeners.add(l);
+	/**
+	 * @return time when last packet was received
+	 */
+	public Date getLastReceivedTime() {
+		return new Date(lastReceivedTime);
+	}
+
+	/**
+	 * @return how much packets have been lost in the stream
+	 */
+	public long getLostPackets() {
+		return lostPackets;
+	}
+
+	/**
+	 * @return how many packets were received overall
+	 */
+	public long getReceivedPackets() {
+		return receivedPackets;
+	}
+
+	/**
+	 * @return pps rate that was configured at the sender
+	 */
+	public long getSenderConfiguredPPS() {
+		return senderConfiguredPPS;
+	}
+
+	/**
+	 * @return avg. pps rate measured at the sender
+	 */
+	public long getSenderMeasuredPPS() {
+		return senderMeasuredPPS;
+	}
+
+	/**
+	 * @return overall packet count sent from sender in this group
+	 */
+	public long getSenderSentPackets() {
+		return senderSentPackets;
+	}
+
+	/**
+	 * @return calculated min. packets per second
+	 */
+	public int getMinPPS() {
+		return minPPS==Integer.MAX_VALUE ? 0 : minPPS;
+	}
+
+	/**
+	 * @return calculated avg. packets per second
+	 */
+	public int getAvgPPS() {
+		return avgPPS;
+	}
+
+	/**
+	 * @return calculated max. packets per second
+	 */
+	public int getMaxPPS() {
+		return maxPPS==Integer.MIN_VALUE ? 0 : maxPPS;
+	}
+
+	/**
+	 * @return max. delay between tow received packets in ms
+	 */
+	public int getMaxDelay() {
+		return maxDelay;
+	}
+
+	/**
+	 * @return min. traversal time between sender and receiver in ms
+	 */
+	public long getMinTraversal() {
+		return minTraversal==Long.MAX_VALUE ? 0 : minTraversal;
+	}
+
+	/**
+	 * @return avg. traversal time between sender and receiver in ms
+	 */
+	public long getAvgTraversal() {
+		return avgTraversal;
+	}
+
+	/**
+	 * @return max traversal time between sender and receiver in ms
+	 */
+	public long getMaxTraversal() {
+		return maxTraversal==Long.MIN_VALUE ? 0 : maxTraversal;
+	}
+
+	/**
+	 * @return payload of last received packet as byte array
+	 */
+	public byte[] getPayload() {
+		return lastPayload;
 	}
 	
-	public void removeReceiverDataChangeListener(ReceiverDataChangeListener l) {
-		receiverDataChangeListeners.remove(l);
+	/**
+	 * @return payload of last received packet as string, or null if parsing is not possible
+	 */
+	public String getPayloadAsString() {
+		String s = null;
+		try {
+			s = new String(lastPayload);
+		} catch(Exception e) {}
+		return s;
+	}
+
+	/**
+	 * @return size of the last received packet
+	 */
+	public long getPacketSize() {
+		return lastPacketSize;
 	}
 	
-	private void fireReceiverDataChangedEvent() {
-		ReceiverDataChangedEvent e = new ReceiverDataChangedEvent(this);
-		for(ReceiverDataChangeListener l : receiverDataChangeListeners) {
-			l.dataChanged(e);
-		}
+	/**
+	 * @return the types of packets received on this stream
+	 */
+	public PacketType getPacketType() {
+		return lastPacketType;
+	}
+	
+	/**
+	 * @return a meaningful string representation of the state of this receiver
+	 */
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("--- Receiver Stats for: "+getSenderId()+"---\n");
+		sb.append("Div (R.P.|L.P.|M.Del|P.Type): "+getReceivedPackets()+"|"+getLostPackets()+"|"+getMaxDelay()+"|"+getPacketType().getDisplayName()+"\n");
+		sb.append("Sender (C.PPS|M.PPS|S.P|P.S): "+getSenderConfiguredPPS()+"|"+getSenderMeasuredPPS()+"|"+getSenderSentPackets()+"|"+getPacketSize()+"\n");
+		sb.append("R.PPS (MIN|AVG|MAX): "+getMinPPS()+"|"+getAvgPPS()+"|"+getMaxPPS()+"\n");
+		sb.append("R.Trav (MIN|AVG|MAX): "+getMinTraversal()+"|"+getAvgTraversal()+"|"+getMaxTraversal()+"\n");
+		sb.append("Payload: "+getPayloadAsString()+"\n");
+		sb.append("Alive (Changed): "+isAlive()+"|"+hasChangedAliveState()+"\n");
+		sb.append("-----------------------------------------------\n");
+		return sb.toString();
 	}
 
 }

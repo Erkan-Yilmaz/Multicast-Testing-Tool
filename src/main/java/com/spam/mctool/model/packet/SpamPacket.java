@@ -167,6 +167,9 @@ public class SpamPacket implements Packet {
 	 * @param senderID the senderID to set
 	 */
 	public void setSenderId(long senderID) {
+		if((senderID & 0xFFFFFFFFL) != senderID)
+			throw new IllegalArgumentException();
+			
 		this.senderID = senderID;
 	}
 	/**
@@ -179,6 +182,9 @@ public class SpamPacket implements Packet {
 	 * @param configuredPacketsPerSeconds the configuredPacketsPerSeconds to set
 	 */
 	public void setConfiguredPacketsPerSecond(long configuredPacketsPerSeconds) {
+		if((configuredPacketsPerSeconds & 0xFFFFFFFFL) != configuredPacketsPerSeconds)
+			throw new IllegalArgumentException();
+	
 		this.configuredPacketsPerSeconds = configuredPacketsPerSeconds;
 	}
 	/**
@@ -191,6 +197,9 @@ public class SpamPacket implements Packet {
 	 * @param senderMeasuredPacketRate the senderMeasuredPacketRate to set
 	 */
 	public void setSenderMeasuredPacketRate(long senderMeasuredPacketRate) {
+		if((senderMeasuredPacketRate & 0xFFFFFFFFL) != senderMeasuredPacketRate)
+			throw new IllegalArgumentException();
+	
 		this.senderMeasuredPacketRate = senderMeasuredPacketRate;
 	}
 	/**
@@ -203,6 +212,9 @@ public class SpamPacket implements Packet {
 	 * @param sequenceNumber the sequenceNumber to set
 	 */
 	public void setSequenceNumber(long sequenceNumber) {
+		if((sequenceNumber & 0xFFFFFFFFL) != sequenceNumber)
+			throw new IllegalArgumentException();
+	
 		this.sequenceNumber = sequenceNumber;
 	}
 	/**
@@ -295,6 +307,7 @@ public class SpamPacket implements Packet {
 			   data.getShort(pos+0) == 1337 &&
 			   data.getInt(pos+2) == 0;
 	}
+	
 	private long minSize;
 	private long senderID;
 	private long configuredPacketsPerSeconds;

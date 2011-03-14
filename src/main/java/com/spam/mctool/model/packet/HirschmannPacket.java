@@ -168,6 +168,9 @@ public class HirschmannPacket implements Packet {
 	 * @param senderID the senderID to set
 	 */
 	public void setSenderId(long senderID) {
+		if((senderID & 0xFFFFL) != senderID)
+			throw new IllegalArgumentException();
+			
 		this.senderID = senderID;
 	}
 	/**
@@ -180,6 +183,9 @@ public class HirschmannPacket implements Packet {
 	 * @param configuredPacketsPerSeconds the configuredPacketsPerSeconds to set
 	 */
 	public void setConfiguredPacketsPerSecond(long configuredPacketsPerSeconds) {
+		if((configuredPacketsPerSeconds & 0xFFFFL) != configuredPacketsPerSeconds)
+			throw new IllegalArgumentException();
+		
 		this.configuredPacketsPerSeconds = configuredPacketsPerSeconds;
 	}
 	/**
@@ -192,7 +198,9 @@ public class HirschmannPacket implements Packet {
 	 * @param senderMeasuredPacketRate the senderMeasuredPacketRate to set
 	 */
 	public void setSenderMeasuredPacketRate(long senderMeasuredPacketRate) 
-	{}
+	{
+		throw new UnsupportedOperationException();
+	}
 	/**
 	 * @return the sequenceNumber
 	 */
@@ -203,6 +211,10 @@ public class HirschmannPacket implements Packet {
 	 * @param sequenceNumber the sequenceNumber to set
 	 */
 	public void setSequenceNumber(long sequenceNumber) {
+		if((sequenceNumber & 0xFFFFFFFFL) != sequenceNumber)
+			throw new IllegalArgumentException();
+		
+		
 		this.sequenceNumber = sequenceNumber;
 	}
 	/**
@@ -214,12 +226,16 @@ public class HirschmannPacket implements Packet {
 	/**
 	 * @param dispatchTime the dispatchTime to set
 	 */
-	public void setDispatchTime(long dispatchTime) {}
+	public void setDispatchTime(long dispatchTime) {
+		throw new UnsupportedOperationException();
+	}
 	
 	/**
 	 * @param data  The payload's data
 	 */
-	public void setPayload(byte[] data) {}
+	public void setPayload(byte[] data) {
+		throw new UnsupportedOperationException();
+	}
 	
 	/**
 	 * @return      Returns the payload's data
