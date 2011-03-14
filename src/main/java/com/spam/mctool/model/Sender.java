@@ -23,7 +23,7 @@ public class Sender extends MulticastStream {
 	
 	// internals
 	private AnalyzeSender analyzer;
-	private LinkedSplitQueue<Short> sentTimes;
+	private LinkedSplitQueue<Integer> sentTimes;
 	private List<SenderDataChangeListener> senderDataChangeListeners = new ArrayList<SenderDataChangeListener>();
 	private long lastSent = 0;
 	private long nowSent = 0;
@@ -48,7 +48,7 @@ public class Sender extends MulticastStream {
 	 */
 	protected Sender(ScheduledThreadPoolExecutor stpe) {
 		this.stpe = stpe;
-		this.sentTimes = new LinkedSplitQueue<Short>();
+		this.sentTimes = new LinkedSplitQueue<Integer>();
 		this.senderId = (long) (Integer.MAX_VALUE*Math.random());
 		this.analyzer = new AnalyzeSender();
 		this.exceptions = new LinkedHashMap<Long, Exception>();
@@ -96,8 +96,8 @@ public class Sender extends MulticastStream {
 			DatagramPacket dp = new DatagramPacket(p, packetSize, this.getGroup(), this.getPort());
 			this.socket.send(dp);
 			// no synchronization needed because usage of java concurrency api
-			nowSent = System.currentTimeMillis();
-			this.sentTimes.enqueue((short)(nowSent-lastSent));
+			nowSent = System.nanoTime(); //TODO changed in windoof
+			this.sentTimes.enqueue((int)(nowSent-lastSent));
 			lastSent = nowSent;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -130,7 +130,7 @@ public class Sender extends MulticastStream {
 	// this is uses to analyze the queued sending intervals
 	private class AnalyzeSender implements Runnable {
 		
-		private LinkedSplitQueue<Short> data;
+		private LinkedSplitQueue<Integer> data;
 		private long counter;
 
 		public void run() {
@@ -143,11 +143,11 @@ public class Sender extends MulticastStream {
 					int valcnt = 0;
 					double avg = 0;
 					data.setIteratorStepSize(statsStepWidth);
-					for(Short s : data) {
-						avg += s;
+					for(int s : data) {
+						avg += Math.round(s/1.0E6);
 						valcnt++;
 					}
-					avg /= valcnt; 
+					avg /= valcnt;
 					avg = 1.0E3 / Math.round(avg);
 					avgPPS = Math.round(avg);
 					minPPS = Math.min(minPPS, avgPPS);

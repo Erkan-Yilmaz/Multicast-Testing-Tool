@@ -68,12 +68,12 @@ public class Receiver {
 				continue;
 			}
 			
-			int delay = (int)(cur.receivedTime-last.receivedTime);
+			int delay = (int)Math.round((cur.receivedTime-last.receivedTime)/1.0E6);
 			if(delay>maxDelay) {
 				maxDelay = delay;
 			}
 			ppsavg += (double)(delay)/(double)statsStepSize;
-			travavg += cur.receivedTime - cur.packet.getDispatchTime();
+			travavg += cur.systemTime - cur.packet.getDispatchTime();
 			last = cur;
 		}
 		ppsavg /= div;
