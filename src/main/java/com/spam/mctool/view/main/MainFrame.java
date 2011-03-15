@@ -6,6 +6,8 @@
 
 package com.spam.mctool.view.main;
 
+import com.spam.mctool.model.ReceiverGroup;
+import com.spam.mctool.view.main.receivertable.ReceiverTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -77,7 +79,7 @@ public class MainFrame extends javax.swing.JFrame {
         jButton10 = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        receiverTable = new javax.swing.JTable();
+        jReceiverTable1 = new com.spam.mctool.view.main.receivertable.JReceiverTable();
         jPanel10 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -412,62 +414,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jPanel8.setLayout(new java.awt.BorderLayout());
 
-        receiverTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Status", "Group", "Sender ID", "Conf. Rate", "Measured Rate", "Lost Packets", "Faulty Packets", "Avg. Rate"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Double.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, true, true, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        receiverTable.setGridColor(javax.swing.UIManager.getDefaults().getColor("control"));
-        receiverTable.setShowHorizontalLines(false);
-        jScrollPane1.setViewportView(receiverTable);
-        receiverTable.getColumnModel().getColumn(0).setResizable(false);
-        receiverTable.getColumnModel().getColumn(0).setPreferredWidth(37);
-        receiverTable.getColumnModel().getColumn(0).setHeaderValue(bundle1.getString("MainFrame.receiverTable.columnModel.title0_1")); // NOI18N
-        receiverTable.getColumnModel().getColumn(0).setCellRenderer(statusRenderer1);
-        receiverTable.getColumnModel().getColumn(1).setPreferredWidth(95);
-        receiverTable.getColumnModel().getColumn(1).setHeaderValue(bundle1.getString("MainFrame.receiverTable.columnModel.title1_1")); // NOI18N
-        receiverTable.getColumnModel().getColumn(1).setCellRenderer(twoColorRenderer1);
-        receiverTable.getColumnModel().getColumn(2).setPreferredWidth(60);
-        receiverTable.getColumnModel().getColumn(2).setHeaderValue(bundle1.getString("MainFrame.jTable2.columnModel.title3_1")); // NOI18N
-        receiverTable.getColumnModel().getColumn(2).setCellRenderer(twoColorRenderer1);
-        receiverTable.getColumnModel().getColumn(3).setPreferredWidth(65);
-        receiverTable.getColumnModel().getColumn(3).setHeaderValue(bundle1.getString("MainFrame.jTable2.columnModel.title6")); // NOI18N
-        receiverTable.getColumnModel().getColumn(3).setCellRenderer(twoColorRenderer1);
-        receiverTable.getColumnModel().getColumn(4).setPreferredWidth(85);
-        receiverTable.getColumnModel().getColumn(4).setHeaderValue(bundle1.getString("MainFrame.receiverTable.columnModel.title4")); // NOI18N
-        receiverTable.getColumnModel().getColumn(4).setCellRenderer(twoColorRenderer1);
-        receiverTable.getColumnModel().getColumn(5).setPreferredWidth(70);
-        receiverTable.getColumnModel().getColumn(5).setHeaderValue(bundle1.getString("MainFrame.receiverTable.columnModel.title5")); // NOI18N
-        receiverTable.getColumnModel().getColumn(5).setCellRenderer(twoColorRenderer1);
-        receiverTable.getColumnModel().getColumn(6).setPreferredWidth(80);
-        receiverTable.getColumnModel().getColumn(6).setHeaderValue(bundle1.getString("MainFrame.jTable2.columnModel.title7")); // NOI18N
-        receiverTable.getColumnModel().getColumn(6).setCellRenderer(twoColorRenderer1);
-        receiverTable.getColumnModel().getColumn(7).setHeaderValue(bundle1.getString("MainFrame.jTable2.columnModel.title2_1")); // NOI18N
-        receiverTable.getColumnModel().getColumn(7).setCellRenderer(twoColorRenderer1);
+        jScrollPane1.setViewportView(jReceiverTable1);
 
         jPanel8.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -647,7 +594,9 @@ public class MainFrame extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainFrame().setVisible(true);
+                MainFrame frame = new MainFrame();
+                frame.setVisible(true);
+                frame.test();
             }
         });
     }
@@ -729,6 +678,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private com.spam.mctool.view.main.receivertable.JReceiverTable jReceiverTable1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
@@ -746,7 +696,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JSplitPane jSplitPane3;
-    private javax.swing.JTable receiverTable;
     private javax.swing.JTable senderTable;
     private com.spam.mctool.view.main.StatusRenderer statusRenderer1;
     private com.spam.mctool.view.main.TwoColorRenderer twoColorRenderer1;
@@ -768,12 +717,12 @@ public class MainFrame extends javax.swing.JFrame {
         this.setExtendedState(state.getWindowState());
     }
 
-    public DefaultTableModel getReceiverTable() {
-        return (DefaultTableModel)this.receiverTable.getModel();
-    }
-
     public DefaultTableModel getSenderTable() {
         return (DefaultTableModel)this.senderTable.getModel();
+    }
+
+    private void test() {
+        ReceiverTableModel tableModel = (ReceiverTableModel)jReceiverTable1.getModel();
     }
 
     

@@ -17,10 +17,12 @@ import com.spam.mctool.model.MulticastStream;
 import com.spam.mctool.model.Receiver;
 import com.spam.mctool.model.ReceiverAddedOrRemovedListener;
 import com.spam.mctool.model.ReceiverDataChangeListener;
+import com.spam.mctool.model.ReceiverGroup;
 import com.spam.mctool.model.Sender;
 import com.spam.mctool.model.SenderAddedOrRemovedListener;
 import com.spam.mctool.model.SenderDataChangeListener;
-import com.spam.mctool.model.SenderStatistics;
+import com.spam.mctool.view.main.receivertable.ReceiverTableModel;
+import java.util.List;
 
 import java.util.Set;
 import javax.swing.UIManager;
@@ -48,38 +50,16 @@ public class GraphicalView implements MctoolView,
         /**
          * Model of the table representing the receivers in the view
          */
-        private DefaultTableModel receiverTable;
+        private ReceiverTableModel receiverTable;
 
-	public void receiverAdded(ReceiverAddedOrRemovedEvent e) {
-            Receiver r = e.getSource();
-            if(getReceiverRow(r) == -1) {
-                // TODO add real receiver row to table
-                receiverTable.addRow (
-                    new Object[] {
-                        r,
-                        r.getGroup(),
-                        r.getSenderId(),
-                        r.getSenderConfiguredPacketRate(),
-                        r.getMeasuredPacketRate(),
-                        r.getLostPackets(),
-                        r.getFaultyPackets(),
-                        r.getAvgPacketRate()
-                    }
-                );
-            } else {
-                throw new RuntimeException("Receiver " + r + " already added to table!");
-            }
-            r.addReceiverDataChangeListener(this);
+	// receiver oder receivergroup???
+        public void receiverAdded(ReceiverAddedOrRemovedEvent e) {
+            // ???
 	}
 
+        // receiverGroupRemoved???
 	public void receiverRemoved(ReceiverAddedOrRemovedEvent e) {
-            Receiver r = e.getSource();
-            int receiverRow = getReceiverRow(r);
-            if(receiverRow > -1) {
-                receiverTable.removeRow(receiverRow);
-            } else {
-                throw new RuntimeException("Receiver " + r + " not found in table!");
-            }
+            // ???
 	}
 
 	public void senderAdded(SenderAddedOrRemovedEvent e) {
@@ -128,25 +108,12 @@ public class GraphicalView implements MctoolView,
 
         // TODO nobody calls this method so far
 	public void dataChanged(ReceiverDataChangedEvent e) {
-            Receiver r = e.getSource();
-            int receiverRow = getReceiverRow(r);
-            if(receiverRow > -1) {
-                receiverTable.setValueAt(r, receiverRow, 0);
-                receiverTable.setValueAt(r.getGroup(), receiverRow, 0);
-                receiverTable.setValueAt(r.getSenderId(), receiverRow, 0);
-                receiverTable.setValueAt(r.getSenderConfiguredPacketRate(), receiverRow, 0);
-                receiverTable.setValueAt(r.getMeasuredPacketRate(), receiverRow, 0);
-                receiverTable.setValueAt(r.getLostPackets(), receiverRow, 0);
-                receiverTable.setValueAt(r.getFaultyPackets(), receiverRow, 0);
-                receiverTable.setValueAt(r.getAvgPacketRate(), receiverRow, 0);
-            }
-
+            receiverTable.dataChanged(e);
 	}
 
         // TODO nobody calls this method so far
 	public void dataChanged(SenderDataChangedEvent e) {
             Sender s = e.getSource();
-            SenderStatistics stats = e.getStatistics();
             int senderRow = getSenderRow(s);
             if(senderRow > -1) {
                 senderTable.setValueAt(s, senderRow, 0);
@@ -154,15 +121,15 @@ public class GraphicalView implements MctoolView,
                 senderTable.setValueAt(s.getPort(), senderRow, 0);
                 senderTable.setValueAt(s.getGroup(), senderRow, 0);
                 senderTable.setValueAt(s.getSenderConfiguredPacketRate(), senderRow, 0);
-                senderTable.setValueAt(s.getMeasuredPacketRate(), senderRow, 0);
+                senderTable.setValueAt(s.getAvgPPS(), senderRow, 0);
                 /*
                 senderTable.setValueAt(s.getAvgPacketRate(), senderRow, 0);
                 senderTable.setValueAt(s.getMinPacketRate(), senderRow, 0);
                 senderTable.setValueAt(s.getMaxPacketRate(), senderRow, 0);
                 */
-                senderTable.setValueAt(stats.getAvgPPS(), senderRow, 0);
-                senderTable.setValueAt(stats.getMinPPS(), senderRow, 0);
-                senderTable.setValueAt(stats.getMaxPPS(), senderRow, 0);
+                senderTable.setValueAt(s.getAvgPPS(), senderRow, 0);
+                senderTable.setValueAt(s.getMinPPS(), senderRow, 0);
+                senderTable.setValueAt(s.getMaxPPS(), senderRow, 0);
             }
 
 	}
@@ -188,7 +155,6 @@ public class GraphicalView implements MctoolView,
                                      // doesn't instantiate a sender and receiver
                                      // pool yet.
                 senderTable = mainFrame.getSenderTable();
-                receiverTable =  mainFrame.getReceiverTable();
 		mainFrame.setVisible(true);
                 loadTableTestData();
 	}
@@ -217,7 +183,7 @@ public class GraphicalView implements MctoolView,
         streamManager.addReceiverAddedOrRemovedListener(this);
         profileManager.addProfileChangeListener(this);
         for (Receiver r : streamManager.getReceivers()) {
-            r.addReceiverDataChangeListener(this);
+            // TODO howto register on receiver group?
         }
         for (Sender s : streamManager.getSenders()) {
             s.addSenderDataChangeListener(this);
