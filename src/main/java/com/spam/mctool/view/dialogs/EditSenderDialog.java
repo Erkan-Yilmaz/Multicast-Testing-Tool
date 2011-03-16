@@ -16,12 +16,14 @@ import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.text.ParseException;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -212,13 +214,12 @@ public class EditSenderDialog extends javax.swing.JDialog {
             senderMap.put("payload", this.DataField.getText());
             senderMap.put("ptype", this.PacketStyleCombo.getSelectedItem().toString());
             senderMap.put("ninf",this.interfaceMap.get(this.InterfaceCombo.getSelectedItem().toString()));
-            //TODO nach erstellen referenz ziehen und aktivieren oder parameter zur aktivierung mit geben
+            senderMap.put("abeh","default");
         }
         else{
             this.sender.setSenderConfiguredPacketRate(Integer.parseInt(this.PacketRateField.getValue().toString()));
             this.sender.setPacketSize(Integer.parseInt(this.PacketSizeField.getValue().toString()));
-            //this.sender.setTtl(this.TTLField.getText().getBytes());
-            //TODO TTL byte - warum kein array? o.o
+            this.sender.setTtl(Byte.parseByte(this.TTLField.getValue().toString()));
             if(this.ActivateBox.isSelected()){
                 this.sender.activate();
             }

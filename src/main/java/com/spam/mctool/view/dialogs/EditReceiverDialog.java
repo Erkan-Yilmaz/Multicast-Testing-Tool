@@ -12,6 +12,7 @@
 package com.spam.mctool.view.dialogs;
 
 import com.spam.mctool.model.Receiver;
+import com.spam.mctool.model.ReceiverGroup;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
@@ -30,7 +31,7 @@ import java.util.regex.Pattern;
 public class EditReceiverDialog extends javax.swing.JDialog {
 
     private static final long serialVersionUID = 1L;
-    private Receiver receiver = null;
+    private ReceiverGroup receiverGroup = null;
     private Map<String,String> interfaceMap = null;
 
 	/** Creates new form EditReceiverDialog */
@@ -39,9 +40,9 @@ public class EditReceiverDialog extends javax.swing.JDialog {
         initComponents();
     }
 
-    public EditReceiverDialog(java.awt.Frame parent, boolean modal, Receiver receiver) {
+    public EditReceiverDialog(java.awt.Frame parent, boolean modal, ReceiverGroup receiverGroup) {
         this(parent, modal);
-        this.receiver = receiver;
+        this.receiverGroup = receiverGroup;
         loadData();
     }
 
@@ -56,12 +57,12 @@ public class EditReceiverDialog extends javax.swing.JDialog {
         GroupField = new javax.swing.JTextField();
         GroupLabel = new javax.swing.JLabel();
         PortLabel = new javax.swing.JLabel();
-        PortField = new javax.swing.JTextField();
         InterfaceLabel = new javax.swing.JLabel();
         InterfaceCombo = new javax.swing.JComboBox();
         ActivateBox = new javax.swing.JCheckBox();
         OKButton = new javax.swing.JButton();
         CancelButton = new javax.swing.JButton();
+        PortField = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -71,8 +72,6 @@ public class EditReceiverDialog extends javax.swing.JDialog {
         GroupLabel.setText(bundle.getString("EditReceiverDialog.GroupLabel.text")); // NOI18N
 
         PortLabel.setText(bundle.getString("EditReceiverDialog.PortLabel.text")); // NOI18N
-
-        PortField.setText(bundle.getString("EditReceiverDialog.PortField.text")); // NOI18N
 
         InterfaceLabel.setText(bundle.getString("EditReceiverDialog.InterfaceLabel.text")); // NOI18N
 
@@ -106,7 +105,6 @@ public class EditReceiverDialog extends javax.swing.JDialog {
                     .addComponent(GroupField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                     .addComponent(GroupLabel)
                     .addComponent(PortLabel)
-                    .addComponent(PortField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                     .addComponent(InterfaceLabel)
                     .addComponent(InterfaceCombo, 0, 250, Short.MAX_VALUE)
                     .addComponent(ActivateBox, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
@@ -114,7 +112,8 @@ public class EditReceiverDialog extends javax.swing.JDialog {
                         .addGap(43, 43, 43)
                         .addComponent(OKButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(CancelButton)))
+                        .addComponent(CancelButton))
+                    .addComponent(PortField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -128,7 +127,7 @@ public class EditReceiverDialog extends javax.swing.JDialog {
                 .addComponent(PortLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PortField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(12, 12, 12)
                 .addComponent(InterfaceLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(InterfaceCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -145,22 +144,19 @@ public class EditReceiverDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
-        /*
-         * 
-         *
-         *
-        */
-        if(this.receiver == null){
-            this.receiver = new Receiver();
-        }
-        //this.receiver.setGroupByString(this.GroupField.getText());
-        this.receiver.setPort(Integer.parseInt(this.PortField.getText()));
-        //TODO Packet style + networkinterface
-        //this.receiver.setNetworkInterface(null);
-        if(this.ActivateBox.isSelected()){
-            this.receiver.activate();
-        }
+        Map<String,String> receiverMap = null;
 
+        if(this.receiverGroup == null){
+            receiverMap.put("group", this.GroupField.getText());
+            receiverMap.put("port", this.PortField.getValue().toString());
+            receiverMap.put("ninf",this.interfaceMap.get(this.InterfaceCombo.getSelectedItem().toString()));
+            receiverMap.put("abeh","default");
+        }
+        else{
+            if(this.ActivateBox.isSelected()){
+                this.receiverGroup.activate();
+            }
+        }
         this.dispose();
     }//GEN-LAST:event_OKButtonActionPerformed
 
@@ -186,9 +182,9 @@ public class EditReceiverDialog extends javax.swing.JDialog {
     }
 
     private void loadData(){
-        this.GroupField.setText(this.receiver.getGroup().toString());
+        this.GroupField.setText(this.receiverGroup.getGroup().toString());
         this.GroupField.setEnabled(false);
-        this.PortField.setText(String.valueOf(this.receiver.getPort()));
+        this.PortField.setValue(String.valueOf(this.receiverGroup.getPort()));
         this.PortField.setEnabled(false);
         this.InterfaceCombo.setEnabled(false);
     }
@@ -225,7 +221,7 @@ public class EditReceiverDialog extends javax.swing.JDialog {
     private javax.swing.JComboBox InterfaceCombo;
     private javax.swing.JLabel InterfaceLabel;
     private javax.swing.JButton OKButton;
-    private javax.swing.JTextField PortField;
+    private javax.swing.JSpinner PortField;
     private javax.swing.JLabel PortLabel;
     // End of variables declaration//GEN-END:variables
 

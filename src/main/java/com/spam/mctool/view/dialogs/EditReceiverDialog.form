@@ -28,7 +28,6 @@
                   <Component id="GroupField" alignment="0" pref="250" max="32767" attributes="1"/>
                   <Component id="GroupLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="PortLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="PortField" alignment="0" pref="250" max="32767" attributes="1"/>
                   <Component id="InterfaceLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="InterfaceCombo" alignment="0" pref="250" max="32767" attributes="0"/>
                   <Component id="ActivateBox" alignment="0" pref="250" max="32767" attributes="0"/>
@@ -38,6 +37,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="CancelButton" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="PortField" alignment="0" pref="250" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -54,7 +54,7 @@
               <Component id="PortLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="PortField" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Component id="InterfaceLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="InterfaceCombo" min="-2" max="-2" attributes="0"/>
@@ -89,13 +89,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
           <ResourceString bundle="com/spam/mctool/view/dialogs/Bundle.properties" key="EditReceiverDialog.PortLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="PortField">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="com/spam/mctool/view/dialogs/Bundle.properties" key="EditReceiverDialog.PortField.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
@@ -150,6 +143,8 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CancelButtonActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="PortField">
     </Component>
   </SubComponents>
 </Form>
