@@ -70,7 +70,7 @@ public class StatusRenderer extends javax.swing.JPanel implements TableCellRende
             jLabel1.setText("");
             if(s.getState() == MulticastStream.State.ACTIVE) {
                 jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/play_green.png")));
-                if(s.getMeasuredPacketRate() == 0) {
+                if(1 == 0) {
                 //if(row % 2 == 0) {
                     jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/pause_orange.png")));
                 } else {

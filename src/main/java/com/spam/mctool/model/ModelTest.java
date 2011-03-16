@@ -20,11 +20,11 @@ public class ModelTest implements ReceiverDataChangeListener, SenderDataChangeLi
 		sp.put("port", "8888");
 		sp.put("ptype", "spam");
 		sp.put("psize", "1000");
-		sp.put("abeh", "default");
-		sp.put("pps", "100");
+		sp.put("abeh", "lazy");
+		sp.put("pps", "1000");
 		sp.put("ttl", "127");
 		sp.put("payload", "SPAM FOR THE WORLD");
-		for(int i=0; i<1; i++) {
+		for(int i=0; i<2; i++) {
 			sp.put("group", "224.0.0.1");
 			s = sm.create(sp);
 			s.addSenderDataChangeListener(mt);

@@ -21,7 +21,7 @@ public class Receiver {
 	// internals
 	private LinkedSplitQueue<ReceiverGroup.PacketContainer> packetQueue;
 	private MulticastStream.AnalyzingBehaviour abeh;
-	private long statsCounter = -1;
+	private long statsCounter = 0;
 	private int statsStepSize = 1;
 	private long timeout = 2000;
 	private long lastPacketNo = 0;
@@ -49,6 +49,7 @@ public class Receiver {
 		this.abeh = abeh;
 		this.lastPayload = new byte[1];
 		this.lastPacketSize = 0;
+		this.statsCounter = abeh.getDiv()-1;
 	}
 	
 	// calculated a new statistic object
@@ -67,17 +68,17 @@ public class Receiver {
 				continue;
 			}
 			
-			int delay = (int)(cur.receivedTime-last.receivedTime);
+			int delay = (int)Math.round((cur.receivedTime-last.receivedTime)/1.0E6);
 			if(delay>maxDelay) {
 				maxDelay = delay;
 			}
 			ppsavg += (double)(delay)/(double)statsStepSize;
-			travavg += cur.receivedTime - cur.packet.getDispatchTime();
+			travavg += cur.systemTime - cur.packet.getDispatchTime();
 			last = cur;
 		}
 		ppsavg /= div;
 		// translate receiving time spans in pps
-		ppsavg = 1.0E3 / Math.ceil(ppsavg);
+		ppsavg = 1.0E3 / Math.round(ppsavg);
 		travavg /= div;
 		
 		// handle pps statistics

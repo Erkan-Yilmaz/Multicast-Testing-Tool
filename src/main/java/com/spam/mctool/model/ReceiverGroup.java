@@ -12,7 +12,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.DataFormatException;
-
 import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
 import com.spam.mctool.model.packet.AutoPacket;
 import com.spam.mctool.model.packet.Packet;
@@ -97,7 +96,8 @@ public class ReceiverGroup extends MulticastStream {
 			// receive and parse the packet
 			PacketContainer con = new PacketContainer();
 			socket.receive(dp);
-			con.receivedTime = System.currentTimeMillis();
+			con.receivedTime = System.nanoTime();
+			con.systemTime = System.currentTimeMillis();
 			ByteBuffer buf = ByteBuffer.wrap(buffer, 0, dp.getLength());
 			Packet p = new AutoPacket();
 			p.fromByteArray(buf);
@@ -125,6 +125,7 @@ public class ReceiverGroup extends MulticastStream {
 	 */
 	protected static class PacketContainer {
 		long receivedTime;
+		long systemTime;
 		Packet packet;
 		int size;
 	}
