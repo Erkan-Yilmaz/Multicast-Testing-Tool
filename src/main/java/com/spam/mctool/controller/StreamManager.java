@@ -54,7 +54,8 @@ public interface StreamManager {
 	/**
 	 * @return collection of all receivers in the pool
 	 */
-	public java.util.Collection<com.spam.mctool.model.Receiver> getReceivers();
+	//Dave: Korrigiert mich, falls ich mich irre, aber hier sollte dann doch wohl ReceiverGroup hin, oder?
+	public java.util.Collection<com.spam.mctool.model.ReceiverGroup> getReceivers();
 	
 	/**
 	 * SenderAddedOrRemoved Observer

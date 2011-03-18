@@ -16,10 +16,13 @@ import com.spam.mctool.intermediates.ProfileChangeEvent;
 import com.spam.mctool.model.MulticastStream;
 import com.spam.mctool.model.Receiver;
 import com.spam.mctool.model.ReceiverAddedOrRemovedListener;
+import com.spam.mctool.model.ReceiverGroup;
 import com.spam.mctool.model.ReceiverManager;
+import com.spam.mctool.model.ReceiverPool;
 import com.spam.mctool.model.Sender;
 import com.spam.mctool.model.SenderAddedOrRemovedListener;
 import com.spam.mctool.model.SenderManager;
+import com.spam.mctool.model.SenderPool;
 import com.spam.mctool.view.GraphicalView;
 import com.spam.mctool.view.MctoolView;
 
@@ -33,8 +36,8 @@ public class Controller implements ProfileManager, StreamManager {
 	private Profile currentProfile;
 	private List<Profile> recentProfiles;
 	private List<ProfileChangeListener> profileChangeObservers;
-	private SenderManager senderManager;
-	private ReceiverManager receiverManager;
+	private SenderPool senderManager;
+	private ReceiverPool receiverManager;
 	private List<MctoolView> viewers;
 	
 	private Controller(){
@@ -42,8 +45,9 @@ public class Controller implements ProfileManager, StreamManager {
 		this.recentProfiles = new ArrayList<Profile>();
 		this.profileChangeObservers = new ArrayList<ProfileChangeListener>();
 		//Init the Sender and Receiver modules
-		//this.senderManager = new SenderPool();
-		//this.receiverManager = new ReceiverPool();
+		this.senderManager = new SenderPool();
+		this.receiverManager = new ReceiverPool();
+		//Create the vies
 		viewers = new ArrayList<MctoolView>();
 		viewers.add(new GraphicalView()); // Added by TST. uncomment to
                                                     // display the gui upon
@@ -102,7 +106,7 @@ public class Controller implements ProfileManager, StreamManager {
 	/* (non-Javadoc)
 	 * @see com.spam.mctool.controller.StreamManager#addReceiver(java.util.HashMap)
 	 */
-	public Receiver addReceiver(HashMap<String, String> params) {
+	public ReceiverGroup addReceiver(HashMap<String, String> params) {
 		return receiverManager.create(params);
 	}
 
@@ -117,8 +121,8 @@ public class Controller implements ProfileManager, StreamManager {
 			if(curStream instanceof Sender){
 				senderManager.remove((Sender)curStream);
 			}
-			else if(curStream instanceof Receiver){
-				receiverManager.remove((Receiver)curStream);
+			else if(curStream instanceof ReceiverGroup){
+				receiverManager.remove((ReceiverGroup)curStream);
 			}
 			else{
 				throw new IllegalArgumentException();
@@ -203,7 +207,7 @@ public class Controller implements ProfileManager, StreamManager {
 		return senderManager.getSenders();
 	}
 
-	public Collection<Receiver> getReceivers() {
+	public Collection<ReceiverGroup> getReceivers() {
 		return receiverManager.getReceiver();
 	}
 
