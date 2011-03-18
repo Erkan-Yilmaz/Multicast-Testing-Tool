@@ -16,10 +16,12 @@ import com.spam.mctool.intermediates.ProfileChangeEvent;
 import com.spam.mctool.model.MulticastStream;
 import com.spam.mctool.model.Receiver;
 import com.spam.mctool.model.ReceiverAddedOrRemovedListener;
+import com.spam.mctool.model.ReceiverGroup;
 import com.spam.mctool.model.ReceiverManager;
 import com.spam.mctool.model.Sender;
 import com.spam.mctool.model.SenderAddedOrRemovedListener;
 import com.spam.mctool.model.SenderManager;
+import com.spam.mctool.model.SenderPool;
 import com.spam.mctool.view.GraphicalView;
 import com.spam.mctool.view.MctoolView;
 
@@ -42,7 +44,7 @@ public class Controller implements ProfileManager, StreamManager {
 		this.recentProfiles = new ArrayList<Profile>();
 		this.profileChangeObservers = new ArrayList<ProfileChangeListener>();
 		//Init the Sender and Receiver modules
-		//this.senderManager = new SenderPool();
+		this.senderManager = new SenderPool();
 		//this.receiverManager = new ReceiverPool();
 		viewers = new ArrayList<MctoolView>();
 		viewers.add(new GraphicalView()); // Added by TST. uncomment to
@@ -103,7 +105,8 @@ public class Controller implements ProfileManager, StreamManager {
 	 * @see com.spam.mctool.controller.StreamManager#addReceiver(java.util.HashMap)
 	 */
 	public Receiver addReceiver(HashMap<String, String> params) {
-		return receiverManager.create(params);
+		//return receiverManager.create(params);
+                return null;
 	}
 
 	/* (non-Javadoc)
@@ -117,8 +120,8 @@ public class Controller implements ProfileManager, StreamManager {
 			if(curStream instanceof Sender){
 				senderManager.remove((Sender)curStream);
 			}
-			else if(curStream instanceof Receiver){
-				receiverManager.remove((Receiver)curStream);
+			else if(curStream instanceof ReceiverGroup){
+				receiverManager.remove((ReceiverGroup)curStream);
 			}
 			else{
 				throw new IllegalArgumentException();
@@ -190,8 +193,7 @@ public class Controller implements ProfileManager, StreamManager {
 	}
 
 	public Sender addSender(Map<String, String> params) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.senderManager.create(params);
 	}
 
 	public Receiver addReceiver(Map<String, String> params) {
@@ -204,7 +206,8 @@ public class Controller implements ProfileManager, StreamManager {
 	}
 
 	public Collection<Receiver> getReceivers() {
-		return receiverManager.getReceiver();
+		//return receiverManager.getReceiver();
+            return null;
 	}
 
 	public void addSenderAddedOrRemovedListener(SenderAddedOrRemovedListener l) {

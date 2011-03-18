@@ -7,7 +7,12 @@
 package com.spam.mctool.view.main;
 
 import com.spam.mctool.model.ReceiverGroup;
+import com.spam.mctool.model.Sender;
+import com.spam.mctool.view.GraphicalView;
+import com.spam.mctool.view.dialogs.EditReceiverDialog;
+import com.spam.mctool.view.dialogs.EditSenderDialog;
 import com.spam.mctool.view.main.receivertable.ReceiverTableModel;
+import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -18,9 +23,15 @@ import javax.swing.table.TableModel;
 public class MainFrame extends javax.swing.JFrame {
 
     private static final long serialVersionUID = 1L;
+    private GraphicalView view;
 
     /** Creates new form MainFrame */
     public MainFrame() {
+        this(null);
+    }
+
+    public MainFrame(GraphicalView view) {
+        this.view = view;
         initComponents();
     }
 
@@ -34,56 +45,56 @@ public class MainFrame extends javax.swing.JFrame {
 
         statusRenderer1 = new com.spam.mctool.view.main.StatusRenderer();
         twoColorRenderer1 = new com.spam.mctool.view.main.TwoColorRenderer();
-        jSplitPane3 = new javax.swing.JSplitPane();
-        jSplitPane1 = new javax.swing.JSplitPane();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jSeparator11 = new javax.swing.JSeparator();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jPanel5 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        mainSplitPane = new javax.swing.JSplitPane();
+        senderSplitPane = new javax.swing.JSplitPane();
+        paSendingStatistics = new javax.swing.JPanel();
+        laSendingStatistics = new javax.swing.JLabel();
+        laSentCaption = new javax.swing.JLabel();
+        laSenderRateCaption = new javax.swing.JLabel();
+        sendingStatisticsSeparator = new javax.swing.JSeparator();
+        laSent = new javax.swing.JLabel();
+        laSenderRate = new javax.swing.JLabel();
+        paSenderTableOuter = new javax.swing.JPanel();
+        paSenderButtons = new javax.swing.JPanel();
+        buActivateSender = new javax.swing.JButton();
+        buDeactivateSender = new javax.swing.JButton();
+        buAddSender = new javax.swing.JButton();
+        buShowSender = new javax.swing.JButton();
+        buEditSender = new javax.swing.JButton();
+        buDeleteSender = new javax.swing.JButton();
+        paSenderTableInner = new javax.swing.JPanel();
+        senderTableScrollPane = new javax.swing.JScrollPane();
         senderTable = new javax.swing.JTable();
-        jPanel9 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jSplitPane2 = new javax.swing.JSplitPane();
-        jPanel6 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jSeparator12 = new javax.swing.JSeparator();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jPanel8 = new javax.swing.JPanel();
+        paSenderTableCaption = new javax.swing.JPanel();
+        laSenderTableCaption = new javax.swing.JLabel();
+        senderTableIcon = new javax.swing.JLabel();
+        receiverSplitPane = new javax.swing.JSplitPane();
+        paReceivingStatistics = new javax.swing.JPanel();
+        laReceivingStatisticsCaption = new javax.swing.JLabel();
+        laReceivedCaption = new javax.swing.JLabel();
+        laReceivingRateCaption = new javax.swing.JLabel();
+        laLostPacketsCaption = new javax.swing.JLabel();
+        laFaultyPacketsCaption = new javax.swing.JLabel();
+        receivingStatisticsSeparator = new javax.swing.JSeparator();
+        laReceived = new javax.swing.JLabel();
+        laReceivingRate = new javax.swing.JLabel();
+        laLostPackets = new javax.swing.JLabel();
+        laFaultyPackets = new javax.swing.JLabel();
+        paReceiverTableOuter = new javax.swing.JPanel();
+        paReceiverButtons = new javax.swing.JPanel();
+        buActivateReceiver = new javax.swing.JButton();
+        buDeactivateReceiver = new javax.swing.JButton();
+        buAddReceiver = new javax.swing.JButton();
+        buShowReceiver = new javax.swing.JButton();
+        buEditReceiver = new javax.swing.JButton();
+        buDeleteReceiver = new javax.swing.JButton();
+        paReceiverTableInner = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jReceiverTable1 = new com.spam.mctool.view.main.receivertable.JReceiverTable();
-        jPanel10 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        receiverTable = new com.spam.mctool.view.main.receivertable.JReceiverTable();
+        paReceiverTableCaption = new javax.swing.JPanel();
+        laReceiverTableCaption = new javax.swing.JLabel();
+        laReceiverTableIcon = new javax.swing.JLabel();
+        menuBar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -134,108 +145,118 @@ public class MainFrame extends javax.swing.JFrame {
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/spam/mctool/view/Bundle"); // NOI18N
         setTitle(bundle.getString("MainFrame.title")); // NOI18N
 
-        jSplitPane3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jSplitPane3.setDividerLocation(267);
-        jSplitPane3.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
-        jSplitPane3.setResizeWeight(0.5);
-        jSplitPane3.setOneTouchExpandable(true);
+        mainSplitPane.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        mainSplitPane.setDividerLocation(267);
+        mainSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        mainSplitPane.setResizeWeight(0.5);
+        mainSplitPane.setOneTouchExpandable(true);
 
-        jSplitPane1.setBorder(null);
-        jSplitPane1.setDividerLocation(590);
-        jSplitPane1.setResizeWeight(1.0);
-        jSplitPane1.setOneTouchExpandable(true);
+        senderSplitPane.setBorder(null);
+        senderSplitPane.setDividerLocation(590);
+        senderSplitPane.setResizeWeight(1.0);
+        senderSplitPane.setOneTouchExpandable(true);
 
         java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("com/spam/mctool/view/main/Bundle"); // NOI18N
-        jLabel1.setText(bundle1.getString("MainFrame.jLabel1.text")); // NOI18N
+        laSendingStatistics.setText(bundle1.getString("MainFrame.laSendingStatistics.text")); // NOI18N
 
-        jLabel7.setText(bundle1.getString("MainFrame.jLabel7.text")); // NOI18N
+        laSentCaption.setText(bundle1.getString("MainFrame.laSentCaption.text")); // NOI18N
 
-        jLabel8.setText(bundle1.getString("MainFrame.jLabel8.text")); // NOI18N
+        laSenderRateCaption.setText(bundle1.getString("MainFrame.laSenderRateCaption.text")); // NOI18N
 
-        jLabel14.setText(bundle1.getString("MainFrame.jLabel14.text")); // NOI18N
+        laSent.setText(bundle1.getString("MainFrame.laSent.text")); // NOI18N
 
-        jLabel15.setText(bundle1.getString("MainFrame.jLabel15.text")); // NOI18N
+        laSenderRate.setText(bundle1.getString("MainFrame.laSenderRate.text")); // NOI18N
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout paSendingStatisticsLayout = new javax.swing.GroupLayout(paSendingStatistics);
+        paSendingStatistics.setLayout(paSendingStatisticsLayout);
+        paSendingStatisticsLayout.setHorizontalGroup(
+            paSendingStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paSendingStatisticsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator11, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                    .addComponent(jLabel1)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
+                .addGroup(paSendingStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sendingStatisticsSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                    .addComponent(laSendingStatistics)
+                    .addGroup(paSendingStatisticsLayout.createSequentialGroup()
+                        .addComponent(laSentCaption)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
-                        .addComponent(jLabel14))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
+                        .addComponent(laSent))
+                    .addGroup(paSendingStatisticsLayout.createSequentialGroup()
+                        .addComponent(laSenderRateCaption)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                        .addComponent(jLabel15)))
+                        .addComponent(laSenderRate)))
                 .addContainerGap())
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        paSendingStatisticsLayout.setVerticalGroup(
+            paSendingStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paSendingStatisticsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(laSendingStatistics)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator11, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(sendingStatisticsSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel14))
+                .addGroup(paSendingStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(laSentCaption)
+                    .addComponent(laSent))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel15))
+                .addGroup(paSendingStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(laSenderRateCaption)
+                    .addComponent(laSenderRate))
                 .addContainerGap(184, Short.MAX_VALUE))
         );
 
-        jSplitPane1.setRightComponent(jPanel4);
+        senderSplitPane.setRightComponent(paSendingStatistics);
 
-        jPanel2.setLayout(new java.awt.BorderLayout());
+        paSenderTableOuter.setLayout(new java.awt.BorderLayout());
 
-        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        paSenderButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/play_green.png"))); // NOI18N
-        jButton1.setText(bundle1.getString("MainFrame.jButton1.text")); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        buActivateSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/play_green.png"))); // NOI18N
+        buActivateSender.setText(bundle1.getString("MainFrame.buActivateSender.text")); // NOI18N
+        buActivateSender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                buActivateSenderActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton1);
+        paSenderButtons.add(buActivateSender);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/stop_red.png"))); // NOI18N
-        jButton2.setText(bundle1.getString("MainFrame.jButton2.text")); // NOI18N
-        jPanel3.add(jButton2);
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/add_green.png"))); // NOI18N
-        jButton3.setText(bundle1.getString("MainFrame.jButton3.text")); // NOI18N
-        jPanel3.add(jButton3);
-
-        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/preview.png"))); // NOI18N
-        jButton11.setText(bundle1.getString("MainFrame.jButton11.text")); // NOI18N
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
+        buDeactivateSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/stop_red.png"))); // NOI18N
+        buDeactivateSender.setText(bundle1.getString("MainFrame.buDeactivateSender.text")); // NOI18N
+        buDeactivateSender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
+                buDeactivateSenderActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton11);
+        paSenderButtons.add(buDeactivateSender);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/edit.png"))); // NOI18N
-        jButton4.setText(bundle1.getString("MainFrame.jButton4.text")); // NOI18N
-        jPanel3.add(jButton4);
+        buAddSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/add_green.png"))); // NOI18N
+        buAddSender.setText(bundle1.getString("MainFrame.buAddSender.text")); // NOI18N
+        buAddSender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buAddSenderActionPerformed(evt);
+            }
+        });
+        paSenderButtons.add(buAddSender);
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/delete.png"))); // NOI18N
-        jButton5.setText(bundle1.getString("MainFrame.jButton5.text")); // NOI18N
-        jPanel3.add(jButton5);
+        buShowSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/preview.png"))); // NOI18N
+        buShowSender.setText(bundle1.getString("MainFrame.buShowSender.text")); // NOI18N
+        buShowSender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buShowSenderActionPerformed(evt);
+            }
+        });
+        paSenderButtons.add(buShowSender);
 
-        jPanel2.add(jPanel3, java.awt.BorderLayout.SOUTH);
+        buEditSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/edit.png"))); // NOI18N
+        buEditSender.setText(bundle1.getString("MainFrame.buEditSender.text")); // NOI18N
+        paSenderButtons.add(buEditSender);
 
-        jPanel5.setLayout(new java.awt.BorderLayout());
+        buDeleteSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/delete.png"))); // NOI18N
+        buDeleteSender.setText(bundle1.getString("MainFrame.buDeleteSender.text")); // NOI18N
+        paSenderButtons.add(buDeleteSender);
+
+        paSenderTableOuter.add(paSenderButtons, java.awt.BorderLayout.SOUTH);
+
+        paSenderTableInner.setLayout(new java.awt.BorderLayout());
 
         senderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -255,7 +276,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
         senderTable.setGridColor(javax.swing.UIManager.getDefaults().getColor("control"));
         senderTable.setShowHorizontalLines(false);
-        jScrollPane2.setViewportView(senderTable);
+        senderTableScrollPane.setViewportView(senderTable);
         senderTable.getColumnModel().getColumn(0).setResizable(false);
         senderTable.getColumnModel().getColumn(0).setPreferredWidth(37);
         senderTable.getColumnModel().getColumn(0).setHeaderValue(bundle1.getString("MainFrame.senderTable.columnModel.title0_1")); // NOI18N
@@ -285,155 +306,155 @@ public class MainFrame extends javax.swing.JFrame {
         senderTable.getColumnModel().getColumn(8).setHeaderValue(bundle1.getString("MainFrame.jTable1.columnModel.title7")); // NOI18N
         senderTable.getColumnModel().getColumn(8).setCellRenderer(twoColorRenderer1);
 
-        jPanel5.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+        paSenderTableInner.add(senderTableScrollPane, java.awt.BorderLayout.CENTER);
 
-        jPanel2.add(jPanel5, java.awt.BorderLayout.CENTER);
+        paSenderTableOuter.add(paSenderTableInner, java.awt.BorderLayout.CENTER);
 
-        jPanel9.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        paSenderTableCaption.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jLabel3.setText(bundle1.getString("MainFrame.jLabel3.text")); // NOI18N
-        jPanel9.add(jLabel3);
+        laSenderTableCaption.setText(bundle1.getString("MainFrame.laSenderTableCaption.text")); // NOI18N
+        paSenderTableCaption.add(laSenderTableCaption);
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/sender.png"))); // NOI18N
-        jLabel5.setText(bundle1.getString("MainFrame.jLabel5.text")); // NOI18N
-        jPanel9.add(jLabel5);
+        senderTableIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/sender.png"))); // NOI18N
+        senderTableIcon.setText(bundle1.getString("MainFrame.senderTableIcon.text")); // NOI18N
+        paSenderTableCaption.add(senderTableIcon);
 
-        jPanel2.add(jPanel9, java.awt.BorderLayout.NORTH);
+        paSenderTableOuter.add(paSenderTableCaption, java.awt.BorderLayout.NORTH);
 
-        jSplitPane1.setLeftComponent(jPanel2);
+        senderSplitPane.setLeftComponent(paSenderTableOuter);
 
-        jSplitPane3.setTopComponent(jSplitPane1);
+        mainSplitPane.setTopComponent(senderSplitPane);
 
-        jSplitPane2.setBorder(null);
-        jSplitPane2.setDividerLocation(590);
-        jSplitPane2.setResizeWeight(1.0);
-        jSplitPane2.setOneTouchExpandable(true);
+        receiverSplitPane.setBorder(null);
+        receiverSplitPane.setDividerLocation(590);
+        receiverSplitPane.setResizeWeight(1.0);
+        receiverSplitPane.setOneTouchExpandable(true);
 
-        jLabel2.setText(bundle1.getString("MainFrame.jLabel2.text")); // NOI18N
+        laReceivingStatisticsCaption.setText(bundle1.getString("MainFrame.laReceivingStatisticsCaption.text")); // NOI18N
 
-        jLabel10.setText(bundle1.getString("MainFrame.jLabel10.text")); // NOI18N
+        laReceivedCaption.setText(bundle1.getString("MainFrame.laReceivedCaption.text")); // NOI18N
 
-        jLabel11.setText(bundle1.getString("MainFrame.jLabel11.text")); // NOI18N
+        laReceivingRateCaption.setText(bundle1.getString("MainFrame.laReceivingRateCaption.text")); // NOI18N
 
-        jLabel12.setText(bundle1.getString("MainFrame.jLabel12.text")); // NOI18N
+        laLostPacketsCaption.setText(bundle1.getString("MainFrame.laLostPacketsCaption.text")); // NOI18N
 
-        jLabel13.setText(bundle1.getString("MainFrame.jLabel13.text")); // NOI18N
+        laFaultyPacketsCaption.setText(bundle1.getString("MainFrame.laFaultyPacketsCaption.text")); // NOI18N
 
-        jLabel17.setText(bundle1.getString("MainFrame.jLabel17.text")); // NOI18N
+        laReceived.setText(bundle1.getString("MainFrame.laReceived.text")); // NOI18N
 
-        jLabel18.setText(bundle1.getString("MainFrame.jLabel18.text")); // NOI18N
+        laReceivingRate.setText(bundle1.getString("MainFrame.laReceivingRate.text")); // NOI18N
 
-        jLabel19.setText(bundle1.getString("MainFrame.jLabel19.text")); // NOI18N
+        laLostPackets.setText(bundle1.getString("MainFrame.laLostPackets.text")); // NOI18N
 
-        jLabel20.setText(bundle1.getString("MainFrame.jLabel20.text")); // NOI18N
+        laFaultyPackets.setText(bundle1.getString("MainFrame.laFaultyPackets.text")); // NOI18N
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        javax.swing.GroupLayout paReceivingStatisticsLayout = new javax.swing.GroupLayout(paReceivingStatistics);
+        paReceivingStatistics.setLayout(paReceivingStatisticsLayout);
+        paReceivingStatisticsLayout.setHorizontalGroup(
+            paReceivingStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paReceivingStatisticsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jSeparator12, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
+                .addGroup(paReceivingStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(laReceivingStatisticsCaption)
+                    .addComponent(receivingStatisticsSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                    .addGroup(paReceivingStatisticsLayout.createSequentialGroup()
+                        .addComponent(laReceivedCaption)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                        .addComponent(jLabel17))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
+                        .addComponent(laReceived))
+                    .addGroup(paReceivingStatisticsLayout.createSequentialGroup()
+                        .addComponent(laReceivingRateCaption)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                        .addComponent(jLabel18))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel12)
+                        .addComponent(laReceivingRate))
+                    .addGroup(paReceivingStatisticsLayout.createSequentialGroup()
+                        .addComponent(laLostPacketsCaption)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                        .addComponent(jLabel19))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel13)
+                        .addComponent(laLostPackets))
+                    .addGroup(paReceivingStatisticsLayout.createSequentialGroup()
+                        .addComponent(laFaultyPacketsCaption)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                        .addComponent(jLabel20)))
+                        .addComponent(laFaultyPackets)))
                 .addContainerGap())
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        paReceivingStatisticsLayout.setVerticalGroup(
+            paReceivingStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(paReceivingStatisticsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2)
+                .addComponent(laReceivingStatisticsCaption)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator12, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(receivingStatisticsSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel17))
+                .addGroup(paReceivingStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(laReceivedCaption)
+                    .addComponent(laReceived))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel18))
+                .addGroup(paReceivingStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(laReceivingRateCaption)
+                    .addComponent(laReceivingRate))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(jLabel19))
+                .addGroup(paReceivingStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(laLostPacketsCaption)
+                    .addComponent(laLostPackets))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
-                    .addComponent(jLabel20))
+                .addGroup(paReceivingStatisticsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(laFaultyPacketsCaption)
+                    .addComponent(laFaultyPackets))
                 .addContainerGap(143, Short.MAX_VALUE))
         );
 
-        jSplitPane2.setRightComponent(jPanel6);
+        receiverSplitPane.setRightComponent(paReceivingStatistics);
 
-        jPanel1.setLayout(new java.awt.BorderLayout());
+        paReceiverTableOuter.setLayout(new java.awt.BorderLayout());
 
-        jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        paReceiverButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/play_green.png"))); // NOI18N
-        jButton6.setText(bundle1.getString("MainFrame.jButton6.text")); // NOI18N
-        jPanel7.add(jButton6);
+        buActivateReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/play_green.png"))); // NOI18N
+        buActivateReceiver.setText(bundle1.getString("MainFrame.buActivateReceiver.text")); // NOI18N
+        paReceiverButtons.add(buActivateReceiver);
 
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/stop_red.png"))); // NOI18N
-        jButton7.setText(bundle1.getString("MainFrame.jButton7.text")); // NOI18N
-        jPanel7.add(jButton7);
+        buDeactivateReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/stop_red.png"))); // NOI18N
+        buDeactivateReceiver.setText(bundle1.getString("MainFrame.buDeactivateReceiver.text")); // NOI18N
+        paReceiverButtons.add(buDeactivateReceiver);
 
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/add_green.png"))); // NOI18N
-        jButton8.setText(bundle1.getString("MainFrame.jButton8.text")); // NOI18N
-        jPanel7.add(jButton8);
+        buAddReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/add_green.png"))); // NOI18N
+        buAddReceiver.setText(bundle1.getString("MainFrame.buAddReceiver.text")); // NOI18N
+        paReceiverButtons.add(buAddReceiver);
 
-        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/preview.png"))); // NOI18N
-        jButton12.setText(bundle1.getString("MainFrame.jButton12.text")); // NOI18N
-        jPanel7.add(jButton12);
+        buShowReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/preview.png"))); // NOI18N
+        buShowReceiver.setText(bundle1.getString("MainFrame.buShowReceiver.text")); // NOI18N
+        paReceiverButtons.add(buShowReceiver);
 
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/edit.png"))); // NOI18N
-        jButton9.setText(bundle1.getString("MainFrame.jButton9.text")); // NOI18N
-        jPanel7.add(jButton9);
+        buEditReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/edit.png"))); // NOI18N
+        buEditReceiver.setText(bundle1.getString("MainFrame.buEditReceiver.text")); // NOI18N
+        paReceiverButtons.add(buEditReceiver);
 
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/delete.png"))); // NOI18N
-        jButton10.setText(bundle1.getString("MainFrame.jButton10.text")); // NOI18N
-        jPanel7.add(jButton10);
+        buDeleteReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/delete.png"))); // NOI18N
+        buDeleteReceiver.setText(bundle1.getString("MainFrame.buDeleteReceiver.text")); // NOI18N
+        paReceiverButtons.add(buDeleteReceiver);
 
-        jPanel1.add(jPanel7, java.awt.BorderLayout.PAGE_END);
+        paReceiverTableOuter.add(paReceiverButtons, java.awt.BorderLayout.PAGE_END);
 
-        jPanel8.setLayout(new java.awt.BorderLayout());
+        paReceiverTableInner.setLayout(new java.awt.BorderLayout());
 
-        jScrollPane1.setViewportView(jReceiverTable1);
+        jScrollPane1.setViewportView(receiverTable);
 
-        jPanel8.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        paReceiverTableInner.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jPanel1.add(jPanel8, java.awt.BorderLayout.CENTER);
+        paReceiverTableOuter.add(paReceiverTableInner, java.awt.BorderLayout.CENTER);
 
-        jPanel10.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        paReceiverTableCaption.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jLabel4.setText(bundle1.getString("MainFrame.jLabel4.text")); // NOI18N
-        jPanel10.add(jLabel4);
+        laReceiverTableCaption.setText(bundle1.getString("MainFrame.laReceiverTableCaption.text")); // NOI18N
+        paReceiverTableCaption.add(laReceiverTableCaption);
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/receiver.png"))); // NOI18N
-        jLabel6.setText(bundle1.getString("MainFrame.jLabel6.text")); // NOI18N
-        jPanel10.add(jLabel6);
+        laReceiverTableIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/receiver.png"))); // NOI18N
+        laReceiverTableIcon.setText(bundle1.getString("MainFrame.laReceiverTableIcon.text")); // NOI18N
+        paReceiverTableCaption.add(laReceiverTableIcon);
 
-        jPanel1.add(jPanel10, java.awt.BorderLayout.NORTH);
+        paReceiverTableOuter.add(paReceiverTableCaption, java.awt.BorderLayout.NORTH);
 
-        jSplitPane2.setLeftComponent(jPanel1);
+        receiverSplitPane.setLeftComponent(paReceiverTableOuter);
 
-        jSplitPane3.setRightComponent(jSplitPane2);
+        mainSplitPane.setRightComponent(receiverSplitPane);
 
         jMenu1.setText(bundle1.getString("MainFrame.jMenu1.text")); // NOI18N
 
@@ -454,7 +475,7 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItem1.setText(bundle1.getString("MainFrame.jMenuItem1.text")); // NOI18N
         jMenu1.add(jMenuItem1);
 
-        jMenuBar1.add(jMenu1);
+        menuBar.add(jMenu1);
 
         jMenu3.setText(bundle1.getString("MainFrame.jMenu3.text")); // NOI18N
 
@@ -500,7 +521,7 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItem13.setText(bundle1.getString("MainFrame.jMenuItem13.text")); // NOI18N
         jMenu3.add(jMenuItem13);
 
-        jMenuBar1.add(jMenu3);
+        menuBar.add(jMenu3);
 
         jMenu4.setText(bundle1.getString("MainFrame.jMenu4.text")); // NOI18N
 
@@ -546,7 +567,7 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItem18.setText(bundle1.getString("MainFrame.jMenuItem18.text")); // NOI18N
         jMenu4.add(jMenuItem18);
 
-        jMenuBar1.add(jMenu4);
+        menuBar.add(jMenu4);
 
         jMenu2.setText(bundle1.getString("MainFrame.jMenu2.text")); // NOI18N
 
@@ -556,9 +577,9 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItem15.setText(bundle1.getString("MainFrame.jMenuItem15.text")); // NOI18N
         jMenu2.add(jMenuItem15);
 
-        jMenuBar1.add(jMenu2);
+        menuBar.add(jMenu2);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -566,27 +587,41 @@ public class MainFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jSplitPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 753, Short.MAX_VALUE)
+                .addComponent(mainSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 753, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jSplitPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
+                .addComponent(mainSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void buActivateSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buActivateSenderActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_buActivateSenderActionPerformed
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+    private void buShowSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buShowSenderActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton11ActionPerformed
+    }//GEN-LAST:event_buShowSenderActionPerformed
+
+    private void buAddSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buAddSenderActionPerformed
+        new EditSenderDialog(this, true).setVisible(true);
+    }//GEN-LAST:event_buAddSenderActionPerformed
+
+    private void buDeactivateSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buDeactivateSenderActionPerformed
+        final int firstSelectedRow = this.senderTable.getSelectedRow();
+        final int selectedRowCount = this.senderTable.getSelectedRowCount();
+        Sender sender;
+        for(int i=firstSelectedRow; i<firstSelectedRow + selectedRowCount; i++) {
+            sender = (Sender)this.senderTable.getValueAt(i, 0);
+            sender.deactivate();
+        }
+    }//GEN-LAST:event_buDeactivateSenderActionPerformed
 
     /**
     * @param args the command line arguments
@@ -602,45 +637,26 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
+    private javax.swing.JButton buActivateReceiver;
+    private javax.swing.JButton buActivateSender;
+    private javax.swing.JButton buAddReceiver;
+    private javax.swing.JButton buAddSender;
+    private javax.swing.JButton buDeactivateReceiver;
+    private javax.swing.JButton buDeactivateSender;
+    private javax.swing.JButton buDeleteReceiver;
+    private javax.swing.JButton buDeleteSender;
+    private javax.swing.JButton buEditReceiver;
+    private javax.swing.JButton buEditSender;
+    private javax.swing.JButton buShowReceiver;
+    private javax.swing.JButton buShowSender;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem3;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem4;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
@@ -668,23 +684,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
-    private com.spam.mctool.view.main.receivertable.JReceiverTable jReceiverTable1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
-    private javax.swing.JSeparator jSeparator11;
-    private javax.swing.JSeparator jSeparator12;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
@@ -693,10 +695,43 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator7;
     private javax.swing.JPopupMenu.Separator jSeparator8;
     private javax.swing.JPopupMenu.Separator jSeparator9;
-    private javax.swing.JSplitPane jSplitPane1;
-    private javax.swing.JSplitPane jSplitPane2;
-    private javax.swing.JSplitPane jSplitPane3;
+    private javax.swing.JLabel laFaultyPackets;
+    private javax.swing.JLabel laFaultyPacketsCaption;
+    private javax.swing.JLabel laLostPackets;
+    private javax.swing.JLabel laLostPacketsCaption;
+    private javax.swing.JLabel laReceived;
+    private javax.swing.JLabel laReceivedCaption;
+    private javax.swing.JLabel laReceiverTableCaption;
+    private javax.swing.JLabel laReceiverTableIcon;
+    private javax.swing.JLabel laReceivingRate;
+    private javax.swing.JLabel laReceivingRateCaption;
+    private javax.swing.JLabel laReceivingStatisticsCaption;
+    private javax.swing.JLabel laSenderRate;
+    private javax.swing.JLabel laSenderRateCaption;
+    private javax.swing.JLabel laSenderTableCaption;
+    private javax.swing.JLabel laSendingStatistics;
+    private javax.swing.JLabel laSent;
+    private javax.swing.JLabel laSentCaption;
+    private javax.swing.JSplitPane mainSplitPane;
+    private javax.swing.JMenuBar menuBar;
+    private javax.swing.JPanel paReceiverButtons;
+    private javax.swing.JPanel paReceiverTableCaption;
+    private javax.swing.JPanel paReceiverTableInner;
+    private javax.swing.JPanel paReceiverTableOuter;
+    private javax.swing.JPanel paReceivingStatistics;
+    private javax.swing.JPanel paSenderButtons;
+    private javax.swing.JPanel paSenderTableCaption;
+    private javax.swing.JPanel paSenderTableInner;
+    private javax.swing.JPanel paSenderTableOuter;
+    private javax.swing.JPanel paSendingStatistics;
+    private javax.swing.JSplitPane receiverSplitPane;
+    private com.spam.mctool.view.main.receivertable.JReceiverTable receiverTable;
+    private javax.swing.JSeparator receivingStatisticsSeparator;
+    private javax.swing.JSplitPane senderSplitPane;
     private javax.swing.JTable senderTable;
+    private javax.swing.JLabel senderTableIcon;
+    private javax.swing.JScrollPane senderTableScrollPane;
+    private javax.swing.JSeparator sendingStatisticsSeparator;
     private com.spam.mctool.view.main.StatusRenderer statusRenderer1;
     private com.spam.mctool.view.main.TwoColorRenderer twoColorRenderer1;
     // End of variables declaration//GEN-END:variables
@@ -722,8 +757,14 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void test() {
-        ReceiverTableModel tableModel = (ReceiverTableModel)jReceiverTable1.getModel();
+        ReceiverTableModel tableModel = (ReceiverTableModel)receiverTable.getModel();
     }
+
+    public void addSender(Map<String, String> senderMap, boolean activate) {
+        this.view.addSender(senderMap, activate);
+    }
+
+    
 
     
 

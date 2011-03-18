@@ -12,17 +12,20 @@
 package com.spam.mctool.view.dialogs;
 
 import com.spam.mctool.model.Sender;
+import com.spam.mctool.view.main.MainFrame;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.text.ParseException;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JFrame;
 import javax.swing.text.MaskFormatter;
 
 /**
@@ -33,18 +36,25 @@ public class EditSenderDialog extends javax.swing.JDialog {
 
     private static final long serialVersionUID = 1L;
     private Sender sender = null;
-    private Map<String,String> interfaceMap = null;
+    private Map<String,String> interfaceMap = new HashMap<String,String>();
+    private MainFrame parent;
     //TODO loglevel?
 
 	/** Creates new form EditSenderDialog */
-    public EditSenderDialog(java.awt.Frame parent, boolean modal) {
+    public EditSenderDialog(JFrame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         loadNetInterfaces();
         initPacketStyles();
+
     }
 
-    public EditSenderDialog(java.awt.Frame parent, boolean modal, Sender sender) {
+    public EditSenderDialog(MainFrame parent, boolean modal) {
+        this((JFrame)parent, modal);
+        this.parent = parent;
+    }
+
+    public EditSenderDialog(MainFrame parent, boolean modal, Sender sender) {
         this(parent, modal);
         this.sender = sender;
         loadData();
@@ -203,7 +213,7 @@ public class EditSenderDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
-        Map<String,String> senderMap = null;
+        Map<String,String> senderMap = new HashMap<String, String>();
 
         if(this.sender == null){
             senderMap.put("group", this.GroupField.getText());
@@ -215,6 +225,7 @@ public class EditSenderDialog extends javax.swing.JDialog {
             senderMap.put("ptype", this.PacketStyleCombo.getSelectedItem().toString());
             senderMap.put("ninf",this.interfaceMap.get(this.InterfaceCombo.getSelectedItem().toString()));
             senderMap.put("abeh","default");
+            parent.addSender(senderMap, this.ActivateBox.isSelected());
         }
         else{
             this.sender.setSenderConfiguredPacketRate(Integer.parseInt(this.PacketRateField.getValue().toString()));
@@ -224,6 +235,8 @@ public class EditSenderDialog extends javax.swing.JDialog {
                 this.sender.activate();
             }
         }
+
+
         this.dispose();
 }//GEN-LAST:event_OKButtonActionPerformed
 

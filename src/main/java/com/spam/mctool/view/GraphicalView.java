@@ -23,6 +23,7 @@ import com.spam.mctool.model.SenderAddedOrRemovedListener;
 import com.spam.mctool.model.SenderDataChangeListener;
 import com.spam.mctool.view.main.receivertable.ReceiverTableModel;
 import java.util.List;
+import java.util.Map;
 
 import java.util.Set;
 import javax.swing.UIManager;
@@ -40,7 +41,6 @@ public class GraphicalView implements MctoolView,
 		ReceiverAddedOrRemovedListener {
 
 	private MainFrame mainFrame;
-	// TODO Add Dialogs
 	private StreamManager streamManager;
         private ProfileManager profileManager;
         /**
@@ -117,19 +117,19 @@ public class GraphicalView implements MctoolView,
             int senderRow = getSenderRow(s);
             if(senderRow > -1) {
                 senderTable.setValueAt(s, senderRow, 0);
-                senderTable.setValueAt(s.getSenderId(), senderRow, 0);
-                senderTable.setValueAt(s.getPort(), senderRow, 0);
-                senderTable.setValueAt(s.getGroup(), senderRow, 0);
-                senderTable.setValueAt(s.getSenderConfiguredPacketRate(), senderRow, 0);
-                senderTable.setValueAt(s.getAvgPPS(), senderRow, 0);
+                senderTable.setValueAt(s.getSenderId(), senderRow, 1);
+                senderTable.setValueAt(s.getPort(), senderRow, 2);
+                senderTable.setValueAt(s.getGroup(), senderRow, 3);
+                senderTable.setValueAt(s.getSenderConfiguredPacketRate(), senderRow, 4);
+                senderTable.setValueAt(s.getAvgPPS(), senderRow, 5);
                 /*
                 senderTable.setValueAt(s.getAvgPacketRate(), senderRow, 0);
                 senderTable.setValueAt(s.getMinPacketRate(), senderRow, 0);
                 senderTable.setValueAt(s.getMaxPacketRate(), senderRow, 0);
                 */
-                senderTable.setValueAt(s.getAvgPPS(), senderRow, 0);
-                senderTable.setValueAt(s.getMinPPS(), senderRow, 0);
-                senderTable.setValueAt(s.getMaxPPS(), senderRow, 0);
+                senderTable.setValueAt(s.getAvgPPS(), senderRow, 5);
+                senderTable.setValueAt(s.getMinPPS(), senderRow, 5);
+                senderTable.setValueAt(s.getMaxPPS(), senderRow, 5);
             }
 
 	}
@@ -149,9 +149,9 @@ public class GraphicalView implements MctoolView,
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-		mainFrame = new MainFrame();
+		mainFrame = new MainFrame(this);
                 //loadState();
-                //attachObservers(); // Doesn't work yet, beacause the Controller
+                attachObservers(); // Doesn't work yet, beacause the Controller
                                      // doesn't instantiate a sender and receiver
                                      // pool yet.
                 senderTable = mainFrame.getSenderTable();
@@ -180,14 +180,14 @@ public class GraphicalView implements MctoolView,
     // senderAdded and receiverAdded calls.
     private void attachObservers() {
         streamManager.addSenderAddedOrRemovedListener(this);
-        streamManager.addReceiverAddedOrRemovedListener(this);
-        profileManager.addProfileChangeListener(this);
-        for (Receiver r : streamManager.getReceivers()) {
+        //streamManager.addReceiverAddedOrRemovedListener(this);
+        //profileManager.addProfileChangeListener(this);
+        //for (Receiver r : streamManager.getReceivers()) {
             // TODO howto register on receiver group?
-        }
-        for (Sender s : streamManager.getSenders()) {
-            s.addSenderDataChangeListener(this);
-        }
+        //}
+        //for (Sender s : streamManager.getSenders()) {
+        //    s.addSenderDataChangeListener(this);
+        //}
     }
 
     private int getSenderRow(Sender s) {
@@ -220,6 +220,12 @@ public class GraphicalView implements MctoolView,
         //    s.setPort(100 + i);
         //    this.senderAdded(new SenderAddedOrRemovedEvent(s));
         //}
+    }
+
+    public void addSender(Map<String, String> senderMap, boolean activate) {
+        Sender s = this.streamManager.addSender(senderMap);
+        s.addSenderDataChangeListener(this);
+        s.activate();
     }
 
 }
