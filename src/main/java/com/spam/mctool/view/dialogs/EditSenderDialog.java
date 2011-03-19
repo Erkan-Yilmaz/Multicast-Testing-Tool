@@ -16,14 +16,13 @@ import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.text.ParseException;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -33,7 +32,9 @@ public class EditSenderDialog extends javax.swing.JDialog {
 
     private static final long serialVersionUID = 1L;
     private Sender sender = null;
-    private Map<String,String> interfaceMap = null;
+    private Map<String,String> interfaceMap = new HashMap<String, String>();
+    private Map<String,String> packageMap = new HashMap<String, String>();
+    private Map<String,String> analyzingBehaviourMap = new HashMap<String, String>();
     //TODO loglevel?
 
 	/** Creates new form EditSenderDialog */
@@ -41,7 +42,7 @@ public class EditSenderDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         loadNetInterfaces();
-        initPacketStyles();
+        initComboBoxes();
     }
 
     public EditSenderDialog(java.awt.Frame parent, boolean modal, Sender sender) {
@@ -78,12 +79,13 @@ public class EditSenderDialog extends javax.swing.JDialog {
         PacketRateField = new javax.swing.JSpinner();
         PacketSizeField = new javax.swing.JSpinner();
         TTLField = new javax.swing.JSpinner();
+        AnalyzingBehaviourLabel = new javax.swing.JLabel();
+        AnalyzingBehaviourCombo = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         InterfaceCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        OKButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/check.png"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/spam/mctool/view/dialogs/Bundle"); // NOI18N
         OKButton.setText(bundle.getString("EditSenderDialog.OKButton.text")); // NOI18N
         OKButton.addActionListener(new java.awt.event.ActionListener() {
@@ -92,7 +94,6 @@ public class EditSenderDialog extends javax.swing.JDialog {
             }
         });
 
-        CancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/delete.png"))); // NOI18N
         CancelButton.setText(bundle.getString("EditSenderDialog.CancelButton.text")); // NOI18N
         CancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,6 +125,10 @@ public class EditSenderDialog extends javax.swing.JDialog {
 
         GroupField.setText(bundle.getString("EditSenderDialog.GroupField.text")); // NOI18N
 
+        AnalyzingBehaviourLabel.setText(bundle.getString("EditSenderDialog.AnalyzingBehaviourLabel.text")); // NOI18N
+
+        AnalyzingBehaviourCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -146,13 +151,15 @@ public class EditSenderDialog extends javax.swing.JDialog {
                     .addComponent(PacketSizeLabel)
                     .addComponent(PacketSizeField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                     .addComponent(TTLLabel)
+                    .addComponent(TTLField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                     .addComponent(ActivateBox, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(43, 43, 43)
                         .addComponent(OKButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(CancelButton))
-                    .addComponent(TTLField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
+                    .addComponent(AnalyzingBehaviourLabel)
+                    .addComponent(AnalyzingBehaviourCombo, 0, 250, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -190,20 +197,24 @@ public class EditSenderDialog extends javax.swing.JDialog {
                 .addComponent(TTLLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(TTLField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
+                .addComponent(AnalyzingBehaviourLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(AnalyzingBehaviourCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addComponent(ActivateBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(OKButton)
                     .addComponent(CancelButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
-        Map<String,String> senderMap = null;
+        Map<String,String> senderMap = new HashMap<String, String>();
 
         if(this.sender == null){
             senderMap.put("group", this.GroupField.getText());
@@ -212,9 +223,9 @@ public class EditSenderDialog extends javax.swing.JDialog {
             senderMap.put("psize", this.PacketSizeField.getValue().toString());
             senderMap.put("ttl", this.TTLField.getValue().toString());
             senderMap.put("payload", this.DataField.getText());
-            senderMap.put("ptype", this.PacketStyleCombo.getSelectedItem().toString());
+            senderMap.put("ptype", this.packageMap.get(this.PacketStyleCombo.getSelectedItem().toString()));
             senderMap.put("ninf",this.interfaceMap.get(this.InterfaceCombo.getSelectedItem().toString()));
-            senderMap.put("abeh","default");
+            senderMap.put("abeh",this.analyzingBehaviourMap.get(this.AnalyzingBehaviourCombo.getSelectedItem().toString()));
         }
         else{
             this.sender.setSenderConfiguredPacketRate(Integer.parseInt(this.PacketRateField.getValue().toString()));
@@ -263,6 +274,7 @@ public class EditSenderDialog extends javax.swing.JDialog {
     }
 
     private void loadNetInterfaces(){
+        this.InterfaceCombo.removeAllItems();
 	Enumeration<NetworkInterface> interfaces = null;
         try {
             interfaces = NetworkInterface.getNetworkInterfaces();
@@ -286,13 +298,26 @@ public class EditSenderDialog extends javax.swing.JDialog {
         }       
     }
 
-    private void initPacketStyles(){
-        this.PacketStyleCombo.addItem("spam");
-        this.PacketStyleCombo.addItem("hmann");
+    private void initComboBoxes(){
+        this.packageMap.put("SPAM","spam");
+        this.packageMap.put("Hirschmann","hmann");
+        this.PacketStyleCombo.removeAllItems();
+        this.PacketStyleCombo.addItem("SPAM");
+        this.PacketStyleCombo.addItem("Hirschmann");
+
+        this.analyzingBehaviourMap.put("Default","default");
+        this.analyzingBehaviourMap.put("Lazy","lazy");
+        this.analyzingBehaviourMap.put("Eager","eager");
+        this.AnalyzingBehaviourCombo.removeAllItems();
+        this.AnalyzingBehaviourCombo.addItem("Default");
+        this.AnalyzingBehaviourCombo.addItem("Lazy");
+        this.AnalyzingBehaviourCombo.addItem("Eager");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox ActivateBox;
+    private javax.swing.JComboBox AnalyzingBehaviourCombo;
+    private javax.swing.JLabel AnalyzingBehaviourLabel;
     private javax.swing.JButton CancelButton;
     private javax.swing.JTextField DataField;
     private javax.swing.JLabel DataLabel;

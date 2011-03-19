@@ -44,6 +44,7 @@
                   <Component id="PacketSizeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="PacketSizeField" alignment="0" pref="250" max="32767" attributes="0"/>
                   <Component id="TTLLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="TTLField" alignment="0" pref="250" max="32767" attributes="0"/>
                   <Component id="ActivateBox" alignment="0" pref="250" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
@@ -51,7 +52,8 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="CancelButton" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="TTLField" alignment="0" pref="250" max="32767" attributes="0"/>
+                  <Component id="AnalyzingBehaviourLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="AnalyzingBehaviourCombo" alignment="0" pref="250" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -92,14 +94,18 @@
               <Component id="TTLLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="TTLField" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="AnalyzingBehaviourLabel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="AnalyzingBehaviourCombo" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="51" max="32767" attributes="0"/>
               <Component id="ActivateBox" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="OKButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="CancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -119,9 +125,6 @@
     </Component>
     <Component class="javax.swing.JButton" name="OKButton">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/com/spam/mctool/view/images/check.png"/>
-        </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
           <ResourceString bundle="com/spam/mctool/view/dialogs/Bundle.properties" key="EditSenderDialog.OKButton.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
@@ -132,9 +135,6 @@
     </Component>
     <Component class="javax.swing.JButton" name="CancelButton">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/com/spam/mctool/view/images/delete.png"/>
-        </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
           <ResourceString bundle="com/spam/mctool/view/dialogs/Bundle.properties" key="EditSenderDialog.CancelButton.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
@@ -239,6 +239,25 @@
     <Component class="javax.swing.JSpinner" name="PacketSizeField">
     </Component>
     <Component class="javax.swing.JSpinner" name="TTLField">
+    </Component>
+    <Component class="javax.swing.JLabel" name="AnalyzingBehaviourLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="com/spam/mctool/view/dialogs/Bundle.properties" key="EditSenderDialog.AnalyzingBehaviourLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="AnalyzingBehaviourCombo">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="Item 1"/>
+            <StringItem index="1" value="Item 2"/>
+            <StringItem index="2" value="Item 3"/>
+            <StringItem index="3" value="Item 4"/>
+          </StringArray>
+        </Property>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
