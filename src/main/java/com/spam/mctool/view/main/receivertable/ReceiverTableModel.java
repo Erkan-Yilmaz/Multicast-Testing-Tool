@@ -150,7 +150,12 @@ public class ReceiverTableModel extends AbstractTableModel implements MouseListe
         // Do nothing
     }
 
-    public void dataChanged(ReceiverDataChangedEvent e) {
+    private boolean contains(Object e) {
+        if(getRowIndex(e) > -1) return true;
+        else                    return false;
+    }
+
+    public void receiverDataChanged(ReceiverDataChangedEvent e) {
         ReceiverGroup group = (ReceiverGroup)e.getSource();
         List<Receiver> receivers = e.getReceiverList();
         if(this.contains(group)) {
@@ -165,11 +170,6 @@ public class ReceiverTableModel extends AbstractTableModel implements MouseListe
                 addReceiver(group, rcv);
             }
         }
-    }
-
-    private boolean contains(Object e) {
-        if(getRowIndex(e) > -1) return true;
-        else                    return false;
     }
 
 }

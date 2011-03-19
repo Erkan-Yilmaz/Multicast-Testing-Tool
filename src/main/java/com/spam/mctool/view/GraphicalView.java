@@ -44,10 +44,6 @@ public class GraphicalView implements MctoolView,
 	private StreamManager streamManager;
         private ProfileManager profileManager;
         /**
-         * Model of the table representing the senders in the view
-         */
-        private DefaultTableModel senderTable;
-        /**
          * Model of the table representing the receivers in the view
          */
         private ReceiverTableModel receiverTable;
@@ -64,41 +60,12 @@ public class GraphicalView implements MctoolView,
 
 	public void senderAdded(SenderAddedOrRemovedEvent e) {
             Sender s = e.getSource();
-            if(getSenderRow(s) == -1) {
-                senderTable.addRow (
-                    new Object[] {
-                        s,
-                        s.getSenderId(),
-                        s.getPort(),
-                        s.getGroup(),
-                        s.getSenderConfiguredPacketRate(),
-                        /*
-                        s.getMeasuredPacketRate(),
-                        s.getAvgPacketRate(),
-                        s.getMinPacketRate(),
-                        s.getMaxPacketRate()
-                        */
-                        0,
-                        0,
-                        0,
-                        0
-                    }
-                );
-            } else {
-                throw new RuntimeException("Sender " + s + " already added to table!");
-            }
-            s.addSenderDataChangeListener(this);
+            mainFrame.senderAdded(s);
 	}
 
 	public void senderRemoved(SenderAddedOrRemovedEvent e) {
             Sender s = e.getSource();
-            int senderRow = getSenderRow(s);
-            if(senderRow > -1) {
-                senderTable.removeRow(senderRow);
-            } else {
-                throw new RuntimeException("Sender " + s + " not found in table!");
-            }
-
+            mainFrame.senderRemoved(s);
 	}
 
 	public void profileChanged(ProfileChangeEvent e) {
@@ -108,30 +75,13 @@ public class GraphicalView implements MctoolView,
 
         // TODO nobody calls this method so far
 	public void dataChanged(ReceiverDataChangedEvent e) {
-            receiverTable.dataChanged(e);
+            receiverTable.receiverDataChanged(e);
 	}
 
         // TODO nobody calls this method so far
 	public void dataChanged(SenderDataChangedEvent e) {
             Sender s = e.getSource();
-            int senderRow = getSenderRow(s);
-            if(senderRow > -1) {
-                senderTable.setValueAt(s, senderRow, 0);
-                senderTable.setValueAt(s.getSenderId(), senderRow, 1);
-                senderTable.setValueAt(s.getPort(), senderRow, 2);
-                senderTable.setValueAt(s.getGroup(), senderRow, 3);
-                senderTable.setValueAt(s.getSenderConfiguredPacketRate(), senderRow, 4);
-                senderTable.setValueAt(s.getAvgPPS(), senderRow, 5);
-                /*
-                senderTable.setValueAt(s.getAvgPacketRate(), senderRow, 0);
-                senderTable.setValueAt(s.getMinPacketRate(), senderRow, 0);
-                senderTable.setValueAt(s.getMaxPacketRate(), senderRow, 0);
-                */
-                senderTable.setValueAt(s.getAvgPPS(), senderRow, 5);
-                senderTable.setValueAt(s.getMinPPS(), senderRow, 5);
-                senderTable.setValueAt(s.getMaxPPS(), senderRow, 5);
-            }
-
+            mainFrame.senderDataChanged(s);
 	}
 
 	/**
@@ -154,7 +104,6 @@ public class GraphicalView implements MctoolView,
                 attachObservers(); // Doesn't work yet, beacause the Controller
                                      // doesn't instantiate a sender and receiver
                                      // pool yet.
-                senderTable = mainFrame.getSenderTable();
 		mainFrame.setVisible(true);
                 loadTableTestData();
 	}
@@ -188,28 +137,6 @@ public class GraphicalView implements MctoolView,
         //for (Sender s : streamManager.getSenders()) {
         //    s.addSenderDataChangeListener(this);
         //}
-    }
-
-    private int getSenderRow(Sender s) {
-        for(int i=0; i < senderTable.getRowCount(); i++) {
-            if(senderTable.getValueAt(i, 0) == s) {
-                // sender found in row i
-                return i;
-            }
-        }
-        // sender not found. returning -1
-        return -1;
-    }
-
-    private int getReceiverRow(Receiver r) {
-        for(int i=0; i < receiverTable.getRowCount(); i++) {
-            if(receiverTable.getValueAt(i, 0) == r) {
-                // sender found in row i
-                return i;
-            }
-        }
-        // sender not found. returning -1
-        return -1;
     }
 
     private void loadTableTestData() {

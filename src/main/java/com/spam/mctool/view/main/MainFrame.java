@@ -63,8 +63,8 @@ public class MainFrame extends javax.swing.JFrame {
         buEditSender = new javax.swing.JButton();
         buDeleteSender = new javax.swing.JButton();
         paSenderTableInner = new javax.swing.JPanel();
-        senderTableScrollPane = new javax.swing.JScrollPane();
-        senderTable = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        senderTable = new com.spam.mctool.view.main.sendertable.JSenderTable();
         paSenderTableCaption = new javax.swing.JPanel();
         laSenderTableCaption = new javax.swing.JLabel();
         senderTableIcon = new javax.swing.JLabel();
@@ -258,55 +258,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         paSenderTableInner.setLayout(new java.awt.BorderLayout());
 
-        senderTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        jScrollPane2.setViewportView(senderTable);
 
-            },
-            new String [] {
-                "Status", "Sender ID", "Port", "Group", "Conf. Rate", "Measured Rate", "Avg. Rate", "Min Rate", "Max Rate"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, true, true, true, true
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        senderTable.setGridColor(javax.swing.UIManager.getDefaults().getColor("control"));
-        senderTable.setShowHorizontalLines(false);
-        senderTableScrollPane.setViewportView(senderTable);
-        senderTable.getColumnModel().getColumn(0).setResizable(false);
-        senderTable.getColumnModel().getColumn(0).setPreferredWidth(37);
-        senderTable.getColumnModel().getColumn(0).setHeaderValue(bundle1.getString("MainFrame.senderTable.columnModel.title0_1")); // NOI18N
-        senderTable.getColumnModel().getColumn(0).setCellRenderer(statusRenderer1);
-        senderTable.getColumnModel().getColumn(1).setPreferredWidth(60);
-        senderTable.getColumnModel().getColumn(1).setHeaderValue(bundle1.getString("MainFrame.senderTable.columnModel.title1_1")); // NOI18N
-        senderTable.getColumnModel().getColumn(1).setCellRenderer(twoColorRenderer1);
-        senderTable.getColumnModel().getColumn(2).setPreferredWidth(45);
-        senderTable.getColumnModel().getColumn(2).setHeaderValue(bundle1.getString("MainFrame.jTable1.columnModel.title4")); // NOI18N
-        senderTable.getColumnModel().getColumn(2).setCellRenderer(twoColorRenderer1);
-        senderTable.getColumnModel().getColumn(3).setPreferredWidth(95);
-        senderTable.getColumnModel().getColumn(3).setHeaderValue(bundle1.getString("MainFrame.jTable1.columnModel.title2_1")); // NOI18N
-        senderTable.getColumnModel().getColumn(3).setCellRenderer(twoColorRenderer1);
-        senderTable.getColumnModel().getColumn(4).setPreferredWidth(65);
-        senderTable.getColumnModel().getColumn(4).setHeaderValue(bundle1.getString("MainFrame.jTable1.columnModel.title3_1")); // NOI18N
-        senderTable.getColumnModel().getColumn(4).setCellRenderer(twoColorRenderer1);
-        senderTable.getColumnModel().getColumn(5).setPreferredWidth(85);
-        senderTable.getColumnModel().getColumn(5).setHeaderValue(bundle1.getString("MainFrame.senderTable.columnModel.title5")); // NOI18N
-        senderTable.getColumnModel().getColumn(5).setCellRenderer(twoColorRenderer1);
-        senderTable.getColumnModel().getColumn(6).setPreferredWidth(60);
-        senderTable.getColumnModel().getColumn(6).setHeaderValue(bundle1.getString("MainFrame.senderTable.columnModel.title6_1")); // NOI18N
-        senderTable.getColumnModel().getColumn(6).setCellRenderer(twoColorRenderer1);
-        senderTable.getColumnModel().getColumn(7).setPreferredWidth(60);
-        senderTable.getColumnModel().getColumn(7).setHeaderValue(bundle1.getString("MainFrame.jTable1.columnModel.title8")); // NOI18N
-        senderTable.getColumnModel().getColumn(7).setCellRenderer(twoColorRenderer1);
-        senderTable.getColumnModel().getColumn(8).setPreferredWidth(60);
-        senderTable.getColumnModel().getColumn(8).setHeaderValue(bundle1.getString("MainFrame.jTable1.columnModel.title7")); // NOI18N
-        senderTable.getColumnModel().getColumn(8).setCellRenderer(twoColorRenderer1);
-
-        paSenderTableInner.add(senderTableScrollPane, java.awt.BorderLayout.CENTER);
+        paSenderTableInner.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
         paSenderTableOuter.add(paSenderTableInner, java.awt.BorderLayout.CENTER);
 
@@ -602,7 +556,9 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buActivateSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buActivateSenderActionPerformed
-        // TODO add your handling code here:
+        for(Sender s : senderTable.getSelectedSenders()) {
+            s.activate();
+        }
     }//GEN-LAST:event_buActivateSenderActionPerformed
 
     private void buShowSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buShowSenderActionPerformed
@@ -614,12 +570,8 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_buAddSenderActionPerformed
 
     private void buDeactivateSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buDeactivateSenderActionPerformed
-        final int firstSelectedRow = this.senderTable.getSelectedRow();
-        final int selectedRowCount = this.senderTable.getSelectedRowCount();
-        Sender sender;
-        for(int i=firstSelectedRow; i<firstSelectedRow + selectedRowCount; i++) {
-            sender = (Sender)this.senderTable.getValueAt(i, 0);
-            sender.deactivate();
+        for(Sender s : senderTable.getSelectedSenders()) {
+            s.deactivate();
         }
     }//GEN-LAST:event_buDeactivateSenderActionPerformed
 
@@ -685,6 +637,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator2;
@@ -728,9 +681,8 @@ public class MainFrame extends javax.swing.JFrame {
     private com.spam.mctool.view.main.receivertable.JReceiverTable receiverTable;
     private javax.swing.JSeparator receivingStatisticsSeparator;
     private javax.swing.JSplitPane senderSplitPane;
-    private javax.swing.JTable senderTable;
+    private com.spam.mctool.view.main.sendertable.JSenderTable senderTable;
     private javax.swing.JLabel senderTableIcon;
-    private javax.swing.JScrollPane senderTableScrollPane;
     private javax.swing.JSeparator sendingStatisticsSeparator;
     private com.spam.mctool.view.main.StatusRenderer statusRenderer1;
     private com.spam.mctool.view.main.TwoColorRenderer twoColorRenderer1;
@@ -752,16 +704,24 @@ public class MainFrame extends javax.swing.JFrame {
         this.setExtendedState(state.getWindowState());
     }
 
-    public DefaultTableModel getSenderTable() {
-        return (DefaultTableModel)this.senderTable.getModel();
-    }
-
     private void test() {
         ReceiverTableModel tableModel = (ReceiverTableModel)receiverTable.getModel();
     }
 
     public void addSender(Map<String, String> senderMap, boolean activate) {
         this.view.addSender(senderMap, activate);
+    }
+
+    public void senderAdded(Sender s) {
+        senderTable.addSender(s);
+    }
+
+    public void senderRemoved(Sender s) {
+        senderTable.removeSender(s);
+    }
+
+    public void senderDataChanged(Sender s) {
+        senderTable.updateSender(s);
     }
 
     
