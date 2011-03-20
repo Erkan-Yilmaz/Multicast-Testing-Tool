@@ -6,15 +6,16 @@
 
 package com.spam.mctool.view.main;
 
-import com.spam.mctool.model.ReceiverGroup;
+import com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent;
+import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
+import com.spam.mctool.intermediates.SenderAddedOrRemovedEvent;
+import com.spam.mctool.intermediates.SenderDataChangedEvent;
 import com.spam.mctool.model.Sender;
 import com.spam.mctool.view.GraphicalView;
 import com.spam.mctool.view.dialogs.EditReceiverDialog;
 import com.spam.mctool.view.dialogs.EditSenderDialog;
 import com.spam.mctool.view.main.receivertable.ReceiverTableModel;
 import java.util.Map;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 /**
  *
@@ -371,6 +372,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         buAddReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/add_green.png"))); // NOI18N
         buAddReceiver.setText(bundle1.getString("MainFrame.buAddReceiver.text")); // NOI18N
+        buAddReceiver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buAddReceiverActionPerformed(evt);
+            }
+        });
         paReceiverButtons.add(buAddReceiver);
 
         buShowReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/preview.png"))); // NOI18N
@@ -575,6 +581,10 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buDeactivateSenderActionPerformed
 
+    private void buAddReceiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buAddReceiverActionPerformed
+        new EditReceiverDialog(this, true).setVisible(true);
+    }//GEN-LAST:event_buAddReceiverActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -712,16 +722,28 @@ public class MainFrame extends javax.swing.JFrame {
         this.view.addSender(senderMap, activate);
     }
 
-    public void senderAdded(Sender s) {
-        senderTable.addSender(s);
+    public void senderAdded(SenderAddedOrRemovedEvent e) {
+        senderTable.senderAdded(e);
     }
 
-    public void senderRemoved(Sender s) {
-        senderTable.removeSender(s);
+    public void senderRemoved(SenderAddedOrRemovedEvent e) {
+        senderTable.senderRemoved(e);
     }
 
-    public void senderDataChanged(Sender s) {
-        senderTable.updateSender(s);
+    public void dataChanged(SenderDataChangedEvent e) {
+        senderTable.dataChanged(e);
+    }
+
+    public void receiverGroupAdded(ReceiverAddedOrRemovedEvent e) {
+        receiverTable.receiverGroupAdded(e);
+    }
+
+    public void receiverGroupRemoved(ReceiverAddedOrRemovedEvent e) {
+        receiverTable.receiverGroupRemoved(e);
+    }
+
+    public void dataChanged(ReceiverDataChangedEvent e) {
+        receiverTable.dataChanged(e);
     }
 
     

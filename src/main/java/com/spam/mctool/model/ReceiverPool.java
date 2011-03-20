@@ -63,11 +63,11 @@ public class ReceiverPool implements ReceiverManager {
 		rec.setAnalyzingBehaviour(abeh);
 		rec.setStatsInterval(statsInterval);
 		receiverGroups.add(rec);
-	
+                
 		return rec;
 	}
 
-	public Collection<ReceiverGroup> getReceiver() {
+	public Collection<ReceiverGroup> getReceiverGroups() {
 		return receiverGroups;
 	}
 

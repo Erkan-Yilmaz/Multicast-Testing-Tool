@@ -10,11 +10,11 @@ public interface ReceiverAddedOrRemovedListener {
 	/**
 	 * @param e event containing the added receiver
 	 */
-	public void receiverAdded(com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent e);
+	public void receiverGroupAdded(com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent e);
 	
 	/**
 	 * @param e event containing the removed receiver
 	 */
-	public void receiverRemoved(com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent e);
+	public void receiverGroupRemoved(com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent e);
 	
 }

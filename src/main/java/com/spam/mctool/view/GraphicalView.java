@@ -13,21 +13,15 @@ import com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
 import com.spam.mctool.intermediates.SenderAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.SenderDataChangedEvent;
-import com.spam.mctool.model.MulticastStream;
-import com.spam.mctool.model.Receiver;
 import com.spam.mctool.model.ReceiverAddedOrRemovedListener;
 import com.spam.mctool.model.ReceiverDataChangeListener;
 import com.spam.mctool.model.ReceiverGroup;
 import com.spam.mctool.model.Sender;
 import com.spam.mctool.model.SenderAddedOrRemovedListener;
 import com.spam.mctool.model.SenderDataChangeListener;
-import com.spam.mctool.view.main.receivertable.ReceiverTableModel;
-import java.util.List;
 import java.util.Map;
 
-import java.util.Set;
 import javax.swing.UIManager;
-import javax.swing.table.DefaultTableModel;
 
 /**
  * @author Tobias Schoknecht, Tobias Stöckel
@@ -43,29 +37,23 @@ public class GraphicalView implements MctoolView,
 	private MainFrame mainFrame;
 	private StreamManager streamManager;
         private ProfileManager profileManager;
-        /**
-         * Model of the table representing the receivers in the view
-         */
-        private ReceiverTableModel receiverTable;
 
 	// receiver oder receivergroup???
-        public void receiverAdded(ReceiverAddedOrRemovedEvent e) {
-            // ???
+        public void receiverGroupAdded(ReceiverAddedOrRemovedEvent e) {
+            mainFrame.receiverGroupAdded(e);
 	}
 
         // receiverGroupRemoved???
-	public void receiverRemoved(ReceiverAddedOrRemovedEvent e) {
-            // ???
+	public void receiverGroupRemoved(ReceiverAddedOrRemovedEvent e) {
+            mainFrame.receiverGroupRemoved(e);
 	}
 
 	public void senderAdded(SenderAddedOrRemovedEvent e) {
-            Sender s = e.getSource();
-            mainFrame.senderAdded(s);
+            mainFrame.senderAdded(e);
 	}
 
 	public void senderRemoved(SenderAddedOrRemovedEvent e) {
-            Sender s = e.getSource();
-            mainFrame.senderRemoved(s);
+            mainFrame.senderRemoved(e);
 	}
 
 	public void profileChanged(ProfileChangeEvent e) {
@@ -75,13 +63,12 @@ public class GraphicalView implements MctoolView,
 
         // TODO nobody calls this method so far
 	public void dataChanged(ReceiverDataChangedEvent e) {
-            receiverTable.receiverDataChanged(e);
+            mainFrame.dataChanged(e);
 	}
 
         // TODO nobody calls this method so far
 	public void dataChanged(SenderDataChangedEvent e) {
-            Sender s = e.getSource();
-            mainFrame.senderDataChanged(s);
+            mainFrame.dataChanged(e);
 	}
 
 	/**
@@ -101,11 +88,8 @@ public class GraphicalView implements MctoolView,
                 }
 		mainFrame = new MainFrame(this);
                 //loadState();
-                attachObservers(); // Doesn't work yet, beacause the Controller
-                                     // doesn't instantiate a sender and receiver
-                                     // pool yet.
+                attachObservers();
 		mainFrame.setVisible(true);
-                loadTableTestData();
 	}
 
     private void loadState() {
@@ -113,8 +97,8 @@ public class GraphicalView implements MctoolView,
 
         // fire the update methods to load all model data to the gui
         profileChanged(new ProfileChangeEvent());
-        for (Receiver r : streamManager.getReceivers()) {
-            this.receiverAdded(new ReceiverAddedOrRemovedEvent(r));
+        for (ReceiverGroup r : streamManager.getReceiverGroups()) {
+            this.receiverGroupAdded(new ReceiverAddedOrRemovedEvent(r));
         }
         for (Sender s : streamManager.getSenders()) {
             this.senderAdded(new SenderAddedOrRemovedEvent(s));
@@ -139,20 +123,16 @@ public class GraphicalView implements MctoolView,
         //}
     }
 
-    private void loadTableTestData() {
-    	// Bitte SenderManager nutzen
-        //Sender s;
-        //for(int i=0; i<20; i++) {
-        //    s = new Sender();
-        //    s.setPort(100 + i);
-        //    this.senderAdded(new SenderAddedOrRemovedEvent(s));
-        //}
-    }
-
     public void addSender(Map<String, String> senderMap, boolean activate) {
         Sender s = this.streamManager.addSender(senderMap);
         s.addSenderDataChangeListener(this);
-        s.activate();
+        if(activate) s.activate();
+    }
+
+    public void addReceiver(Map<String, String> receiverMap, boolean activate) {
+        ReceiverGroup r = this.streamManager.addReceiverGroup(receiverMap);
+        r.addReceiverDataChangeListener(this);
+        if(activate) r.activate();
     }
 
 }

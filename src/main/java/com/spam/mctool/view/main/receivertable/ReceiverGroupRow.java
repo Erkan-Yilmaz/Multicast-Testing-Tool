@@ -5,6 +5,7 @@
 
 package com.spam.mctool.view.main.receivertable;
 
+import com.spam.mctool.model.Receiver;
 import com.spam.mctool.model.ReceiverGroup;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +23,6 @@ class ReceiverGroupRow extends ReceiverTableRow {
         this.group = group;
     }
 
-    ReceiverGroup getReceiverGroup() {
-        return group;
-    }
-
     void addReceiverRow(ReceiverRow receiverRow) {
         receiverRows.add(receiverRow);
     }
@@ -34,12 +31,31 @@ class ReceiverGroupRow extends ReceiverTableRow {
         return expanded;
     }
 
+    void setExpanded(boolean expanded) {
+        this.expanded = expanded;
+    }
+
+    boolean contains(Receiver receiver) {
+        for(ReceiverRow row : receiverRows) {
+            if(row.getReceiver() == receiver) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    ReceiverGroup getReceiverGroup() {
+        return group;
+    }
+
+    int getReceiverRowCount() {
+        return receiverRows.size();
+    }
+
     Iterable<ReceiverRow> getReceiverRows() {
         return receiverRows;
     }
 
-    void setExpanded(boolean expanded) {
-        this.expanded = expanded;
-    }
+    
 
 }

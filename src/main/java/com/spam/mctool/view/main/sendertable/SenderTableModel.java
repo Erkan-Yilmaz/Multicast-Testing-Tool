@@ -1,5 +1,7 @@
 package com.spam.mctool.view.main.sendertable;
 
+import com.spam.mctool.intermediates.SenderAddedOrRemovedEvent;
+import com.spam.mctool.intermediates.SenderDataChangedEvent;
 import com.spam.mctool.model.Sender;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
@@ -45,7 +47,8 @@ public class SenderTableModel extends DefaultTableModel {
      *
      * @param s The Sender to be newly represented by this table model.
      */
-    public void addSender(Sender s) {
+    public void senderAdded(SenderAddedOrRemovedEvent e) {
+        Sender s = e.getSource();
         if (!this.contains(s)) {
             this.addRow (
                 new Object[] {
@@ -69,7 +72,8 @@ public class SenderTableModel extends DefaultTableModel {
      * TableRowsUpdated event to update the JTable.
      * @param s
      */
-    public void updateSender(Sender s) {
+    public void dataChanged(SenderDataChangedEvent e) {
+        Sender s = e.getSource();
         int senderRow = findSenderRow(s);
         if(senderRow > -1) {
             Vector rowVector = (Vector)dataVector.elementAt(senderRow);
@@ -93,7 +97,8 @@ public class SenderTableModel extends DefaultTableModel {
      *
      * @param s The sender to be removed.
      */
-    public void removeSender(Sender s) {
+    public void senderRemoved(SenderAddedOrRemovedEvent e) {
+        Sender s = e.getSource();
         int senderRow = findSenderRow(s);
         if(senderRow > -1) {
             this.removeRow(senderRow);

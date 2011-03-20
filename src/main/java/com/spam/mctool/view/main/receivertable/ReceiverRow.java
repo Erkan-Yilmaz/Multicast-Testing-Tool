@@ -13,14 +13,18 @@ import com.spam.mctool.model.Receiver;
  */
 class ReceiverRow extends ReceiverTableRow {
 
-    Receiver receiver;
+    private final Receiver receiver;
 
     ReceiverRow(Receiver rcv) {
         this.receiver = rcv;
     }
 
-    Receiver getReceiver() {
+    public Receiver getReceiver() {
         return receiver;
     }
+
+    
+
+
 
 }

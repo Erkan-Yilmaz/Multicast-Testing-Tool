@@ -1,5 +1,7 @@
 package com.spam.mctool.view.main.sendertable;
 
+import com.spam.mctool.intermediates.SenderAddedOrRemovedEvent;
+import com.spam.mctool.intermediates.SenderDataChangedEvent;
 import com.spam.mctool.model.Sender;
 import com.spam.mctool.view.main.StatusRenderer;
 import com.spam.mctool.view.main.TwoColorRenderer;
@@ -44,10 +46,10 @@ public class JSenderTable extends JTable {
      *
      * @param s The Sender to be added to the table.
      */
-    public void addSender(Sender s) {
+    public void senderAdded(SenderAddedOrRemovedEvent e) {
         try {
-            ((SenderTableModel)getModel()).addSender(s);
-        } catch (ClassCastException e) {
+            ((SenderTableModel)getModel()).senderAdded(e);
+        } catch (ClassCastException ex) {
             throw new IllegalStateException("JSenderTable was initialized with " + getModel().getClass() + " as model.");
         }
     }
@@ -59,10 +61,10 @@ public class JSenderTable extends JTable {
      *
      * @param s The Sender to be removed from the table.
      */
-    public void removeSender(Sender s) {
+    public void senderRemoved(SenderAddedOrRemovedEvent e) {
         try {
-            ((SenderTableModel)getModel()).removeSender(s);
-        } catch (ClassCastException e) {
+            ((SenderTableModel)getModel()).senderRemoved(e);
+        } catch (ClassCastException ex) {
             throw new IllegalStateException("JSenderTable was initialized with " + getModel().getClass() + " as model.");
         }
     }
@@ -74,10 +76,10 @@ public class JSenderTable extends JTable {
      * 
      * @param s
      */
-    public void updateSender(Sender s) {
+    public void dataChanged(SenderDataChangedEvent e) {
         try {
-            ((SenderTableModel)getModel()).updateSender(s);
-        } catch (ClassCastException e) {
+            ((SenderTableModel)getModel()).dataChanged(e);
+        } catch (ClassCastException ex) {
             throw new IllegalStateException("JSenderTable was initialized with " + getModel().getClass() + " as model.");
         }
     }

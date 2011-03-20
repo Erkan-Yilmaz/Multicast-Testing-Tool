@@ -18,6 +18,7 @@ import com.spam.mctool.model.Receiver;
 import com.spam.mctool.model.ReceiverAddedOrRemovedListener;
 import com.spam.mctool.model.ReceiverGroup;
 import com.spam.mctool.model.ReceiverManager;
+import com.spam.mctool.model.ReceiverPool;
 import com.spam.mctool.model.Sender;
 import com.spam.mctool.model.SenderAddedOrRemovedListener;
 import com.spam.mctool.model.SenderManager;
@@ -45,7 +46,7 @@ public class Controller implements ProfileManager, StreamManager {
 		this.profileChangeObservers = new ArrayList<ProfileChangeListener>();
 		//Init the Sender and Receiver modules
 		this.senderManager = new SenderPool();
-		//this.receiverManager = new ReceiverPool();
+		this.receiverManager = new ReceiverPool();
 		viewers = new ArrayList<MctoolView>();
 		viewers.add(new GraphicalView()); // Added by TST. uncomment to
                                                     // display the gui upon
@@ -196,18 +197,16 @@ public class Controller implements ProfileManager, StreamManager {
 		return this.senderManager.create(params);
 	}
 
-	public Receiver addReceiver(Map<String, String> params) {
-		// TODO Auto-generated method stub
-		return null;
+	public ReceiverGroup addReceiverGroup(Map<String, String> params) {
+		return receiverManager.create(params);
 	}
 
 	public Collection<Sender> getSenders() {
 		return senderManager.getSenders();
 	}
 
-	public Collection<Receiver> getReceivers() {
-		//return receiverManager.getReceiver();
-            return null;
+	public Collection<ReceiverGroup> getReceiverGroups() {
+		return receiverManager.getReceiverGroups();
 	}
 
 	public void addSenderAddedOrRemovedListener(SenderAddedOrRemovedListener l) {

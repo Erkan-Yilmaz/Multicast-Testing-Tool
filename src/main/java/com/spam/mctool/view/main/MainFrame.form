@@ -816,6 +816,9 @@
                           <ResourceString bundle="com/spam/mctool/view/main/Bundle.properties" key="MainFrame.buAddReceiver.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buAddReceiverActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="buShowReceiver">
                       <Properties>

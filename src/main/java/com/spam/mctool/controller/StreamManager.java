@@ -22,7 +22,7 @@ public interface StreamManager {
 	 * @param params Properties for the new created receiver. Look in moddocs for possible values
 	 * @return the newly created receiver.
 	 */
-	public com.spam.mctool.model.Receiver addReceiver(java.util.Map<String, String> params);
+	public com.spam.mctool.model.ReceiverGroup addReceiverGroup(java.util.Map<String, String> params);
 	
 	//TODO are individual remove methods for senders and receivers really necessary
 	/**
@@ -54,7 +54,7 @@ public interface StreamManager {
 	/**
 	 * @return collection of all receivers in the pool
 	 */
-	public java.util.Collection<com.spam.mctool.model.Receiver> getReceivers();
+	public java.util.Collection<com.spam.mctool.model.ReceiverGroup> getReceiverGroups();
 	
 	/**
 	 * SenderAddedOrRemoved Observer

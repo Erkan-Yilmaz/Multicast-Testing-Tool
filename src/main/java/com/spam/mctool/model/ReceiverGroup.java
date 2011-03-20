@@ -119,7 +119,7 @@ public class ReceiverGroup extends MulticastStream {
 			faultyPackets++;
 		}
 	}
-	
+
 	/**
 	 * Simple datastructure to store packets, receiving time and packet size
 	 */

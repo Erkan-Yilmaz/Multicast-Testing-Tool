@@ -5,6 +5,7 @@
 
 package com.spam.mctool.view.main.receivertable;
 
+import com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
 import com.spam.mctool.model.Receiver;
 import com.spam.mctool.model.ReceiverGroup;
@@ -28,7 +29,7 @@ public class ReceiverTableModel extends AbstractTableModel implements MouseListe
     }
 
     public int getColumnCount() {
-        return 3;
+        return 5;
     }
 
     public Object getValueAt(int rowIndex, int columnIndex) {
@@ -37,10 +38,13 @@ public class ReceiverTableModel extends AbstractTableModel implements MouseListe
             return row;
         } else if (visibleRows.get(rowIndex) instanceof ReceiverRow) {
             ReceiverRow row = (ReceiverRow)visibleRows.get(rowIndex);
+            Receiver receiver = row.getReceiver();
             switch(columnIndex) {
-                case 0: return row.getReceiver().isAlive();
-                case 1: return row.getReceiver().getSenderId();
-                case 2: return row.getReceiver().getAvgPPS();
+                case 0: return receiver.isAlive();
+                case 1: return receiver.getSenderId();
+                case 2: return receiver.getSenderConfiguredPPS();
+                case 3: return receiver.getAvgPPS();
+                case 4: return receiver.getLostPackets();
                 default:
                     throw new RuntimeException("Illegal columnIndex: " + columnIndex);
             }
@@ -49,21 +53,51 @@ public class ReceiverTableModel extends AbstractTableModel implements MouseListe
         }
     }
 
-    void addReceiverGroup(ReceiverGroup group) {
+    public void receiverGroupAdded(ReceiverAddedOrRemovedEvent e) {
+        ReceiverGroup group = e.getSource();
         int newRowIndex = visibleRows.size();
         visibleRows.add(new ReceiverGroupRow(group));
         this.fireTableRowsInserted(newRowIndex, newRowIndex);
     }
 
-    void addReceiver(ReceiverGroup group, Receiver rcv) {
-        int groupRowIndex = getRowIndex(group);
-        ReceiverGroupRow groupRow = (ReceiverGroupRow)visibleRows.get(groupRowIndex);
-        ReceiverRow receiverRow = new ReceiverRow(rcv);
-        groupRow.addReceiverRow(receiverRow);
+    void receiverGroupRemoved(ReceiverAddedOrRemovedEvent e) {
+        ReceiverGroup group = e.getSource();
+        ReceiverGroupRow groupRow = getReceiverGroupRow(group);
+        int firstRow = getRowIndex(group);
+        int lastRow  = firstRow;
         if(groupRow.isExpanded()) {
-            int receiverRowIndex = groupRowIndex+1;
-            visibleRows.add(receiverRowIndex, receiverRow);
-            this.fireTableRowsInserted(receiverRowIndex, receiverRowIndex);
+            for(ReceiverRow row : groupRow.getReceiverRows()) {
+                visibleRows.remove(row);
+                lastRow++;
+            }
+        }
+        visibleRows.remove(groupRow);
+        fireTableRowsDeleted(firstRow, lastRow);
+    }
+
+    public void dataChanged(ReceiverDataChangedEvent e) {
+        ReceiverGroup receiverGroup = e.getSource();
+        ReceiverGroupRow receiverGroupRow = getReceiverGroupRow(receiverGroup);
+        int groupRowIndex = getRowIndex(receiverGroup);
+        fireTableRowsUpdated(groupRowIndex, groupRowIndex);
+
+        ReceiverRow receiverRow;
+        int receiverRowIndex;
+        int insertPos;
+        for(Receiver receiver : e.getReceiverList()) {
+            receiverRow = getReceiverRow(receiver);
+            if(receiverRow != null) {
+                receiverRowIndex = this.getRowIndex(receiver);
+                fireTableRowsUpdated(receiverRowIndex, receiverRowIndex);
+            } else {
+                receiverRow = new ReceiverRow(receiver);
+                receiverGroupRow.addReceiverRow(receiverRow);
+                if(receiverGroupRow.isExpanded()) {
+                   insertPos = groupRowIndex + receiverGroupRow.getReceiverRowCount() + 1;
+                   visibleRows.add(insertPos, receiverRow);
+                   fireTableRowsInserted(insertPos, insertPos);
+                }
+            }
         }
     }
 
@@ -108,20 +142,6 @@ public class ReceiverTableModel extends AbstractTableModel implements MouseListe
         }
     }
 
-    void updateReceiverGroup(ReceiverGroup group) {
-        int groupRowIndex = getRowIndex(group);
-        this.fireTableRowsUpdated(groupRowIndex, groupRowIndex);
-    }
-
-    void updateReceiver(ReceiverGroup group, Receiver rcv) {
-        int groupRowIndex = getRowIndex(group);
-        ReceiverGroupRow groupRow = (ReceiverGroupRow)visibleRows.get(groupRowIndex);
-        if(groupRow.isExpanded()) {
-            int rcvRowIndex = getRowIndex(rcv);
-            this.fireTableRowsUpdated(rcvRowIndex, rcvRowIndex);
-        }
-    }
-
     public void mouseClicked(MouseEvent e) {
         int rowIndex = ((JTable)e.getSource()).getSelectedRow();
         if(getValueAt(rowIndex,0) instanceof ReceiverGroupRow) {
@@ -150,26 +170,28 @@ public class ReceiverTableModel extends AbstractTableModel implements MouseListe
         // Do nothing
     }
 
-    private boolean contains(Object e) {
-        if(getRowIndex(e) > -1) return true;
-        else                    return false;
-    }
-
-    public void receiverDataChanged(ReceiverDataChangedEvent e) {
-        ReceiverGroup group = (ReceiverGroup)e.getSource();
-        List<Receiver> receivers = e.getReceiverList();
-        if(this.contains(group)) {
-            updateReceiverGroup(group);
-        } else {
-            addReceiverGroup(group);
-        }
-        for(Receiver rcv : receivers) {
-            if(this.contains(rcv)) {
-                updateReceiver(group, rcv);
-            } else {
-                addReceiver(group, rcv);
+    private ReceiverGroupRow getReceiverGroupRow(ReceiverGroup receiverGroup) {
+        for(ReceiverTableRow row : visibleRows) {
+            if(row instanceof ReceiverGroupRow) {
+                ReceiverGroupRow groupRow = (ReceiverGroupRow)row;
+                if(groupRow.getReceiverGroup() == receiverGroup) {
+                    return groupRow;
+                }
             }
         }
+        return null;
+    }
+
+    private ReceiverRow getReceiverRow(Receiver receiver) {
+        for(ReceiverTableRow row : visibleRows) {
+            if(row instanceof ReceiverRow) {
+                ReceiverRow receiverRow = (ReceiverRow)row;
+                if(receiverRow.getReceiver() == receiver) {
+                    return receiverRow;
+                }
+            }
+        }
+        return null;
     }
 
 }
