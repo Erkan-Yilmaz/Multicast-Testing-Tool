@@ -91,8 +91,6 @@ public class EditSenderDialog extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        InterfaceCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         OKButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/check.png"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/spam/mctool/view/dialogs/Bundle"); // NOI18N
         OKButton.setText(bundle.getString("EditSenderDialog.OKButton.text")); // NOI18N
@@ -129,8 +127,6 @@ public class EditSenderDialog extends javax.swing.JDialog {
         TTLLabel.setText(bundle.getString("EditSenderDialog.TTLLabel.text")); // NOI18N
 
         PacketStyleLabel.setText(bundle.getString("EditSenderDialog.PacketStyleLabel.text")); // NOI18N
-
-        PacketStyleCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         GroupField.setText(bundle.getString("EditSenderDialog.GroupField.text")); // NOI18N
 
@@ -263,7 +259,7 @@ public class EditSenderDialog extends javax.swing.JDialog {
     }
 
     private void loadData(){
-        this.GroupField.setText(this.sender.getGroup().toString());
+        this.GroupField.setText(this.sender.getGroup().getHostAddress());
         this.GroupField.setEnabled(false);
         this.PortField.setValue(this.sender.getPort());
         this.PortField.setEnabled(false);

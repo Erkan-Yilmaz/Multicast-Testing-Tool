@@ -44,7 +44,7 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        statusRenderer1 = new com.spam.mctool.view.main.StatusRenderer();
+        statusRenderer1 = new com.spam.mctool.view.main.sendertable.SenderStateRenderer();
         twoColorRenderer1 = new com.spam.mctool.view.main.TwoColorRenderer();
         mainSplitPane = new javax.swing.JSplitPane();
         senderSplitPane = new javax.swing.JSplitPane();
@@ -150,11 +150,13 @@ public class MainFrame extends javax.swing.JFrame {
         mainSplitPane.setDividerLocation(267);
         mainSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         mainSplitPane.setResizeWeight(0.5);
+        mainSplitPane.setContinuousLayout(true);
         mainSplitPane.setOneTouchExpandable(true);
 
         senderSplitPane.setBorder(null);
         senderSplitPane.setDividerLocation(590);
         senderSplitPane.setResizeWeight(1.0);
+        senderSplitPane.setContinuousLayout(true);
         senderSplitPane.setOneTouchExpandable(true);
 
         java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("com/spam/mctool/view/main/Bundle"); // NOI18N
@@ -259,6 +261,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         paSenderTableInner.setLayout(new java.awt.BorderLayout());
 
+        senderTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                senderTableMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(senderTable);
 
         paSenderTableInner.add(jScrollPane2, java.awt.BorderLayout.CENTER);
@@ -283,6 +290,7 @@ public class MainFrame extends javax.swing.JFrame {
         receiverSplitPane.setBorder(null);
         receiverSplitPane.setDividerLocation(590);
         receiverSplitPane.setResizeWeight(1.0);
+        receiverSplitPane.setContinuousLayout(true);
         receiverSplitPane.setOneTouchExpandable(true);
 
         laReceivingStatisticsCaption.setText(bundle1.getString("MainFrame.laReceivingStatisticsCaption.text")); // NOI18N
@@ -395,6 +403,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         paReceiverTableInner.setLayout(new java.awt.BorderLayout());
 
+        receiverTable.setGridColor(javax.swing.UIManager.getDefaults().getColor("control"));
         jScrollPane1.setViewportView(receiverTable);
 
         paReceiverTableInner.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -568,7 +577,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_buActivateSenderActionPerformed
 
     private void buShowSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buShowSenderActionPerformed
-        // TODO add your handling code here:
+        //
     }//GEN-LAST:event_buShowSenderActionPerformed
 
     private void buAddSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buAddSenderActionPerformed
@@ -584,6 +593,15 @@ public class MainFrame extends javax.swing.JFrame {
     private void buAddReceiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buAddReceiverActionPerformed
         new EditReceiverDialog(this, true).setVisible(true);
     }//GEN-LAST:event_buAddReceiverActionPerformed
+
+    private void senderTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_senderTableMouseClicked
+        if(evt.getClickCount() == 2) {
+            if(senderTable.getSelectedSenders().size() == 1) {
+                Sender sender = senderTable.getSelectedSenders().get(0);
+                new EditSenderDialog(this, true, sender).setVisible(true);
+            }
+        }
+    }//GEN-LAST:event_senderTableMouseClicked
 
     /**
     * @param args the command line arguments
@@ -694,7 +712,7 @@ public class MainFrame extends javax.swing.JFrame {
     private com.spam.mctool.view.main.sendertable.JSenderTable senderTable;
     private javax.swing.JLabel senderTableIcon;
     private javax.swing.JSeparator sendingStatisticsSeparator;
-    private com.spam.mctool.view.main.StatusRenderer statusRenderer1;
+    private com.spam.mctool.view.main.sendertable.SenderStateRenderer statusRenderer1;
     private com.spam.mctool.view.main.TwoColorRenderer twoColorRenderer1;
     // End of variables declaration//GEN-END:variables
 

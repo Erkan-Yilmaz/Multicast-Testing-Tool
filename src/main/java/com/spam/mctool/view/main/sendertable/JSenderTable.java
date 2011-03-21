@@ -3,7 +3,6 @@ package com.spam.mctool.view.main.sendertable;
 import com.spam.mctool.intermediates.SenderAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.SenderDataChangedEvent;
 import com.spam.mctool.model.Sender;
-import com.spam.mctool.view.main.StatusRenderer;
 import com.spam.mctool.view.main.TwoColorRenderer;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +33,7 @@ public class JSenderTable extends JTable {
         this.setModel(new SenderTableModel());
         setGridColor(javax.swing.UIManager.getDefaults().getColor("control"));
         setShowHorizontalLines(false);
-        getColumn("Status").setCellRenderer(new StatusRenderer());
+        getColumn("Status").setCellRenderer(new SenderStateRenderer());
         this.setDefaultRenderer(Object.class, new TwoColorRenderer());
         // TODO ...
     }
@@ -84,7 +83,7 @@ public class JSenderTable extends JTable {
         }
     }
 
-    public Iterable<Sender> getSelectedSenders() {
+    public List<Sender> getSelectedSenders() {
         List<Sender> selectedSenders = new ArrayList<Sender>();
         for(int i=getSelectedRow(); i<getSelectedRow() + getSelectedRowCount(); i++) {
             try {

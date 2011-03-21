@@ -16,11 +16,11 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author Tobias Stöckel
  */
-class StateRenderer extends JPanel implements TableCellRenderer {
+class ReceiverStateRenderer extends JPanel implements TableCellRenderer {
 
     private JLabel laIcon = new JLabel();
 
-    public StateRenderer() {
+    public ReceiverStateRenderer() {
         this.setLayout(new BorderLayout());
         this.add(laIcon, BorderLayout.WEST);
     }

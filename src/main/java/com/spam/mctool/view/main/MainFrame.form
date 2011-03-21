@@ -2,7 +2,7 @@
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
-    <Component class="com.spam.mctool.view.main.StatusRenderer" name="statusRenderer1">
+    <Component class="com.spam.mctool.view.main.sendertable.SenderStateRenderer" name="statusRenderer1">
     </Component>
     <Component class="com.spam.mctool.view.main.TwoColorRenderer" name="twoColorRenderer1">
     </Component>
@@ -341,6 +341,7 @@
         <Property name="dividerLocation" type="int" value="267"/>
         <Property name="orientation" type="int" value="0"/>
         <Property name="resizeWeight" type="double" value="0.5"/>
+        <Property name="continuousLayout" type="boolean" value="true"/>
         <Property name="oneTouchExpandable" type="boolean" value="true"/>
       </Properties>
 
@@ -353,6 +354,7 @@
             </Property>
             <Property name="dividerLocation" type="int" value="590"/>
             <Property name="resizeWeight" type="double" value="1.0"/>
+            <Property name="continuousLayout" type="boolean" value="true"/>
             <Property name="oneTouchExpandable" type="boolean" value="true"/>
           </Properties>
           <Constraints>
@@ -571,6 +573,9 @@
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
                         <Component class="com.spam.mctool.view.main.sendertable.JSenderTable" name="senderTable">
+                          <Events>
+                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="senderTableMouseClicked"/>
+                          </Events>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -617,6 +622,7 @@
             </Property>
             <Property name="dividerLocation" type="int" value="590"/>
             <Property name="resizeWeight" type="double" value="1.0"/>
+            <Property name="continuousLayout" type="boolean" value="true"/>
             <Property name="oneTouchExpandable" type="boolean" value="true"/>
           </Properties>
           <Constraints>
@@ -874,6 +880,11 @@
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
                         <Component class="com.spam.mctool.view.main.receivertable.JReceiverTable" name="receiverTable">
+                          <Properties>
+                            <Property name="gridColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="f0" green="f0" id="control" palette="3" red="f0" type="palette"/>
+                            </Property>
+                          </Properties>
                         </Component>
                       </SubComponents>
                     </Container>

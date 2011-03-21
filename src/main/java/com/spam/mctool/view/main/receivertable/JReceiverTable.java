@@ -29,7 +29,7 @@ public class JReceiverTable extends JTable {
         this.getColumnModel().getColumn(2).setHeaderValue("Conf. PPS");
         this.getColumnModel().getColumn(3).setHeaderValue("Measured PPS");
         this.getColumnModel().getColumn(4).setHeaderValue("Lost Packets");
-        this.getColumnModel().getColumn(0).setCellRenderer(new StateRenderer());
+        this.getColumnModel().getColumn(0).setCellRenderer(new ReceiverStateRenderer());
         this.addMouseListener((ReceiverTableModel)this.getModel());
         this.setDefaultRenderer(Object.class, new TwoColorRenderer());
     }
