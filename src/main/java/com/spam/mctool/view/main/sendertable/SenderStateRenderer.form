@@ -29,7 +29,7 @@
     <Component class="javax.swing.JLabel" name="laActiveIcon">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/com/spam/mctool/view/images/play_green.png"/>
+          <Image iconType="3" name="/images/play_green.png"/>
         </Property>
       </Properties>
     </Component>

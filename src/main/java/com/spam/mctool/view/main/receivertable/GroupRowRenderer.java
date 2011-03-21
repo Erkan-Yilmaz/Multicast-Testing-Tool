@@ -46,10 +46,10 @@ public class GroupRowRenderer extends javax.swing.JPanel implements javax.swing.
 
         setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 0));
 
-        laExpandIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/fold_closed.png"))); // NOI18N
+        laExpandIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fold_closed.png"))); // NOI18N
         add(laExpandIcon);
 
-        laStateIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/stop_red.png"))); // NOI18N
+        laStateIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/stop_red.png"))); // NOI18N
         laStateIcon.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 2, 0, 0));
         add(laStateIcon);
 
@@ -79,8 +79,8 @@ public class GroupRowRenderer extends javax.swing.JPanel implements javax.swing.
     // End of variables declaration//GEN-END:variables
     private javax.swing.JTable table;
     private int column;
-    private final ImageIcon collapsed = new ImageIcon(getClass().getResource("/com/spam/mctool/view/images/fold_closed.png"));
-    private final ImageIcon expanded  = new ImageIcon(getClass().getResource("/com/spam/mctool/view/images/stop_red.png"));
+    private final ImageIcon collapsed = new ImageIcon(getClass().getResource("/images/fold_closed.png"));
+    private final ImageIcon expanded  = new ImageIcon(getClass().getResource("/images/fold_opened.png"));
 
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         this.table = table;

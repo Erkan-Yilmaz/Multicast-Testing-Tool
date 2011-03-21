@@ -113,9 +113,9 @@ public class GraphicalView implements MctoolView,
     // senderAdded and receiverAdded calls.
     private void attachObservers() {
         streamManager.addSenderAddedOrRemovedListener(this);
-        //streamManager.addReceiverAddedOrRemovedListener(this);
-        //profileManager.addProfileChangeListener(this);
-        //for (Receiver r : streamManager.getReceivers()) {
+        streamManager.addReceiverAddedOrRemovedListener(this);
+        profileManager.addProfileChangeListener(this);
+        //for (ReceiverGroup r : streamManager.getReceivers()) {
             // TODO howto register on receiver group?
         //}
         //for (Sender s : streamManager.getSenders()) {

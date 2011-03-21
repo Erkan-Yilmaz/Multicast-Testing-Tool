@@ -22,14 +22,14 @@
     <Component class="javax.swing.JLabel" name="laExpandIcon">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/com/spam/mctool/view/images/fold_closed.png"/>
+          <Image iconType="3" name="/images/fold_closed.png"/>
         </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="laStateIcon">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/com/spam/mctool/view/images/stop_red.png"/>
+          <Image iconType="3" name="/images/stop_red.png"/>
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">

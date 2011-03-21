@@ -143,7 +143,7 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItem15 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/spam/mctool/view/Bundle"); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationlization/Bundle"); // NOI18N
         setTitle(bundle.getString("MainFrame.title")); // NOI18N
 
         mainSplitPane.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -159,16 +159,16 @@ public class MainFrame extends javax.swing.JFrame {
         senderSplitPane.setContinuousLayout(true);
         senderSplitPane.setOneTouchExpandable(true);
 
-        java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("com/spam/mctool/view/main/Bundle"); // NOI18N
-        laSendingStatistics.setText(bundle1.getString("MainFrame.laSendingStatistics.text")); // NOI18N
+        java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("internationlization/Bundle"); // NOI18N
+        laSendingStatistics.setText(bundle1.getString("MainFrame.laSendingStatistics.text_1")); // NOI18N
 
-        laSentCaption.setText(bundle1.getString("MainFrame.laSentCaption.text")); // NOI18N
+        laSentCaption.setText(bundle1.getString("MainFrame.laSentCaption.text_1")); // NOI18N
 
-        laSenderRateCaption.setText(bundle1.getString("MainFrame.laSenderRateCaption.text")); // NOI18N
+        laSenderRateCaption.setText(bundle1.getString("MainFrame.laSenderRateCaption.text_1")); // NOI18N
 
-        laSent.setText(bundle1.getString("MainFrame.laSent.text")); // NOI18N
+        laSent.setText(bundle1.getString("MainFrame.laSent.text_1")); // NOI18N
 
-        laSenderRate.setText(bundle1.getString("MainFrame.laSenderRate.text")); // NOI18N
+        laSenderRate.setText(bundle1.getString("MainFrame.laSenderRate.text_1")); // NOI18N
 
         javax.swing.GroupLayout paSendingStatisticsLayout = new javax.swing.GroupLayout(paSendingStatistics);
         paSendingStatistics.setLayout(paSendingStatisticsLayout);
@@ -213,8 +213,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         paSenderButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        buActivateSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/play_green.png"))); // NOI18N
-        buActivateSender.setText(bundle1.getString("MainFrame.buActivateSender.text")); // NOI18N
+        buActivateSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/play_green.png"))); // NOI18N
+        buActivateSender.setText(bundle1.getString("MainFrame.buActivateSender.text_1")); // NOI18N
         buActivateSender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buActivateSenderActionPerformed(evt);
@@ -222,8 +222,8 @@ public class MainFrame extends javax.swing.JFrame {
         });
         paSenderButtons.add(buActivateSender);
 
-        buDeactivateSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/stop_red.png"))); // NOI18N
-        buDeactivateSender.setText(bundle1.getString("MainFrame.buDeactivateSender.text")); // NOI18N
+        buDeactivateSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/stop_red.png"))); // NOI18N
+        buDeactivateSender.setText(bundle1.getString("MainFrame.buDeactivateSender.text_1")); // NOI18N
         buDeactivateSender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buDeactivateSenderActionPerformed(evt);
@@ -231,8 +231,8 @@ public class MainFrame extends javax.swing.JFrame {
         });
         paSenderButtons.add(buDeactivateSender);
 
-        buAddSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/add_green.png"))); // NOI18N
-        buAddSender.setText(bundle1.getString("MainFrame.buAddSender.text")); // NOI18N
+        buAddSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add_green.png"))); // NOI18N
+        buAddSender.setText(bundle1.getString("MainFrame.buAddSender.text_1")); // NOI18N
         buAddSender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buAddSenderActionPerformed(evt);
@@ -240,8 +240,8 @@ public class MainFrame extends javax.swing.JFrame {
         });
         paSenderButtons.add(buAddSender);
 
-        buShowSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/preview.png"))); // NOI18N
-        buShowSender.setText(bundle1.getString("MainFrame.buShowSender.text")); // NOI18N
+        buShowSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/preview.png"))); // NOI18N
+        buShowSender.setText(bundle1.getString("MainFrame.buShowSender.text_1")); // NOI18N
         buShowSender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buShowSenderActionPerformed(evt);
@@ -249,12 +249,12 @@ public class MainFrame extends javax.swing.JFrame {
         });
         paSenderButtons.add(buShowSender);
 
-        buEditSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/edit.png"))); // NOI18N
-        buEditSender.setText(bundle1.getString("MainFrame.buEditSender.text")); // NOI18N
+        buEditSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
+        buEditSender.setText(bundle1.getString("MainFrame.buEditSender.text_1")); // NOI18N
         paSenderButtons.add(buEditSender);
 
-        buDeleteSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/delete.png"))); // NOI18N
-        buDeleteSender.setText(bundle1.getString("MainFrame.buDeleteSender.text")); // NOI18N
+        buDeleteSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
+        buDeleteSender.setText(bundle1.getString("MainFrame.buDeleteSender.text_1")); // NOI18N
         paSenderButtons.add(buDeleteSender);
 
         paSenderTableOuter.add(paSenderButtons, java.awt.BorderLayout.SOUTH);
@@ -274,11 +274,10 @@ public class MainFrame extends javax.swing.JFrame {
 
         paSenderTableCaption.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        laSenderTableCaption.setText(bundle1.getString("MainFrame.laSenderTableCaption.text")); // NOI18N
+        laSenderTableCaption.setText(bundle1.getString("MainFrame.laSenderTableCaption.text_1")); // NOI18N
         paSenderTableCaption.add(laSenderTableCaption);
 
-        senderTableIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/sender.png"))); // NOI18N
-        senderTableIcon.setText(bundle1.getString("MainFrame.senderTableIcon.text")); // NOI18N
+        senderTableIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/sender.png"))); // NOI18N
         paSenderTableCaption.add(senderTableIcon);
 
         paSenderTableOuter.add(paSenderTableCaption, java.awt.BorderLayout.NORTH);
@@ -293,23 +292,23 @@ public class MainFrame extends javax.swing.JFrame {
         receiverSplitPane.setContinuousLayout(true);
         receiverSplitPane.setOneTouchExpandable(true);
 
-        laReceivingStatisticsCaption.setText(bundle1.getString("MainFrame.laReceivingStatisticsCaption.text")); // NOI18N
+        laReceivingStatisticsCaption.setText(bundle1.getString("MainFrame.laReceivingStatisticsCaption.text_1")); // NOI18N
 
-        laReceivedCaption.setText(bundle1.getString("MainFrame.laReceivedCaption.text")); // NOI18N
+        laReceivedCaption.setText(bundle1.getString("MainFrame.laReceivedCaption.text_1")); // NOI18N
 
-        laReceivingRateCaption.setText(bundle1.getString("MainFrame.laReceivingRateCaption.text")); // NOI18N
+        laReceivingRateCaption.setText(bundle1.getString("MainFrame.laReceivingRateCaption.text_1")); // NOI18N
 
-        laLostPacketsCaption.setText(bundle1.getString("MainFrame.laLostPacketsCaption.text")); // NOI18N
+        laLostPacketsCaption.setText(bundle1.getString("MainFrame.laLostPacketsCaption.text_1")); // NOI18N
 
-        laFaultyPacketsCaption.setText(bundle1.getString("MainFrame.laFaultyPacketsCaption.text")); // NOI18N
+        laFaultyPacketsCaption.setText(bundle1.getString("MainFrame.laFaultyPacketsCaption.text_1")); // NOI18N
 
-        laReceived.setText(bundle1.getString("MainFrame.laReceived.text")); // NOI18N
+        laReceived.setText(bundle1.getString("MainFrame.laReceived.text_1")); // NOI18N
 
-        laReceivingRate.setText(bundle1.getString("MainFrame.laReceivingRate.text")); // NOI18N
+        laReceivingRate.setText(bundle1.getString("MainFrame.laReceivingRate.text_1")); // NOI18N
 
-        laLostPackets.setText(bundle1.getString("MainFrame.laLostPackets.text")); // NOI18N
+        laLostPackets.setText(bundle1.getString("MainFrame.laLostPackets.text_1")); // NOI18N
 
-        laFaultyPackets.setText(bundle1.getString("MainFrame.laFaultyPackets.text")); // NOI18N
+        laFaultyPackets.setText(bundle1.getString("MainFrame.laFaultyPackets.text_1")); // NOI18N
 
         javax.swing.GroupLayout paReceivingStatisticsLayout = new javax.swing.GroupLayout(paReceivingStatistics);
         paReceivingStatistics.setLayout(paReceivingStatisticsLayout);
@@ -370,16 +369,16 @@ public class MainFrame extends javax.swing.JFrame {
 
         paReceiverButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        buActivateReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/play_green.png"))); // NOI18N
-        buActivateReceiver.setText(bundle1.getString("MainFrame.buActivateReceiver.text")); // NOI18N
+        buActivateReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/play_green.png"))); // NOI18N
+        buActivateReceiver.setText(bundle1.getString("MainFrame.buActivateReceiver.text_1")); // NOI18N
         paReceiverButtons.add(buActivateReceiver);
 
-        buDeactivateReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/stop_red.png"))); // NOI18N
-        buDeactivateReceiver.setText(bundle1.getString("MainFrame.buDeactivateReceiver.text")); // NOI18N
+        buDeactivateReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/stop_red.png"))); // NOI18N
+        buDeactivateReceiver.setText(bundle1.getString("MainFrame.buDeactivateReceiver.text_1")); // NOI18N
         paReceiverButtons.add(buDeactivateReceiver);
 
-        buAddReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/add_green.png"))); // NOI18N
-        buAddReceiver.setText(bundle1.getString("MainFrame.buAddReceiver.text")); // NOI18N
+        buAddReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add_green.png"))); // NOI18N
+        buAddReceiver.setText(bundle1.getString("MainFrame.buAddReceiver.text_1")); // NOI18N
         buAddReceiver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buAddReceiverActionPerformed(evt);
@@ -387,16 +386,16 @@ public class MainFrame extends javax.swing.JFrame {
         });
         paReceiverButtons.add(buAddReceiver);
 
-        buShowReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/preview.png"))); // NOI18N
-        buShowReceiver.setText(bundle1.getString("MainFrame.buShowReceiver.text")); // NOI18N
+        buShowReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/preview.png"))); // NOI18N
+        buShowReceiver.setText(bundle1.getString("MainFrame.buShowReceiver.text_1")); // NOI18N
         paReceiverButtons.add(buShowReceiver);
 
-        buEditReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/edit.png"))); // NOI18N
-        buEditReceiver.setText(bundle1.getString("MainFrame.buEditReceiver.text")); // NOI18N
+        buEditReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
+        buEditReceiver.setText(bundle1.getString("MainFrame.buEditReceiver.text_1")); // NOI18N
         paReceiverButtons.add(buEditReceiver);
 
-        buDeleteReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/delete.png"))); // NOI18N
-        buDeleteReceiver.setText(bundle1.getString("MainFrame.buDeleteReceiver.text")); // NOI18N
+        buDeleteReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
+        buDeleteReceiver.setText(bundle1.getString("MainFrame.buDeleteReceiver.text_1")); // NOI18N
         paReceiverButtons.add(buDeleteReceiver);
 
         paReceiverTableOuter.add(paReceiverButtons, java.awt.BorderLayout.PAGE_END);
@@ -412,11 +411,10 @@ public class MainFrame extends javax.swing.JFrame {
 
         paReceiverTableCaption.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        laReceiverTableCaption.setText(bundle1.getString("MainFrame.laReceiverTableCaption.text")); // NOI18N
+        laReceiverTableCaption.setText(bundle1.getString("MainFrame.laReceiverTableCaption.text_1")); // NOI18N
         paReceiverTableCaption.add(laReceiverTableCaption);
 
-        laReceiverTableIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/receiver.png"))); // NOI18N
-        laReceiverTableIcon.setText(bundle1.getString("MainFrame.laReceiverTableIcon.text")); // NOI18N
+        laReceiverTableIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/receiver.png"))); // NOI18N
         paReceiverTableCaption.add(laReceiverTableIcon);
 
         paReceiverTableOuter.add(paReceiverTableCaption, java.awt.BorderLayout.NORTH);
@@ -425,125 +423,125 @@ public class MainFrame extends javax.swing.JFrame {
 
         mainSplitPane.setRightComponent(receiverSplitPane);
 
-        jMenu1.setText(bundle1.getString("MainFrame.jMenu1.text")); // NOI18N
+        jMenu1.setText(bundle1.getString("MainFrame.jMenu1.text_1")); // NOI18N
 
-        jMenuItem3.setText(bundle1.getString("MainFrame.jMenuItem3.text")); // NOI18N
+        jMenuItem3.setText(bundle1.getString("MainFrame.jMenuItem3.text_1")); // NOI18N
         jMenu1.add(jMenuItem3);
 
-        jMenuItem5.setText(bundle1.getString("MainFrame.jMenuItem5.text")); // NOI18N
+        jMenuItem5.setText(bundle1.getString("MainFrame.jMenuItem5.text_1")); // NOI18N
         jMenu1.add(jMenuItem5);
 
-        jMenuItem4.setText(bundle1.getString("MainFrame.jMenuItem4.text")); // NOI18N
+        jMenuItem4.setText(bundle1.getString("MainFrame.jMenuItem4.text_1")); // NOI18N
         jMenu1.add(jMenuItem4);
         jMenu1.add(jSeparator1);
 
-        jMenuItem6.setText(bundle1.getString("MainFrame.jMenuItem6.text")); // NOI18N
+        jMenuItem6.setText(bundle1.getString("MainFrame.jMenuItem6.text_1")); // NOI18N
         jMenu1.add(jMenuItem6);
         jMenu1.add(jSeparator2);
 
-        jMenuItem1.setText(bundle1.getString("MainFrame.jMenuItem1.text")); // NOI18N
+        jMenuItem1.setText(bundle1.getString("MainFrame.jMenuItem1.text_1")); // NOI18N
         jMenu1.add(jMenuItem1);
 
         menuBar.add(jMenu1);
 
-        jMenu3.setText(bundle1.getString("MainFrame.jMenu3.text")); // NOI18N
+        jMenu3.setText(bundle1.getString("MainFrame.jMenu3.text_1")); // NOI18N
 
         jCheckBoxMenuItem1.setSelected(true);
-        jCheckBoxMenuItem1.setText(bundle1.getString("MainFrame.jCheckBoxMenuItem1.text")); // NOI18N
+        jCheckBoxMenuItem1.setText(bundle1.getString("MainFrame.jCheckBoxMenuItem1.text_1")); // NOI18N
         jMenu3.add(jCheckBoxMenuItem1);
 
         jCheckBoxMenuItem2.setSelected(true);
-        jCheckBoxMenuItem2.setText(bundle1.getString("MainFrame.jCheckBoxMenuItem2.text")); // NOI18N
+        jCheckBoxMenuItem2.setText(bundle1.getString("MainFrame.jCheckBoxMenuItem2.text_1")); // NOI18N
         jMenu3.add(jCheckBoxMenuItem2);
         jMenu3.add(jSeparator3);
 
-        jMenuItem8.setText(bundle1.getString("MainFrame.jMenuItem8.text")); // NOI18N
+        jMenuItem8.setText(bundle1.getString("MainFrame.jMenuItem8.text_1")); // NOI18N
         jMenu3.add(jMenuItem8);
 
-        jMenuItem7.setText(bundle1.getString("MainFrame.jMenuItem7.text")); // NOI18N
+        jMenuItem7.setText(bundle1.getString("MainFrame.jMenuItem7.text_1")); // NOI18N
         jMenu3.add(jMenuItem7);
         jMenu3.add(jSeparator9);
 
-        jMenuItem27.setText(bundle1.getString("MainFrame.jMenuItem27.text")); // NOI18N
+        jMenuItem27.setText(bundle1.getString("MainFrame.jMenuItem27.text_1")); // NOI18N
         jMenu3.add(jMenuItem27);
 
-        jMenuItem17.setText(bundle1.getString("MainFrame.jMenuItem17.text")); // NOI18N
+        jMenuItem17.setText(bundle1.getString("MainFrame.jMenuItem17.text_1")); // NOI18N
         jMenu3.add(jMenuItem17);
 
-        jMenuItem9.setText(bundle1.getString("MainFrame.jMenuItem9.text")); // NOI18N
+        jMenuItem9.setText(bundle1.getString("MainFrame.jMenuItem9.text_1")); // NOI18N
         jMenu3.add(jMenuItem9);
 
-        jMenuItem14.setText(bundle1.getString("MainFrame.jMenuItem14.text")); // NOI18N
+        jMenuItem14.setText(bundle1.getString("MainFrame.jMenuItem14.text_1")); // NOI18N
         jMenu3.add(jMenuItem14);
         jMenu3.add(jSeparator4);
 
-        jMenuItem10.setText(bundle1.getString("MainFrame.jMenuItem10.text")); // NOI18N
+        jMenuItem10.setText(bundle1.getString("MainFrame.jMenuItem10.text_1")); // NOI18N
         jMenu3.add(jMenuItem10);
         jMenu3.add(jSeparator5);
 
-        jMenuItem11.setText(bundle1.getString("MainFrame.jMenuItem11.text")); // NOI18N
+        jMenuItem11.setText(bundle1.getString("MainFrame.jMenuItem11.text_1")); // NOI18N
         jMenu3.add(jMenuItem11);
 
-        jMenuItem12.setText(bundle1.getString("MainFrame.jMenuItem12.text")); // NOI18N
+        jMenuItem12.setText(bundle1.getString("MainFrame.jMenuItem12.text_1")); // NOI18N
         jMenu3.add(jMenuItem12);
 
-        jMenuItem13.setText(bundle1.getString("MainFrame.jMenuItem13.text")); // NOI18N
+        jMenuItem13.setText(bundle1.getString("MainFrame.jMenuItem13.text_1")); // NOI18N
         jMenu3.add(jMenuItem13);
 
         menuBar.add(jMenu3);
 
-        jMenu4.setText(bundle1.getString("MainFrame.jMenu4.text")); // NOI18N
+        jMenu4.setText(bundle1.getString("MainFrame.jMenu4.text_1")); // NOI18N
 
         jCheckBoxMenuItem3.setSelected(true);
-        jCheckBoxMenuItem3.setText(bundle1.getString("MainFrame.jCheckBoxMenuItem3.text")); // NOI18N
+        jCheckBoxMenuItem3.setText(bundle1.getString("MainFrame.jCheckBoxMenuItem3.text_1")); // NOI18N
         jMenu4.add(jCheckBoxMenuItem3);
 
         jCheckBoxMenuItem4.setSelected(true);
-        jCheckBoxMenuItem4.setText(bundle1.getString("MainFrame.jCheckBoxMenuItem4.text")); // NOI18N
+        jCheckBoxMenuItem4.setText(bundle1.getString("MainFrame.jCheckBoxMenuItem4.text_1")); // NOI18N
         jMenu4.add(jCheckBoxMenuItem4);
         jMenu4.add(jSeparator6);
 
-        jMenuItem16.setText(bundle1.getString("MainFrame.jMenuItem16.text")); // NOI18N
+        jMenuItem16.setText(bundle1.getString("MainFrame.jMenuItem16.text_1")); // NOI18N
         jMenu4.add(jMenuItem16);
 
-        jMenuItem19.setText(bundle1.getString("MainFrame.jMenuItem19.text")); // NOI18N
+        jMenuItem19.setText(bundle1.getString("MainFrame.jMenuItem19.text_1")); // NOI18N
         jMenu4.add(jMenuItem19);
         jMenu4.add(jSeparator10);
 
-        jMenuItem26.setText(bundle1.getString("MainFrame.jMenuItem26.text")); // NOI18N
+        jMenuItem26.setText(bundle1.getString("MainFrame.jMenuItem26.text_1")); // NOI18N
         jMenu4.add(jMenuItem26);
 
-        jMenuItem25.setText(bundle1.getString("MainFrame.jMenuItem25.text")); // NOI18N
+        jMenuItem25.setText(bundle1.getString("MainFrame.jMenuItem25.text_1")); // NOI18N
         jMenu4.add(jMenuItem25);
 
-        jMenuItem20.setText(bundle1.getString("MainFrame.jMenuItem20.text")); // NOI18N
+        jMenuItem20.setText(bundle1.getString("MainFrame.jMenuItem20.text_1")); // NOI18N
         jMenu4.add(jMenuItem20);
 
-        jMenuItem23.setText(bundle1.getString("MainFrame.jMenuItem23.text")); // NOI18N
+        jMenuItem23.setText(bundle1.getString("MainFrame.jMenuItem23.text_1")); // NOI18N
         jMenu4.add(jMenuItem23);
         jMenu4.add(jSeparator7);
 
-        jMenuItem24.setText(bundle1.getString("MainFrame.jMenuItem24.text")); // NOI18N
+        jMenuItem24.setText(bundle1.getString("MainFrame.jMenuItem24.text_1")); // NOI18N
         jMenu4.add(jMenuItem24);
         jMenu4.add(jSeparator8);
 
-        jMenuItem22.setText(bundle1.getString("MainFrame.jMenuItem22.text")); // NOI18N
+        jMenuItem22.setText(bundle1.getString("MainFrame.jMenuItem22.text_1")); // NOI18N
         jMenu4.add(jMenuItem22);
 
-        jMenuItem21.setText(bundle1.getString("MainFrame.jMenuItem21.text")); // NOI18N
+        jMenuItem21.setText(bundle1.getString("MainFrame.jMenuItem21.text_1")); // NOI18N
         jMenu4.add(jMenuItem21);
 
-        jMenuItem18.setText(bundle1.getString("MainFrame.jMenuItem18.text")); // NOI18N
+        jMenuItem18.setText(bundle1.getString("MainFrame.jMenuItem18.text_1")); // NOI18N
         jMenu4.add(jMenuItem18);
 
         menuBar.add(jMenu4);
 
-        jMenu2.setText(bundle1.getString("MainFrame.jMenu2.text")); // NOI18N
+        jMenu2.setText(bundle1.getString("MainFrame.jMenu2.text_1")); // NOI18N
 
-        jMenuItem2.setText(bundle1.getString("MainFrame.jMenuItem2.text")); // NOI18N
+        jMenuItem2.setText(bundle1.getString("MainFrame.jMenuItem2.text_1")); // NOI18N
         jMenu2.add(jMenuItem2);
 
-        jMenuItem15.setText(bundle1.getString("MainFrame.jMenuItem15.text")); // NOI18N
+        jMenuItem15.setText(bundle1.getString("MainFrame.jMenuItem15.text_1")); // NOI18N
         jMenu2.add(jMenuItem15);
 
         menuBar.add(jMenu2);
@@ -762,6 +760,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     public void dataChanged(ReceiverDataChangedEvent e) {
         receiverTable.dataChanged(e);
+    }
+
+    public void addReceiverGroup(Map<String, String> receiverMap, boolean activate) {
+        this.view.addReceiver(receiverMap, activate);
     }
 
     

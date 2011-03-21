@@ -45,7 +45,7 @@ public class SenderStateRenderer extends javax.swing.JPanel implements TableCell
         setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 0));
         setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 0));
 
-        laActiveIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/spam/mctool/view/images/play_green.png"))); // NOI18N
+        laActiveIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/play_green.png"))); // NOI18N
         add(laActiveIcon);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -76,7 +76,7 @@ public class SenderStateRenderer extends javax.swing.JPanel implements TableCell
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel laActiveIcon;
     // End of variables declaration//GEN-END:variables
-    private ImageIcon activated   = new ImageIcon(getClass().getResource("/com/spam/mctool/view/images/play_green.png"));
-    private ImageIcon deactivated = new ImageIcon(getClass().getResource("/com/spam/mctool/view/images/stop_red.png"));
-    private ImageIcon error       = new ImageIcon(getClass().getResource("/com/spam/mctool/view/images/error.png"));
+    private ImageIcon activated   = new ImageIcon(getClass().getResource("/images/play_green.png"));
+    private ImageIcon deactivated = new ImageIcon(getClass().getResource("/images/stop_red.png"));
+    private ImageIcon error       = new ImageIcon(getClass().getResource("/images/error.png"));
 }

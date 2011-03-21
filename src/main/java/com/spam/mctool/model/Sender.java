@@ -22,25 +22,25 @@ import com.spam.mctool.model.packet.SpamPacket;
 public class Sender extends MulticastStream {
 	
 	// internals
-	private AnalyzeSender analyzer;
-	private LinkedSplitQueue<Integer> sentTimes;
-	private List<SenderDataChangeListener> senderDataChangeListeners = new ArrayList<SenderDataChangeListener>();
-	private long lastSent = 0;
-	private long nowSent = 0;
-	private Map<Long, Exception> exceptions;
+	transient private AnalyzeSender analyzer;
+	transient private LinkedSplitQueue<Integer> sentTimes;
+	transient private List<SenderDataChangeListener> senderDataChangeListeners = new ArrayList<SenderDataChangeListener>();
+	transient private long lastSent = 0;
+	transient private long nowSent = 0;
+	transient private Map<Long, Exception> exceptions;
 	// sender specific
-	private long senderId;
+	transient private long senderId;
 	private byte ttl;
 	private PacketType pType;
 	private byte[] data;
 	private int packetSize;
 	private int senderConfiguredPacketRate;
 	// statistics
-	private int statsStepWidth;
-	private long sentPacketCount = 0;
-	private long avgPPS;
-	private long minPPS = Integer.MAX_VALUE;
-	private long maxPPS = Integer.MIN_VALUE;
+	transient private int statsStepWidth;
+	transient private long sentPacketCount = 0;
+	transient private long avgPPS;
+	transient private long minPPS = Integer.MAX_VALUE;
+	transient private long maxPPS = Integer.MIN_VALUE;
 	
 	/**
 	 * Used by the sender manager to create a new receiver.
@@ -130,8 +130,8 @@ public class Sender extends MulticastStream {
 	// this is uses to analyze the queued sending intervals
 	private class AnalyzeSender implements Runnable {
 		
-		private LinkedSplitQueue<Integer> data;
-		private long counter;
+		transient private LinkedSplitQueue<Integer> data;
+		transient private long counter;
 
 		public void run() {
 			if(sentTimes.size()>statsStepWidth) {

@@ -1,5 +1,7 @@
 package com.spam.mctool.model;
 
+import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Collection;
@@ -8,6 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
+import com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent;
+import com.spam.mctool.intermediates.ReceiverCreationException;
+
 public class ReceiverPool implements ReceiverManager {
 	
 	// internals
@@ -15,16 +20,15 @@ public class ReceiverPool implements ReceiverManager {
 	private int statsInterval = 1000;
 	private ScheduledThreadPoolExecutor stpe;
 	private List<ReceiverGroup> receiverGroups;
+	private List<ReceiverAddedOrRemovedListener> raorListeners;
 	
+	/**
+	 * Creates a new receiver pool.
+	 */
 	public ReceiverPool() {
 		stpe = new ScheduledThreadPoolExecutor(threadPoolSize);
 		receiverGroups = new LinkedList<ReceiverGroup>();
-	}
-
-	public void addReceiverAddedOrRemovedListener(
-			ReceiverAddedOrRemovedListener l) {
-		// TODO Auto-generated method stub
-
+		raorListeners = new LinkedList<ReceiverAddedOrRemovedListener>();
 	}
 
 	public ReceiverGroup create(Map<String, String> params) {
@@ -32,28 +36,53 @@ public class ReceiverPool implements ReceiverManager {
 		int port;
 		NetworkInterface ninf;
 		MulticastStream.AnalyzingBehaviour abeh;
+		ReceiverCreationException.ErrorType errorType = null;
 		
 		try {
 			// try to create a inet adress group
+			errorType = ReceiverCreationException.ErrorType.GROUP;
 			group = InetAddress.getByName(
 				params.get("group")
 			);
+			if(group instanceof Inet4Address) {
+				if(group.getAddress()[0]+256<224 || group.getAddress()[0]+256>239) {
+					// if IPv4 address is not in multicast range
+					throw new Exception();
+				}
+			}
+			if(group instanceof Inet6Address) {
+				if(group.getAddress()[0]!=-1) {
+					if(group.getAddress()[1]<0 || group.getAddress()[1]>15) {
+						// if IPv6 address is not in multicast range
+					}
+				}
+			}
 			// try to parse the port
+			errorType = ReceiverCreationException.ErrorType.PORT;
 			port = new Integer(
 				params.get("port")
 			);
+			if(port<0 && port>65535) {
+				throw new Exception();
+			}
 			// try to parse Network Interface
+			errorType = ReceiverCreationException.ErrorType.NETWORKINTERFACE;
 			ninf = NetworkInterface.getByInetAddress(
 				InetAddress.getByName(
 					params.get("ninf")
 				)
 			);
 			// try to parse analyzing behavior
-			abeh = MulticastStream.AnalyzingBehaviour.getByIdentifier(
-				params.get("abeh")	
-			);
+			errorType = ReceiverCreationException.ErrorType.ANALYZINGBEHAVIOR;
+			if(params.containsKey("abeh")) {
+				abeh = MulticastStream.AnalyzingBehaviour.getByIdentifier(
+						params.get("abeh")	
+				);
+			} else {
+				abeh = MulticastStream.AnalyzingBehaviour.DEFAULT;
+			}
 		} catch(Exception e) {
-			throw new IllegalArgumentException();
+			throw new ReceiverCreationException(errorType);
 		}
 		
 		ReceiverGroup rec = new ReceiverGroup(stpe);
@@ -63,7 +92,8 @@ public class ReceiverPool implements ReceiverManager {
 		rec.setAnalyzingBehaviour(abeh);
 		rec.setStatsInterval(statsInterval);
 		receiverGroups.add(rec);
-                
+		fireReceiverAddedEvent(rec);
+	
 		return rec;
 	}
 
@@ -76,14 +106,35 @@ public class ReceiverPool implements ReceiverManager {
 	}
 
 	public void remove(ReceiverGroup receiver) {
-		// TODO Auto-generated method stub
-
+		receiver.deactivate();
+		receiverGroups.remove(receiver);
+		fireReceiverRemovedEvent(receiver);
+	}
+	
+	public void addReceiverAddedOrRemovedListener(
+			ReceiverAddedOrRemovedListener l) {
+		raorListeners.add(l);
 	}
 
 	public void removeReceiverAddedOrRemovedListener(
 			ReceiverAddedOrRemovedListener l) {
-		// TODO Auto-generated method stub
-
+		raorListeners.remove(l);
+	}
+	
+	// used to inform interested classes about added receivers
+	private void fireReceiverAddedEvent(ReceiverGroup r) {
+		ReceiverAddedOrRemovedEvent e = new ReceiverAddedOrRemovedEvent(r);
+		for(ReceiverAddedOrRemovedListener l : raorListeners) {
+			l.receiverGroupAdded(e);
+		}
+	}
+	
+	// used to inform interested classes about removed receivers
+	private void fireReceiverRemovedEvent(ReceiverGroup r) {
+		ReceiverAddedOrRemovedEvent e = new ReceiverAddedOrRemovedEvent(r);
+		for(ReceiverAddedOrRemovedListener l : raorListeners) {
+			l.receiverGroupRemoved(e);
+		}
 	}
 
 }
