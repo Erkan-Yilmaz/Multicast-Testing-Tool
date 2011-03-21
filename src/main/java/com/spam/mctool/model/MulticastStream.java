@@ -14,10 +14,10 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 public abstract class MulticastStream implements Runnable {
 	
 	// internals
-	protected State state = State.INACTIVE;
+	transient protected State state = State.INACTIVE;
 	protected AnalyzingBehaviour analyzingBehaviour;
-	protected ScheduledThreadPoolExecutor stpe;
-	protected ScheduledFuture<? extends Object> sf, asf;
+	transient protected ScheduledThreadPoolExecutor stpe;
+	transient protected ScheduledFuture<? extends Object> sf, asf;
 	// network
 	protected NetworkInterface networkInterface;
 	protected InetAddress group;

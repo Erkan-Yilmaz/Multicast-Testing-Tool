@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
 import com.spam.mctool.intermediates.SenderDataChangedEvent;
+import com.spam.mctool.model.persistence.SenderPoolXmlConverter;
+import com.thoughtworks.xstream.XStream;
 
 public class ModelTest implements ReceiverDataChangeListener, SenderDataChangeListener {
 	
@@ -28,7 +30,6 @@ public class ModelTest implements ReceiverDataChangeListener, SenderDataChangeLi
 			sp.put("group", "224.0.0.1");
 			s = sm.create(sp);
 			s.addSenderDataChangeListener(mt);
-			s.activate();
 		}
 		
 		Map<String, String> rp = new HashMap<String, String>();
@@ -40,32 +41,12 @@ public class ModelTest implements ReceiverDataChangeListener, SenderDataChangeLi
 			rp.put("group", "224.0.0.1");
 			ReceiverGroup r = rm.create(rp);
 			r.addReceiverDataChangeListener(mt);
-			r.activate();
 		}
 		
-		/*
-		try {
-			Thread.sleep(3*1000);
-			s.deactivate();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			Thread.sleep(3*1000);
-			s.activate();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			Thread.sleep(2*1000);
-			sm.killAll();
-			rm.killAll();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		*/
+		XStream xs = new XStream();
+		xs.registerConverter(new SenderPoolXmlConverter());
+		String xml = xs.toXML(sm);
+		System.out.println(xml);
 	}
 
 	public void dataChanged(ReceiverDataChangedEvent e) {

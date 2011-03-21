@@ -1,16 +1,16 @@
 package com.spam.mctool.intermediates;
 
-import com.spam.mctool.model.Receiver;
+import com.spam.mctool.model.ReceiverGroup;
 
 public class ReceiverAddedOrRemovedEvent {
 
-    private Receiver source;
+    private ReceiverGroup source;
 
-    public ReceiverAddedOrRemovedEvent(Receiver r) {
+    public ReceiverAddedOrRemovedEvent(ReceiverGroup r) {
         source = r;
     }
 
-    public Receiver getSource() {
+    public ReceiverGroup getSource() {
         return source;
     }
 }

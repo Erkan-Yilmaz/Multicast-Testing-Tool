@@ -164,8 +164,8 @@ public class GraphicalView implements MctoolView,
 
         // fire the update methods to load all model data to the gui
         profileChanged(new ProfileChangeEvent());
-        for (Receiver r : streamManager.getReceivers()) {
-            this.receiverAdded(new ReceiverAddedOrRemovedEvent(r));
+        for (ReceiverGroup r : streamManager.getReceivers()) {
+            //this.receiverAdded(new ReceiverAddedOrRemovedEvent(r));
         }
         for (Sender s : streamManager.getSenders()) {
             this.senderAdded(new SenderAddedOrRemovedEvent(s));
@@ -182,7 +182,7 @@ public class GraphicalView implements MctoolView,
         streamManager.addSenderAddedOrRemovedListener(this);
         streamManager.addReceiverAddedOrRemovedListener(this);
         profileManager.addProfileChangeListener(this);
-        for (Receiver r : streamManager.getReceivers()) {
+        for (ReceiverGroup r : streamManager.getReceivers()) {
             // TODO howto register on receiver group?
         }
         for (Sender s : streamManager.getSenders()) {
