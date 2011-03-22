@@ -171,7 +171,7 @@ public class EditReceiverDialog extends javax.swing.JDialog {
             receiverMap.put("group", this.GroupField.getText());
             receiverMap.put("port", this.PortField.getValue().toString());
             receiverMap.put("ninf",this.interfaceMap.get(this.InterfaceCombo.getSelectedItem().toString()));
-            receiverMap.put("abeh","default");
+            receiverMap.put("abeh",this.analyzingBehaviourMap.get(this.AnalyzingBehaviourCombo.getSelectedItem().toString()));
             parent.addReceiverGroup(receiverMap, ActivateBox.isSelected());
         }
         else{
@@ -225,12 +225,12 @@ public class EditReceiverDialog extends javax.swing.JDialog {
             for (InterfaceAddress interfaceAddress : networkInterface.getInterfaceAddresses()) {
                 InetAddress address = interfaceAddress.getAddress();
 
-                Pattern p = Pattern.compile("/(([1-9][0-9]{0,2}|0)\\.([1-9][0-9]{0,2}|0)\\.([1-9][0-9]{0,2}|0)\\.([1-9][0-9]{0,2}|0))");
-                Matcher m = p.matcher(address.toString());
+                Pattern p = Pattern.compile("(([1-9][0-9]{0,2}|0)\\.([1-9][0-9]{0,2}|0)\\.([1-9][0-9]{0,2}|0)\\.([1-9][0-9]{0,2}|0))");
+		Matcher m = p.matcher(address.getHostAddress());
 
                 if(m.matches()){
-                        this.InterfaceCombo.addItem(networkInterface.getDisplayName() + " - " + m.group(1));
-                        this.interfaceMap.put(networkInterface.getDisplayName() + " - " + m.group(1), m.group(1));
+                    this.InterfaceCombo.addItem(networkInterface.getDisplayName() + " - " + address.getHostAddress());
+                    this.interfaceMap.put(networkInterface.getDisplayName() + " - " + address.getHostAddress(), address.getHostAddress());
                 }
             }
         }
