@@ -85,10 +85,11 @@ public class ReceiverTableModel extends AbstractTableModel implements MouseListe
         int receiverRowIndex;
         int insertPos;
         for(Receiver receiver : e.getReceiverList()) {
-            receiverRow = getReceiverRow(receiver);
-            if(receiverRow != null) {
-                receiverRowIndex = this.getRowIndex(receiver);
-                fireTableRowsUpdated(receiverRowIndex, receiverRowIndex);
+            if(contains(receiver)) {
+                if (receiverGroupRow.isExpanded()) {
+                    receiverRowIndex = this.getRowIndex(receiver);
+                    fireTableRowsUpdated(receiverRowIndex, receiverRowIndex);
+                }
             } else {
                 receiverRow = new ReceiverRow(receiver);
                 receiverGroupRow.addReceiverRow(receiverRow);
@@ -192,6 +193,18 @@ public class ReceiverTableModel extends AbstractTableModel implements MouseListe
             }
         }
         return null;
+    }
+
+    private boolean contains(Receiver receiver) {
+        for(ReceiverTableRow row : visibleRows) {
+            if(row instanceof ReceiverGroupRow) {
+                ReceiverGroupRow groupRow = (ReceiverGroupRow)row;
+                for(ReceiverRow receiverRow : groupRow.getReceiverRows()) {
+                    if(receiverRow.getReceiver() == receiver) return true;
+                }
+            }
+        }
+        return false;
     }
 
 }
