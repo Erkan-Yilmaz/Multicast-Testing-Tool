@@ -32,23 +32,23 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="GroupLabel" min="-2" max="-2" attributes="0"/>
                   <Component id="PortLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="GroupField" alignment="0" pref="501" max="32767" attributes="0"/>
-                  <Component id="PortField" alignment="0" pref="501" max="32767" attributes="0"/>
+                  <Component id="GroupField" alignment="0" pref="233" max="32767" attributes="0"/>
+                  <Component id="PortField" alignment="0" pref="233" max="32767" attributes="0"/>
                   <Component id="InterfaceLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="InterfaceCombo" alignment="0" pref="501" max="32767" attributes="0"/>
-                  <Component id="DataField" alignment="1" pref="501" max="32767" attributes="0"/>
+                  <Component id="InterfaceCombo" alignment="0" pref="233" max="32767" attributes="0"/>
+                  <Component id="DataField" alignment="1" pref="233" max="32767" attributes="0"/>
                   <Component id="DataLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="PacketStyleLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="PacketStyleCombo" alignment="0" pref="501" max="32767" attributes="0"/>
+                  <Component id="PacketStyleCombo" alignment="0" pref="233" max="32767" attributes="0"/>
                   <Component id="PacketRateLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="PacketRateField" alignment="0" pref="501" max="32767" attributes="0"/>
+                  <Component id="PacketRateField" alignment="0" pref="233" max="32767" attributes="0"/>
                   <Component id="PacketSizeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="PacketSizeField" alignment="0" pref="501" max="32767" attributes="0"/>
+                  <Component id="PacketSizeField" alignment="0" pref="233" max="32767" attributes="0"/>
                   <Component id="TTLLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="TTLField" alignment="0" pref="501" max="32767" attributes="0"/>
+                  <Component id="TTLField" alignment="0" pref="233" max="32767" attributes="0"/>
                   <Component id="AnalyzingBehaviourLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="AnalyzingBehaviourCombo" alignment="0" pref="501" max="32767" attributes="0"/>
-                  <Component id="ActivateBox" alignment="0" pref="501" max="32767" attributes="0"/>
+                  <Component id="AnalyzingBehaviourCombo" alignment="0" pref="233" max="32767" attributes="0"/>
+                  <Component id="ActivateBox" alignment="0" pref="233" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                       <Component id="OKButton" min="-2" max="-2" attributes="0"/>
