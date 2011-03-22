@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JFrame;
 
 /**
@@ -290,8 +292,13 @@ public class EditSenderDialog extends javax.swing.JDialog {
             for (InterfaceAddress interfaceAddress : networkInterface.getInterfaceAddresses()) {
                 InetAddress address = interfaceAddress.getAddress();
 
-                this.InterfaceCombo.addItem(networkInterface.getDisplayName() + " - " + address.getHostAddress());
-                this.interfaceMap.put(networkInterface.getDisplayName() + " - " + address.getHostAddress(),address.getHostAddress());
+                Pattern p = Pattern.compile("(([1-9][0-9]{0,2}|0)\\.([1-9][0-9]{0,2}|0)\\.([1-9][0-9]{0,2}|0)\\.([1-9][0-9]{0,2}|0))");
+		Matcher m = p.matcher(address.getHostAddress());
+
+                if(m.matches()){
+                    this.InterfaceCombo.addItem(networkInterface.getDisplayName() + " - " + address.getHostAddress());
+                    this.interfaceMap.put(networkInterface.getDisplayName() + " - " + address.getHostAddress(),address.getHostAddress());
+                }
             }
         }       
     }
