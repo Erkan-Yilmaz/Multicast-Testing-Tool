@@ -12,6 +12,8 @@
 package com.spam.mctool.view.dialogs;
 
 import com.spam.mctool.model.Sender;
+import com.spam.mctool.view.main.MainFrame;
+import javax.swing.JFrame;
 
 /**
  *
@@ -21,17 +23,23 @@ public class ShowSenderDialog extends javax.swing.JDialog {
 
     private static final long serialVersionUID = 1L;
     private Sender sender;
+    private MainFrame parent;
 
 	/** Creates new form ShowSenderDialog */
     public ShowSenderDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        initData();
     }
 
-    public ShowSenderDialog(java.awt.Frame parent, boolean modal, Sender sender) {
+    public ShowSenderDialog(MainFrame parent, boolean modal) {
+        this((JFrame)parent, modal);
+        this.parent = parent;
+    }
+
+    public ShowSenderDialog(MainFrame parent, boolean modal, Sender sender) {
         this(parent, modal);
         this.sender = sender;
+        initData();
     }
 
     /** This method is called from within the constructor to
@@ -62,6 +70,7 @@ public class ShowSenderDialog extends javax.swing.JDialog {
         ConfPPSData = new javax.swing.JLabel();
         SentPPSLabel = new javax.swing.JLabel();
         SentPPSData = new javax.swing.JLabel();
+        CloseButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -106,36 +115,49 @@ public class ShowSenderDialog extends javax.swing.JDialog {
 
         SentPPSData.setText(bundle.getString("ShowSenderDialog.SentPPSData.text_1")); // NOI18N
 
+        CloseButton.setText(bundle.getString("ShowSenderDialog.CloseButton.text")); // NOI18N
+        CloseButton.setActionCommand(bundle.getString("ShowSenderDialog.CloseButton.actionCommand")); // NOI18N
+        CloseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CloseButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(SenderIDLabel)
-                    .addComponent(InterfaceLabel)
-                    .addComponent(GroupLabel)
-                    .addComponent(PortLabel)
-                    .addComponent(PacketStyleLabel)
-                    .addComponent(ActivationTimeLabel)
-                    .addComponent(PacketSizeLabel)
-                    .addComponent(DataLabel)
-                    .addComponent(ConfPPSLabel)
-                    .addComponent(SentPPSLabel))
-                .addGap(79, 79, 79)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(SentPPSData)
-                    .addComponent(ConfPPSData)
-                    .addComponent(DataData)
-                    .addComponent(PacketSizeData)
-                    .addComponent(ActivationTimeData)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(PacketStyleData)
-                        .addComponent(PortData)
-                        .addComponent(GroupData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(InterfaceData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(SenderIDData)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(SenderIDLabel)
+                            .addComponent(InterfaceLabel)
+                            .addComponent(GroupLabel)
+                            .addComponent(PortLabel)
+                            .addComponent(PacketStyleLabel)
+                            .addComponent(ActivationTimeLabel)
+                            .addComponent(PacketSizeLabel)
+                            .addComponent(DataLabel)
+                            .addComponent(ConfPPSLabel)
+                            .addComponent(SentPPSLabel))
+                        .addGap(79, 79, 79)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(SentPPSData)
+                            .addComponent(ConfPPSData)
+                            .addComponent(DataData)
+                            .addComponent(PacketSizeData)
+                            .addComponent(ActivationTimeData)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(PacketStyleData)
+                                .addComponent(PortData)
+                                .addComponent(GroupData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(InterfaceData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(SenderIDData))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(105, 105, 105)
+                        .addComponent(CloseButton)))
                 .addContainerGap(80, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -181,11 +203,17 @@ public class ShowSenderDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SentPPSLabel)
                     .addComponent(SentPPSData))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(CloseButton)
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_CloseButtonActionPerformed
 
     /**
     * @param args the command line arguments
@@ -205,12 +233,22 @@ public class ShowSenderDialog extends javax.swing.JDialog {
     }
 
     private void initData() {
-        // TODO load data from sender to dialog components
+        this.SenderIDData.setText(String.valueOf(this.sender.getSenderId()));
+        //interface
+        this.GroupData.setText(this.sender.getGroup().getHostAddress());
+        this.PortData.setText(String.valueOf(this.sender.getPort()));
+        this.PacketStyleData.setText(this.sender.getpType().toString());
+        //Active since
+        this.PacketSizeData.setText(String.valueOf(this.sender.getPacketSize()));
+        this.DataData.setText(this.sender.getPayloadAsString());
+        this.ConfPPSData.setText(String.valueOf(this.sender.getSenderConfiguredPacketRate()));
+        this.SentPPSData.setText(String.valueOf(this.sender.getAvgPPS()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ActivationTimeData;
     private javax.swing.JLabel ActivationTimeLabel;
+    private javax.swing.JButton CloseButton;
     private javax.swing.JLabel ConfPPSData;
     private javax.swing.JLabel ConfPPSLabel;
     private javax.swing.JLabel DataData;

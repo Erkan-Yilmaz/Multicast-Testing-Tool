@@ -22,8 +22,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.swing.JFrame;
 
 /**
@@ -158,7 +156,7 @@ public class EditReceiverDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(OKButton)
                     .addComponent(CancelButton))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -171,7 +169,7 @@ public class EditReceiverDialog extends javax.swing.JDialog {
             receiverMap.put("group", this.GroupField.getText());
             receiverMap.put("port", this.PortField.getValue().toString());
             receiverMap.put("ninf",this.interfaceMap.get(this.InterfaceCombo.getSelectedItem().toString()));
-            receiverMap.put("abeh","default");
+            receiverMap.put("abeh",this.analyzingBehaviourMap.get(this.AnalyzingBehaviourCombo.getSelectedItem().toString()));
             parent.addReceiverGroup(receiverMap, ActivateBox.isSelected());
         }
         else{
@@ -225,13 +223,8 @@ public class EditReceiverDialog extends javax.swing.JDialog {
             for (InterfaceAddress interfaceAddress : networkInterface.getInterfaceAddresses()) {
                 InetAddress address = interfaceAddress.getAddress();
 
-                Pattern p = Pattern.compile("/(([1-9][0-9]{0,2}|0)\\.([1-9][0-9]{0,2}|0)\\.([1-9][0-9]{0,2}|0)\\.([1-9][0-9]{0,2}|0))");
-                Matcher m = p.matcher(address.toString());
-
-                if(m.matches()){
-                        this.InterfaceCombo.addItem(networkInterface.getDisplayName() + " - " + m.group(1));
-                        this.interfaceMap.put(networkInterface.getDisplayName() + " - " + m.group(1), m.group(1));
-                }
+                this.InterfaceCombo.addItem(networkInterface.getDisplayName() + " - " + address.getHostAddress());
+                this.interfaceMap.put(networkInterface.getDisplayName() + " - " + address.getHostAddress(), address.getHostAddress());
             }
         }
     }
