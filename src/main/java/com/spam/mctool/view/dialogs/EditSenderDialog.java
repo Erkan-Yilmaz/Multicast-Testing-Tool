@@ -92,40 +92,40 @@ public class EditSenderDialog extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationlization/Bundle"); // NOI18N
-        OKButton.setText(bundle.getString("EditSenderDialog.OKButton.text_1")); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
+        OKButton.setText(bundle.getString("EditSenderDialog.OKButton.text")); // NOI18N
         OKButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 OKButtonActionPerformed(evt);
             }
         });
 
-        CancelButton.setText(bundle.getString("EditSenderDialog.CancelButton.text_1")); // NOI18N
+        CancelButton.setText(bundle.getString("EditSenderDialog.CancelButton.text")); // NOI18N
         CancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CancelButtonActionPerformed(evt);
             }
         });
 
-        InterfaceLabel.setText(bundle.getString("EditSenderDialog.InterfaceLabel.text_1")); // NOI18N
+        InterfaceLabel.setText(bundle.getString("EditSenderDialog.InterfaceLabel.text")); // NOI18N
 
-        PortLabel.setText(bundle.getString("EditSenderDialog.PortLabel.text_1")); // NOI18N
+        PortLabel.setText(bundle.getString("EditSenderDialog.PortLabel.text")); // NOI18N
 
-        GroupLabel.setText(bundle.getString("EditSenderDialog.GroupLabel.text_1")); // NOI18N
+        GroupLabel.setText(bundle.getString("EditSenderDialog.GroupLabel.text")); // NOI18N
 
-        ActivateBox.setText(bundle.getString("EditSenderDialog.ActivateBox.text_1")); // NOI18N
+        ActivateBox.setText(bundle.getString("EditSenderDialog.ActivateBox.text")); // NOI18N
 
-        DataLabel.setText(bundle.getString("EditSenderDialog.DataLabel.text_1")); // NOI18N
+        DataLabel.setText(bundle.getString("EditSenderDialog.DataLabel.text")); // NOI18N
 
-        PacketRateLabel.setText(bundle.getString("EditSenderDialog.PacketRateLabel.text_1")); // NOI18N
+        PacketRateLabel.setText(bundle.getString("EditSenderDialog.PacketRateLabel.text")); // NOI18N
 
-        PacketSizeLabel.setText(bundle.getString("EditSenderDialog.PacketSizeLabel.text_1")); // NOI18N
+        PacketSizeLabel.setText(bundle.getString("EditSenderDialog.PacketSizeLabel.text")); // NOI18N
 
-        TTLLabel.setText(bundle.getString("EditSenderDialog.TTLLabel.text_1")); // NOI18N
+        TTLLabel.setText(bundle.getString("EditSenderDialog.TTLLabel.text")); // NOI18N
 
-        PacketStyleLabel.setText(bundle.getString("EditSenderDialog.PacketStyleLabel.text_1")); // NOI18N
+        PacketStyleLabel.setText(bundle.getString("EditSenderDialog.PacketStyleLabel.text")); // NOI18N
 
-        AnalyzingBehaviourLabel.setText(bundle.getString("EditSenderDialog.AnalyzingBehaviourLabel.text_1")); // NOI18N
+        AnalyzingBehaviourLabel.setText(bundle.getString("EditSenderDialog.AnalyzingBehaviourLabel.text")); // NOI18N
 
         AnalyzingBehaviourCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -138,28 +138,28 @@ public class EditSenderDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(GroupLabel)
                     .addComponent(PortLabel)
-                    .addComponent(GroupField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(PortField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(GroupField, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
+                    .addComponent(PortField, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
                     .addComponent(InterfaceLabel)
-                    .addComponent(InterfaceCombo, 0, 250, Short.MAX_VALUE)
-                    .addComponent(DataField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(InterfaceCombo, 0, 501, Short.MAX_VALUE)
+                    .addComponent(DataField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
                     .addComponent(DataLabel)
                     .addComponent(PacketStyleLabel)
-                    .addComponent(PacketStyleCombo, 0, 250, Short.MAX_VALUE)
+                    .addComponent(PacketStyleCombo, 0, 501, Short.MAX_VALUE)
                     .addComponent(PacketRateLabel)
-                    .addComponent(PacketRateField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(PacketRateField, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
                     .addComponent(PacketSizeLabel)
-                    .addComponent(PacketSizeField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(PacketSizeField, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
                     .addComponent(TTLLabel)
-                    .addComponent(TTLField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(ActivateBox, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(TTLField, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
+                    .addComponent(ActivateBox, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(43, 43, 43)
                         .addComponent(OKButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(CancelButton))
                     .addComponent(AnalyzingBehaviourLabel)
-                    .addComponent(AnalyzingBehaviourCombo, 0, 250, Short.MAX_VALUE))
+                    .addComponent(AnalyzingBehaviourCombo, 0, 501, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -201,7 +201,7 @@ public class EditSenderDialog extends javax.swing.JDialog {
                 .addComponent(AnalyzingBehaviourLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(AnalyzingBehaviourCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(ActivateBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)

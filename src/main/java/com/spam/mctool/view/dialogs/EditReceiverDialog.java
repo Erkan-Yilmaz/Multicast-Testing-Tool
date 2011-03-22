@@ -79,19 +79,19 @@ public class EditReceiverDialog extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationlization/Bundle"); // NOI18N
-        GroupLabel.setText(bundle.getString("EditReceiverDialog.GroupLabel.text_1")); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
+        GroupLabel.setText(bundle.getString("EditReceiverDialog.GroupLabel.text")); // NOI18N
 
-        PortLabel.setText(bundle.getString("EditReceiverDialog.PortLabel.text_1")); // NOI18N
+        PortLabel.setText(bundle.getString("EditReceiverDialog.PortLabel.text")); // NOI18N
 
-        InterfaceLabel.setText(bundle.getString("EditReceiverDialog.InterfaceLabel.text_1")); // NOI18N
+        InterfaceLabel.setText(bundle.getString("EditReceiverDialog.InterfaceLabel.text")); // NOI18N
 
         InterfaceCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        ActivateBox.setText(bundle.getString("EditReceiverDialog.ActivateBox.text_1")); // NOI18N
+        ActivateBox.setText(bundle.getString("EditReceiverDialog.ActivateBox.text")); // NOI18N
 
         OKButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/check.png"))); // NOI18N
-        OKButton.setText(bundle.getString("EditReceiverDialog.OKButton.text_1")); // NOI18N
+        OKButton.setText(bundle.getString("EditReceiverDialog.OKButton.text")); // NOI18N
         OKButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 OKButtonActionPerformed(evt);
@@ -99,14 +99,14 @@ public class EditReceiverDialog extends javax.swing.JDialog {
         });
 
         CancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
-        CancelButton.setText(bundle.getString("EditReceiverDialog.CancelButton.text_1")); // NOI18N
+        CancelButton.setText(bundle.getString("EditReceiverDialog.CancelButton.text")); // NOI18N
         CancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CancelButtonActionPerformed(evt);
             }
         });
 
-        AnalyzingBehaviourLabel.setText(bundle.getString("EditReceiverDialog.AnalyzingBehaviourLabel.text_1")); // NOI18N
+        AnalyzingBehaviourLabel.setText(bundle.getString("EditReceiverDialog.AnalyzingBehaviourLabel.text")); // NOI18N
 
         AnalyzingBehaviourCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -117,15 +117,15 @@ public class EditReceiverDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(GroupField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(GroupField, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
                     .addComponent(GroupLabel)
                     .addComponent(PortLabel)
-                    .addComponent(PortField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(PortField, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
                     .addComponent(InterfaceLabel)
-                    .addComponent(InterfaceCombo, 0, 250, Short.MAX_VALUE)
+                    .addComponent(InterfaceCombo, 0, 549, Short.MAX_VALUE)
                     .addComponent(AnalyzingBehaviourLabel)
-                    .addComponent(AnalyzingBehaviourCombo, 0, 250, Short.MAX_VALUE)
-                    .addComponent(ActivateBox, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(AnalyzingBehaviourCombo, 0, 549, Short.MAX_VALUE)
+                    .addComponent(ActivateBox, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(43, 43, 43)
                         .addComponent(OKButton)
@@ -158,7 +158,7 @@ public class EditReceiverDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(OKButton)
                     .addComponent(CancelButton))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();

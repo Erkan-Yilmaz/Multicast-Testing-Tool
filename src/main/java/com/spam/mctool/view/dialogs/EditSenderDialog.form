@@ -14,7 +14,7 @@
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="1"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
-    <AuxValue name="FormSettings_formBundle" type="java.lang.String" value="internationlization/Bundle"/>
+    <AuxValue name="FormSettings_formBundle" type="java.lang.String" value="internationalization/Bundle"/>
     <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
     <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="true"/>
@@ -32,21 +32,21 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="GroupLabel" min="-2" max="-2" attributes="0"/>
                   <Component id="PortLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="GroupField" alignment="0" pref="250" max="32767" attributes="0"/>
-                  <Component id="PortField" alignment="0" pref="250" max="32767" attributes="0"/>
+                  <Component id="GroupField" alignment="0" pref="501" max="32767" attributes="0"/>
+                  <Component id="PortField" alignment="0" pref="501" max="32767" attributes="0"/>
                   <Component id="InterfaceLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="InterfaceCombo" alignment="0" pref="250" max="32767" attributes="0"/>
-                  <Component id="DataField" alignment="1" pref="250" max="32767" attributes="0"/>
+                  <Component id="InterfaceCombo" alignment="0" pref="501" max="32767" attributes="0"/>
+                  <Component id="DataField" alignment="1" pref="501" max="32767" attributes="0"/>
                   <Component id="DataLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="PacketStyleLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="PacketStyleCombo" alignment="0" pref="250" max="32767" attributes="0"/>
+                  <Component id="PacketStyleCombo" alignment="0" pref="501" max="32767" attributes="0"/>
                   <Component id="PacketRateLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="PacketRateField" alignment="0" pref="250" max="32767" attributes="0"/>
+                  <Component id="PacketRateField" alignment="0" pref="501" max="32767" attributes="0"/>
                   <Component id="PacketSizeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="PacketSizeField" alignment="0" pref="250" max="32767" attributes="0"/>
+                  <Component id="PacketSizeField" alignment="0" pref="501" max="32767" attributes="0"/>
                   <Component id="TTLLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="TTLField" alignment="0" pref="250" max="32767" attributes="0"/>
-                  <Component id="ActivateBox" alignment="0" pref="250" max="32767" attributes="0"/>
+                  <Component id="TTLField" alignment="0" pref="501" max="32767" attributes="0"/>
+                  <Component id="ActivateBox" alignment="0" pref="501" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                       <Component id="OKButton" min="-2" max="-2" attributes="0"/>
@@ -54,7 +54,7 @@
                       <Component id="CancelButton" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="AnalyzingBehaviourLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="AnalyzingBehaviourCombo" alignment="0" pref="250" max="32767" attributes="0"/>
+                  <Component id="AnalyzingBehaviourCombo" alignment="0" pref="501" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -99,7 +99,7 @@
               <Component id="AnalyzingBehaviourLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="AnalyzingBehaviourCombo" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="51" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="ActivateBox" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -122,7 +122,7 @@
     <Component class="javax.swing.JButton" name="OKButton">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationlization/Bundle.properties" key="EditSenderDialog.OKButton.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.OKButton.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
       <Events>
@@ -132,7 +132,7 @@
     <Component class="javax.swing.JButton" name="CancelButton">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationlization/Bundle.properties" key="EditSenderDialog.CancelButton.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.CancelButton.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
       <Events>
@@ -142,35 +142,35 @@
     <Component class="javax.swing.JLabel" name="InterfaceLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationlization/Bundle.properties" key="EditSenderDialog.InterfaceLabel.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.InterfaceLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="PortLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationlization/Bundle.properties" key="EditSenderDialog.PortLabel.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.PortLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="GroupLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationlization/Bundle.properties" key="EditSenderDialog.GroupLabel.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.GroupLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JCheckBox" name="ActivateBox">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationlization/Bundle.properties" key="EditSenderDialog.ActivateBox.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.ActivateBox.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="DataLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationlization/Bundle.properties" key="EditSenderDialog.DataLabel.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.DataLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
@@ -179,28 +179,28 @@
     <Component class="javax.swing.JLabel" name="PacketRateLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationlization/Bundle.properties" key="EditSenderDialog.PacketRateLabel.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.PacketRateLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="PacketSizeLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationlization/Bundle.properties" key="EditSenderDialog.PacketSizeLabel.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.PacketSizeLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="TTLLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationlization/Bundle.properties" key="EditSenderDialog.TTLLabel.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.TTLLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="PacketStyleLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationlization/Bundle.properties" key="EditSenderDialog.PacketStyleLabel.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.PacketStyleLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
@@ -224,7 +224,7 @@
     <Component class="javax.swing.JLabel" name="AnalyzingBehaviourLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationlization/Bundle.properties" key="EditSenderDialog.AnalyzingBehaviourLabel.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.AnalyzingBehaviourLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>

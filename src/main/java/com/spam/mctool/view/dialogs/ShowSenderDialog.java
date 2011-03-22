@@ -65,46 +65,46 @@ public class ShowSenderDialog extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationlization/Bundle"); // NOI18N
-        SenderIDLabel.setText(bundle.getString("ShowSenderDialog.SenderIDLabel.text_1")); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
+        SenderIDLabel.setText(bundle.getString("ShowSenderDialog.SenderIDLabel.text")); // NOI18N
 
-        SenderIDData.setText(bundle.getString("ShowSenderDialog.SenderIDData.text_1")); // NOI18N
+        SenderIDData.setText(bundle.getString("ShowSenderDialog.SenderIDData.text")); // NOI18N
 
-        InterfaceLabel.setText(bundle.getString("ShowSenderDialog.InterfaceLabel.text_1")); // NOI18N
+        InterfaceLabel.setText(bundle.getString("ShowSenderDialog.InterfaceLabel.text")); // NOI18N
 
-        InterfaceData.setText(bundle.getString("ShowSenderDialog.InterfaceData.text_1")); // NOI18N
+        InterfaceData.setText(bundle.getString("ShowSenderDialog.InterfaceData.text")); // NOI18N
 
-        GroupLabel.setText(bundle.getString("ShowSenderDialog.GroupLabel.text_1")); // NOI18N
+        GroupLabel.setText(bundle.getString("ShowSenderDialog.GroupLabel.text")); // NOI18N
 
-        GroupData.setText(bundle.getString("ShowSenderDialog.GroupData.text_1")); // NOI18N
+        GroupData.setText(bundle.getString("ShowSenderDialog.GroupData.text")); // NOI18N
 
-        PortLabel.setText(bundle.getString("ShowSenderDialog.PortLabel.text_1")); // NOI18N
+        PortLabel.setText(bundle.getString("ShowSenderDialog.PortLabel.text")); // NOI18N
 
-        PortData.setText(bundle.getString("ShowSenderDialog.PortData.text_1")); // NOI18N
+        PortData.setText(bundle.getString("ShowSenderDialog.PortData.text")); // NOI18N
 
-        PacketStyleLabel.setText(bundle.getString("ShowSenderDialog.PacketStyleLabel.text_1")); // NOI18N
+        PacketStyleLabel.setText(bundle.getString("ShowSenderDialog.PacketStyleLabel.text")); // NOI18N
 
-        PacketStyleData.setText(bundle.getString("ShowSenderDialog.PacketStyleData.text_1")); // NOI18N
+        PacketStyleData.setText(bundle.getString("ShowSenderDialog.PacketStyleData.text")); // NOI18N
 
-        ActivationTimeLabel.setText(bundle.getString("ShowSenderDialog.ActivationTimeLabel.text_1")); // NOI18N
+        ActivationTimeLabel.setText(bundle.getString("ShowSenderDialog.ActivationTimeLabel.text")); // NOI18N
 
-        ActivationTimeData.setText(bundle.getString("ShowSenderDialog.ActivationTimeData.text_1")); // NOI18N
+        ActivationTimeData.setText(bundle.getString("ShowSenderDialog.ActivationTimeData.text")); // NOI18N
 
-        PacketSizeLabel.setText(bundle.getString("ShowSenderDialog.PacketSizeLabel.text_1")); // NOI18N
+        PacketSizeLabel.setText(bundle.getString("ShowSenderDialog.PacketSizeLabel.text")); // NOI18N
 
-        PacketSizeData.setText(bundle.getString("ShowSenderDialog.PacketSizeData.text_1")); // NOI18N
+        PacketSizeData.setText(bundle.getString("ShowSenderDialog.PacketSizeData.text")); // NOI18N
 
-        DataLabel.setText(bundle.getString("ShowSenderDialog.DataLabel.text_1")); // NOI18N
+        DataLabel.setText(bundle.getString("ShowSenderDialog.DataLabel.text")); // NOI18N
 
-        DataData.setText(bundle.getString("ShowSenderDialog.DataData.text_1")); // NOI18N
+        DataData.setText(bundle.getString("ShowSenderDialog.DataData.text")); // NOI18N
 
-        ConfPPSLabel.setText(bundle.getString("ShowSenderDialog.ConfPPSLabel.text_1")); // NOI18N
+        ConfPPSLabel.setText(bundle.getString("ShowSenderDialog.ConfPPSLabel.text")); // NOI18N
 
-        ConfPPSData.setText(bundle.getString("ShowSenderDialog.ConfPPSData.text_1")); // NOI18N
+        ConfPPSData.setText(bundle.getString("ShowSenderDialog.ConfPPSData.text")); // NOI18N
 
-        SentPPSLabel.setText(bundle.getString("ShowSenderDialog.SentPPSLabel.text_1")); // NOI18N
+        SentPPSLabel.setText(bundle.getString("ShowSenderDialog.SentPPSLabel.text")); // NOI18N
 
-        SentPPSData.setText(bundle.getString("ShowSenderDialog.SentPPSData.text_1")); // NOI18N
+        SentPPSData.setText(bundle.getString("ShowSenderDialog.SentPPSData.text")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -136,7 +136,7 @@ public class ShowSenderDialog extends javax.swing.JDialog {
                         .addComponent(GroupData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(InterfaceData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(SenderIDData)))
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,7 +181,7 @@ public class ShowSenderDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SentPPSLabel)
                     .addComponent(SentPPSData))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();

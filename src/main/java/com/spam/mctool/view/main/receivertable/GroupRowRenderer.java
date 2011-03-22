@@ -12,10 +12,12 @@
 package com.spam.mctool.view.main.receivertable;
 
 import com.spam.mctool.model.ReceiverGroup;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
+import javax.swing.UIManager;
 
 /**
  *
@@ -44,6 +46,8 @@ public class GroupRowRenderer extends javax.swing.JPanel implements javax.swing.
         laPortCaption = new javax.swing.JLabel();
         laPort = new javax.swing.JLabel();
 
+        setBackground(javax.swing.UIManager.getDefaults().getColor("Button.shadow"));
+        setForeground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 0));
 
         laExpandIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fold_closed.png"))); // NOI18N
@@ -53,17 +57,21 @@ public class GroupRowRenderer extends javax.swing.JPanel implements javax.swing.
         laStateIcon.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 2, 0, 0));
         add(laStateIcon);
 
+        laGroupCaption.setForeground(new java.awt.Color(255, 255, 255));
         laGroupCaption.setText("Group:");
         laGroupCaption.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0));
         add(laGroupCaption);
 
+        laGroup.setForeground(new java.awt.Color(255, 255, 255));
         laGroup.setText("225.1.1.14");
         add(laGroup);
 
+        laPortCaption.setForeground(new java.awt.Color(255, 255, 255));
         laPortCaption.setText("Port:");
         laPortCaption.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0));
         add(laPortCaption);
 
+        laPort.setForeground(new java.awt.Color(255, 255, 255));
         laPort.setText("2345");
         add(laPort);
     }// </editor-fold>//GEN-END:initComponents
@@ -79,21 +87,40 @@ public class GroupRowRenderer extends javax.swing.JPanel implements javax.swing.
     // End of variables declaration//GEN-END:variables
     private javax.swing.JTable table;
     private int column;
-    private final ImageIcon collapsed = new ImageIcon(getClass().getResource("/images/fold_closed.png"));
-    private final ImageIcon expanded  = new ImageIcon(getClass().getResource("/images/fold_opened.png"));
+    private final ImageIcon collapsed    = new ImageIcon(getClass().getResource("/images/fold_closed.png"));
+    private final ImageIcon expanded     = new ImageIcon(getClass().getResource("/images/fold_opened.png"));
+    private final ImageIcon activated    = new ImageIcon(getClass().getResource("/images/play_green.png"));
+    private final ImageIcon deactivated  = new ImageIcon(getClass().getResource("/images/stop_red.png"));
+    private final Color     deselectedBg   = UIManager.getDefaults().getColor("Button.light");
+    private final Color     selectedBg     = UIManager.getDefaults().getColor("Button.shadow");
+    private final Color     deselectedFg = Color.BLACK;
+    private final Color     selectedFg   = Color.WHITE;
 
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         this.table = table;
         this.column = column;
+
         ReceiverGroupRow groupRow = (ReceiverGroupRow)value;
-        ReceiverGroup group = (ReceiverGroup)groupRow.getReceiverGroup();
-        if(groupRow.isExpanded()) {
-            laExpandIcon.setIcon(expanded);
+        ReceiverGroup    group    = (ReceiverGroup)groupRow.getReceiverGroup();
+        
+        laExpandIcon.setIcon(       groupRow.isExpanded()? expanded  : collapsed   );
+        laStateIcon. setIcon(       group.   isActive()?   activated : deactivated );
+        laGroup.     setText(       group.getGroup().getHostAddress()              );
+        laPort.      setText(       "" + group.getPort()                           );
+        if(isSelected) {
+            this.          setBackground(selectedBg);
+            laGroupCaption.setForeground(selectedFg);
+            laGroup.       setForeground(selectedFg);
+            laPortCaption. setForeground(selectedFg);
+            laPort.        setForeground(selectedFg);
         } else {
-            laExpandIcon.setIcon(collapsed);
+            this.          setBackground(deselectedBg);
+            laGroupCaption.setForeground(deselectedFg);
+            laGroup.       setForeground(deselectedFg);
+            laPortCaption. setForeground(deselectedFg);
+            laPort.        setForeground(deselectedFg);
         }
-        laGroup.setText(group.getGroup().getHostAddress());
-        laPort.setText("" + group.getPort());
+
         return this;
     }
 

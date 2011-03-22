@@ -96,55 +96,54 @@ public class MainFrame extends javax.swing.JFrame {
         laReceiverTableCaption = new javax.swing.JLabel();
         laReceiverTableIcon = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        menuFile = new javax.swing.JMenu();
+        miOpenProfile = new javax.swing.JMenuItem();
+        miSaveProfile = new javax.swing.JMenuItem();
+        miSaveProfileAs = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        miPreferences = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
+        miExit = new javax.swing.JMenuItem();
+        menuSender = new javax.swing.JMenu();
+        miShowSenders = new javax.swing.JCheckBoxMenuItem();
+        miShowSendingStatistics = new javax.swing.JCheckBoxMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
+        miSenderActivate = new javax.swing.JMenuItem();
+        miSenderDeactivate = new javax.swing.JMenuItem();
         jSeparator9 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem27 = new javax.swing.JMenuItem();
-        jMenuItem17 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
+        miSenderAdd = new javax.swing.JMenuItem();
+        miSenderEdit = new javax.swing.JMenuItem();
+        miSenderDelete = new javax.swing.JMenuItem();
+        miSenderDetails = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem10 = new javax.swing.JMenuItem();
+        miSenderSelectAll = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem11 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        jCheckBoxMenuItem3 = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuItem4 = new javax.swing.JCheckBoxMenuItem();
+        miSenderActivateAll = new javax.swing.JMenuItem();
+        miSenderDeactivateAll = new javax.swing.JMenuItem();
+        miSenderDeleteAll = new javax.swing.JMenuItem();
+        menuReceiver = new javax.swing.JMenu();
+        miShowReceivers = new javax.swing.JCheckBoxMenuItem();
+        miShowReceivingStatistics = new javax.swing.JCheckBoxMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem16 = new javax.swing.JMenuItem();
-        jMenuItem19 = new javax.swing.JMenuItem();
+        miReceiverActivate = new javax.swing.JMenuItem();
+        miReceiverDeactivate = new javax.swing.JMenuItem();
         jSeparator10 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem26 = new javax.swing.JMenuItem();
-        jMenuItem25 = new javax.swing.JMenuItem();
-        jMenuItem20 = new javax.swing.JMenuItem();
-        jMenuItem23 = new javax.swing.JMenuItem();
+        miReceiverAdd = new javax.swing.JMenuItem();
+        miReceiverEdit = new javax.swing.JMenuItem();
+        miReceiverDelete = new javax.swing.JMenuItem();
+        mirReceiverDetails = new javax.swing.JMenuItem();
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem24 = new javax.swing.JMenuItem();
+        miReceiverSelectAll = new javax.swing.JMenuItem();
         jSeparator8 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem22 = new javax.swing.JMenuItem();
-        jMenuItem21 = new javax.swing.JMenuItem();
-        jMenuItem18 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem15 = new javax.swing.JMenuItem();
+        miReceiverActivateAll = new javax.swing.JMenuItem();
+        miReceiverDeactivateAll = new javax.swing.JMenuItem();
+        miReceiverDeleteAll = new javax.swing.JMenuItem();
+        menuHelp = new javax.swing.JMenu();
+        miAbout = new javax.swing.JMenuItem();
+        miHelp = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationlization/Bundle"); // NOI18N
-        setTitle(bundle.getString("MainFrame.title")); // NOI18N
+        setTitle(null);
 
         mainSplitPane.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         mainSplitPane.setDividerLocation(267);
@@ -159,16 +158,16 @@ public class MainFrame extends javax.swing.JFrame {
         senderSplitPane.setContinuousLayout(true);
         senderSplitPane.setOneTouchExpandable(true);
 
-        java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("internationlization/Bundle"); // NOI18N
-        laSendingStatistics.setText(bundle1.getString("MainFrame.laSendingStatistics.text_1")); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
+        laSendingStatistics.setText(bundle.getString("MainFrame.laSendingStatistics.text")); // NOI18N
 
-        laSentCaption.setText(bundle1.getString("MainFrame.laSentCaption.text_1")); // NOI18N
+        laSentCaption.setText(bundle.getString("MainFrame.laSentCaption.text")); // NOI18N
 
-        laSenderRateCaption.setText(bundle1.getString("MainFrame.laSenderRateCaption.text_1")); // NOI18N
+        laSenderRateCaption.setText(bundle.getString("MainFrame.laSenderRateCaption.text")); // NOI18N
 
-        laSent.setText(bundle1.getString("MainFrame.laSent.text_1")); // NOI18N
+        laSent.setText(bundle.getString("MainFrame.laSent.text")); // NOI18N
 
-        laSenderRate.setText(bundle1.getString("MainFrame.laSenderRate.text_1")); // NOI18N
+        laSenderRate.setText(bundle.getString("MainFrame.laSenderRate.text")); // NOI18N
 
         javax.swing.GroupLayout paSendingStatisticsLayout = new javax.swing.GroupLayout(paSendingStatistics);
         paSendingStatistics.setLayout(paSendingStatisticsLayout);
@@ -181,11 +180,11 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(laSendingStatistics)
                     .addGroup(paSendingStatisticsLayout.createSequentialGroup()
                         .addComponent(laSentCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                         .addComponent(laSent))
                     .addGroup(paSendingStatisticsLayout.createSequentialGroup()
                         .addComponent(laSenderRateCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                         .addComponent(laSenderRate)))
                 .addContainerGap())
         );
@@ -214,7 +213,7 @@ public class MainFrame extends javax.swing.JFrame {
         paSenderButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         buActivateSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/play_green.png"))); // NOI18N
-        buActivateSender.setText(bundle1.getString("MainFrame.buActivateSender.text_1")); // NOI18N
+        buActivateSender.setText(bundle.getString("MainFrame.buActivateSender.text")); // NOI18N
         buActivateSender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buActivateSenderActionPerformed(evt);
@@ -223,7 +222,7 @@ public class MainFrame extends javax.swing.JFrame {
         paSenderButtons.add(buActivateSender);
 
         buDeactivateSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/stop_red.png"))); // NOI18N
-        buDeactivateSender.setText(bundle1.getString("MainFrame.buDeactivateSender.text_1")); // NOI18N
+        buDeactivateSender.setText(bundle.getString("MainFrame.buDeactivateSender.text")); // NOI18N
         buDeactivateSender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buDeactivateSenderActionPerformed(evt);
@@ -232,7 +231,7 @@ public class MainFrame extends javax.swing.JFrame {
         paSenderButtons.add(buDeactivateSender);
 
         buAddSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add_green.png"))); // NOI18N
-        buAddSender.setText(bundle1.getString("MainFrame.buAddSender.text_1")); // NOI18N
+        buAddSender.setText(bundle.getString("MainFrame.buAddSender.text")); // NOI18N
         buAddSender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buAddSenderActionPerformed(evt);
@@ -241,7 +240,7 @@ public class MainFrame extends javax.swing.JFrame {
         paSenderButtons.add(buAddSender);
 
         buShowSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/preview.png"))); // NOI18N
-        buShowSender.setText(bundle1.getString("MainFrame.buShowSender.text_1")); // NOI18N
+        buShowSender.setText(bundle.getString("MainFrame.buShowSender.text")); // NOI18N
         buShowSender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buShowSenderActionPerformed(evt);
@@ -250,11 +249,11 @@ public class MainFrame extends javax.swing.JFrame {
         paSenderButtons.add(buShowSender);
 
         buEditSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
-        buEditSender.setText(bundle1.getString("MainFrame.buEditSender.text_1")); // NOI18N
+        buEditSender.setText(bundle.getString("MainFrame.buEditSender.text")); // NOI18N
         paSenderButtons.add(buEditSender);
 
         buDeleteSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
-        buDeleteSender.setText(bundle1.getString("MainFrame.buDeleteSender.text_1")); // NOI18N
+        buDeleteSender.setText(bundle.getString("MainFrame.buDeleteSender.text")); // NOI18N
         paSenderButtons.add(buDeleteSender);
 
         paSenderTableOuter.add(paSenderButtons, java.awt.BorderLayout.SOUTH);
@@ -274,7 +273,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         paSenderTableCaption.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        laSenderTableCaption.setText(bundle1.getString("MainFrame.laSenderTableCaption.text_1")); // NOI18N
+        laSenderTableCaption.setText(bundle.getString("MainFrame.laSenderTableCaption.text")); // NOI18N
         paSenderTableCaption.add(laSenderTableCaption);
 
         senderTableIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/sender.png"))); // NOI18N
@@ -292,23 +291,23 @@ public class MainFrame extends javax.swing.JFrame {
         receiverSplitPane.setContinuousLayout(true);
         receiverSplitPane.setOneTouchExpandable(true);
 
-        laReceivingStatisticsCaption.setText(bundle1.getString("MainFrame.laReceivingStatisticsCaption.text_1")); // NOI18N
+        laReceivingStatisticsCaption.setText(bundle.getString("MainFrame.laReceivingStatisticsCaption.text")); // NOI18N
 
-        laReceivedCaption.setText(bundle1.getString("MainFrame.laReceivedCaption.text_1")); // NOI18N
+        laReceivedCaption.setText(bundle.getString("MainFrame.laReceivedCaption.text")); // NOI18N
 
-        laReceivingRateCaption.setText(bundle1.getString("MainFrame.laReceivingRateCaption.text_1")); // NOI18N
+        laReceivingRateCaption.setText(bundle.getString("MainFrame.laReceivingRateCaption.text")); // NOI18N
 
-        laLostPacketsCaption.setText(bundle1.getString("MainFrame.laLostPacketsCaption.text_1")); // NOI18N
+        laLostPacketsCaption.setText(bundle.getString("MainFrame.laLostPacketsCaption.text")); // NOI18N
 
-        laFaultyPacketsCaption.setText(bundle1.getString("MainFrame.laFaultyPacketsCaption.text_1")); // NOI18N
+        laFaultyPacketsCaption.setText(bundle.getString("MainFrame.laFaultyPacketsCaption.text")); // NOI18N
 
-        laReceived.setText(bundle1.getString("MainFrame.laReceived.text_1")); // NOI18N
+        laReceived.setText(bundle.getString("MainFrame.laReceived.text")); // NOI18N
 
-        laReceivingRate.setText(bundle1.getString("MainFrame.laReceivingRate.text_1")); // NOI18N
+        laReceivingRate.setText(bundle.getString("MainFrame.laReceivingRate.text")); // NOI18N
 
-        laLostPackets.setText(bundle1.getString("MainFrame.laLostPackets.text_1")); // NOI18N
+        laLostPackets.setText(bundle.getString("MainFrame.laLostPackets.text")); // NOI18N
 
-        laFaultyPackets.setText(bundle1.getString("MainFrame.laFaultyPackets.text_1")); // NOI18N
+        laFaultyPackets.setText(bundle.getString("MainFrame.laFaultyPackets.text")); // NOI18N
 
         javax.swing.GroupLayout paReceivingStatisticsLayout = new javax.swing.GroupLayout(paReceivingStatistics);
         paReceivingStatistics.setLayout(paReceivingStatisticsLayout);
@@ -321,19 +320,19 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(receivingStatisticsSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
                     .addGroup(paReceivingStatisticsLayout.createSequentialGroup()
                         .addComponent(laReceivedCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                         .addComponent(laReceived))
                     .addGroup(paReceivingStatisticsLayout.createSequentialGroup()
                         .addComponent(laReceivingRateCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                         .addComponent(laReceivingRate))
                     .addGroup(paReceivingStatisticsLayout.createSequentialGroup()
                         .addComponent(laLostPacketsCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                         .addComponent(laLostPackets))
                     .addGroup(paReceivingStatisticsLayout.createSequentialGroup()
                         .addComponent(laFaultyPacketsCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                         .addComponent(laFaultyPackets)))
                 .addContainerGap())
         );
@@ -370,15 +369,15 @@ public class MainFrame extends javax.swing.JFrame {
         paReceiverButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         buActivateReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/play_green.png"))); // NOI18N
-        buActivateReceiver.setText(bundle1.getString("MainFrame.buActivateReceiver.text_1")); // NOI18N
+        buActivateReceiver.setText(bundle.getString("MainFrame.buActivateReceiver.text")); // NOI18N
         paReceiverButtons.add(buActivateReceiver);
 
         buDeactivateReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/stop_red.png"))); // NOI18N
-        buDeactivateReceiver.setText(bundle1.getString("MainFrame.buDeactivateReceiver.text_1")); // NOI18N
+        buDeactivateReceiver.setText(bundle.getString("MainFrame.buDeactivateReceiver.text")); // NOI18N
         paReceiverButtons.add(buDeactivateReceiver);
 
         buAddReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add_green.png"))); // NOI18N
-        buAddReceiver.setText(bundle1.getString("MainFrame.buAddReceiver.text_1")); // NOI18N
+        buAddReceiver.setText(bundle.getString("MainFrame.buAddReceiver.text")); // NOI18N
         buAddReceiver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buAddReceiverActionPerformed(evt);
@@ -387,15 +386,15 @@ public class MainFrame extends javax.swing.JFrame {
         paReceiverButtons.add(buAddReceiver);
 
         buShowReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/preview.png"))); // NOI18N
-        buShowReceiver.setText(bundle1.getString("MainFrame.buShowReceiver.text_1")); // NOI18N
+        buShowReceiver.setText(bundle.getString("MainFrame.buShowReceiver.text")); // NOI18N
         paReceiverButtons.add(buShowReceiver);
 
         buEditReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
-        buEditReceiver.setText(bundle1.getString("MainFrame.buEditReceiver.text_1")); // NOI18N
+        buEditReceiver.setText(bundle.getString("MainFrame.buEditReceiver.text")); // NOI18N
         paReceiverButtons.add(buEditReceiver);
 
         buDeleteReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
-        buDeleteReceiver.setText(bundle1.getString("MainFrame.buDeleteReceiver.text_1")); // NOI18N
+        buDeleteReceiver.setText(bundle.getString("MainFrame.buDeleteReceiver.text")); // NOI18N
         paReceiverButtons.add(buDeleteReceiver);
 
         paReceiverTableOuter.add(paReceiverButtons, java.awt.BorderLayout.PAGE_END);
@@ -403,6 +402,7 @@ public class MainFrame extends javax.swing.JFrame {
         paReceiverTableInner.setLayout(new java.awt.BorderLayout());
 
         receiverTable.setGridColor(javax.swing.UIManager.getDefaults().getColor("control"));
+        receiverTable.setIntercellSpacing(new java.awt.Dimension(0, 1));
         jScrollPane1.setViewportView(receiverTable);
 
         paReceiverTableInner.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -411,7 +411,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         paReceiverTableCaption.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        laReceiverTableCaption.setText(bundle1.getString("MainFrame.laReceiverTableCaption.text_1")); // NOI18N
+        laReceiverTableCaption.setText(bundle.getString("MainFrame.laReceiverTableCaption.text")); // NOI18N
         paReceiverTableCaption.add(laReceiverTableCaption);
 
         laReceiverTableIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/receiver.png"))); // NOI18N
@@ -423,128 +423,128 @@ public class MainFrame extends javax.swing.JFrame {
 
         mainSplitPane.setRightComponent(receiverSplitPane);
 
-        jMenu1.setText(bundle1.getString("MainFrame.jMenu1.text_1")); // NOI18N
+        menuFile.setText(bundle.getString("MainFrame.menuFile.text")); // NOI18N
 
-        jMenuItem3.setText(bundle1.getString("MainFrame.jMenuItem3.text_1")); // NOI18N
-        jMenu1.add(jMenuItem3);
+        miOpenProfile.setText(bundle.getString("MainFrame.miOpenProfile.text")); // NOI18N
+        menuFile.add(miOpenProfile);
 
-        jMenuItem5.setText(bundle1.getString("MainFrame.jMenuItem5.text_1")); // NOI18N
-        jMenu1.add(jMenuItem5);
+        miSaveProfile.setText(bundle.getString("MainFrame.miSaveProfile.text")); // NOI18N
+        menuFile.add(miSaveProfile);
 
-        jMenuItem4.setText(bundle1.getString("MainFrame.jMenuItem4.text_1")); // NOI18N
-        jMenu1.add(jMenuItem4);
-        jMenu1.add(jSeparator1);
+        miSaveProfileAs.setText(bundle.getString("MainFrame.miSaveProfileAs.text")); // NOI18N
+        menuFile.add(miSaveProfileAs);
+        menuFile.add(jSeparator1);
 
-        jMenuItem6.setText(bundle1.getString("MainFrame.jMenuItem6.text_1")); // NOI18N
-        jMenu1.add(jMenuItem6);
-        jMenu1.add(jSeparator2);
+        miPreferences.setText(bundle.getString("MainFrame.miPreferences.text")); // NOI18N
+        menuFile.add(miPreferences);
+        menuFile.add(jSeparator2);
 
-        jMenuItem1.setText(bundle1.getString("MainFrame.jMenuItem1.text_1")); // NOI18N
-        jMenu1.add(jMenuItem1);
+        miExit.setText(bundle.getString("MainFrame.miExit.text")); // NOI18N
+        menuFile.add(miExit);
 
-        menuBar.add(jMenu1);
+        menuBar.add(menuFile);
 
-        jMenu3.setText(bundle1.getString("MainFrame.jMenu3.text_1")); // NOI18N
+        menuSender.setText(bundle.getString("MainFrame.menuSender.text")); // NOI18N
 
-        jCheckBoxMenuItem1.setSelected(true);
-        jCheckBoxMenuItem1.setText(bundle1.getString("MainFrame.jCheckBoxMenuItem1.text_1")); // NOI18N
-        jMenu3.add(jCheckBoxMenuItem1);
+        miShowSenders.setSelected(true);
+        miShowSenders.setText(bundle.getString("MainFrame.miShowSenders.text")); // NOI18N
+        menuSender.add(miShowSenders);
 
-        jCheckBoxMenuItem2.setSelected(true);
-        jCheckBoxMenuItem2.setText(bundle1.getString("MainFrame.jCheckBoxMenuItem2.text_1")); // NOI18N
-        jMenu3.add(jCheckBoxMenuItem2);
-        jMenu3.add(jSeparator3);
+        miShowSendingStatistics.setSelected(true);
+        miShowSendingStatistics.setText(bundle.getString("MainFrame.miShowSendingStatistics.text")); // NOI18N
+        menuSender.add(miShowSendingStatistics);
+        menuSender.add(jSeparator3);
 
-        jMenuItem8.setText(bundle1.getString("MainFrame.jMenuItem8.text_1")); // NOI18N
-        jMenu3.add(jMenuItem8);
+        miSenderActivate.setText(bundle.getString("MainFrame.miSenderActivate.text")); // NOI18N
+        menuSender.add(miSenderActivate);
 
-        jMenuItem7.setText(bundle1.getString("MainFrame.jMenuItem7.text_1")); // NOI18N
-        jMenu3.add(jMenuItem7);
-        jMenu3.add(jSeparator9);
+        miSenderDeactivate.setText(bundle.getString("MainFrame.miSenderDeactivate.text")); // NOI18N
+        menuSender.add(miSenderDeactivate);
+        menuSender.add(jSeparator9);
 
-        jMenuItem27.setText(bundle1.getString("MainFrame.jMenuItem27.text_1")); // NOI18N
-        jMenu3.add(jMenuItem27);
+        miSenderAdd.setText(bundle.getString("MainFrame.miSenderAdd.text")); // NOI18N
+        menuSender.add(miSenderAdd);
 
-        jMenuItem17.setText(bundle1.getString("MainFrame.jMenuItem17.text_1")); // NOI18N
-        jMenu3.add(jMenuItem17);
+        miSenderEdit.setText(bundle.getString("MainFrame.miSenderEdit.text")); // NOI18N
+        menuSender.add(miSenderEdit);
 
-        jMenuItem9.setText(bundle1.getString("MainFrame.jMenuItem9.text_1")); // NOI18N
-        jMenu3.add(jMenuItem9);
+        miSenderDelete.setText(bundle.getString("MainFrame.miSenderDelete.text")); // NOI18N
+        menuSender.add(miSenderDelete);
 
-        jMenuItem14.setText(bundle1.getString("MainFrame.jMenuItem14.text_1")); // NOI18N
-        jMenu3.add(jMenuItem14);
-        jMenu3.add(jSeparator4);
+        miSenderDetails.setText(bundle.getString("MainFrame.miSenderDetails.text")); // NOI18N
+        menuSender.add(miSenderDetails);
+        menuSender.add(jSeparator4);
 
-        jMenuItem10.setText(bundle1.getString("MainFrame.jMenuItem10.text_1")); // NOI18N
-        jMenu3.add(jMenuItem10);
-        jMenu3.add(jSeparator5);
+        miSenderSelectAll.setText(bundle.getString("MainFrame.miSenderSelectAll.text")); // NOI18N
+        menuSender.add(miSenderSelectAll);
+        menuSender.add(jSeparator5);
 
-        jMenuItem11.setText(bundle1.getString("MainFrame.jMenuItem11.text_1")); // NOI18N
-        jMenu3.add(jMenuItem11);
+        miSenderActivateAll.setText(bundle.getString("MainFrame.miSenderActivateAll.text")); // NOI18N
+        menuSender.add(miSenderActivateAll);
 
-        jMenuItem12.setText(bundle1.getString("MainFrame.jMenuItem12.text_1")); // NOI18N
-        jMenu3.add(jMenuItem12);
+        miSenderDeactivateAll.setText(bundle.getString("MainFrame.miSenderDeactivateAll.text")); // NOI18N
+        menuSender.add(miSenderDeactivateAll);
 
-        jMenuItem13.setText(bundle1.getString("MainFrame.jMenuItem13.text_1")); // NOI18N
-        jMenu3.add(jMenuItem13);
+        miSenderDeleteAll.setText(bundle.getString("MainFrame.miSenderDeleteAll.text")); // NOI18N
+        menuSender.add(miSenderDeleteAll);
 
-        menuBar.add(jMenu3);
+        menuBar.add(menuSender);
 
-        jMenu4.setText(bundle1.getString("MainFrame.jMenu4.text_1")); // NOI18N
+        menuReceiver.setText(bundle.getString("MainFrame.menuReceiver.text")); // NOI18N
 
-        jCheckBoxMenuItem3.setSelected(true);
-        jCheckBoxMenuItem3.setText(bundle1.getString("MainFrame.jCheckBoxMenuItem3.text_1")); // NOI18N
-        jMenu4.add(jCheckBoxMenuItem3);
+        miShowReceivers.setSelected(true);
+        miShowReceivers.setText(bundle.getString("MainFrame.miShowReceivers.text")); // NOI18N
+        menuReceiver.add(miShowReceivers);
 
-        jCheckBoxMenuItem4.setSelected(true);
-        jCheckBoxMenuItem4.setText(bundle1.getString("MainFrame.jCheckBoxMenuItem4.text_1")); // NOI18N
-        jMenu4.add(jCheckBoxMenuItem4);
-        jMenu4.add(jSeparator6);
+        miShowReceivingStatistics.setSelected(true);
+        miShowReceivingStatistics.setText(bundle.getString("MainFrame.miShowReceivingStatistics.text")); // NOI18N
+        menuReceiver.add(miShowReceivingStatistics);
+        menuReceiver.add(jSeparator6);
 
-        jMenuItem16.setText(bundle1.getString("MainFrame.jMenuItem16.text_1")); // NOI18N
-        jMenu4.add(jMenuItem16);
+        miReceiverActivate.setText(bundle.getString("MainFrame.miReceiverActivate.text")); // NOI18N
+        menuReceiver.add(miReceiverActivate);
 
-        jMenuItem19.setText(bundle1.getString("MainFrame.jMenuItem19.text_1")); // NOI18N
-        jMenu4.add(jMenuItem19);
-        jMenu4.add(jSeparator10);
+        miReceiverDeactivate.setText(bundle.getString("MainFrame.miReceiverDeactivate.text")); // NOI18N
+        menuReceiver.add(miReceiverDeactivate);
+        menuReceiver.add(jSeparator10);
 
-        jMenuItem26.setText(bundle1.getString("MainFrame.jMenuItem26.text_1")); // NOI18N
-        jMenu4.add(jMenuItem26);
+        miReceiverAdd.setText(bundle.getString("MainFrame.miReceiverAdd.text")); // NOI18N
+        menuReceiver.add(miReceiverAdd);
 
-        jMenuItem25.setText(bundle1.getString("MainFrame.jMenuItem25.text_1")); // NOI18N
-        jMenu4.add(jMenuItem25);
+        miReceiverEdit.setText(bundle.getString("MainFrame.miReceiverEdit.text")); // NOI18N
+        menuReceiver.add(miReceiverEdit);
 
-        jMenuItem20.setText(bundle1.getString("MainFrame.jMenuItem20.text_1")); // NOI18N
-        jMenu4.add(jMenuItem20);
+        miReceiverDelete.setText(bundle.getString("MainFrame.miReceiverDelete.text")); // NOI18N
+        menuReceiver.add(miReceiverDelete);
 
-        jMenuItem23.setText(bundle1.getString("MainFrame.jMenuItem23.text_1")); // NOI18N
-        jMenu4.add(jMenuItem23);
-        jMenu4.add(jSeparator7);
+        mirReceiverDetails.setText(bundle.getString("MainFrame.mirReceiverDetails.text")); // NOI18N
+        menuReceiver.add(mirReceiverDetails);
+        menuReceiver.add(jSeparator7);
 
-        jMenuItem24.setText(bundle1.getString("MainFrame.jMenuItem24.text_1")); // NOI18N
-        jMenu4.add(jMenuItem24);
-        jMenu4.add(jSeparator8);
+        miReceiverSelectAll.setText(bundle.getString("MainFrame.miReceiverSelectAll.text")); // NOI18N
+        menuReceiver.add(miReceiverSelectAll);
+        menuReceiver.add(jSeparator8);
 
-        jMenuItem22.setText(bundle1.getString("MainFrame.jMenuItem22.text_1")); // NOI18N
-        jMenu4.add(jMenuItem22);
+        miReceiverActivateAll.setText(bundle.getString("MainFrame.miReceiverActivateAll.text")); // NOI18N
+        menuReceiver.add(miReceiverActivateAll);
 
-        jMenuItem21.setText(bundle1.getString("MainFrame.jMenuItem21.text_1")); // NOI18N
-        jMenu4.add(jMenuItem21);
+        miReceiverDeactivateAll.setText(bundle.getString("MainFrame.miReceiverDeactivateAll.text")); // NOI18N
+        menuReceiver.add(miReceiverDeactivateAll);
 
-        jMenuItem18.setText(bundle1.getString("MainFrame.jMenuItem18.text_1")); // NOI18N
-        jMenu4.add(jMenuItem18);
+        miReceiverDeleteAll.setText(bundle.getString("MainFrame.miReceiverDeleteAll.text")); // NOI18N
+        menuReceiver.add(miReceiverDeleteAll);
 
-        menuBar.add(jMenu4);
+        menuBar.add(menuReceiver);
 
-        jMenu2.setText(bundle1.getString("MainFrame.jMenu2.text_1")); // NOI18N
+        menuHelp.setText(bundle.getString("MainFrame.menuHelp.text")); // NOI18N
 
-        jMenuItem2.setText(bundle1.getString("MainFrame.jMenuItem2.text_1")); // NOI18N
-        jMenu2.add(jMenuItem2);
+        miAbout.setText(bundle.getString("MainFrame.miAbout.text")); // NOI18N
+        menuHelp.add(miAbout);
 
-        jMenuItem15.setText(bundle1.getString("MainFrame.jMenuItem15.text_1")); // NOI18N
-        jMenu2.add(jMenuItem15);
+        miHelp.setText(bundle.getString("MainFrame.miHelp.text")); // NOI18N
+        menuHelp.add(miHelp);
 
-        menuBar.add(jMenu2);
+        menuBar.add(menuHelp);
 
         setJMenuBar(menuBar);
 
@@ -627,41 +627,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton buEditSender;
     private javax.swing.JButton buShowReceiver;
     private javax.swing.JButton buShowSender;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem3;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem4;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem15;
-    private javax.swing.JMenuItem jMenuItem16;
-    private javax.swing.JMenuItem jMenuItem17;
-    private javax.swing.JMenuItem jMenuItem18;
-    private javax.swing.JMenuItem jMenuItem19;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem20;
-    private javax.swing.JMenuItem jMenuItem21;
-    private javax.swing.JMenuItem jMenuItem22;
-    private javax.swing.JMenuItem jMenuItem23;
-    private javax.swing.JMenuItem jMenuItem24;
-    private javax.swing.JMenuItem jMenuItem25;
-    private javax.swing.JMenuItem jMenuItem26;
-    private javax.swing.JMenuItem jMenuItem27;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
@@ -693,6 +658,41 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel laSentCaption;
     private javax.swing.JSplitPane mainSplitPane;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenu menuFile;
+    private javax.swing.JMenu menuHelp;
+    private javax.swing.JMenu menuReceiver;
+    private javax.swing.JMenu menuSender;
+    private javax.swing.JMenuItem miAbout;
+    private javax.swing.JMenuItem miExit;
+    private javax.swing.JMenuItem miHelp;
+    private javax.swing.JMenuItem miOpenProfile;
+    private javax.swing.JMenuItem miPreferences;
+    private javax.swing.JMenuItem miReceiverActivate;
+    private javax.swing.JMenuItem miReceiverActivateAll;
+    private javax.swing.JMenuItem miReceiverAdd;
+    private javax.swing.JMenuItem miReceiverDeactivate;
+    private javax.swing.JMenuItem miReceiverDeactivateAll;
+    private javax.swing.JMenuItem miReceiverDelete;
+    private javax.swing.JMenuItem miReceiverDeleteAll;
+    private javax.swing.JMenuItem miReceiverEdit;
+    private javax.swing.JMenuItem miReceiverSelectAll;
+    private javax.swing.JMenuItem miSaveProfile;
+    private javax.swing.JMenuItem miSaveProfileAs;
+    private javax.swing.JMenuItem miSenderActivate;
+    private javax.swing.JMenuItem miSenderActivateAll;
+    private javax.swing.JMenuItem miSenderAdd;
+    private javax.swing.JMenuItem miSenderDeactivate;
+    private javax.swing.JMenuItem miSenderDeactivateAll;
+    private javax.swing.JMenuItem miSenderDelete;
+    private javax.swing.JMenuItem miSenderDeleteAll;
+    private javax.swing.JMenuItem miSenderDetails;
+    private javax.swing.JMenuItem miSenderEdit;
+    private javax.swing.JMenuItem miSenderSelectAll;
+    private javax.swing.JCheckBoxMenuItem miShowReceivers;
+    private javax.swing.JCheckBoxMenuItem miShowReceivingStatistics;
+    private javax.swing.JCheckBoxMenuItem miShowSenders;
+    private javax.swing.JCheckBoxMenuItem miShowSendingStatistics;
+    private javax.swing.JMenuItem mirReceiverDetails;
     private javax.swing.JPanel paReceiverButtons;
     private javax.swing.JPanel paReceiverTableCaption;
     private javax.swing.JPanel paReceiverTableInner;
