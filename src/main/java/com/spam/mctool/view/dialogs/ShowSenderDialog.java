@@ -116,7 +116,8 @@ public class ShowSenderDialog extends javax.swing.JDialog {
         SentPPSData.setText(bundle.getString("ShowSenderDialog.SentPPSData.text")); // NOI18N
 
         CloseButton.setText(bundle.getString("ShowSenderDialog.CloseButton.text")); // NOI18N
-        CloseButton.setActionCommand(bundle.getString("ShowSenderDialog.CloseButton.actionCommand")); // NOI18N
+        java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("internationlization/Bundle"); // NOI18N
+        CloseButton.setActionCommand(bundle1.getString("ShowSenderDialog.CloseButton.actionCommand")); // NOI18N
         CloseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CloseButtonActionPerformed(evt);
@@ -156,9 +157,9 @@ public class ShowSenderDialog extends javax.swing.JDialog {
                                 .addComponent(InterfaceData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(SenderIDData))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(105, 105, 105)
+                        .addGap(114, 114, 114)
                         .addComponent(CloseButton)))
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,9 +204,9 @@ public class ShowSenderDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SentPPSLabel)
                     .addComponent(SentPPSData))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CloseButton)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
