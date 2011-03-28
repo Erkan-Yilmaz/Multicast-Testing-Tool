@@ -10,7 +10,7 @@ import com.thoughtworks.xstream.XStream;
 
 public class ModelTest implements ReceiverDataChangeListener, SenderDataChangeListener {
 	
-	public static void main(String... args) {
+	public static void main(String... args) throws InterruptedException {
 		SenderManager sm = new SenderPool();
 		ReceiverManager rm = new ReceiverPool();
 		ModelTest mt = new ModelTest();
@@ -30,6 +30,7 @@ public class ModelTest implements ReceiverDataChangeListener, SenderDataChangeLi
 			sp.put("group", "224.0.0.1");
 			s = sm.create(sp);
 			s.addSenderDataChangeListener(mt);
+			s.activate();
 		}
 		
 		Map<String, String> rp = new HashMap<String, String>();
@@ -37,16 +38,17 @@ public class ModelTest implements ReceiverDataChangeListener, SenderDataChangeLi
 		rp.put("group", "224.0.0.1");
 		rp.put("port", "8888");
 		rp.put("abeh", "default");
+		ReceiverGroup r=null;
 		for(int i=0; i<1; i++) {
 			rp.put("group", "224.0.0.1");
-			ReceiverGroup r = rm.create(rp);
+			r = rm.create(rp);
 			r.addReceiverDataChangeListener(mt);
+			r.activate();
 		}
 		
-		XStream xs = new XStream();
-		xs.registerConverter(new SenderPoolXmlConverter());
-		String xml = xs.toXML(sm);
-		System.out.println(xml);
+		Thread.sleep(5000);
+		s.deactivate();
+		
 	}
 
 	public void dataChanged(ReceiverDataChangedEvent e) {

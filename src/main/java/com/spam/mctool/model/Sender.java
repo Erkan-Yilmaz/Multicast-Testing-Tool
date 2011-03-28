@@ -83,8 +83,12 @@ public class Sender extends MulticastStream {
 	@Override
 	public void deactivate() {
 		sf.cancel(true);
+		asf.cancel(true);
 		this.socket.close();
 		this.state = State.INACTIVE;
+		// clean up statistics
+		analyzer.counter = -1;
+		analyzer.run();
 	}
 	
 	/**
@@ -96,7 +100,7 @@ public class Sender extends MulticastStream {
 			DatagramPacket dp = new DatagramPacket(p, packetSize, this.getGroup(), this.getPort());
 			this.socket.send(dp);
 			// no synchronization needed because usage of java concurrency api
-			nowSent = System.nanoTime(); //TODO changed in windoof
+			nowSent = System.nanoTime();
 			this.sentTimes.enqueue((int)(nowSent-lastSent));
 			lastSent = nowSent;
 		} catch (Exception e) {
@@ -121,12 +125,13 @@ public class Sender extends MulticastStream {
 			p.setSequenceNumber(++sentPacketCount);
 			p.setSenderMeasuredPacketRate(avgPPS);
 		} catch(Exception e) {
-			System.out.println(avgPPS);
 			System.out.println(e);
+			exceptions.put(System.currentTimeMillis(), e);
 		}
 		return p;
 	}
 	
+	/* old version
 	// this is uses to analyze the queued sending intervals
 	private class AnalyzeSender implements Runnable {
 		
@@ -158,6 +163,40 @@ public class Sender extends MulticastStream {
 					sentTimes.split();
 				}
 			}
+		}
+	}
+	*/
+	
+	// this is uses to analyze the queued sending intervals
+	private class AnalyzeSender implements Runnable {
+		
+		transient private LinkedSplitQueue<Integer> data;
+		transient private long counter=-1;
+
+		public void run() {
+			counter++;
+			if(counter%analyzingBehaviour.getDiv() == 0) {
+				// analyze if enough sending intervals are buffered
+				if(sentTimes.size()>statsStepWidth) {
+					data = sentTimes.split();
+					// if stats are to be calced new
+					int div = (int) Math.ceil(data.size()/statsStepWidth)-1;
+					double avg = 0;
+					data.setIteratorStepSize(statsStepWidth);
+					for(int s : data) {
+						avg += Math.round(s/1.0E6);
+					}
+					avg /= div;
+					avg = 1.0E3 / Math.round(avg);
+					avgPPS = Math.round(avg);
+					minPPS = Math.min(minPPS, avgPPS);
+					maxPPS = Math.max(maxPPS, avgPPS);
+				}
+			} else {
+				// clear the buffer
+				sentTimes.split();
+			}
+			fireSenderDataChangedEvent();
 		}
 	}
 	
@@ -326,7 +365,7 @@ public class Sender extends MulticastStream {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("--- Sender Stats for: "+senderId+" ---\n");
-		sb.append("C.R.|P.Size|P.Sent|P.Type: "+getSenderConfiguredPacketRate()+"|"+getPacketSize()+"|"+getpType().getDisplayName()+"\n");
+		sb.append("C.R.|P.Size|P.Sent|P.Type: "+getSenderConfiguredPacketRate()+"|"+getPacketSize()+"|"+getSentPacketCount()+"|"+getpType().getDisplayName()+"\n");
 		sb.append("PPS (MIN|AVG|MAX): "+getMinPPS()+"|"+getAvgPPS()+"|"+getMaxPPS()+"\n");
 		sb.append("----------------------------------------\n");
 		return sb.toString();
