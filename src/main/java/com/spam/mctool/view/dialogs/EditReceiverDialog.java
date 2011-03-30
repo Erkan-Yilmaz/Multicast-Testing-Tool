@@ -225,13 +225,8 @@ public class EditReceiverDialog extends javax.swing.JDialog {
             for (InterfaceAddress interfaceAddress : networkInterface.getInterfaceAddresses()) {
                 InetAddress address = interfaceAddress.getAddress();
 
-                Pattern p = Pattern.compile("(([1-9][0-9]{0,2}|0)\\.([1-9][0-9]{0,2}|0)\\.([1-9][0-9]{0,2}|0)\\.([1-9][0-9]{0,2}|0))");
-		Matcher m = p.matcher(address.getHostAddress());
-
-                if(m.matches()){
-                    this.InterfaceCombo.addItem(networkInterface.getDisplayName() + " - " + address.getHostAddress());
-                    this.interfaceMap.put(networkInterface.getDisplayName() + " - " + address.getHostAddress(), address.getHostAddress());
-                }
+                this.InterfaceCombo.addItem(networkInterface.getDisplayName() + " - " + address.getHostAddress());
+                this.interfaceMap.put(networkInterface.getDisplayName() + " - " + address.getHostAddress(), address.getHostAddress());
             }
         }
     }
