@@ -84,6 +84,11 @@ public class ReceiverGroup extends MulticastStream {
 		asf.cancel(false);
 		state = State.INACTIVE;
 		socket.close();
+		// clean up receiver data
+		for(Receiver r : receivers.values()) {
+			if(r != null) r.calcNewStatistics();
+		}
+		analyzer.run();
 	}
 
 	/**
