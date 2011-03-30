@@ -11,7 +11,9 @@
 
 package com.spam.mctool.view.dialogs;
 
+import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
 import com.spam.mctool.model.Receiver;
+import com.spam.mctool.model.ReceiverDataChangeListener;
 import com.spam.mctool.model.ReceiverGroup;
 import com.spam.mctool.view.main.MainFrame;
 import javax.swing.JFrame;
@@ -20,7 +22,7 @@ import javax.swing.JFrame;
  *
  * @author Tobias Schoknecht (Tobias.Schoknecht@de.ibm.com)
  */
-public class ShowReceiverDialog extends javax.swing.JDialog {
+public class ShowReceiverDialog extends javax.swing.JDialog implements ReceiverDataChangeListener{
 
     private static final long serialVersionUID = 1L;
     private Receiver receiver;
@@ -42,7 +44,7 @@ public class ShowReceiverDialog extends javax.swing.JDialog {
         this(parent, modal);
         this.receiver = receiver;
         this.receivergroup = receivergroup;
-        initData();
+        loadData();
     }
 
     /** This method is called from within the constructor to
@@ -301,7 +303,7 @@ public class ShowReceiverDialog extends javax.swing.JDialog {
         });
     }
 
-    private void initData(){
+    private void loadData(){
         this.SenderIDData.setText(String.valueOf(this.receiver.getSenderId()));
         this.PacketStyleData.setText(this.receiver.getPacketType().toString());
         this.PacketSizeData.setText(String.valueOf(this.receiver.getPacketSize()));
@@ -319,6 +321,10 @@ public class ShowReceiverDialog extends javax.swing.JDialog {
         //ActivationTimeData;
         
         
+    }
+    
+    public void dataChanged(ReceiverDataChangedEvent e) {
+        loadData();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
