@@ -52,7 +52,7 @@ class ReceiverGroupRow extends ReceiverTableRow {
         return receiverRows.size();
     }
 
-    Iterable<ReceiverRow> getReceiverRows() {
+    List<ReceiverRow> getReceiverRows() {
         return receiverRows;
     }
 
