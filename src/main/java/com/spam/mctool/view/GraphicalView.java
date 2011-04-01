@@ -13,6 +13,7 @@ import com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
 import com.spam.mctool.intermediates.SenderAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.SenderDataChangedEvent;
+import com.spam.mctool.model.MulticastStream;
 import com.spam.mctool.model.ReceiverAddedOrRemovedListener;
 import com.spam.mctool.model.ReceiverDataChangeListener;
 import com.spam.mctool.model.ReceiverGroup;
@@ -20,6 +21,7 @@ import com.spam.mctool.model.Sender;
 import com.spam.mctool.model.SenderAddedOrRemovedListener;
 import com.spam.mctool.model.SenderDataChangeListener;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.UIManager;
 
@@ -40,20 +42,36 @@ public class GraphicalView implements MctoolView,
 
 	// receiver oder receivergroup???
         public void receiverGroupAdded(ReceiverAddedOrRemovedEvent e) {
-            mainFrame.receiverGroupAdded(e);
+            try {
+                mainFrame.receiverGroupAdded(e);
+            } catch (RuntimeException ex) {
+                ex.printStackTrace();
+            }
 	}
 
         // receiverGroupRemoved???
 	public void receiverGroupRemoved(ReceiverAddedOrRemovedEvent e) {
-            mainFrame.receiverGroupRemoved(e);
+            try {
+                mainFrame.receiverGroupRemoved(e);
+            } catch (RuntimeException ex) {
+                ex.printStackTrace();
+            }
 	}
 
 	public void senderAdded(SenderAddedOrRemovedEvent e) {
-            mainFrame.senderAdded(e);
+            try {
+                mainFrame.senderAdded(e);
+            } catch (RuntimeException ex) {
+                ex.printStackTrace();
+            }
 	}
 
 	public void senderRemoved(SenderAddedOrRemovedEvent e) {
-            mainFrame.senderRemoved(e);
+            try {
+                mainFrame.senderRemoved(e);
+            } catch (RuntimeException ex) {
+                ex.printStackTrace();
+            }
 	}
 
 	public void profileChanged(ProfileChangeEvent e) {
@@ -63,12 +81,20 @@ public class GraphicalView implements MctoolView,
 
         // TODO nobody calls this method so far
 	public void dataChanged(ReceiverDataChangedEvent e) {
-            mainFrame.dataChanged(e);
+            try {
+                mainFrame.dataChanged(e);
+            } catch (RuntimeException ex) {
+                ex.printStackTrace();
+            }
 	}
 
         // TODO nobody calls this method so far
 	public void dataChanged(SenderDataChangedEvent e) {
-            mainFrame.dataChanged(e);
+            try {
+                mainFrame.dataChanged(e);
+            } catch (RuntimeException ex) {
+                ex.printStackTrace();
+            }
 	}
 
 	/**
@@ -133,6 +159,10 @@ public class GraphicalView implements MctoolView,
         ReceiverGroup r = this.streamManager.addReceiverGroup(receiverMap);
         r.addReceiverDataChangeListener(this);
         if(activate) r.activate();
+    }
+
+    public void removeStreams(Set<MulticastStream> senders) {
+        this.streamManager.removeStreams(senders);
     }
 
 }

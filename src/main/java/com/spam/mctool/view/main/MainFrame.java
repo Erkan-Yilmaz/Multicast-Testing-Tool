@@ -10,12 +10,16 @@ import com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
 import com.spam.mctool.intermediates.SenderAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.SenderDataChangedEvent;
+import com.spam.mctool.model.MulticastStream;
 import com.spam.mctool.model.Sender;
 import com.spam.mctool.view.GraphicalView;
 import com.spam.mctool.view.dialogs.EditReceiverDialog;
 import com.spam.mctool.view.dialogs.EditSenderDialog;
+import com.spam.mctool.view.dialogs.ShowSenderDialog;
 import com.spam.mctool.view.main.receivertable.ReceiverTableModel;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -143,7 +147,8 @@ public class MainFrame extends javax.swing.JFrame {
         miHelp = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle(null);
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
+        setTitle(bundle.getString("MainFrame.title")); // NOI18N
 
         mainSplitPane.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         mainSplitPane.setDividerLocation(267);
@@ -158,7 +163,6 @@ public class MainFrame extends javax.swing.JFrame {
         senderSplitPane.setContinuousLayout(true);
         senderSplitPane.setOneTouchExpandable(true);
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
         laSendingStatistics.setText(bundle.getString("MainFrame.laSendingStatistics.text")); // NOI18N
 
         laSentCaption.setText(bundle.getString("MainFrame.laSentCaption.text")); // NOI18N
@@ -250,10 +254,20 @@ public class MainFrame extends javax.swing.JFrame {
 
         buEditSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
         buEditSender.setText(bundle.getString("MainFrame.buEditSender.text")); // NOI18N
+        buEditSender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buEditSenderActionPerformed(evt);
+            }
+        });
         paSenderButtons.add(buEditSender);
 
         buDeleteSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
         buDeleteSender.setText(bundle.getString("MainFrame.buDeleteSender.text")); // NOI18N
+        buDeleteSender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buDeleteSenderActionPerformed(evt);
+            }
+        });
         paSenderButtons.add(buDeleteSender);
 
         paSenderTableOuter.add(paSenderButtons, java.awt.BorderLayout.SOUTH);
@@ -574,8 +588,13 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buActivateSenderActionPerformed
 
+    /**
+     * assumption: there is only one row selected!
+     * @param evt
+     */
     private void buShowSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buShowSenderActionPerformed
-        //
+        Sender s = senderTable.getSelectedSenders().get(0);
+        new ShowSenderDialog(this, true, s).setVisible(true);
     }//GEN-LAST:event_buShowSenderActionPerformed
 
     private void buAddSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buAddSenderActionPerformed
@@ -600,6 +619,20 @@ public class MainFrame extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_senderTableMouseClicked
+
+    /**
+     * assumption: there is only one sender selected!
+     * @param evt
+     */
+    private void buEditSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buEditSenderActionPerformed
+        Sender s = senderTable.getSelectedSenders().get(0);
+        new EditSenderDialog(this, true, s).setVisible(true);
+    }//GEN-LAST:event_buEditSenderActionPerformed
+
+    private void buDeleteSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buDeleteSenderActionPerformed
+        Set<MulticastStream> senders = new HashSet<MulticastStream>(senderTable.getSelectedSenders());
+        this.view.removeStreams(senders);
+    }//GEN-LAST:event_buDeleteSenderActionPerformed
 
     /**
     * @param args the command line arguments
