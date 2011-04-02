@@ -3,6 +3,7 @@
  */
 package com.spam.mctool.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ import com.spam.mctool.model.ReceiverPool;
 import com.spam.mctool.model.Sender;
 import com.spam.mctool.model.SenderAddedOrRemovedListener;
 import com.spam.mctool.model.SenderPool;
+import com.spam.mctool.view.CommandLineView;
 import com.spam.mctool.view.GraphicalView;
 import com.spam.mctool.view.MctoolView;
 
@@ -46,9 +48,6 @@ public class Controller implements ProfileManager, StreamManager {
 		this.receiverManager = new ReceiverPool();
 		//Create the vies
 		viewers = new ArrayList<MctoolView>();
-		viewers.add(new GraphicalView()); // Added by TST. uncomment to
-                                                    // display the gui upon
-                                                    // instantiation
 	}
 	
 	private void profileChanged(){
@@ -66,14 +65,80 @@ public class Controller implements ProfileManager, StreamManager {
 	}
 	
 	public void init(String[] args) {
-                //Add views here
-
-                //Init all views
-                Iterator<MctoolView> it = viewers.iterator();
-                while(it.hasNext()){
-                        MctoolView curView = it.next();
-                        curView.init(this);
-                }
+			//TODO load recent profiles
+			//Gui enabled by default
+			boolean enableGui = true;
+			//Cli disabled by default
+			boolean enableCli = false;
+			//Start all loaded senders and receivers later?
+			boolean enableStartAll = false;
+			//The profile to be loaded
+			File desiredProfile;
+            //iterate over all args
+			for(int i = 0; i<args.length; ++i){
+				//CLI desired?
+				if(args[i].compareToIgnoreCase("-cli") == 0){
+					enableCli = true;
+				}
+				//Disable the gui?
+				else if(args[i].compareToIgnoreCase("-nogui") == 0){
+					enableGui = false;
+				}
+				//load profile?
+				else if(args[i].compareToIgnoreCase("-profile") == 0){
+					//read the next argument if available
+					if((i+1) >= args.length){
+						//TODO: Error Message, no profile is defined
+					}
+					else{
+						if(args[i].charAt(0) == '-'){
+							//TODO this really can't be a name or path
+						}
+						else if(args[i].contains(":/\\")){
+							//This is a path, load it
+							desiredProfile = new File("args[i]");
+							//TODO error
+							++i;
+						}
+						else{
+							//This could be a name of a recently used profile
+							//Search for it
+							Iterator<Profile> it = this.recentProfiles.iterator();
+							while(it.hasNext()){
+								it.next();
+								String name = ((Profile)it).getName();
+								//found the name?
+								if( name.compareTo(args[i+1]) != 0){
+									desiredProfile = ((Profile)it).getPath();
+									break;
+								}
+							}
+							++i;
+						}
+					}
+				}
+				//start all receivers and sender
+				else if(args[i].compareToIgnoreCase("-startall") == 0){
+					enableStartAll = true;
+				}
+				
+			}
+			//Add views here
+			
+			//enable the Gui
+			if(enableGui){
+				viewers.add(new GraphicalView()); 
+			}
+			//enable the cli/logger
+			if(enableCli){
+				//viewers.add(new CommandLineView());
+			}
+            //Init all views
+            Iterator<MctoolView> it = viewers.iterator();
+            while(it.hasNext()){
+                    MctoolView curView = it.next();
+                    curView.init(this);
+            }
 	}
 
 	public void setCurrentProfile(Profile currentProfile) {
