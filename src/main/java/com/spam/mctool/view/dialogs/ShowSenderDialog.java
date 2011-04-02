@@ -11,7 +11,9 @@
 
 package com.spam.mctool.view.dialogs;
 
+import com.spam.mctool.intermediates.SenderDataChangedEvent;
 import com.spam.mctool.model.Sender;
+import com.spam.mctool.model.SenderDataChangeListener;
 import com.spam.mctool.view.main.MainFrame;
 import javax.swing.JFrame;
 
@@ -19,7 +21,7 @@ import javax.swing.JFrame;
  *
  * @author Tobias Schoknecht (Tobias.Schoknecht@de.ibm.com)
  */
-public class ShowSenderDialog extends javax.swing.JDialog {
+public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataChangeListener{
 
     private static final long serialVersionUID = 1L;
     private Sender sender;
@@ -39,7 +41,7 @@ public class ShowSenderDialog extends javax.swing.JDialog {
     public ShowSenderDialog(MainFrame parent, boolean modal, Sender sender) {
         this(parent, modal);
         this.sender = sender;
-        initData();
+        loadData();
     }
 
     /** This method is called from within the constructor to
@@ -233,7 +235,7 @@ public class ShowSenderDialog extends javax.swing.JDialog {
         });
     }
 
-    private void initData() {
+    private void loadData() {
         this.SenderIDData.setText(String.valueOf(this.sender.getSenderId()));
         //interface
         this.GroupData.setText(this.sender.getGroup().getHostAddress());
@@ -245,7 +247,11 @@ public class ShowSenderDialog extends javax.swing.JDialog {
         this.ConfPPSData.setText(String.valueOf(this.sender.getSenderConfiguredPacketRate()));
         this.SentPPSData.setText(String.valueOf(this.sender.getAvgPPS()));
     }
-
+    
+    public void dataChanged(SenderDataChangedEvent e) {
+        loadData();
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ActivationTimeData;
     private javax.swing.JLabel ActivationTimeLabel;

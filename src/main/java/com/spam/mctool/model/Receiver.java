@@ -53,11 +53,12 @@ public class Receiver {
 	}
 	
 	// calculated a new statistic object
-	private void calcNewStatistics() {
+	protected void calcNewStatistics() {
 		// split queue
 		LinkedSplitQueue<ReceiverGroup.PacketContainer> data = packetQueue.split();
+		if(data.size() < 2) return;
 		data.setIteratorStepSize(statsStepSize);
-		int div = data.size() / statsStepSize;
+		int div = (int) Math.ceil(data.size()/statsStepSize)-1;
 		// initialize the average counters
 		double ppsavg = 0.0;
 		double travavg = 0.0;
@@ -117,7 +118,7 @@ public class Receiver {
 		}
 		receivedPackets++;
 		lastPacketNo = p.packet.getSequenceNumber();
-		lastReceivedTime = p.receivedTime;
+		lastReceivedTime = p.systemTime;
 	}
 	
 	/**

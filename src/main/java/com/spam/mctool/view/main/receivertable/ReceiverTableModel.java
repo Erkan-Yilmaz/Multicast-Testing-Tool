@@ -29,7 +29,7 @@ public class ReceiverTableModel extends AbstractTableModel implements MouseListe
     }
 
     public int getColumnCount() {
-        return 5;
+        return 6;
     }
 
     public Object getValueAt(int rowIndex, int columnIndex) {
@@ -45,6 +45,7 @@ public class ReceiverTableModel extends AbstractTableModel implements MouseListe
                 case 2: return receiver.getSenderConfiguredPPS();
                 case 3: return receiver.getAvgPPS();
                 case 4: return receiver.getLostPackets();
+                case 5: return receiver.getPayloadAsString();
                 default:
                     throw new RuntimeException("Illegal columnIndex: " + columnIndex);
             }
