@@ -151,8 +151,7 @@ public class ShowReceiverDialog extends javax.swing.JDialog implements ReceiverD
         AvgTraversalData.setText(bundle.getString("ShowReceiverDialog.AvgTraversalData.text")); // NOI18N
 
         CloseButton.setText(bundle.getString("ShowReceiverDialog.CloseButton.text")); // NOI18N
-        java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("internationlization/Bundle"); // NOI18N
-        CloseButton.setActionCommand(bundle1.getString("ShowReceiverDialog.CloseButton.actionCommand")); // NOI18N
+        CloseButton.setActionCommand(bundle.getString("ShowReceiverDialog.CloseButton.actionCommand")); // NOI18N
         CloseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CloseButtonActionPerformed(evt);

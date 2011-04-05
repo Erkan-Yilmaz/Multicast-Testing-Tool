@@ -118,8 +118,7 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
         SentPPSData.setText(bundle.getString("ShowSenderDialog.SentPPSData.text")); // NOI18N
 
         CloseButton.setText(bundle.getString("ShowSenderDialog.CloseButton.text")); // NOI18N
-        java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("internationlization/Bundle"); // NOI18N
-        CloseButton.setActionCommand(bundle1.getString("ShowSenderDialog.CloseButton.actionCommand")); // NOI18N
+        CloseButton.setActionCommand(bundle.getString("ShowSenderDialog.CloseButton.actionCommand")); // NOI18N
         CloseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CloseButtonActionPerformed(evt);
