@@ -13,17 +13,18 @@ package com.spam.mctool.view.dialogs;
 
 import com.spam.mctool.model.ReceiverGroup;
 import com.spam.mctool.view.main.MainFrame;
+import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.swing.JFrame;
 
 /**
@@ -51,10 +52,14 @@ public class EditReceiverDialog extends javax.swing.JDialog {
         this.parent = parent;
     }
 
-    public EditReceiverDialog(MainFrame parent, boolean modal, ReceiverGroup receiverGroup) {
+    public EditReceiverDialog(MainFrame parent, boolean modal, ReceiverGroup receiverGroup, boolean create) {
         this(parent, modal);
         this.receiverGroup = receiverGroup;
-        loadData();
+        loadData(create);
+
+        if(create){
+            this.receiverGroup = null;
+        }
     }
 
     /** This method is called from within the constructor to
@@ -230,12 +235,42 @@ public class EditReceiverDialog extends javax.swing.JDialog {
         });
     }
 
-    private void loadData(){
+    private void loadData(boolean create){
         this.GroupField.setText(this.receiverGroup.getGroup().toString());
-        this.GroupField.setEnabled(false);
-        this.PortField.setValue(String.valueOf(this.receiverGroup.getPort()));
-        this.PortField.setEnabled(false);
-        this.InterfaceCombo.setEnabled(false);
+        this.PortField.setValue(this.receiverGroup.getPort());
+
+        for (InterfaceAddress interfaceAddress : this.receiverGroup.getNetworkInterface().getInterfaceAddresses()) {
+            InetAddress address = interfaceAddress.getAddress();
+            String ip = null;
+
+            if(this.receiverGroup.getGroup() instanceof Inet4Address){
+                if(address instanceof Inet4Address){
+                    ip = address.getHostAddress();
+                }
+            }
+            else if(this.receiverGroup.getGroup() instanceof Inet6Address){
+                if(address instanceof Inet6Address){
+                    ip = address.getHostAddress();
+                }
+            }
+
+            this.InterfaceCombo.setSelectedItem(this.receiverGroup.getNetworkInterface().getDisplayName() + " - " + ip);
+        }
+
+        Iterator it = analyzingBehaviourMap.entrySet().iterator();
+        while(it.hasNext()){
+            Map.Entry entry = (Map.Entry)it.next();
+
+            if(entry.getValue().equals(this.receiverGroup.getAnalyzingBehaviour().getIdentifier())){
+                this.AnalyzingBehaviourCombo.setSelectedItem(entry.getKey());
+            }
+        }
+
+        if(!create){
+            this.GroupField.setEnabled(false);
+            this.PortField.setEnabled(false);
+            this.InterfaceCombo.setEnabled(false);
+        }
     }
 
     private void loadNetInterfaces(){
