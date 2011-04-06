@@ -652,7 +652,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         if(evt.getClickCount() == 2) {
             if(senderTable.getSelectedSenders().size() == 1) {
                 Sender sender = senderTable.getSelectedSenders().get(0);
-                new EditSenderDialog(this, true, sender).setVisible(true);
+                new EditSenderDialog(this, true, sender, false).setVisible(true);
             }
         }
     }//GEN-LAST:event_senderTableMouseClicked
@@ -663,7 +663,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
      */
     private void buEditSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buEditSenderActionPerformed
         Sender s = senderTable.getSelectedSenders().get(0);
-        new EditSenderDialog(this, true, s).setVisible(true);
+        new EditSenderDialog(this, true, s, false).setVisible(true);
     }//GEN-LAST:event_buEditSenderActionPerformed
 
     private void buDeleteSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buDeleteSenderActionPerformed
@@ -708,7 +708,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
      */
     private void buEditReceiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buEditReceiverActionPerformed
         ReceiverGroup rg = receiverTable.getSelectedReceiverGroups().get(0);
-        new EditReceiverDialog(this, true, rg).setVisible(true);
+        new EditReceiverDialog(this, true, rg, false).setVisible(true);
     }//GEN-LAST:event_buEditReceiverActionPerformed
 
     /**

@@ -14,11 +14,14 @@ package com.spam.mctool.view.dialogs;
 import com.spam.mctool.model.Sender;
 import com.spam.mctool.view.main.MainFrame;
 import java.net.InetAddress;
+import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,10 +54,14 @@ public class EditSenderDialog extends javax.swing.JDialog {
         this.parent = parent;
     }
 
-    public EditSenderDialog(MainFrame parent, boolean modal, Sender sender) {
+    public EditSenderDialog(MainFrame parent, boolean modal, Sender sender, boolean create) {
         this(parent, modal);
         this.sender = sender;
-        loadData();
+        loadData(create);
+
+        if(create){
+            this.sender = null;
+        }
     }
 
     /** This method is called from within the constructor to
@@ -316,17 +323,48 @@ public class EditSenderDialog extends javax.swing.JDialog {
         });
     }
 
-    private void loadData(){
+    private void loadData(boolean create){
         this.GroupField.setText(this.sender.getGroup().getHostAddress());
-        this.GroupField.setEnabled(false);
         this.PortField.setValue(this.sender.getPort());
-        this.PortField.setEnabled(false);
         this.DataField.setText(this.sender.getPayloadAsString());
-        this.DataField.setEnabled(false);
         this.PacketRateField.setValue(this.sender.getSenderConfiguredPacketRate());
         this.PacketSizeField.setValue(this.sender.getPacketSize());
-        this.InterfaceCombo.setEnabled(false);
         this.TTLField.setValue(this.sender.getTtl());
+        this.PacketStyleCombo.setSelectedItem(this.sender.getpType().getDisplayName());
+
+        for (InterfaceAddress interfaceAddress : this.sender.getNetworkInterface().getInterfaceAddresses()) {
+            InetAddress address = interfaceAddress.getAddress();
+            String ip = null;
+
+            if(this.sender.getGroup() instanceof Inet4Address){
+                if(address instanceof Inet4Address){
+                    ip = address.getHostAddress();
+                }
+            }
+            else if(this.sender.getGroup() instanceof Inet6Address){
+                if(address instanceof Inet6Address){
+                    ip = address.getHostAddress();
+                }
+            }
+
+            this.InterfaceCombo.setSelectedItem(this.sender.getNetworkInterface().getDisplayName() + " - " + ip);
+        }
+
+        Iterator it = analyzingBehaviourMap.entrySet().iterator();
+        while(it.hasNext()){
+            Map.Entry entry = (Map.Entry)it.next();
+
+            if(entry.getValue().equals(this.sender.getAnalyzingBehaviour().getIdentifier())){
+                this.AnalyzingBehaviourCombo.setSelectedItem(entry.getKey());
+            }
+        }
+
+        if(!create){
+            this.GroupField.setEnabled(false);
+            this.PortField.setEnabled(false);
+            this.DataField.setEnabled(false);
+            this.InterfaceCombo.setEnabled(false);
+        }
     }
 
     private void loadNetInterfaces(){
@@ -350,11 +388,11 @@ public class EditSenderDialog extends javax.swing.JDialog {
     }
 
     private void initComboBoxes(){
-        this.packageMap.put("SPAM","spam");
-        this.packageMap.put("Hirschmann","hmann");
+        this.packageMap.put("Spam Packet Format","spam");
+        this.packageMap.put("Hirschmann Packet Format","hmann");
         this.PacketStyleCombo.removeAllItems();
-        this.PacketStyleCombo.addItem("SPAM");
-        this.PacketStyleCombo.addItem("Hirschmann");
+        this.PacketStyleCombo.addItem("Spam Packet Format");
+        this.PacketStyleCombo.addItem("Hirschmann Packet Format");
 
         this.analyzingBehaviourMap.put("Default","default");
         this.analyzingBehaviourMap.put("Lazy","lazy");
