@@ -238,7 +238,7 @@ public class ReceiverTableModel extends AbstractTableModel implements MouseListe
         ReceiverGroupRow groupRow = getRow(group);
         int groupRowIndex = rows.indexOf(groupRow);
         int inputPos = groupRowIndex + groupRow.getReceiverRowCount() + 1;
-        ReceiverRow rcvRow = new ReceiverRow(receiver);
+        ReceiverRow rcvRow = new ReceiverRow(groupRow, receiver);
         groupRow.add(rcvRow);
         rows.add(inputPos, rcvRow);
 
@@ -356,6 +356,47 @@ public class ReceiverTableModel extends AbstractTableModel implements MouseListe
         }
         System.out.println("---------------------------------------------------");
         System.out.flush();
+    }
+
+    /**
+     * Returns the receiverGroup that is most closely associated with the
+     * given row index. If the rowIndex identifies a row representing a
+     * receiverGroup, that receiverGroup is returned. If rowIndex identifies
+     * a row representing a Receiver, the ReceiverGroup containing that Receiver
+     * is returned
+     * @param rowIndex
+     * @return the ReceiverGroup most closely related to the given row.
+     */
+    ReceiverGroup getReceiverGroupAt(int rowIndex) {
+        ReceiverTableRow row = getVisibleRow(rowIndex);
+        if(row instanceof ReceiverGroupRow) {
+            return ((ReceiverGroupRow)row).getReceiverGroup();
+        } else if(row instanceof ReceiverRow) {
+            ReceiverRow rcvRow = (ReceiverRow)row;
+            return rcvRow.getParent().getReceiverGroup();
+        } else {
+            throw new RuntimeException("Illegal Rowtype: " + row.getClass().getName());
+        }
+    }
+
+    /**
+     * Returns the receiver that is represented by the given row. If rowIndex
+     * identifies a row containing a ReceiverGroup, null is returned.
+     * @param rowIndex
+     * @return the Receiver represented by row number rowIndex. Null, if
+     *         row number rowIndex represents a ReceiverGroup.
+     */
+    Receiver getReceiverAt(int rowIndex) {
+        ReceiverTableRow row = getVisibleRow(rowIndex);
+        if(row instanceof ReceiverRow) {
+            ReceiverRow rcvRow = (ReceiverRow)row;
+            return rcvRow.getReceiver();
+        }
+        else if(row instanceof ReceiverGroupRow) {
+            return null;
+        } else {
+            throw new RuntimeException("Illegal Rowtype: " + row.getClass().getName());
+        }
     }
 
 }

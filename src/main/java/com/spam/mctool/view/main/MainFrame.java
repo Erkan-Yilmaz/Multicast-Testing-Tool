@@ -11,21 +11,26 @@ import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
 import com.spam.mctool.intermediates.SenderAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.SenderDataChangedEvent;
 import com.spam.mctool.model.MulticastStream;
+import com.spam.mctool.model.Receiver;
+import com.spam.mctool.model.ReceiverGroup;
 import com.spam.mctool.model.Sender;
 import com.spam.mctool.view.GraphicalView;
 import com.spam.mctool.view.dialogs.EditReceiverDialog;
 import com.spam.mctool.view.dialogs.EditSenderDialog;
+import com.spam.mctool.view.dialogs.ShowReceiverDialog;
 import com.spam.mctool.view.dialogs.ShowSenderDialog;
 import com.spam.mctool.view.main.receivertable.ReceiverTableModel;
+import com.spam.mctool.view.main.sendertable.JSenderTable;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import javax.swing.event.ListSelectionEvent;
 
 /**
  *
  * @author Tobias Stöckel (Tobias.Stoeckel@de.ibm.com)
  */
-public class MainFrame extends javax.swing.JFrame {
+public class MainFrame extends javax.swing.JFrame implements javax.swing.event.ListSelectionListener {
 
     private static final long serialVersionUID = 1L;
     private GraphicalView view;
@@ -218,6 +223,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         buActivateSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/play_green.png"))); // NOI18N
         buActivateSender.setText(bundle.getString("MainFrame.buActivateSender.text")); // NOI18N
+        buActivateSender.setEnabled(false);
         buActivateSender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buActivateSenderActionPerformed(evt);
@@ -227,6 +233,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         buDeactivateSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/stop_red.png"))); // NOI18N
         buDeactivateSender.setText(bundle.getString("MainFrame.buDeactivateSender.text")); // NOI18N
+        buDeactivateSender.setEnabled(false);
         buDeactivateSender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buDeactivateSenderActionPerformed(evt);
@@ -245,6 +252,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         buShowSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/preview.png"))); // NOI18N
         buShowSender.setText(bundle.getString("MainFrame.buShowSender.text")); // NOI18N
+        buShowSender.setEnabled(false);
         buShowSender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buShowSenderActionPerformed(evt);
@@ -254,6 +262,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         buEditSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
         buEditSender.setText(bundle.getString("MainFrame.buEditSender.text")); // NOI18N
+        buEditSender.setEnabled(false);
         buEditSender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buEditSenderActionPerformed(evt);
@@ -263,6 +272,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         buDeleteSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
         buDeleteSender.setText(bundle.getString("MainFrame.buDeleteSender.text")); // NOI18N
+        buDeleteSender.setEnabled(false);
         buDeleteSender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buDeleteSenderActionPerformed(evt);
@@ -279,6 +289,7 @@ public class MainFrame extends javax.swing.JFrame {
                 senderTableMouseClicked(evt);
             }
         });
+        senderTable.getSelectionModel().addListSelectionListener(this);
         jScrollPane2.setViewportView(senderTable);
 
         paSenderTableInner.add(jScrollPane2, java.awt.BorderLayout.CENTER);
@@ -384,10 +395,22 @@ public class MainFrame extends javax.swing.JFrame {
 
         buActivateReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/play_green.png"))); // NOI18N
         buActivateReceiver.setText(bundle.getString("MainFrame.buActivateReceiver.text")); // NOI18N
+        buActivateReceiver.setEnabled(false);
+        buActivateReceiver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buActivateReceiverActionPerformed(evt);
+            }
+        });
         paReceiverButtons.add(buActivateReceiver);
 
         buDeactivateReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/stop_red.png"))); // NOI18N
         buDeactivateReceiver.setText(bundle.getString("MainFrame.buDeactivateReceiver.text")); // NOI18N
+        buDeactivateReceiver.setEnabled(false);
+        buDeactivateReceiver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buDeactivateReceiverActionPerformed(evt);
+            }
+        });
         paReceiverButtons.add(buDeactivateReceiver);
 
         buAddReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add_green.png"))); // NOI18N
@@ -401,14 +424,27 @@ public class MainFrame extends javax.swing.JFrame {
 
         buShowReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/preview.png"))); // NOI18N
         buShowReceiver.setText(bundle.getString("MainFrame.buShowReceiver.text")); // NOI18N
+        buShowReceiver.setEnabled(false);
+        buShowReceiver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buShowReceiverActionPerformed(evt);
+            }
+        });
         paReceiverButtons.add(buShowReceiver);
 
         buEditReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
         buEditReceiver.setText(bundle.getString("MainFrame.buEditReceiver.text")); // NOI18N
+        buEditReceiver.setEnabled(false);
+        buEditReceiver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buEditReceiverActionPerformed(evt);
+            }
+        });
         paReceiverButtons.add(buEditReceiver);
 
         buDeleteReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
         buDeleteReceiver.setText(bundle.getString("MainFrame.buDeleteReceiver.text")); // NOI18N
+        buDeleteReceiver.setEnabled(false);
         paReceiverButtons.add(buDeleteReceiver);
 
         paReceiverTableOuter.add(paReceiverButtons, java.awt.BorderLayout.PAGE_END);
@@ -417,6 +453,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         receiverTable.setGridColor(javax.swing.UIManager.getDefaults().getColor("control"));
         receiverTable.setIntercellSpacing(new java.awt.Dimension(0, 1));
+        receiverTable.getSelectionModel().addListSelectionListener(this);
         jScrollPane1.setViewportView(receiverTable);
 
         paReceiverTableInner.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -635,6 +672,46 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_buDeleteSenderActionPerformed
 
     /**
+     * assumption: there is at least one receivergroup selected!
+     * @param evt
+     */
+    private void buActivateReceiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buActivateReceiverActionPerformed
+        for(ReceiverGroup r : receiverTable.getSelectedReceiverGroups()) {
+            r.activate();
+        }
+    }//GEN-LAST:event_buActivateReceiverActionPerformed
+
+    /**
+     * assumption: there is at least one receivergroup selected!
+     * @param evt
+     */
+    private void buDeactivateReceiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buDeactivateReceiverActionPerformed
+        for(ReceiverGroup r : receiverTable.getSelectedReceiverGroups()) {
+            r.deactivate();
+        }
+    }//GEN-LAST:event_buDeactivateReceiverActionPerformed
+
+    /**
+     * assumption: there is only one receiver selected
+     * @param evt
+     */
+    private void buShowReceiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buShowReceiverActionPerformed
+        ReceiverGroup rg = receiverTable.getSelectedReceiverGroups().get(0);
+        Receiver r = receiverTable.getSelectedReceivers().get(0);
+        new ShowReceiverDialog(this, true, r, rg).setVisible(true);
+    }//GEN-LAST:event_buShowReceiverActionPerformed
+
+    /**
+     * assumption: there are only rows selected to be associated with exactly
+     * one receivergroup
+     * @param evt
+     */
+    private void buEditReceiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buEditReceiverActionPerformed
+        ReceiverGroup rg = receiverTable.getSelectedReceiverGroups().get(0);
+        new EditReceiverDialog(this, true, rg).setVisible(true);
+    }//GEN-LAST:event_buEditReceiverActionPerformed
+
+    /**
     * @param args the command line arguments
     */
     public static void main(String args[]) {
@@ -797,6 +874,27 @@ public class MainFrame extends javax.swing.JFrame {
 
     public void addReceiverGroup(Map<String, String> receiverMap, boolean activate) {
         this.view.addReceiver(receiverMap, activate);
+    }
+
+    public void valueChanged(ListSelectionEvent e) {
+        // refresh the sender buttons' state
+        // TODO do properly
+        if(senderTable.getSelectedRowCount() > 0) {
+            buActivateSender.setEnabled(true);
+            buDeactivateSender.setEnabled(true);
+            buShowSender.setEnabled(true);
+            buEditSender.setEnabled(true);
+            buDeleteSender.setEnabled(true);
+        }
+
+        // refresh the receiver buttons' state
+        if(receiverTable.getSelectedRowCount() > 0) {
+            buActivateReceiver.setEnabled(true);
+            buDeactivateReceiver.setEnabled(true);
+            buShowReceiver.setEnabled(true);
+            buEditReceiver.setEnabled(true);
+            buDeleteReceiver.setEnabled(true);
+        }
     }
 
     

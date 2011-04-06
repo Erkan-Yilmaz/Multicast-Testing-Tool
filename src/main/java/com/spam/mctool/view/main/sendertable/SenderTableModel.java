@@ -55,7 +55,7 @@ public class SenderTableModel extends DefaultTableModel {
                     s,
                     s.getSenderId(),
                     s.getPort(),
-                    s.getGroup(),
+                    s.getGroup().getHostAddress(),
                     s.getSenderConfiguredPacketRate(),
                     s.getAvgPPS(),
                     s.getMinPPS(),
@@ -80,7 +80,7 @@ public class SenderTableModel extends DefaultTableModel {
             rowVector.setElementAt(s,               0);
             rowVector.setElementAt(s.getSenderId(), 1);
             rowVector.setElementAt(s.getPort(),     2);
-            rowVector.setElementAt(s.getGroup(),    3);
+            rowVector.setElementAt(s.getGroup().getHostAddress(),    3);
             rowVector.setElementAt(s.getSenderConfiguredPacketRate(), 4);
             rowVector.setElementAt(s.getAvgPPS(),   5);
             rowVector.setElementAt(s.getMinPPS(),   6);

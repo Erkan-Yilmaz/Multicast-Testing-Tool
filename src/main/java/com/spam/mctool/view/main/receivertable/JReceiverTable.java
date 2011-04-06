@@ -2,7 +2,13 @@ package com.spam.mctool.view.main.receivertable;
 
 import com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
+import com.spam.mctool.model.Receiver;
+import com.spam.mctool.model.ReceiverGroup;
 import com.spam.mctool.view.main.TwoColorRenderer;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
@@ -74,6 +80,36 @@ public class JReceiverTable extends JTable {
         try {
             ((ReceiverTableModel)getModel()).dataChanged(e);
         } catch (ClassCastException ex) {
+            throw new IllegalStateException("JReceiverTable must have a ReceiverTableModel but contains " + getModel().getClass());
+        }
+    }
+
+    public List<ReceiverGroup> getSelectedReceiverGroups() {
+        Set<ReceiverGroup> groupSet = new HashSet<ReceiverGroup>();
+        if(dataModel instanceof ReceiverTableModel) {
+            ReceiverTableModel model = (ReceiverTableModel)dataModel;
+            for(int i : getSelectedRows()) {
+                groupSet.add(model.getReceiverGroupAt(i));
+            }
+            return new ArrayList<ReceiverGroup>(groupSet);
+        } else {
+            throw new IllegalStateException("JReceiverTable must have a ReceiverTableModel but contains " + getModel().getClass());
+        }
+    }
+
+    public List<Receiver> getSelectedReceivers() {
+        List<Receiver> receiverList = new ArrayList<Receiver>();
+        if(dataModel instanceof ReceiverTableModel) {
+            ReceiverTableModel model = (ReceiverTableModel)dataModel;
+            for(int i : getSelectedRows()) {
+                Receiver rcv = model.getReceiverAt(i);
+                // if a null is returned, this row contained a ReceiverGroup
+                if(rcv != null) {
+                    receiverList.add(rcv);
+                }
+            }
+            return receiverList;
+        } else {
             throw new IllegalStateException("JReceiverTable must have a ReceiverTableModel but contains " + getModel().getClass());
         }
     }
