@@ -31,25 +31,18 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jSeparator1" pref="529" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
                       <Component id="InterfaceLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="477" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="GroupLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="GroupField" alignment="0" max="32767" attributes="1"/>
-                              <Component id="InterfaceCombo" alignment="0" pref="255" max="32767" attributes="1"/>
-                          </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="GroupLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="GroupField" min="-2" pref="254" max="-2" attributes="1"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="PortField" pref="256" max="32767" attributes="1"/>
-                          <Component id="PortLabel" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="PortLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="PortField" pref="257" max="32767" attributes="1"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -119,6 +112,13 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="CancelButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="239" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="InterfaceCombo" alignment="0" pref="529" max="32767" attributes="1"/>
+                          <Component id="jSeparator1" alignment="1" pref="529" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>

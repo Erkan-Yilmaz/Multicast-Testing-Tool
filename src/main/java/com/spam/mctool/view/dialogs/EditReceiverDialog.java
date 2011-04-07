@@ -126,9 +126,6 @@ public class EditReceiverDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
-                            .addContainerGap())
-                        .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,9 +138,6 @@ public class EditReceiverDialog extends javax.swing.JDialog {
                                 .addComponent(InterfaceLabel))
                             .addContainerGap())
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(InterfaceCombo, 0, 252, Short.MAX_VALUE)
-                            .addGap(280, 280, 280))
-                        .addGroup(layout.createSequentialGroup()
                             .addComponent(AnalyzingBehaviourLabel)
                             .addContainerGap(393, Short.MAX_VALUE))
                         .addGroup(layout.createSequentialGroup()
@@ -154,6 +148,11 @@ public class EditReceiverDialog extends javax.swing.JDialog {
                             .addContainerGap())
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addComponent(ActivateBox, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+                            .addContainerGap())
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(InterfaceCombo, javax.swing.GroupLayout.Alignment.LEADING, 0, 520, Short.MAX_VALUE)
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE))
                             .addContainerGap()))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(OKButton)
@@ -236,7 +235,7 @@ public class EditReceiverDialog extends javax.swing.JDialog {
     }
 
     private void loadData(boolean create){
-        this.GroupField.setText(this.receiverGroup.getGroup().toString());
+        this.GroupField.setText(this.receiverGroup.getGroup().getHostAddress());
         this.PortField.setValue(this.receiverGroup.getPort());
 
         for (InterfaceAddress interfaceAddress : this.receiverGroup.getNetworkInterface().getInterfaceAddresses()) {
