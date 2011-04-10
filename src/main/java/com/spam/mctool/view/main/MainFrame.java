@@ -624,6 +624,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         for(Sender s : senderTable.getSelectedSenders()) {
             s.activate();
         }
+        refreshSenderButtons();
     }//GEN-LAST:event_buActivateSenderActionPerformed
 
     /**
@@ -633,8 +634,8 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     private void buShowSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buShowSenderActionPerformed
         Sender s = senderTable.getSelectedSenders().get(0);
         ShowSenderDialog dlg = new ShowSenderDialog(this, true, s);
-        dlg.setVisible(true);
         s.addSenderDataChangeListener(dlg);
+        dlg.setVisible(true);
     }//GEN-LAST:event_buShowSenderActionPerformed
 
     private void buAddSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buAddSenderActionPerformed
@@ -650,6 +651,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         for(Sender s : senderTable.getSelectedSenders()) {
             s.deactivate();
         }
+        refreshSenderButtons();
     }//GEN-LAST:event_buDeactivateSenderActionPerformed
 
     private void buAddReceiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buAddReceiverActionPerformed
@@ -693,6 +695,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         for(ReceiverGroup r : receiverTable.getSelectedReceiverGroups()) {
             r.activate();
         }
+        refreshReceiverButtons();
     }//GEN-LAST:event_buActivateReceiverActionPerformed
 
     /**
@@ -703,6 +706,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         for(ReceiverGroup r : receiverTable.getSelectedReceiverGroups()) {
             r.deactivate();
         }
+        refreshReceiverButtons();
     }//GEN-LAST:event_buDeactivateReceiverActionPerformed
 
     /**
@@ -892,23 +896,69 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     }
 
     public void valueChanged(ListSelectionEvent e) {
-        // refresh the sender buttons' state
-        // TODO do properly
-        if(senderTable.getSelectedRowCount() > 0) {
-            buActivateSender.setEnabled(true);
-            buDeactivateSender.setEnabled(true);
+        if(e.getSource() == senderTable.getSelectionModel()) {
+            refreshSenderButtons();
+        } else if (e.getSource() == receiverTable.getSelectionModel()) {
+            refreshReceiverButtons();
+        }
+    }
+
+    private void refreshSenderButtons() {
+        int rc = senderTable.getSelectedRowCount();
+        if(rc == 0) {
+            buActivateSender.setEnabled(false);
+            buDeactivateSender.setEnabled(false);
+            buShowSender.setEnabled(false);
+            buEditSender.setEnabled(false);
+            buDeleteSender.setEnabled(false);
+        } else if (rc == 1) {
             buShowSender.setEnabled(true);
             buEditSender.setEnabled(true);
             buDeleteSender.setEnabled(true);
+            if(senderTable.getSelectedSenders().get(0).isActive()) {
+                buActivateSender.setEnabled(false);
+                buDeactivateSender.setEnabled(true);
+            } else {
+                buActivateSender.setEnabled(true);
+                buDeactivateSender.setEnabled(false);
+            }
+        } else if (rc > 1) {
+            buActivateSender.setEnabled(true);
+            buDeactivateSender.setEnabled(true);
+            buShowSender.setEnabled(false);
+            buEditSender.setEnabled(false);
+            buDeleteSender.setEnabled(true);
         }
+    }
 
-        // refresh the receiver buttons' state
-        if(receiverTable.getSelectedRowCount() > 0) {
-            buActivateReceiver.setEnabled(true);
-            buDeactivateReceiver.setEnabled(true);
-            buShowReceiver.setEnabled(true);
-            buEditReceiver.setEnabled(true);
+    private void refreshReceiverButtons() {
+        int rowCount = receiverTable.getSelectedRowCount();
+
+        if(rowCount > 0) {
+            // Activate/Deactivate Buttons
+            if(receiverTable.getSelectedReceiverGroups().size() == 1) {
+                buDeactivateReceiver.setEnabled(receiverTable.getSelectedReceiverGroups().get(0).isActive());
+                buActivateReceiver.setEnabled(!receiverTable.getSelectedReceiverGroups().get(0).isActive());
+            } else {
+                buDeactivateReceiver.setEnabled(true);
+                buActivateReceiver.setEnabled(true);
+            }
+
+            // Show Button
+            buShowReceiver.setEnabled(receiverTable.getSelectedReceivers().size() == 1);
+
+            // Edit Button
+            buEditReceiver.setEnabled(    receiverTable.getSelectedReceiverGroups().size() == 1
+                                       && receiverTable.getSelectedReceivers().isEmpty()        );
+
+            // Delete Button
             buDeleteReceiver.setEnabled(true);
+        } else {
+            buActivateReceiver.setEnabled(false);
+            buDeactivateReceiver.setEnabled(false);
+            buShowReceiver.setEnabled(false);
+            buEditReceiver.setEnabled(false);
+            buDeleteReceiver.setEnabled(false);
         }
     }
 

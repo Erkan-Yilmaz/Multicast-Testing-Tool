@@ -334,7 +334,6 @@ public class ShowReceiverDialog extends javax.swing.JDialog {
         this.GroupData.setText(this.receivergroup.getGroup().getHostAddress());
         this.PortData.setText(String.valueOf(this.receivergroup.getPort()));
         //ActivationTimeData;
-        System.out.println(System.nanoTime());
         
     }
     

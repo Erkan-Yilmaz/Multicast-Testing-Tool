@@ -22,6 +22,7 @@ import com.spam.mctool.model.SenderAddedOrRemovedListener;
 import com.spam.mctool.model.SenderDataChangeListener;
 import java.util.Map;
 import java.util.Set;
+import javax.swing.SwingUtilities;
 
 import javax.swing.UIManager;
 
@@ -41,37 +42,32 @@ public class GraphicalView implements MctoolView,
         private ProfileManager profileManager;
 
 	// receiver oder receivergroup???
-        public void receiverGroupAdded(ReceiverAddedOrRemovedEvent e) {
-            try {
-                mainFrame.receiverGroupAdded(e);
-            } catch (RuntimeException ex) {
-                ex.printStackTrace();
-            }
+        public void receiverGroupAdded(final ReceiverAddedOrRemovedEvent e) {
+            Runnable groupAddedRunnable = new Runnable() {
+                public void run() {mainFrame.receiverGroupAdded(e);}
+            };
+            SwingUtilities.invokeLater(groupAddedRunnable);
 	}
 
         // receiverGroupRemoved???
-	public void receiverGroupRemoved(ReceiverAddedOrRemovedEvent e) {
-            try {
-                mainFrame.receiverGroupRemoved(e);
-            } catch (RuntimeException ex) {
-                ex.printStackTrace();
-            }
+	public void receiverGroupRemoved(final ReceiverAddedOrRemovedEvent e) {
+            Runnable groupRemovedRunnable = new Runnable() {
+                public void run() {mainFrame.receiverGroupRemoved(e);}
+            };
+            SwingUtilities.invokeLater(groupRemovedRunnable);
 	}
 
-	public void senderAdded(SenderAddedOrRemovedEvent e) {
-            try {
-                mainFrame.senderAdded(e);
-            } catch (RuntimeException ex) {
-                ex.printStackTrace();
-            }
+	public void senderAdded(final SenderAddedOrRemovedEvent e) {
+            Runnable senderAddedRunnable = new Runnable() {
+                public void run() {mainFrame.senderAdded(e);}
+            };
+            SwingUtilities.invokeLater(senderAddedRunnable);
 	}
 
-	public void senderRemoved(SenderAddedOrRemovedEvent e) {
-            try {
-                mainFrame.senderRemoved(e);
-            } catch (RuntimeException ex) {
-                ex.printStackTrace();
-            }
+	public void senderRemoved(final SenderAddedOrRemovedEvent e) {
+            SwingUtilities.invokeLater( new Runnable() {
+                public void run() {mainFrame.senderRemoved(e);}
+            });
 	}
 
 	public void profileChanged(ProfileChangeEvent e) {
@@ -80,21 +76,17 @@ public class GraphicalView implements MctoolView,
 	}
 
         // TODO nobody calls this method so far
-	public void dataChanged(ReceiverDataChangedEvent e) {
-            try {
-                mainFrame.dataChanged(e);
-            } catch (RuntimeException ex) {
-                ex.printStackTrace();
-            }
+	public void dataChanged(final ReceiverDataChangedEvent e) {
+            SwingUtilities.invokeLater( new Runnable() {
+                public void run() {mainFrame.dataChanged(e);}
+            });
 	}
 
         // TODO nobody calls this method so far
-	public void dataChanged(SenderDataChangedEvent e) {
-            try {
-                mainFrame.dataChanged(e);
-            } catch (RuntimeException ex) {
-                ex.printStackTrace();
-            }
+	public void dataChanged(final SenderDataChangedEvent e) {
+            SwingUtilities.invokeLater( new Runnable() {
+                public void run() {mainFrame.dataChanged(e);}
+            });
 	}
 
 	/**
