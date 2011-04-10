@@ -17,25 +17,31 @@ import com.spam.mctool.model.ReceiverDataChangeListener;
 import com.spam.mctool.model.ReceiverGroup;
 import com.spam.mctool.view.main.MainFrame;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 /**
  *
  * @author Tobias Schoknecht (Tobias.Schoknecht@de.ibm.com)
  */
-public class ShowReceiverDialog extends javax.swing.JDialog implements ReceiverDataChangeListener{
+public class ShowReceiverDialog extends javax.swing.JDialog {
 
     private static final long serialVersionUID = 1L;
     private Receiver receiver;
     private ReceiverGroup receivergroup;
     private MainFrame parent;
+    private ReceiverDataChangeListener listener = new ReceiverDataChangeListener() {
+            public void dataChanged(ReceiverDataChangedEvent e) {
+                SwingUtilities.invokeLater(new DataLoader());
+            }
+        };
 
 	/** Creates new form ShowReceiverDialog */
-    public ShowReceiverDialog(java.awt.Frame parent, boolean modal) {
+    private ShowReceiverDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
 
-    public ShowReceiverDialog(MainFrame parent, boolean modal) {
+    private ShowReceiverDialog(MainFrame parent, boolean modal) {
         this((JFrame)parent, modal);
         this.parent = parent;
     }
@@ -44,7 +50,16 @@ public class ShowReceiverDialog extends javax.swing.JDialog implements ReceiverD
         this(parent, modal);
         this.receiver = receiver;
         this.receivergroup = receivergroup;
-        loadData();
+        receivergroup.addReceiverDataChangeListener(listener);
+        SwingUtilities.invokeLater(new DataLoader());
+    }
+
+    private class DataLoader implements Runnable {
+
+        public void run() {
+            loadData();
+        }
+
     }
 
     /** This method is called from within the constructor to
@@ -282,6 +297,7 @@ public class ShowReceiverDialog extends javax.swing.JDialog implements ReceiverD
     }// </editor-fold>//GEN-END:initComponents
 
     private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
+        receivergroup.removeReceiverDataChangeListener(listener);
         this.dispose();
     }//GEN-LAST:event_CloseButtonActionPerformed
 
@@ -318,13 +334,11 @@ public class ShowReceiverDialog extends javax.swing.JDialog implements ReceiverD
         this.GroupData.setText(this.receivergroup.getGroup().getHostAddress());
         this.PortData.setText(String.valueOf(this.receivergroup.getPort()));
         //ActivationTimeData;
-        
+        System.out.println(System.nanoTime());
         
     }
     
-    public void dataChanged(ReceiverDataChangedEvent e) {
-        loadData();
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ActivationTimeData;

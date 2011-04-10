@@ -22,6 +22,7 @@ import com.spam.mctool.view.dialogs.ShowSenderDialog;
 import com.spam.mctool.view.main.receivertable.ReceiverTableModel;
 import com.spam.mctool.view.main.sendertable.JSenderTable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.event.ListSelectionEvent;
@@ -631,11 +632,18 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
      */
     private void buShowSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buShowSenderActionPerformed
         Sender s = senderTable.getSelectedSenders().get(0);
-        new ShowSenderDialog(this, true, s).setVisible(true);
+        ShowSenderDialog dlg = new ShowSenderDialog(this, true, s);
+        dlg.setVisible(true);
+        s.addSenderDataChangeListener(dlg);
     }//GEN-LAST:event_buShowSenderActionPerformed
 
     private void buAddSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buAddSenderActionPerformed
-        new EditSenderDialog(this, true).setVisible(true);
+        if(senderTable.getSelectedRowCount() > 0) {
+            Sender s = senderTable.getSelectedSenders().get(0);
+            new EditSenderDialog(this, true, s, true).setVisible(true);
+        } else {
+            new EditSenderDialog(this, true).setVisible(true);
+        }
     }//GEN-LAST:event_buAddSenderActionPerformed
 
     private void buDeactivateSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buDeactivateSenderActionPerformed
@@ -645,7 +653,13 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     }//GEN-LAST:event_buDeactivateSenderActionPerformed
 
     private void buAddReceiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buAddReceiverActionPerformed
-        new EditReceiverDialog(this, true).setVisible(true);
+        List<ReceiverGroup> selectedGroups = receiverTable.getSelectedReceiverGroups();
+        if(selectedGroups.size() > 0) {
+            ReceiverGroup rg = selectedGroups.get(0);
+            new EditReceiverDialog(this, true, rg, true).setVisible(true);
+        } else {
+            new EditReceiverDialog(this, true).setVisible(true);
+        }
     }//GEN-LAST:event_buAddReceiverActionPerformed
 
     private void senderTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_senderTableMouseClicked
@@ -698,7 +712,8 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     private void buShowReceiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buShowReceiverActionPerformed
         ReceiverGroup rg = receiverTable.getSelectedReceiverGroups().get(0);
         Receiver r = receiverTable.getSelectedReceivers().get(0);
-        new ShowReceiverDialog(this, true, r, rg).setVisible(true);
+        ShowReceiverDialog dlg = new ShowReceiverDialog(this, true, r, rg);
+        dlg.setVisible(true);
     }//GEN-LAST:event_buShowReceiverActionPerformed
 
     /**
