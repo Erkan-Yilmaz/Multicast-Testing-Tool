@@ -52,6 +52,7 @@ public class EditSenderDialog extends javax.swing.JDialog {
     public EditSenderDialog(MainFrame parent, boolean modal) {
         this((JFrame)parent, modal);
         this.parent = parent;
+        setDefaultValues();
     }
 
     public EditSenderDialog(MainFrame parent, boolean modal, Sender sender, boolean create) {
@@ -226,7 +227,7 @@ public class EditSenderDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(GroupField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(PortField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(PortField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addComponent(InterfaceLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -385,6 +386,16 @@ public class EditSenderDialog extends javax.swing.JDialog {
                 this.interfaceMap.put(networkInterface.getDisplayName() + " - " + address.getHostAddress(),address.getHostAddress());
             }
         }       
+    }
+
+    private void setDefaultValues(){
+        this.GroupField.setText("255.1.1.1");
+        this.PortField.setValue(12345);
+        this.DataField.setText("Default");
+        this.PacketRateField.setValue(10);
+        this.PacketSizeField.setValue(200);
+        this.TTLField.setValue(32);
+        this.PacketStyleCombo.setSelectedItem("Spam Packet Format");
     }
 
     private void initComboBoxes(){

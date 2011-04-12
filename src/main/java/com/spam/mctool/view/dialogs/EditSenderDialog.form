@@ -135,7 +135,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="GroupField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="PortField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="PortField" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Component id="InterfaceLabel" min="-2" max="-2" attributes="0"/>
