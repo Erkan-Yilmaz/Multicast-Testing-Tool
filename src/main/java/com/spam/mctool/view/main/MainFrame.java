@@ -18,6 +18,7 @@ import com.spam.mctool.model.Sender;
 import com.spam.mctool.view.GraphicalView;
 import com.spam.mctool.view.dialogs.EditReceiverDialog;
 import com.spam.mctool.view.dialogs.EditSenderDialog;
+import com.spam.mctool.view.dialogs.SaveProfileDialog;
 import com.spam.mctool.view.dialogs.ShowReceiverDialog;
 import com.spam.mctool.view.dialogs.ShowSenderDialog;
 import com.spam.mctool.view.main.receivertable.ReceiverTableModel;
@@ -27,6 +28,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.swing.JFileChooser;
 import javax.swing.event.ListSelectionEvent;
 
 /**
@@ -497,12 +499,22 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         menuFile.setText(bundle.getString("MainFrame.menuFile.text")); // NOI18N
 
         miOpenProfile.setText(bundle.getString("MainFrame.miOpenProfile.text")); // NOI18N
+        miOpenProfile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miOpenProfileActionPerformed(evt);
+            }
+        });
         menuFile.add(miOpenProfile);
 
         miSaveProfile.setText(bundle.getString("MainFrame.miSaveProfile.text")); // NOI18N
         menuFile.add(miSaveProfile);
 
         miSaveProfileAs.setText(bundle.getString("MainFrame.miSaveProfileAs.text")); // NOI18N
+        miSaveProfileAs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miSaveProfileAsActionPerformed(evt);
+            }
+        });
         menuFile.add(miSaveProfileAs);
         menuFile.add(jSeparator1);
 
@@ -763,6 +775,14 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
         receiverTable.clearSelection();
     }//GEN-LAST:event_jScrollPane1MouseClicked
+
+    private void miOpenProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miOpenProfileActionPerformed
+        new JFileChooser().showOpenDialog(this);
+    }//GEN-LAST:event_miOpenProfileActionPerformed
+
+    private void miSaveProfileAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSaveProfileAsActionPerformed
+        new SaveProfileDialog(this, true).setVisible(true);
+    }//GEN-LAST:event_miSaveProfileAsActionPerformed
 
     /**
     * @param args the command line arguments

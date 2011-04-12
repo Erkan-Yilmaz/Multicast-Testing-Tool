@@ -6,19 +6,22 @@
 /*
  * SaveProfileDialog.java
  *
- * Created on 12.04.2011, 10:02:07
+ * Created on 12.04.2011, 17:04:34
  */
 
 package com.spam.mctool.view.dialogs;
 
+import javax.swing.JFileChooser;
+
 /**
  *
- * @author Tobias Schoknecht (Tobias.Schoknecht@de.ibm.com)
+ * @author Tobias
  */
-public class SaveProfileDialog extends javax.swing.JPanel {
+public class SaveProfileDialog extends javax.swing.JDialog {
 
     /** Creates new form SaveProfileDialog */
-    public SaveProfileDialog() {
+    public SaveProfileDialog(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
     }
 
@@ -31,31 +34,85 @@ public class SaveProfileDialog extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jFileChooser1 = new javax.swing.JFileChooser();
+        jFileChooser = new javax.swing.JFileChooser();
+        txtProfileName = new javax.swing.JTextField();
+        laProfileName = new javax.swing.JLabel();
 
-        jFileChooser1.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        jFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+        jFileChooser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFileChooserActionPerformed(evt);
+            }
+        });
+
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
+        laProfileName.setText(bundle.getString("SaveProfileDialog.laProfileName.text_1")); // NOI18N
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jFileChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jFileChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(103, 103, 103)
+                .addComponent(laProfileName)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtProfileName, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(138, 138, 138))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jFileChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(laProfileName)
+                    .addComponent(txtProfileName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jFileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooserActionPerformed
+        if (evt.getActionCommand().equals(JFileChooser.CANCEL_SELECTION))
+        {
+            System.out.printf("CancelSelection\n");
+            this.setVisible(false);
+            this.dispose();
+        }
+        if (evt.getActionCommand().equals(JFileChooser.APPROVE_SELECTION))
+        {
+            System.out.printf("ApproveSelection\n");
+            this.setVisible(false);
+            this.dispose();
+        }
+
+    }//GEN-LAST:event_jFileChooserActionPerformed
+
+    /**
+    * @param args the command line arguments
+    */
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                SaveProfileDialog dialog = new SaveProfileDialog(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JFileChooser jFileChooser;
+    private javax.swing.JLabel laProfileName;
+    private javax.swing.JTextField txtProfileName;
     // End of variables declaration//GEN-END:variables
 
 }
