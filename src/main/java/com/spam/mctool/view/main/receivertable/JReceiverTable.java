@@ -84,12 +84,22 @@ public class JReceiverTable extends JTable {
         }
     }
 
+    /**
+     * Returns the ReceiverGroups whose rows are currently selected. Returns
+     * an empty list, if no row is selected or if the selected rows only contain
+     * Receivers.
+     * @return List of selected ReceiverGroups, or the empty list if there are
+     *         none.
+     */
     public List<ReceiverGroup> getSelectedReceiverGroups() {
         Set<ReceiverGroup> groupSet = new HashSet<ReceiverGroup>();
         if(dataModel instanceof ReceiverTableModel) {
             ReceiverTableModel model = (ReceiverTableModel)dataModel;
             for(int i : getSelectedRows()) {
-                groupSet.add(model.getReceiverGroupAt(i));
+                ReceiverGroup g = model.getReceiverGroupAt(i);
+                if(g != null) {
+                    groupSet.add(g);
+                }
             }
             return new ArrayList<ReceiverGroup>(groupSet);
         } else {
@@ -97,6 +107,11 @@ public class JReceiverTable extends JTable {
         }
     }
 
+    /**
+     * Returns the Receivers whose rows are currently selected. Returns an empty
+     * list, if no row is selected or if the selected rows only contain ReceiverGroups.
+     * @return List of selected Receivers, or the empty list if there are none.
+     */
     public List<Receiver> getSelectedReceivers() {
         List<Receiver> receiverList = new ArrayList<Receiver>();
         if(dataModel instanceof ReceiverTableModel) {
@@ -111,6 +126,15 @@ public class JReceiverTable extends JTable {
             return receiverList;
         } else {
             throw new IllegalStateException("JReceiverTable must have a ReceiverTableModel but contains " + getModel().getClass());
+        }
+    }
+
+    public ReceiverGroup getParent(Receiver r) {
+        if(this.getModel() instanceof ReceiverTableModel) {
+            ReceiverTableModel model = (ReceiverTableModel)getModel();
+            return model.getParent(r);
+        } else {
+            throw new IllegalStateException("JReceiverTable must contain a ReceiverTableModel!");
         }
     }
 

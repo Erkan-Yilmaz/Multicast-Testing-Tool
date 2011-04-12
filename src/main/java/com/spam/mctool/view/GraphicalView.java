@@ -14,6 +14,7 @@ import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
 import com.spam.mctool.intermediates.SenderAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.SenderDataChangedEvent;
 import com.spam.mctool.model.MulticastStream;
+import com.spam.mctool.model.Receiver;
 import com.spam.mctool.model.ReceiverAddedOrRemovedListener;
 import com.spam.mctool.model.ReceiverDataChangeListener;
 import com.spam.mctool.model.ReceiverGroup;
@@ -153,8 +154,12 @@ public class GraphicalView implements MctoolView,
         if(activate) r.activate();
     }
 
-    public void removeStreams(Set<MulticastStream> senders) {
-        this.streamManager.removeStreams(senders);
+    public void removeStreams(Set<MulticastStream> streams) {
+        this.streamManager.removeStreams(streams);
+    }
+
+    public void removeReceivers(Set<Receiver> receivers) {
+        // TODO
     }
 
 }

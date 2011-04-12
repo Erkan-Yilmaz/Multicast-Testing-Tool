@@ -170,13 +170,15 @@ public class ReceiverTableModel extends AbstractTableModel implements MouseListe
     }
 
     public void mouseClicked(MouseEvent e) {
-        int rowIndex = ((JTable)e.getSource()).getSelectedRow();
-        if(getValueAt(rowIndex,0) instanceof ReceiverGroupRow) {
-            ReceiverGroupRow groupRow = (ReceiverGroupRow)getValueAt(rowIndex,0);
-            if(groupRow.isExpanded()) {
-                collapse(rowIndex);
-            } else {
-                expand(rowIndex);
+        if(e.getClickCount() == 2) {
+            int rowIndex = ((JTable)e.getSource()).getSelectedRow();
+            if(getValueAt(rowIndex,0) instanceof ReceiverGroupRow) {
+                ReceiverGroupRow groupRow = (ReceiverGroupRow)getValueAt(rowIndex,0);
+                if(groupRow.isExpanded()) {
+                    collapse(rowIndex);
+                } else {
+                    expand(rowIndex);
+                }
             }
         }
     }
@@ -372,8 +374,7 @@ public class ReceiverTableModel extends AbstractTableModel implements MouseListe
         if(row instanceof ReceiverGroupRow) {
             return ((ReceiverGroupRow)row).getReceiverGroup();
         } else if(row instanceof ReceiverRow) {
-            ReceiverRow rcvRow = (ReceiverRow)row;
-            return rcvRow.getParent().getReceiverGroup();
+            return null;
         } else {
             throw new RuntimeException("Illegal Rowtype: " + row.getClass().getName());
         }
@@ -397,6 +398,10 @@ public class ReceiverTableModel extends AbstractTableModel implements MouseListe
         } else {
             throw new RuntimeException("Illegal Rowtype: " + row.getClass().getName());
         }
+    }
+
+    ReceiverGroup getParent(Receiver r) {
+        return this.getRow(r).getParent().getReceiverGroup();
     }
 
 }

@@ -285,6 +285,12 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         paSenderTableInner.setLayout(new java.awt.BorderLayout());
 
+        jScrollPane2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jScrollPane2MouseClicked(evt);
+            }
+        });
+
         senderTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 senderTableMouseClicked(evt);
@@ -446,11 +452,22 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         buDeleteReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
         buDeleteReceiver.setText(bundle.getString("MainFrame.buDeleteReceiver.text")); // NOI18N
         buDeleteReceiver.setEnabled(false);
+        buDeleteReceiver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buDeleteReceiverActionPerformed(evt);
+            }
+        });
         paReceiverButtons.add(buDeleteReceiver);
 
         paReceiverTableOuter.add(paReceiverButtons, java.awt.BorderLayout.PAGE_END);
 
         paReceiverTableInner.setLayout(new java.awt.BorderLayout());
+
+        jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jScrollPane1MouseClicked(evt);
+            }
+        });
 
         receiverTable.setGridColor(javax.swing.UIManager.getDefaults().getColor("control"));
         receiverTable.setIntercellSpacing(new java.awt.Dimension(0, 1));
@@ -710,12 +727,12 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     }//GEN-LAST:event_buDeactivateReceiverActionPerformed
 
     /**
-     * assumption: there is only one receiver selected
+     * assumption: there is only one receiver selected.
      * @param evt
      */
     private void buShowReceiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buShowReceiverActionPerformed
-        ReceiverGroup rg = receiverTable.getSelectedReceiverGroups().get(0);
         Receiver r = receiverTable.getSelectedReceivers().get(0);
+        ReceiverGroup rg = receiverTable.getParent(r);
         ShowReceiverDialog dlg = new ShowReceiverDialog(this, true, r, rg);
         dlg.setVisible(true);
     }//GEN-LAST:event_buShowReceiverActionPerformed
@@ -729,6 +746,21 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         ReceiverGroup rg = receiverTable.getSelectedReceiverGroups().get(0);
         new EditReceiverDialog(this, true, rg, false).setVisible(true);
     }//GEN-LAST:event_buEditReceiverActionPerformed
+
+    private void buDeleteReceiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buDeleteReceiverActionPerformed
+        Set<MulticastStream> groups = new HashSet<MulticastStream>(receiverTable.getSelectedReceiverGroups());
+        Set<Receiver> receivers   = new HashSet<Receiver>(receiverTable.getSelectedReceivers());
+        view.removeStreams(groups);
+        view.removeReceivers(receivers);
+    }//GEN-LAST:event_buDeleteReceiverActionPerformed
+
+    private void jScrollPane2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane2MouseClicked
+        senderTable.clearSelection();
+    }//GEN-LAST:event_jScrollPane2MouseClicked
+
+    private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
+        receiverTable.clearSelection();
+    }//GEN-LAST:event_jScrollPane1MouseClicked
 
     /**
     * @param args the command line arguments
@@ -939,17 +971,19 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
             if(receiverTable.getSelectedReceiverGroups().size() == 1) {
                 buDeactivateReceiver.setEnabled(receiverTable.getSelectedReceiverGroups().get(0).isActive());
                 buActivateReceiver.setEnabled(!receiverTable.getSelectedReceiverGroups().get(0).isActive());
-            } else {
+            } else if (receiverTable.getSelectedReceiverGroups().size() > 1){
                 buDeactivateReceiver.setEnabled(true);
                 buActivateReceiver.setEnabled(true);
+            } else {
+                buDeactivateReceiver.setEnabled(false);
+                buActivateReceiver.setEnabled(false);
             }
 
             // Show Button
             buShowReceiver.setEnabled(receiverTable.getSelectedReceivers().size() == 1);
 
             // Edit Button
-            buEditReceiver.setEnabled(    receiverTable.getSelectedReceiverGroups().size() == 1
-                                       && receiverTable.getSelectedReceivers().isEmpty()        );
+            buEditReceiver.setEnabled(receiverTable.getSelectedReceiverGroups().size() == 1);
 
             // Delete Button
             buDeleteReceiver.setEnabled(true);
