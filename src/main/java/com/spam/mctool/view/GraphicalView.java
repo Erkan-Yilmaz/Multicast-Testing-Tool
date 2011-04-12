@@ -5,6 +5,7 @@ package com.spam.mctool.view;
 
 import com.spam.mctool.view.main.MainFrame;
 import com.spam.mctool.controller.Controller;
+import com.spam.mctool.controller.Profile;
 import com.spam.mctool.controller.ProfileChangeListener;
 import com.spam.mctool.controller.ProfileManager;
 import com.spam.mctool.controller.StreamManager;
@@ -73,15 +74,16 @@ public class GraphicalView implements MctoolView,
             });
 	}
 
-	public void profileChanged(ProfileChangeEvent e) {
-		// TODO Auto-generated method stub
-
+	public void profileChanged(final ProfileChangeEvent e) {
+            SwingUtilities.invokeLater( new Runnable() {
+                public void run() { mainFrame.profileChanged(e); }
+            });
 	}
 
         // TODO nobody calls this method so far
 	public void dataChanged(final ReceiverDataChangedEvent e) {
             SwingUtilities.invokeLater( new Runnable() {
-                public void run() {mainFrame.dataChanged(e);}
+                public void run() { mainFrame.dataChanged(e); }
             });
 	}
 
@@ -170,6 +172,10 @@ public class GraphicalView implements MctoolView,
 
     public Collection<ReceiverGroup> getReceiverGroups() {
         return this.streamManager.getReceiverGroups();
+    }
+
+    public Profile getCurrentProfile() {
+        return profileManager.getCurrentProfile();
     }
 
 }

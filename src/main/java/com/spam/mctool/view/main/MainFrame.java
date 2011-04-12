@@ -6,6 +6,7 @@
 
 package com.spam.mctool.view.main;
 
+import com.spam.mctool.intermediates.ProfileChangeEvent;
 import com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
 import com.spam.mctool.intermediates.SenderAddedOrRemovedEvent;
@@ -154,8 +155,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         miHelp = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
-        setTitle(bundle.getString("MainFrame.title")); // NOI18N
+        setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("MainFrame.title") + (view.getCurrentProfile().getName() != null ? " - " + view.getCurrentProfile().getName() : ""));
 
         mainSplitPane.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         mainSplitPane.setDividerLocation(267);
@@ -170,6 +170,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         senderSplitPane.setContinuousLayout(true);
         senderSplitPane.setOneTouchExpandable(true);
 
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
         laSendingStatistics.setText(bundle.getString("MainFrame.laSendingStatistics.text")); // NOI18N
 
         laSentCaption.setText(bundle.getString("MainFrame.laSentCaption.text")); // NOI18N
@@ -1033,6 +1034,10 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
             buEditReceiver.setEnabled(false);
             buDeleteReceiver.setEnabled(false);
         }
+    }
+
+    public void profileChanged(ProfileChangeEvent e) {
+        setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("MainFrame.title") + (view.getCurrentProfile().getName() != null ? " - " + view.getCurrentProfile().getName() : ""));
     }
 
     
