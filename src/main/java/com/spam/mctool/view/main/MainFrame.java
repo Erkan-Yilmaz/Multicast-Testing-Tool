@@ -6,6 +6,7 @@
 
 package com.spam.mctool.view.main;
 
+import com.spam.mctool.intermediates.ProfileChangeEvent;
 import com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
 import com.spam.mctool.intermediates.SenderAddedOrRemovedEvent;
@@ -21,6 +22,7 @@ import com.spam.mctool.view.dialogs.ShowReceiverDialog;
 import com.spam.mctool.view.dialogs.ShowSenderDialog;
 import com.spam.mctool.view.main.receivertable.ReceiverTableModel;
 import com.spam.mctool.view.main.sendertable.JSenderTable;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -153,8 +155,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         miHelp = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
-        setTitle(bundle.getString("MainFrame.title")); // NOI18N
+        setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("MainFrame.title") + (view.getCurrentProfile().getName() != null ? " - " + view.getCurrentProfile().getName() : ""));
 
         mainSplitPane.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         mainSplitPane.setDividerLocation(267);
@@ -169,6 +170,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         senderSplitPane.setContinuousLayout(true);
         senderSplitPane.setOneTouchExpandable(true);
 
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
         laSendingStatistics.setText(bundle.getString("MainFrame.laSendingStatistics.text")); // NOI18N
 
         laSentCaption.setText(bundle.getString("MainFrame.laSentCaption.text")); // NOI18N
@@ -190,11 +192,11 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
                     .addComponent(laSendingStatistics)
                     .addGroup(paSendingStatisticsLayout.createSequentialGroup()
                         .addComponent(laSentCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                         .addComponent(laSent))
                     .addGroup(paSendingStatisticsLayout.createSequentialGroup()
                         .addComponent(laSenderRateCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                         .addComponent(laSenderRate)))
                 .addContainerGap())
         );
@@ -285,6 +287,12 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         paSenderTableInner.setLayout(new java.awt.BorderLayout());
 
+        jScrollPane2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jScrollPane2MouseClicked(evt);
+            }
+        });
+
         senderTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 senderTableMouseClicked(evt);
@@ -346,19 +354,19 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
                     .addComponent(receivingStatisticsSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
                     .addGroup(paReceivingStatisticsLayout.createSequentialGroup()
                         .addComponent(laReceivedCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                         .addComponent(laReceived))
                     .addGroup(paReceivingStatisticsLayout.createSequentialGroup()
                         .addComponent(laReceivingRateCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                         .addComponent(laReceivingRate))
                     .addGroup(paReceivingStatisticsLayout.createSequentialGroup()
                         .addComponent(laLostPacketsCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                         .addComponent(laLostPackets))
                     .addGroup(paReceivingStatisticsLayout.createSequentialGroup()
                         .addComponent(laFaultyPacketsCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                         .addComponent(laFaultyPackets)))
                 .addContainerGap())
         );
@@ -446,11 +454,22 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         buDeleteReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
         buDeleteReceiver.setText(bundle.getString("MainFrame.buDeleteReceiver.text")); // NOI18N
         buDeleteReceiver.setEnabled(false);
+        buDeleteReceiver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buDeleteReceiverActionPerformed(evt);
+            }
+        });
         paReceiverButtons.add(buDeleteReceiver);
 
         paReceiverTableOuter.add(paReceiverButtons, java.awt.BorderLayout.PAGE_END);
 
         paReceiverTableInner.setLayout(new java.awt.BorderLayout());
+
+        jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jScrollPane1MouseClicked(evt);
+            }
+        });
 
         receiverTable.setGridColor(javax.swing.UIManager.getDefaults().getColor("control"));
         receiverTable.setIntercellSpacing(new java.awt.Dimension(0, 1));
@@ -710,12 +729,12 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     }//GEN-LAST:event_buDeactivateReceiverActionPerformed
 
     /**
-     * assumption: there is only one receiver selected
+     * assumption: there is only one receiver selected.
      * @param evt
      */
     private void buShowReceiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buShowReceiverActionPerformed
-        ReceiverGroup rg = receiverTable.getSelectedReceiverGroups().get(0);
         Receiver r = receiverTable.getSelectedReceivers().get(0);
+        ReceiverGroup rg = receiverTable.getParent(r);
         ShowReceiverDialog dlg = new ShowReceiverDialog(this, true, r, rg);
         dlg.setVisible(true);
     }//GEN-LAST:event_buShowReceiverActionPerformed
@@ -729,6 +748,21 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         ReceiverGroup rg = receiverTable.getSelectedReceiverGroups().get(0);
         new EditReceiverDialog(this, true, rg, false).setVisible(true);
     }//GEN-LAST:event_buEditReceiverActionPerformed
+
+    private void buDeleteReceiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buDeleteReceiverActionPerformed
+        Set<MulticastStream> groups = new HashSet<MulticastStream>(receiverTable.getSelectedReceiverGroups());
+        Set<Receiver> receivers   = new HashSet<Receiver>(receiverTable.getSelectedReceivers());
+        view.removeStreams(groups);
+        view.removeReceivers(receivers);
+    }//GEN-LAST:event_buDeleteReceiverActionPerformed
+
+    private void jScrollPane2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane2MouseClicked
+        senderTable.clearSelection();
+    }//GEN-LAST:event_jScrollPane2MouseClicked
+
+    private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
+        receiverTable.clearSelection();
+    }//GEN-LAST:event_jScrollPane1MouseClicked
 
     /**
     * @param args the command line arguments
@@ -876,7 +910,21 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     }
 
     public void dataChanged(SenderDataChangedEvent e) {
+
+        // update the sender table
         senderTable.dataChanged(e);
+
+        // update the sender statistics section
+        Collection<Sender> senders = this.view.getSenders();
+        Long rate = 0l;
+        Long sent = 0l;
+        for(Sender s : senders) {
+            sent += s.getSentPacketCount();
+            rate += s.getAvgPPS();
+        }
+        if(!senders.isEmpty()) rate /= senders.size();
+        laSent.setText(sent.toString());
+        laSenderRate.setText(rate.toString());
     }
 
     public void receiverGroupAdded(ReceiverAddedOrRemovedEvent e) {
@@ -888,7 +936,31 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     }
 
     public void dataChanged(ReceiverDataChangedEvent e) {
+
+        // update the receiver table
         receiverTable.dataChanged(e);
+
+        // update the receiver statistics section
+        Collection<ReceiverGroup> groups = view.getReceiverGroups();
+
+        Long received = 0l;
+        Long rate     = 0l;
+        Long lost     = 0l;
+        Long faulty   = 0l;
+
+        for(ReceiverGroup g : groups) {
+            received += g.getReceivedPackets();
+            rate     += g.getAvgPPS();
+            lost     += g.getLostPackets();
+            faulty   += g.getFaultyPackets();
+        }
+
+        if(!groups.isEmpty()) rate /= groups.size();
+
+        laReceived.setText(received.toString());
+        laReceivingRate.setText(rate.toString());
+        laLostPackets.setText(lost.toString());
+        laFaultyPackets.setText(faulty.toString());
     }
 
     public void addReceiverGroup(Map<String, String> receiverMap, boolean activate) {
@@ -939,17 +1011,19 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
             if(receiverTable.getSelectedReceiverGroups().size() == 1) {
                 buDeactivateReceiver.setEnabled(receiverTable.getSelectedReceiverGroups().get(0).isActive());
                 buActivateReceiver.setEnabled(!receiverTable.getSelectedReceiverGroups().get(0).isActive());
-            } else {
+            } else if (receiverTable.getSelectedReceiverGroups().size() > 1){
                 buDeactivateReceiver.setEnabled(true);
                 buActivateReceiver.setEnabled(true);
+            } else {
+                buDeactivateReceiver.setEnabled(false);
+                buActivateReceiver.setEnabled(false);
             }
 
             // Show Button
             buShowReceiver.setEnabled(receiverTable.getSelectedReceivers().size() == 1);
 
             // Edit Button
-            buEditReceiver.setEnabled(    receiverTable.getSelectedReceiverGroups().size() == 1
-                                       && receiverTable.getSelectedReceivers().isEmpty()        );
+            buEditReceiver.setEnabled(receiverTable.getSelectedReceiverGroups().size() == 1);
 
             // Delete Button
             buDeleteReceiver.setEnabled(true);
@@ -960,6 +1034,10 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
             buEditReceiver.setEnabled(false);
             buDeleteReceiver.setEnabled(false);
         }
+    }
+
+    public void profileChanged(ProfileChangeEvent e) {
+        setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("MainFrame.title") + (view.getCurrentProfile().getName() != null ? " - " + view.getCurrentProfile().getName() : ""));
     }
 
     

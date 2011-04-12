@@ -5,6 +5,7 @@ package com.spam.mctool.view;
 
 import com.spam.mctool.view.main.MainFrame;
 import com.spam.mctool.controller.Controller;
+import com.spam.mctool.controller.Profile;
 import com.spam.mctool.controller.ProfileChangeListener;
 import com.spam.mctool.controller.ProfileManager;
 import com.spam.mctool.controller.StreamManager;
@@ -14,12 +15,15 @@ import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
 import com.spam.mctool.intermediates.SenderAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.SenderDataChangedEvent;
 import com.spam.mctool.model.MulticastStream;
+import com.spam.mctool.model.Receiver;
 import com.spam.mctool.model.ReceiverAddedOrRemovedListener;
 import com.spam.mctool.model.ReceiverDataChangeListener;
 import com.spam.mctool.model.ReceiverGroup;
 import com.spam.mctool.model.Sender;
 import com.spam.mctool.model.SenderAddedOrRemovedListener;
 import com.spam.mctool.model.SenderDataChangeListener;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.SwingUtilities;
@@ -70,15 +74,16 @@ public class GraphicalView implements MctoolView,
             });
 	}
 
-	public void profileChanged(ProfileChangeEvent e) {
-		// TODO Auto-generated method stub
-
+	public void profileChanged(final ProfileChangeEvent e) {
+            SwingUtilities.invokeLater( new Runnable() {
+                public void run() { mainFrame.profileChanged(e); }
+            });
 	}
 
         // TODO nobody calls this method so far
 	public void dataChanged(final ReceiverDataChangedEvent e) {
             SwingUtilities.invokeLater( new Runnable() {
-                public void run() {mainFrame.dataChanged(e);}
+                public void run() { mainFrame.dataChanged(e); }
             });
 	}
 
@@ -153,8 +158,24 @@ public class GraphicalView implements MctoolView,
         if(activate) r.activate();
     }
 
-    public void removeStreams(Set<MulticastStream> senders) {
-        this.streamManager.removeStreams(senders);
+    public void removeStreams(Set<MulticastStream> streams) {
+        this.streamManager.removeStreams(streams);
+    }
+
+    public void removeReceivers(Set<Receiver> receivers) {
+        // TODO
+    }
+
+    public Collection<Sender> getSenders() {
+        return this.streamManager.getSenders();
+    }
+
+    public Collection<ReceiverGroup> getReceiverGroups() {
+        return this.streamManager.getReceiverGroups();
+    }
+
+    public Profile getCurrentProfile() {
+        return profileManager.getCurrentProfile();
     }
 
 }
