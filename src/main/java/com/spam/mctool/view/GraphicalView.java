@@ -21,6 +21,8 @@ import com.spam.mctool.model.ReceiverGroup;
 import com.spam.mctool.model.Sender;
 import com.spam.mctool.model.SenderAddedOrRemovedListener;
 import com.spam.mctool.model.SenderDataChangeListener;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.SwingUtilities;
@@ -160,6 +162,14 @@ public class GraphicalView implements MctoolView,
 
     public void removeReceivers(Set<Receiver> receivers) {
         // TODO
+    }
+
+    public Collection<Sender> getSenders() {
+        return this.streamManager.getSenders();
+    }
+
+    public Collection<ReceiverGroup> getReceiverGroups() {
+        return this.streamManager.getReceiverGroups();
     }
 
 }

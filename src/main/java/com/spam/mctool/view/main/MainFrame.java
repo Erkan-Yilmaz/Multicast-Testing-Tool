@@ -21,6 +21,7 @@ import com.spam.mctool.view.dialogs.ShowReceiverDialog;
 import com.spam.mctool.view.dialogs.ShowSenderDialog;
 import com.spam.mctool.view.main.receivertable.ReceiverTableModel;
 import com.spam.mctool.view.main.sendertable.JSenderTable;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -190,11 +191,11 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
                     .addComponent(laSendingStatistics)
                     .addGroup(paSendingStatisticsLayout.createSequentialGroup()
                         .addComponent(laSentCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                         .addComponent(laSent))
                     .addGroup(paSendingStatisticsLayout.createSequentialGroup()
                         .addComponent(laSenderRateCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                         .addComponent(laSenderRate)))
                 .addContainerGap())
         );
@@ -352,19 +353,19 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
                     .addComponent(receivingStatisticsSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
                     .addGroup(paReceivingStatisticsLayout.createSequentialGroup()
                         .addComponent(laReceivedCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                         .addComponent(laReceived))
                     .addGroup(paReceivingStatisticsLayout.createSequentialGroup()
                         .addComponent(laReceivingRateCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                         .addComponent(laReceivingRate))
                     .addGroup(paReceivingStatisticsLayout.createSequentialGroup()
                         .addComponent(laLostPacketsCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                         .addComponent(laLostPackets))
                     .addGroup(paReceivingStatisticsLayout.createSequentialGroup()
                         .addComponent(laFaultyPacketsCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                         .addComponent(laFaultyPackets)))
                 .addContainerGap())
         );
@@ -908,7 +909,21 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     }
 
     public void dataChanged(SenderDataChangedEvent e) {
+
+        // update the sender table
         senderTable.dataChanged(e);
+
+        // update the sender statistics section
+        Collection<Sender> senders = this.view.getSenders();
+        Long rate = 0l;
+        Long sent = 0l;
+        for(Sender s : senders) {
+            sent += s.getSentPacketCount();
+            rate += s.getAvgPPS();
+        }
+        if(!senders.isEmpty()) rate /= senders.size();
+        laSent.setText(sent.toString());
+        laSenderRate.setText(rate.toString());
     }
 
     public void receiverGroupAdded(ReceiverAddedOrRemovedEvent e) {
@@ -920,7 +935,31 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     }
 
     public void dataChanged(ReceiverDataChangedEvent e) {
+
+        // update the receiver table
         receiverTable.dataChanged(e);
+
+        // update the receiver statistics section
+        Collection<ReceiverGroup> groups = view.getReceiverGroups();
+
+        Long received = 0l;
+        Long rate     = 0l;
+        Long lost     = 0l;
+        Long faulty   = 0l;
+
+        for(ReceiverGroup g : groups) {
+            received += g.getReceivedPackets();
+            rate     += g.getAvgPPS();
+            lost     += g.getLostPackets();
+            faulty   += g.getFaultyPackets();
+        }
+
+        if(!groups.isEmpty()) rate /= groups.size();
+
+        laReceived.setText(received.toString());
+        laReceivingRate.setText(rate.toString());
+        laLostPackets.setText(lost.toString());
+        laFaultyPackets.setText(faulty.toString());
     }
 
     public void addReceiverGroup(Map<String, String> receiverMap, boolean activate) {
