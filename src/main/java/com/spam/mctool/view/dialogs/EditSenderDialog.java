@@ -389,7 +389,7 @@ public class EditSenderDialog extends javax.swing.JDialog {
     }
 
     private void setDefaultValues(){
-        this.GroupField.setText("255.1.1.1");
+        this.GroupField.setText("225.1.1.1");
         this.PortField.setValue(12345);
         this.DataField.setText("Default");
         this.PacketRateField.setValue(10);
