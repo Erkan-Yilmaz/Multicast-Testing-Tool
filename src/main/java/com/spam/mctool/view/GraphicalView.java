@@ -162,10 +162,6 @@ public class GraphicalView implements MctoolView,
         this.streamManager.removeStreams(streams);
     }
 
-    public void removeReceivers(Set<Receiver> receivers) {
-        // TODO
-    }
-
     public Collection<Sender> getSenders() {
         return this.streamManager.getSenders();
     }

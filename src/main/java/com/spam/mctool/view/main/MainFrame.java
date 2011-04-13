@@ -764,8 +764,12 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     private void buDeleteReceiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buDeleteReceiverActionPerformed
         Set<MulticastStream> groups = new HashSet<MulticastStream>(receiverTable.getSelectedReceiverGroups());
         Set<Receiver> receivers   = new HashSet<Receiver>(receiverTable.getSelectedReceivers());
+        for(Receiver r : receivers) {
+            ReceiverGroup parent = receiverTable.getParent(r);
+            parent.removeReceiver(r);
+            receiverTable.receiverRemoved(r);
+        }
         view.removeStreams(groups);
-        view.removeReceivers(receivers);
     }//GEN-LAST:event_buDeleteReceiverActionPerformed
 
     private void jScrollPane2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane2MouseClicked

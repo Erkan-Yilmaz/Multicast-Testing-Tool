@@ -42,8 +42,8 @@ public class JReceiverTable extends JTable {
     private void init() {
         this.getColumnModel().getColumn(0).setHeaderValue("Status");
         this.getColumnModel().getColumn(1).setHeaderValue("Sender ID");
-        this.getColumnModel().getColumn(2).setHeaderValue("Conf. PPS");
-        this.getColumnModel().getColumn(3).setHeaderValue("Measured PPS");
+        this.getColumnModel().getColumn(2).setHeaderValue("Conf. Packet Rate");
+        this.getColumnModel().getColumn(3).setHeaderValue("Avg. Packet Rate");
         this.getColumnModel().getColumn(4).setHeaderValue("Lost Packets");
         this.getColumnModel().getColumn(5).setHeaderValue("Payload");
         this.getColumnModel().getColumn(0).setCellRenderer(new ReceiverStateRenderer());
@@ -133,6 +133,15 @@ public class JReceiverTable extends JTable {
         if(this.getModel() instanceof ReceiverTableModel) {
             ReceiverTableModel model = (ReceiverTableModel)getModel();
             return model.getParent(r);
+        } else {
+            throw new IllegalStateException("JReceiverTable must contain a ReceiverTableModel!");
+        }
+    }
+
+    public void receiverRemoved(Receiver r) {
+        if(this.getModel() instanceof ReceiverTableModel) {
+            ReceiverTableModel model = (ReceiverTableModel)getModel();
+            model.receiverRemoved(r);
         } else {
             throw new IllegalStateException("JReceiverTable must contain a ReceiverTableModel!");
         }

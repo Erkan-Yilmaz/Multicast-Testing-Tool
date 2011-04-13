@@ -61,6 +61,10 @@ class ReceiverGroupRow extends ReceiverTableRow {
         return receiverRows;
     }
 
+    void remove(ReceiverRow rrow) {
+        receiverRows.remove(rrow);
+    }
+
     
 
 }

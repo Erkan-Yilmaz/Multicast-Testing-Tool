@@ -404,4 +404,13 @@ public class ReceiverTableModel extends AbstractTableModel implements MouseListe
         return this.getRow(r).getParent().getReceiverGroup();
     }
 
+    void receiverRemoved(Receiver r) {
+        ReceiverRow rrow = getRow(r);
+        int rowIndex = this.getVisibleIndex(rrow);
+        ReceiverGroupRow grow = rrow.getParent();
+        grow.remove(rrow);
+        rows.remove(rrow);
+        this.fireTableRowsDeleted(rowIndex, rowIndex);
+    }
+
 }
