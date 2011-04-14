@@ -539,6 +539,11 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         menuSender.add(jSeparator3);
 
         miSenderActivate.setText(bundle.getString("MainFrame.miSenderActivate.text")); // NOI18N
+        miSenderActivate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miSenderActivateActionPerformed(evt);
+            }
+        });
         menuSender.add(miSenderActivate);
 
         miSenderDeactivate.setText(bundle.getString("MainFrame.miSenderDeactivate.text")); // NOI18N
@@ -787,6 +792,10 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     private void miSaveProfileAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSaveProfileAsActionPerformed
         new SaveProfileDialog(this, true).setVisible(true);
     }//GEN-LAST:event_miSaveProfileAsActionPerformed
+
+    private void miSenderActivateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSenderActivateActionPerformed
+        this.buActivateSenderActionPerformed(evt);
+    }//GEN-LAST:event_miSenderActivateActionPerformed
 
     /**
     * @param args the command line arguments
