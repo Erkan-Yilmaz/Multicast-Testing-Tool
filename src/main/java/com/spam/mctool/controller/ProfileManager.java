@@ -1,5 +1,6 @@
 package com.spam.mctool.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -8,23 +9,23 @@ import java.util.List;
  * @author Jeffrey Jedele
  */
 public interface ProfileManager {
-	
-	/**
-	 * Saves the current settings and streams to a file
-	 */
-	public void storeCurrentProfile();
-	
-	/**
-	 * ProfileChangeListener Observer
-	 * @param l listener to be added 
-	 */
-	public void addProfileChangeListener(com.spam.mctool.controller.ProfileChangeListener l);
-	
-	/**
-	 * ProfileChangeListener Observer
-	 * @param l listener to be removed
-	 */
-	public void removeProfileChangeListener(com.spam.mctool.controller.ProfileChangeListener l);
+
+    /**
+     * Saves the current settings and streams to a file
+     */
+    public void storeCurrentProfile();
+
+    /**
+     * ProfileChangeListener Observer
+     * @param l listener to be added
+     */
+    public void addProfileChangeListener(com.spam.mctool.controller.ProfileChangeListener l);
+
+    /**
+     * ProfileChangeListener Observer
+     * @param l listener to be removed
+     */
+    public void removeProfileChangeListener(com.spam.mctool.controller.ProfileChangeListener l);
 
         /**
          * Get the current profile.
@@ -45,8 +46,10 @@ public interface ProfileManager {
 
         /**
          * Save profile data
+         * @throws IOException
+         * @throws Exception
          */
-        void saveProfile();
+        void saveProfile() throws IOException, Exception;
 
         /**
          * Change the profile to currentProfile
