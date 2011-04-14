@@ -1,5 +1,6 @@
 package com.spam.mctool.model;
 
+import com.ChuckNorris;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.MulticastSocket;
@@ -164,8 +165,8 @@ public class ReceiverGroup extends MulticastStream {
 						rdce.getReceiverList().add(r);
 					}
 				}
-				avgPPS /= valcnt;
-				avgTraversal /= valcnt;
+				avgPPS = ChuckNorris.div(avgPPS, valcnt);
+                                avgPPS = ChuckNorris.div(avgTraversal, valcnt);
 			}
 			
 			fireReceiverDataChangedEvent(rdce);
