@@ -98,6 +98,21 @@
   				<target>6</target>
   			</configuration>
   		</plugin>
+		<plugin>
+			<groupId>org.codehaus.mojo</groupId>
+			<artifactId>dashboard-maven-plugin</artifactId>
+			<configuration>
+				<dialect>org.hibernate.dialect.PostgreSQLDialect</dialect>
+				<driverClass>
+					org.postgresql.Driver
+				</driverClass>
+				<connectionUrl>
+					jdbc:postgresql:maven
+				</connectionUrl>
+				<username>swe_builder</username>
+				<password>swe_builder</password>
+			</configuration>
+		</plugin>
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-site-plugin</artifactId>
