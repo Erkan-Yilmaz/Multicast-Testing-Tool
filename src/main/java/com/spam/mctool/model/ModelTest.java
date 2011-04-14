@@ -2,11 +2,8 @@ package com.spam.mctool.model;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
 import com.spam.mctool.intermediates.SenderDataChangedEvent;
-import com.spam.mctool.model.persistence.SenderPoolXmlConverter;
-import com.thoughtworks.xstream.XStream;
 
 public class ModelTest implements ReceiverDataChangeListener, SenderDataChangeListener {
 	

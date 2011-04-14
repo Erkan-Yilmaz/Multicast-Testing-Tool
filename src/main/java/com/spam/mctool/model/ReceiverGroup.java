@@ -23,7 +23,7 @@ import com.spam.mctool.model.packet.Packet;
  * in this group.
  * @author Jeffrey Jedele
  */
-public class ReceiverGroup extends MulticastStream {
+public final class ReceiverGroup extends MulticastStream {
 	
 	// internals
 	private Map<Long, Exception> exceptions;
@@ -46,6 +46,9 @@ public class ReceiverGroup extends MulticastStream {
 	private long minTraversal = 0;
 	private long avgTraversal = 0;
 	private long maxTraversal = 0;
+	// constants
+	private static final int INITIAL_RECEIVER_GROUP_SIZE = 10;
+	private static final int PACKET_BUFFER_SIZE = 10000;
 	
 	/**
 	 * Used from the SenderManager to create a new ReceiverGroup
@@ -53,9 +56,9 @@ public class ReceiverGroup extends MulticastStream {
 	 */
 	protected ReceiverGroup(ScheduledThreadPoolExecutor stpe) {
 		this.exceptions = new LinkedHashMap<Long, Exception>();
-		this.receivers = new ConcurrentHashMap<Long, Receiver>(10);
+		this.receivers = new ConcurrentHashMap<Long, Receiver>(INITIAL_RECEIVER_GROUP_SIZE);
 		this.stpe = stpe;
-		this.buffer = new byte[10000];
+		this.buffer = new byte[PACKET_BUFFER_SIZE];
 		this.analyzer = new AnalyzeReceiverGroup();
 		this.faultyPackets = 0;
 		this.rdclListeners = new LinkedList<ReceiverDataChangeListener>();
@@ -64,6 +67,9 @@ public class ReceiverGroup extends MulticastStream {
 	@Override
 	public void activate() {
 		try {
+			if(state == State.ACTIVE) {
+				return;
+			}
 			// open socket and join group
 			socket = new MulticastSocket(getPort());
 			socket.setNetworkInterface(getNetworkInterface());
@@ -82,12 +88,17 @@ public class ReceiverGroup extends MulticastStream {
 	 */
 	@Override
 	public void deactivate() {
+		if(state == State.INACTIVE) {
+			return;
+		}
 		asf.cancel(false);
 		state = State.INACTIVE;
 		socket.close();
 		// clean up receiver data
 		for(Receiver r : receivers.values()) {
-			if(r != null) r.calcNewStatistics();
+			if(r != null) {
+				r.calcNewStatistics();
+			}
 		}
 		analyzer.run();
 	}
@@ -133,7 +144,7 @@ public class ReceiverGroup extends MulticastStream {
 		long receivedTime;
 		long systemTime;
 		Packet packet;
-		int size;
+		private int size;
 	}
 	
 	// this is scheduled in the executor thread pool to analyze the data of the receivers
@@ -142,10 +153,21 @@ public class ReceiverGroup extends MulticastStream {
 			ReceiverDataChangedEvent rdce = new ReceiverDataChangedEvent(ReceiverGroup.this);
 			
 			synchronized(statsLock) {
-				receivedPackets = lostPackets = senderConfiguredPPS = senderMeasuredPPS = senderSentPackets = avgPPS = avgTraversal = 0;
-				minPPS = minTraversal = Long.MAX_VALUE;
-				maxDelay = maxPPS = maxTraversal = Long.MIN_VALUE;
+				// initialize variables
+				receivedPackets = 0;
+				lostPackets = 0;
+				senderConfiguredPPS = 0;
+				senderMeasuredPPS = 0;
+				senderSentPackets = 0;
+				avgPPS = 0;
+				avgTraversal = 0;
+				minPPS = Long.MAX_VALUE;
+				minTraversal = Long.MAX_VALUE;
+				maxDelay = Long.MIN_VALUE;
+				maxPPS = Long.MIN_VALUE;
+				maxTraversal = Long.MIN_VALUE;
 				int valcnt = 0;
+				// calculate everything
 				for(Receiver r : receivers.values()) {
 					if(r != null) {
 						valcnt++;
@@ -165,8 +187,9 @@ public class ReceiverGroup extends MulticastStream {
 						rdce.getReceiverList().add(r);
 					}
 				}
+				// do the famous chuck norris possible by zero division
 				avgPPS = ChuckNorris.div(avgPPS, valcnt);
-                                avgPPS = ChuckNorris.div(avgTraversal, valcnt);
+                avgPPS = ChuckNorris.div(avgTraversal, valcnt);
 			}
 			
 			fireReceiverDataChangedEvent(rdce);

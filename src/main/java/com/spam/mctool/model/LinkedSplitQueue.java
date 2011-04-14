@@ -17,13 +17,16 @@ public class LinkedSplitQueue<E> implements Iterable<E> {
 	private int iteratorStepSize = 1;
 	
 	private class Node {
-		volatile Node next;
-		E data;
+		private volatile Node next;
+		private E data;
 	}
 	
 	private class LSQIterator implements Iterator<E> {
-		Node pos = head;
+		private Node pos = head;
 
+		/**
+		 * @return true if an element exists in range of the set step width
+		 */
 		public boolean hasNext() {
 			Node p = pos;
 			try {
@@ -36,6 +39,10 @@ public class LinkedSplitQueue<E> implements Iterable<E> {
 			}
 		}
 
+		/**
+		 * @return next element regarding set step width if existent
+		 * @throws NoSuchElementException if no more objects are reachable
+		 */
 		public E next() {
 			Node p = pos;
 			try {
@@ -44,12 +51,16 @@ public class LinkedSplitQueue<E> implements Iterable<E> {
 				}
 				pos = p;
 				return p.data;
-			} catch(NullPointerException e) {
+			} catch(Exception e) {
 				throw new NoSuchElementException();
 			}
 		}
 
+		/**
+		 * removing elements is not supported in this implementation
+		 */
 		public void remove() {
+			throw new UnsupportedOperationException();
 		}
 	}
 	
@@ -118,8 +129,8 @@ public class LinkedSplitQueue<E> implements Iterable<E> {
 	 * @param step stepwidth to set
 	 */
 	public void setIteratorStepSize(int step) {
-		if(step<=0) step=1; // escape step widths of zero
-		this.iteratorStepSize = step;
+		int escapedStep = (step<=0) ? 1 : step;
+		this.iteratorStepSize = escapedStep;
 	}
 	
 }
