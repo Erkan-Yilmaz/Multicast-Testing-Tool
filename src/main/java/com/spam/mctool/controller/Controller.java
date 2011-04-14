@@ -3,9 +3,19 @@
  */
 package com.spam.mctool.controller;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -13,17 +23,35 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Text;
+
 import com.spam.mctool.intermediates.ProfileChangeEvent;
 import com.spam.mctool.model.MulticastStream;
 import com.spam.mctool.model.ReceiverAddedOrRemovedListener;
 import com.spam.mctool.model.ReceiverGroup;
+import com.spam.mctool.model.ReceiverManager;
 import com.spam.mctool.model.ReceiverPool;
 import com.spam.mctool.model.Sender;
 import com.spam.mctool.model.SenderAddedOrRemovedListener;
+import com.spam.mctool.model.SenderManager;
 import com.spam.mctool.model.SenderPool;
 import com.spam.mctool.view.CommandLineView;
 import com.spam.mctool.view.GraphicalView;
 import com.spam.mctool.view.MctoolView;
+import com.thoughtworks.xstream.XStream;
 
 /**
  * @author davidhildenbrand
@@ -35,17 +63,94 @@ public class Controller implements ProfileManager, StreamManager {
 	private Profile currentProfile;
 	private List<Profile> recentProfiles;
 	private List<ProfileChangeListener> profileChangeObservers;
-	private SenderPool senderManager;
-	private ReceiverPool receiverManager;
+	private SenderManager senderPool;
+	private ReceiverManager receiverPool;
 	private List<MctoolView> viewers;
+	
+	/* This function either inserts the profile directly to the top
+	 * of the list or searches for an existing entry(path!), deletes that entry
+	 * and inserts the new profile at te top. Max 10 profiles are stored.
+	 */
+	private void addOrUpdateProfileInList(Profile profile){
+		//test for null value
+		if(profile == null){
+			throw new IllegalArgumentException();
+		}
+		//Search for existing entries with equal path and delete them
+		Iterator<Profile> it = this.recentProfiles.iterator();
+		while(it.hasNext()){
+			Profile compareObject = it.next();
+			//Delete the entry
+			if(profile.equalPath(compareObject)){
+				this.recentProfiles.remove(compareObject);
+			}
+		}
+		//Add the new profile to the top
+		this.recentProfiles.add(0, profile);
+		//Test if there are more then 10 elements in the list
+		if(this.recentProfiles.size() > 10){
+			//delete the 11. entry until the size equals 10
+			while(this.recentProfiles.size() > 10){
+				this.recentProfiles.remove(10);
+			}
+		}
+	}
+	
+	/*
+	 * This function tries to save the profile list to the file named "RecentProfiles.xml"
+	 */
+	private void saveRecentProfiles() throws IOException{
+		//create the xstream object
+		XStream xstream = new XStream();
+		//convert the recent profiles to xml
+		String xml = xstream.toXML(recentProfiles);
+		//create a new file
+		File recentProfilesPath = new File("RecentProfiles.xml");
+		//create a file output stream
+		FileOutputStream fos = null;
+		try {
+			fos = new FileOutputStream(recentProfilesPath);
+		} catch (FileNotFoundException e) {
+			// We can ignore this, file will be created
+		}
+		//Create a data output stream
+		DataOutputStream dos = new DataOutputStream(fos);
+		//Write the list
+		dos.writeUTF(xml);
+		//close the dos stream
+		dos.flush();
+		dos.close();
+		//close the fos
+		fos.flush();
+		fos.close();
+	}
+	
+	/*
+	 * This function tries to load the profile list from the file named "RecentProfiles.xml"
+	 */
+	private void loadRecentProfiles() throws IOException{
+		//create the xstream object
+		XStream xstream = new XStream();
+		//create a new file
+		File recentProfilesPath = new File("RecentProfiles.xml");
+		//create a file input stream
+		FileInputStream fis = new FileInputStream(recentProfilesPath);
+		//create a data input stream
+		DataInputStream dis = new DataInputStream(fis);
+		//read the xml data
+		String xml = dis.readUTF();
+		//create the object from xstream
+		this.recentProfiles = (ArrayList<Profile>)xstream.fromXML(xml);
+	}
+	
 	
 	private Controller(){
 		this.currentProfile = new Profile();
 		this.recentProfiles = new ArrayList<Profile>();
 		this.profileChangeObservers = new ArrayList<ProfileChangeListener>();
 		//Init the Sender and Receiver modules
-		this.senderManager = new SenderPool();
-		this.receiverManager = new ReceiverPool();
+		this.senderPool = new SenderPool();
+		this.receiverPool = new ReceiverPool();
 		//Create the vies
 		viewers = new ArrayList<MctoolView>();
 	}
@@ -65,7 +170,14 @@ public class Controller implements ProfileManager, StreamManager {
 	}
 	
 	public void init(String[] args) {
-			//TODO load recent profiles
+			//try to load recent profiles
+			try {
+				this.loadRecentProfiles();
+			} catch (FileNotFoundException e) {
+				System.out.println("The recent profiles list could not be read. The file 'RecentProfiles.xml' does not exist.");
+			} catch (IOException e) {
+				System.out.println("The recent profiles list could not be read. An IOException occured");
+			}
 			//Gui enabled by default
 			boolean enableGui = true;
 			//Cli disabled by default
@@ -73,7 +185,7 @@ public class Controller implements ProfileManager, StreamManager {
 			//Start all loaded senders and receivers later?
 			boolean enableStartAll = false;
 			//The profile to be loaded
-			File desiredProfile;
+			File desiredProfile = null;
             //iterate over all args
 			for(int i = 0; i<args.length; ++i){
 				//CLI desired?
@@ -121,6 +233,9 @@ public class Controller implements ProfileManager, StreamManager {
 				else if(args[i].compareToIgnoreCase("-startall") == 0){
 					enableStartAll = true;
 				}
+				else{
+					//TODO Keyword not valid
+				}
 				
 			}
 			//Add views here
@@ -139,37 +254,45 @@ public class Controller implements ProfileManager, StreamManager {
                     MctoolView curView = it.next();
                     curView.init(this);
             }
+            
+            //TODO Load desired Profile
+            
+            //TODO Start the streams if -startall has been defined
 	}
 
+	/*
+	 * This function will set the current profile and inform all observers
+	 */
 	public void setCurrentProfile(Profile currentProfile) {
-		//Put it right into the recentProfiles list
-		this.recentProfiles.add(currentProfile);
+		if(currentProfile == null){
+			throw new IllegalArgumentException();
+		}
+		//This will be our new profile
 		this.currentProfile = currentProfile;
 		//Inform observers
 		profileChanged();
 	}
-
+	
+	/*
+	 * This function will return the list of recently used profiles
+	 */
 	public List<Profile> getRecentProfiles() {
 		return recentProfiles;
 	}
-	/*
-	public void setRecentProfiles(ArrayList<Profile> recentProfiles) {
-		this.recentProfiles = recentProfiles;
-	}
-	*/
+
 
 	/* (non-Javadoc)
 	 * @see com.spam.mctool.controller.StreamManager#addSender(java.util.HashMap)
 	 */
 	public Sender addSender(HashMap<String, String> params) {
-		return senderManager.create(params);
+		return senderPool.create(params);
 	}
 
 	/* (non-Javadoc)
 	 * @see com.spam.mctool.controller.StreamManager#addReceiver(java.util.HashMap)
 	 */
 	public ReceiverGroup addReceiver(HashMap<String, String> params) {
-		return receiverManager.create(params);
+		return receiverPool.create(params);
 	}
 
 	/* (non-Javadoc)
@@ -181,10 +304,10 @@ public class Controller implements ProfileManager, StreamManager {
 		while(it.hasNext()){
 			MulticastStream curStream = it.next();
 			if(curStream instanceof Sender){
-				senderManager.remove((Sender)curStream);
+				senderPool.remove((Sender)curStream);
 			}
 			else if(curStream instanceof ReceiverGroup){
-				receiverManager.remove((ReceiverGroup)curStream);
+				receiverPool.remove((ReceiverGroup)curStream);
 			}
 			else{
 				throw new IllegalArgumentException();
@@ -193,7 +316,7 @@ public class Controller implements ProfileManager, StreamManager {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.spam.mctool.controller.StreamManager#startStreams(java.util.Set)
+	 * @see com.spam.mctool.controller.StreamPool#startStreams(java.util.Set)
 	 */
 	public void startStreams(Set<MulticastStream> streams) {
 		//Fetch the set iterator
@@ -205,7 +328,7 @@ public class Controller implements ProfileManager, StreamManager {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.spam.mctool.controller.StreamManager#stopStreams(java.util.Set)
+	 * @see com.spam.mctool.controller.StreamPool#stopStreams(java.util.Set)
 	 */
 	public void stopStreams(Set<MulticastStream> streams) {
 		//Fetch the set iterator
@@ -216,31 +339,151 @@ public class Controller implements ProfileManager, StreamManager {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.spam.mctool.controller.ProfileManager#saveProfile()
+	/* 
+	 * This function will save the sender/receiver settings to the specified profile path
+	 * in currentProfile.
 	 */
-	public void saveProfile() {
-		// TODO Auto-generated method stub
+	public void saveProfile() throws IOException {
+		//Lets build a new factory for our XMLDocument and create one
+		DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
+		DocumentBuilder docBuilder = null;
+		try {
+			docBuilder = dbfac.newDocumentBuilder();
+		} catch (ParserConfigurationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Document xmldoc = docBuilder.newDocument();
+		
+		//Create the root element which will be named "configuration" later on
+		Element rootElement = xmldoc.createElement("configuration");
+		xmldoc.appendChild(rootElement);
+		//Profile section
+		Element profileElement = xmldoc.createElement("profile");
+		rootElement.appendChild(profileElement);
+		//Name Section in profile section
+		Element profileNameElement = xmldoc.createElement("name");
+		profileElement.appendChild(profileNameElement);
+		//The name as text
+		Text profileNameText = xmldoc.createTextNode(currentProfile.getName());
+		profileNameElement.appendChild(profileNameText);
+		//The Time Section
+		Element profileCreationTimeElement = xmldoc.createElement("creationTime");
+		profileElement.appendChild(profileCreationTimeElement);
+		//The time as text
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		Date date = new Date();
+		Text profileCreationTimeText = xmldoc.createTextNode(dateFormat.format(date));
+		profileCreationTimeElement.appendChild(profileCreationTimeText);
+		
 
+		/*
+		
+		//create the xstream object
+		//XStream xstream = new XStream();
+		//get the receiver pool xml configuration
+		String receiverXml = "Test Receiver";//xstream.toXML(receiverPool);
+		//System.out.println(receiverXml);
+		//get the sender pool xml configuration
+		String senderXml = "Test Sender";//xstream.toXML(senderPool);
+		//TODO complete xml structure
+		//get the receiver pool xml configuration
+		//String receiverXml = receiverPool.toXML();
+		//get the sender pool xml configuration
+		//String senderXml = senderPool.toXML();
+		//get the desired profile path
+		File profilePath = this.currentProfile.getPath();
+		//get the desired profile alias
+		String profileName = this.currentProfile.getName();
+		//create a file output stream
+		FileOutputStream fos = null;
+		try {
+			fos = new FileOutputStream(profilePath);
+		} catch (FileNotFoundException e) {
+			// We can ignore this, file will be created
+		}
+		//Create a data output stream
+		DataOutputStream dos = new DataOutputStream(fos);
+		//First of all, write the profile name
+		dos.writeUTF(profileName);
+		//Write the receivers configuration
+		dos.writeUTF(receiverXml);
+		//Write the senders configuration
+		dos.writeUTF(senderXml);
+		//close the dos stream
+		dos.flush();
+		dos.close();
+		//close the fos
+		fos.flush();
+		fos.close();
+		*/
+		//Create our XML transformer
+		TransformerFactory transfac = TransformerFactory.newInstance();
+		Transformer trans = null;
+		try {
+			trans = transfac.newTransformer();
+		} catch (TransformerConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//Set some properties for the output
+		trans.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+		trans.setOutputProperty(OutputKeys.INDENT, "yes");
+		
+		//Create the stringwriters
+		StringWriter sw = new StringWriter();
+		StreamResult result = new StreamResult(sw);
+		DOMSource source = new DOMSource(xmldoc);
+		try {
+			trans.transform(source, result);
+		} catch (TransformerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//Finally create the xml String
+		String xmlString = sw.toString();
+		
+		//TODO remove debug
+		System.out.println(xmlString);
+		
+		//get the desired profile path
+		File profilePath = this.currentProfile.getPath();
+		//create a file output stream
+		FileOutputStream fos = null;
+		try {
+			fos = new FileOutputStream(profilePath);
+		} catch (FileNotFoundException e) {
+			// We can ignore this, file will be created
+		}
+		//Create a data output stream
+		DataOutputStream dos = new DataOutputStream(fos);
+		//Write the xml data
+		dos.writeUTF(xmlString);
+		//close the dos stream
+		dos.flush();
+		dos.close();
+		//close the fos
+		fos.flush();
+		fos.close();
 	}
 
 	/* (non-Javadoc)
-	 * @see com.spam.mctool.controller.ProfileManager#loadProfile()
+	 * @see com.spam.mctool.controller.ProfilePool#loadProfile()
 	 */
 	public void loadProfile() {
-		// TODO Auto-generated method stub
+		// TODO Load the profile
 
 	}
 
 	/* (non-Javadoc)
-	 * @see com.spam.mctool.controller.ProfileManager#addProfileChangeListener(com.spam.mctool.controller.ProfileChangeListener)
+	 * @see com.spam.mctool.controller.ProfilePool#addProfileChangeListener(com.spam.mctool.controller.ProfileChangeListener)
 	 */
 	public void addProfileChangeListener(ProfileChangeListener listener) {
 		this.profileChangeObservers.add(listener);
 	}
 
 	/* (non-Javadoc)
-	 * @see com.spam.mctool.controller.ProfileManager#removeProfileChangeListener(com.spam.mctool.controller.ProfileChangeListener)
+	 * @see com.spam.mctool.controller.ProfilePool#removeProfileChangeListener(com.spam.mctool.controller.ProfileChangeListener)
 	 */
 	public void removeProfileChangeListener(ProfileChangeListener listener) {
 		this.profileChangeObservers.remove(listener);
@@ -250,48 +493,69 @@ public class Controller implements ProfileManager, StreamManager {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		controller = new Controller();
 		controller.init(args);
+		
+		//Test
+		controller.setCurrentProfile(new Profile("Test",new File("Test.xml")));
+		try {
+			controller.saveProfile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public Sender addSender(Map<String, String> params) {
-		return this.senderManager.create(params);
+		return this.senderPool.create(params);
 	}
 
 	public ReceiverGroup addReceiverGroup(Map<String, String> params) {
-		return receiverManager.create(params);
+		return receiverPool.create(params);
 	}
 
 	public Collection<Sender> getSenders() {
-		return senderManager.getSenders();
+		return senderPool.getSenders();
 	}
 
 	public Collection<ReceiverGroup> getReceiverGroups() {
-		return receiverManager.getReceiverGroups();
+		return receiverPool.getReceiverGroups();
 	}
 
 	public void addSenderAddedOrRemovedListener(SenderAddedOrRemovedListener l) {
-		senderManager.addSenderAddedOrRemovedListener(l);
+		senderPool.addSenderAddedOrRemovedListener(l);
 	}
 
 	public void removeSenderAddedOrRemovedListener(
 			SenderAddedOrRemovedListener l) {
-		senderManager.removeSenderAddedOrRemovedListener(l);
+		senderPool.removeSenderAddedOrRemovedListener(l);
 	}
 
 	public void addReceiverAddedOrRemovedListener(
 			ReceiverAddedOrRemovedListener l) {
-		receiverManager.addReceiverAddedOrRemovedListener(l);
+		receiverPool.addReceiverAddedOrRemovedListener(l);
 	}
 
 	public void removeReceiverAddedOrRemovedListener(
 			ReceiverAddedOrRemovedListener l) {
-		receiverManager.removeReceiverAddedOrRemovedListener(l);
+		receiverPool.removeReceiverAddedOrRemovedListener(l);
 	}
 
 	public void storeCurrentProfile() {
-		// TODO Do the serialization	
+		try {
+			saveProfile();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		//if successfully saved, add it to the list of recent profiles
+		this.addOrUpdateProfileInList(this.currentProfile);
+		//save the recent profile list
+		try {
+			saveRecentProfiles();
+		} catch (IOException e) {
+			System.out.println("The recent profile list could not be saved, an IOException was thrown.");
+		}
 	}
 	
 
