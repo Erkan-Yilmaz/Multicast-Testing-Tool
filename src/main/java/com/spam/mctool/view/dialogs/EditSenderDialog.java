@@ -14,11 +14,14 @@ package com.spam.mctool.view.dialogs;
 import com.spam.mctool.model.Sender;
 import com.spam.mctool.view.main.MainFrame;
 import java.net.InetAddress;
+import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,12 +52,17 @@ public class EditSenderDialog extends javax.swing.JDialog {
     public EditSenderDialog(MainFrame parent, boolean modal) {
         this((JFrame)parent, modal);
         this.parent = parent;
+        setDefaultValues();
     }
 
-    public EditSenderDialog(MainFrame parent, boolean modal, Sender sender) {
+    public EditSenderDialog(MainFrame parent, boolean modal, Sender sender, boolean create) {
         this(parent, modal);
         this.sender = sender;
-        loadData();
+        loadData(create);
+
+        if(create){
+            this.sender = null;
+        }
     }
 
     /** This method is called from within the constructor to
@@ -144,21 +152,16 @@ public class EditSenderDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(InterfaceLabel)
                         .addContainerGap(477, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(GroupLabel, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(GroupField, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(InterfaceCombo, javax.swing.GroupLayout.Alignment.LEADING, 0, 255, Short.MAX_VALUE)))
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PortField, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
-                            .addComponent(PortLabel))
+                            .addComponent(GroupLabel)
+                            .addComponent(GroupField, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(PortLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(PortField, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,7 +210,12 @@ public class EditSenderDialog extends javax.swing.JDialog {
                             .addComponent(ActivateBox, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(CancelButton)
-                        .addGap(239, 239, 239))))
+                        .addGap(239, 239, 239))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(InterfaceCombo, javax.swing.GroupLayout.Alignment.LEADING, 0, 529, Short.MAX_VALUE)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -219,7 +227,7 @@ public class EditSenderDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(GroupField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(PortField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(PortField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addComponent(InterfaceLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -316,17 +324,48 @@ public class EditSenderDialog extends javax.swing.JDialog {
         });
     }
 
-    private void loadData(){
+    private void loadData(boolean create){
         this.GroupField.setText(this.sender.getGroup().getHostAddress());
-        this.GroupField.setEnabled(false);
         this.PortField.setValue(this.sender.getPort());
-        this.PortField.setEnabled(false);
         this.DataField.setText(this.sender.getPayloadAsString());
-        this.DataField.setEnabled(false);
         this.PacketRateField.setValue(this.sender.getSenderConfiguredPacketRate());
         this.PacketSizeField.setValue(this.sender.getPacketSize());
-        this.InterfaceCombo.setEnabled(false);
         this.TTLField.setValue(this.sender.getTtl());
+        this.PacketStyleCombo.setSelectedItem(this.sender.getpType().getDisplayName());
+
+        for (InterfaceAddress interfaceAddress : this.sender.getNetworkInterface().getInterfaceAddresses()) {
+            InetAddress address = interfaceAddress.getAddress();
+            String ip = null;
+
+            if(this.sender.getGroup() instanceof Inet4Address){
+                if(address instanceof Inet4Address){
+                    ip = address.getHostAddress();
+                }
+            }
+            else if(this.sender.getGroup() instanceof Inet6Address){
+                if(address instanceof Inet6Address){
+                    ip = address.getHostAddress();
+                }
+            }
+
+            this.InterfaceCombo.setSelectedItem(this.sender.getNetworkInterface().getDisplayName() + " - " + ip);
+        }
+
+        Iterator it = analyzingBehaviourMap.entrySet().iterator();
+        while(it.hasNext()){
+            Map.Entry entry = (Map.Entry)it.next();
+
+            if(entry.getValue().equals(this.sender.getAnalyzingBehaviour().getIdentifier())){
+                this.AnalyzingBehaviourCombo.setSelectedItem(entry.getKey());
+            }
+        }
+
+        if(!create){
+            this.GroupField.setEnabled(false);
+            this.PortField.setEnabled(false);
+            this.DataField.setEnabled(false);
+            this.InterfaceCombo.setEnabled(false);
+        }
     }
 
     private void loadNetInterfaces(){
@@ -349,12 +388,22 @@ public class EditSenderDialog extends javax.swing.JDialog {
         }       
     }
 
+    private void setDefaultValues(){
+        this.GroupField.setText("225.1.1.1");
+        this.PortField.setValue(12345);
+        this.DataField.setText("Default");
+        this.PacketRateField.setValue(10);
+        this.PacketSizeField.setValue(200);
+        this.TTLField.setValue(32);
+        this.PacketStyleCombo.setSelectedItem("Spam Packet Format");
+    }
+
     private void initComboBoxes(){
-        this.packageMap.put("SPAM","spam");
-        this.packageMap.put("Hirschmann","hmann");
+        this.packageMap.put("Spam Packet Format","spam");
+        this.packageMap.put("Hirschmann Packet Format","hmann");
         this.PacketStyleCombo.removeAllItems();
-        this.PacketStyleCombo.addItem("SPAM");
-        this.PacketStyleCombo.addItem("Hirschmann");
+        this.PacketStyleCombo.addItem("Spam Packet Format");
+        this.PacketStyleCombo.addItem("Hirschmann Packet Format");
 
         this.analyzingBehaviourMap.put("Default","default");
         this.analyzingBehaviourMap.put("Lazy","lazy");

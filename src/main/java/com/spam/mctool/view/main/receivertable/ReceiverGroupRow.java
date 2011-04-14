@@ -17,13 +17,18 @@ import java.util.List;
 class ReceiverGroupRow extends ReceiverTableRow {
     private final ReceiverGroup group;
     private List<ReceiverRow> receiverRows = new ArrayList<ReceiverRow>();
-    private boolean expanded = false;
+    private boolean expanded = true;
     
     ReceiverGroupRow(ReceiverGroup group) {
         this.group = group;
     }
 
-    void addReceiverRow(ReceiverRow receiverRow) {
+    ReceiverGroupRow(ReceiverGroup group, boolean visible) {
+        this.group = group;
+        this.setVisible(true);
+    }
+
+    void add(ReceiverRow receiverRow) {
         receiverRows.add(receiverRow);
     }
 
@@ -54,6 +59,10 @@ class ReceiverGroupRow extends ReceiverTableRow {
 
     List<ReceiverRow> getReceiverRows() {
         return receiverRows;
+    }
+
+    void remove(ReceiverRow rrow) {
+        receiverRows.remove(rrow);
     }
 
     

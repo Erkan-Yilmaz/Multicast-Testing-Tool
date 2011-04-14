@@ -24,16 +24,27 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="SenderIDLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="InterfaceLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="GroupLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="PortLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="PacketStyleLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="ActivationTimeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="116" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="GroupData" alignment="0" pref="173" max="32767" attributes="1"/>
+                          <Component id="InterfaceData" alignment="0" pref="173" max="32767" attributes="1"/>
+                          <Component id="SenderIDData" alignment="0" pref="173" max="32767" attributes="1"/>
+                          <Component id="PortData" alignment="0" pref="173" max="32767" attributes="0"/>
+                          <Component id="PacketStyleData" alignment="0" pref="173" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="PacketSizeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="DataLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="ConfPPSLabel" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -41,26 +52,18 @@
                       </Group>
                       <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="SentPPSData" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="ConfPPSData" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="DataData" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="PacketSizeData" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="ActivationTimeData" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="PacketStyleData" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="PortData" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="GroupData" alignment="0" max="32767" attributes="1"/>
-                              <Component id="InterfaceData" alignment="0" max="32767" attributes="1"/>
-                              <Component id="SenderIDData" alignment="0" min="-2" max="-2" attributes="1"/>
-                          </Group>
+                          <Component id="PacketSizeData" alignment="0" pref="173" max="32767" attributes="0"/>
+                          <Component id="DataData" alignment="0" pref="173" max="32767" attributes="0"/>
+                          <Component id="ConfPPSData" alignment="0" pref="173" max="32767" attributes="0"/>
+                          <Component id="SentPPSData" alignment="0" pref="173" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="114" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
                       <Component id="CloseButton" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="66" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -92,11 +95,6 @@
                   <Component id="PacketStyleLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="PacketStyleData" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="ActivationTimeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="ActivationTimeData" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="PacketSizeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -119,7 +117,7 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="CloseButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="26" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -134,6 +132,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="SenderIDData">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
           <ResourceString bundle="internationalization/Bundle.properties" key="ShowSenderDialog.SenderIDData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
@@ -148,6 +147,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="InterfaceData">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
           <ResourceString bundle="internationalization/Bundle.properties" key="ShowSenderDialog.InterfaceData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
@@ -162,6 +162,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="GroupData">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
           <ResourceString bundle="internationalization/Bundle.properties" key="ShowSenderDialog.GroupData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
@@ -176,6 +177,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="PortData">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
           <ResourceString bundle="internationalization/Bundle.properties" key="ShowSenderDialog.PortData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
@@ -190,22 +192,9 @@
     </Component>
     <Component class="javax.swing.JLabel" name="PacketStyleData">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
           <ResourceString bundle="internationalization/Bundle.properties" key="ShowSenderDialog.PacketStyleData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="ActivationTimeLabel">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowSenderDialog.ActivationTimeLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="ActivationTimeData">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowSenderDialog.ActivationTimeData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
@@ -218,6 +207,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="PacketSizeData">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
           <ResourceString bundle="internationalization/Bundle.properties" key="ShowSenderDialog.PacketSizeData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
@@ -232,6 +222,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="DataData">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
           <ResourceString bundle="internationalization/Bundle.properties" key="ShowSenderDialog.DataData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
@@ -246,6 +237,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="ConfPPSData">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
           <ResourceString bundle="internationalization/Bundle.properties" key="ShowSenderDialog.ConfPPSData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
@@ -260,6 +252,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="SentPPSData">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
           <ResourceString bundle="internationalization/Bundle.properties" key="ShowSenderDialog.SentPPSData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
@@ -271,7 +264,7 @@
           <ResourceString bundle="internationalization/Bundle.properties" key="ShowSenderDialog.CloseButton.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
         <Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationlization/Bundle.properties" key="ShowSenderDialog.CloseButton.actionCommand" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowSenderDialog.CloseButton.actionCommand" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
       <Events>

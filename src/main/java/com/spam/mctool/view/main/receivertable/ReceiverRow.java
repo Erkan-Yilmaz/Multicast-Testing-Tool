@@ -13,9 +13,11 @@ import com.spam.mctool.model.Receiver;
  */
 class ReceiverRow extends ReceiverTableRow {
 
+    private final ReceiverGroupRow parent;
     private final Receiver receiver;
 
-    ReceiverRow(Receiver rcv) {
+    ReceiverRow(ReceiverGroupRow parent, Receiver rcv) {
+        this.parent = parent;
         this.receiver = rcv;
     }
 
@@ -23,8 +25,11 @@ class ReceiverRow extends ReceiverTableRow {
         return receiver;
     }
 
-    
+    public ReceiverGroupRow getParent() {
+        return parent;
+    }
 
+    
 
 
 }

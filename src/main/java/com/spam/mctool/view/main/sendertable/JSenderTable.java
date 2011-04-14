@@ -89,7 +89,7 @@ public class JSenderTable extends JTable {
             try {
                 selectedSenders.add(((SenderTableModel)getModel()).getSenderAt(i));
             } catch (ClassCastException e) {
-                throw new IllegalStateException ("JSenderTable initilized with " + getModel().getClass() + " which is not compatible with SenderTableModel.");
+                throw new IllegalStateException ("JSenderTable initialized with " + getModel().getClass() + " which is not compatible with SenderTableModel.");
             }
         }
         return selectedSenders;

@@ -21,6 +21,9 @@
                   <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.miOpenProfile.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miOpenProfileActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="miSaveProfile">
               <Properties>
@@ -35,6 +38,9 @@
                   <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.miSaveProfileAs.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miSaveProfileAsActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
             </MenuItem>
@@ -87,6 +93,9 @@
                   <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.miSenderActivate.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miSenderActivateActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="miSenderDeactivate">
               <Properties>
@@ -290,7 +299,9 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="null"/>
+    <Property name="title" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+      <Connection code="java.util.ResourceBundle.getBundle(&quot;internationalization/Bundle&quot;).getString(&quot;MainFrame.title&quot;) + (view.getCurrentProfile().getName() != null ? &quot; - &quot; + view.getCurrentProfile().getName() : &quot;&quot;)" type="code"/>
+    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="menuBar"/>
@@ -381,12 +392,12 @@
                               <Component id="laSendingStatistics" alignment="0" min="-2" max="-2" attributes="1"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="laSentCaption" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="42" max="32767" attributes="0"/>
+                                  <EmptySpace pref="66" max="32767" attributes="0"/>
                                   <Component id="laSent" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="laSenderRateCaption" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="36" max="32767" attributes="0"/>
+                                  <EmptySpace pref="48" max="32767" attributes="0"/>
                                   <Component id="laSenderRate" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -484,6 +495,7 @@
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                           <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.buActivateSender.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buActivateSenderActionPerformed"/>
@@ -497,6 +509,7 @@
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                           <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.buDeactivateSender.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buDeactivateSenderActionPerformed"/>
@@ -523,6 +536,7 @@
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                           <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.buShowSender.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buShowSenderActionPerformed"/>
@@ -536,7 +550,11 @@
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                           <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.buEditSender.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buEditSenderActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="buDeleteSender">
                       <Properties>
@@ -546,7 +564,11 @@
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                           <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.buDeleteSender.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buDeleteSenderActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -560,6 +582,9 @@
                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
                   <SubComponents>
                     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jScrollPane2MouseClicked"/>
+                      </Events>
                       <AuxValues>
                         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
                       </AuxValues>
@@ -575,6 +600,9 @@
                           <Events>
                             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="senderTableMouseClicked"/>
                           </Events>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="senderTable.getSelectionModel().addListSelectionListener(this);"/>
+                          </AuxValues>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -646,22 +674,22 @@
                               <Component id="receivingStatisticsSeparator" alignment="0" pref="134" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="laReceivedCaption" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="20" max="32767" attributes="0"/>
+                                  <EmptySpace pref="44" max="32767" attributes="0"/>
                                   <Component id="laReceived" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="laReceivingRateCaption" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="36" max="32767" attributes="0"/>
+                                  <EmptySpace pref="48" max="32767" attributes="0"/>
                                   <Component id="laReceivingRate" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="laLostPacketsCaption" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="62" max="32767" attributes="0"/>
+                                  <EmptySpace pref="68" max="32767" attributes="0"/>
                                   <Component id="laLostPackets" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="laFaultyPacketsCaption" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="52" max="32767" attributes="0"/>
+                                  <EmptySpace pref="58" max="32767" attributes="0"/>
                                   <Component id="laFaultyPackets" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -797,7 +825,11 @@
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                           <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.buActivateReceiver.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buActivateReceiverActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="buDeactivateReceiver">
                       <Properties>
@@ -807,7 +839,11 @@
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                           <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.buDeactivateReceiver.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buDeactivateReceiverActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="buAddReceiver">
                       <Properties>
@@ -830,7 +866,11 @@
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                           <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.buShowReceiver.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buShowReceiverActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="buEditReceiver">
                       <Properties>
@@ -840,7 +880,11 @@
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                           <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.buEditReceiver.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buEditReceiverActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="buDeleteReceiver">
                       <Properties>
@@ -850,7 +894,11 @@
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                           <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.buDeleteReceiver.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buDeleteReceiverActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -864,6 +912,9 @@
                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
                   <SubComponents>
                     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jScrollPane1MouseClicked"/>
+                      </Events>
                       <AuxValues>
                         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
                       </AuxValues>
@@ -884,6 +935,9 @@
                               <Dimension value="[0, 1]"/>
                             </Property>
                           </Properties>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="receiverTable.getSelectionModel().addListSelectionListener(this);"/>
+                          </AuxValues>
                         </Component>
                       </SubComponents>
                     </Container>
