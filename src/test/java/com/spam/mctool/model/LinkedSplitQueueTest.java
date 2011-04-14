@@ -2,12 +2,13 @@ package com.spam.mctool.model;
 
 import static org.junit.Assert.*;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class LinkedSplitQueueTestsuite {
+public class LinkedSplitQueueTest {
 	LinkedSplitQueue<Integer> lsq;
 
 	@Before
@@ -55,7 +56,8 @@ public class LinkedSplitQueueTestsuite {
 	}
 	
 	@Test
-	public void testIfIteratorWithStepWidthWorksCorrectly() {
+	public void testIterator() {
+		// test correct iteration
 		lsq.enqueue(1);
 		lsq.enqueue(2);
 		lsq.enqueue(3);
@@ -69,10 +71,43 @@ public class LinkedSplitQueueTestsuite {
 		lsq.enqueue(11);
 		
 		lsq.setIteratorStepSize(3);
+		
 		Integer ie = 3;
 		for(Integer i : lsq) {
-			assertEquals(ie, i);
+			assertEquals("unexpected element in iteration", ie, i);
 			ie+=3;
+		}
+		
+		// setters and getters
+		lsq.setIteratorStepSize(-1);
+		assertEquals("illegal step width not catched correctly", 1, lsq.getIteratorStepSize());
+		lsq.setIteratorStepSize(13);
+		assertEquals("legal step width not returned correctly", 13, lsq.getIteratorStepSize());
+		
+		
+		Iterator<Integer> i = lsq.iterator();
+		// next function
+		lsq.setIteratorStepSize(4);
+		assertEquals("next() did not mention available elements", true, lsq.iterator().hasNext());
+		lsq.setIteratorStepSize(20);
+		assertEquals("next() did not return false with no remaining elements", false, lsq.iterator().hasNext());
+		
+		// exceptions
+		block1:{
+			try{
+				i.next();
+			} catch(NoSuchElementException e) {
+				break block1;
+			}
+			fail("no such element exception not thrown correctly");
+		}
+		block2:{
+			try{
+				i.remove();
+			} catch(UnsupportedOperationException e) {
+				break block2;
+			}
+			fail("remove() did not throw excpetion");
 		}
 	}
 
