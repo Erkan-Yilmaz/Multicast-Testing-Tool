@@ -198,9 +198,10 @@ public class EditReceiverDialog extends javax.swing.JDialog {
             receiverMap.put("port", this.portField.getValue().toString());
             receiverMap.put("ninf",this.interfaceMap.get(this.interfaceCombo.getSelectedItem().toString()));
             receiverMap.put("abeh",this.analyzingBehaviourMap.get(this.analyzingBehaviourCombo.getSelectedItem().toString()));
-            parent.addReceiverGroup(receiverMap, activateBox.isSelected());
+            parent.addReceiverGroup(receiverMap, this.activateBox.isSelected());
         }
         else{
+            this.receiverGroup.deactivate();
             if(this.activateBox.isSelected()){
                 this.receiverGroup.activate();
             }
@@ -262,6 +263,10 @@ public class EditReceiverDialog extends javax.swing.JDialog {
             if(entry.getValue().equals(this.receiverGroup.getAnalyzingBehaviour().getIdentifier())){
                 this.analyzingBehaviourCombo.setSelectedItem(entry.getKey());
             }
+        }
+
+        if(this.receiverGroup.isActive()){
+            this.activateBox.setSelected(true);
         }
 
         if(!create){

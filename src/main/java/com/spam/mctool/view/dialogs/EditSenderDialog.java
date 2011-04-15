@@ -283,12 +283,13 @@ public class EditSenderDialog extends javax.swing.JDialog {
             senderMap.put("ptype", this.packageMap.get(this.packetStyleCombo.getSelectedItem().toString()));
             senderMap.put("ninf",this.interfaceMap.get(this.interfaceCombo.getSelectedItem().toString()));
             senderMap.put("abeh",this.analyzingBehaviourMap.get(this.analyzingBehaviourCombo.getSelectedItem().toString()));
-            parent.addSender(senderMap, activateBox.isSelected());
+            parent.addSender(senderMap, this.activateBox.isSelected());
         }
         else{
             this.sender.setSenderConfiguredPacketRate(Integer.parseInt(this.packetRateField.getValue().toString()));
             this.sender.setPacketSize(Integer.parseInt(this.packetSizeField.getValue().toString()));
             this.sender.setTtl(Byte.parseByte(this.ttlField.getValue().toString()));
+            this.sender.deactivate();
             if(this.activateBox.isSelected()){
                 this.sender.activate();
             }
@@ -354,6 +355,10 @@ public class EditSenderDialog extends javax.swing.JDialog {
             if(entry.getValue().equals(this.sender.getAnalyzingBehaviour().getIdentifier())){
                 this.analyzingBehaviourCombo.setSelectedItem(entry.getKey());
             }
+        }
+
+        if(this.sender.isActive()){
+            this.activateBox.setSelected(true);
         }
 
         if(!create){
