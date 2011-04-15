@@ -71,58 +71,58 @@ public class EditReceiverDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        GroupField = new javax.swing.JTextField();
-        GroupLabel = new javax.swing.JLabel();
-        PortLabel = new javax.swing.JLabel();
-        InterfaceLabel = new javax.swing.JLabel();
-        InterfaceCombo = new javax.swing.JComboBox();
-        ActivateBox = new javax.swing.JCheckBox();
-        OKButton = new javax.swing.JButton();
-        CancelButton = new javax.swing.JButton();
-        PortField = new javax.swing.JSpinner();
-        AnalyzingBehaviourLabel = new javax.swing.JLabel();
-        AnalyzingBehaviourCombo = new javax.swing.JComboBox();
+        groupField = new javax.swing.JTextField();
+        groupLabel = new javax.swing.JLabel();
+        portLabel = new javax.swing.JLabel();
+        interfaceLabel = new javax.swing.JLabel();
+        interfaceCombo = new javax.swing.JComboBox();
+        activateBox = new javax.swing.JCheckBox();
+        okButton = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
+        portField = new javax.swing.JSpinner();
+        analyzingBehaviourLabel = new javax.swing.JLabel();
+        analyzingBehaviourCombo = new javax.swing.JComboBox();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
-        GroupLabel.setText(bundle.getString("EditReceiverDialog.GroupLabel.text")); // NOI18N
+        groupLabel.setText(bundle.getString("EditReceiverDialog.groupLabel.text")); // NOI18N
 
-        PortLabel.setText(bundle.getString("EditReceiverDialog.PortLabel.text")); // NOI18N
+        portLabel.setText(bundle.getString("EditReceiverDialog.portLabel.text")); // NOI18N
 
-        InterfaceLabel.setText(bundle.getString("EditReceiverDialog.InterfaceLabel.text")); // NOI18N
+        interfaceLabel.setText(bundle.getString("EditReceiverDialog.interfaceLabel.text")); // NOI18N
 
-        InterfaceCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        interfaceCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        ActivateBox.setText(bundle.getString("EditReceiverDialog.ActivateBox.text")); // NOI18N
-        ActivateBox.setActionCommand(bundle.getString("EditReceiverDialog.ActivateBox.actionCommand")); // NOI18N
-        ActivateBox.addActionListener(new java.awt.event.ActionListener() {
+        activateBox.setText(bundle.getString("EditReceiverDialog.activateBox.text")); // NOI18N
+        activateBox.setActionCommand(bundle.getString("EditReceiverDialog.activateBox.actionCommand")); // NOI18N
+        activateBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ActivateBoxActionPerformed(evt);
+                activateBoxActionPerformed(evt);
             }
         });
 
-        OKButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/check.png"))); // NOI18N
-        OKButton.setText(bundle.getString("EditReceiverDialog.OKButton.text")); // NOI18N
-        OKButton.addActionListener(new java.awt.event.ActionListener() {
+        okButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/check.png"))); // NOI18N
+        okButton.setText(bundle.getString("EditReceiverDialog.okButton.text")); // NOI18N
+        okButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                OKButtonActionPerformed(evt);
+                okButtonActionPerformed(evt);
             }
         });
 
-        CancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
-        CancelButton.setText(bundle.getString("EditReceiverDialog.CancelButton.text")); // NOI18N
-        CancelButton.addActionListener(new java.awt.event.ActionListener() {
+        cancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
+        cancelButton.setText(bundle.getString("EditReceiverDialog.cancelButton.text")); // NOI18N
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CancelButtonActionPerformed(evt);
+                cancelButtonActionPerformed(evt);
             }
         });
 
-        AnalyzingBehaviourLabel.setText(bundle.getString("EditReceiverDialog.AnalyzingBehaviourLabel.text")); // NOI18N
+        analyzingBehaviourLabel.setText(bundle.getString("EditReceiverDialog.analyzingBehaviourLabel.text")); // NOI18N
 
-        AnalyzingBehaviourCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        analyzingBehaviourCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -135,24 +135,24 @@ public class EditReceiverDialog extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(GroupField, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(GroupLabel))
+                                    .addComponent(groupField, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(groupLabel))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(PortLabel)
-                                    .addComponent(PortField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)))
-                            .addComponent(InterfaceLabel)
-                            .addComponent(AnalyzingBehaviourLabel)
-                            .addComponent(AnalyzingBehaviourCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(portLabel)
+                                    .addComponent(portField, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)))
+                            .addComponent(interfaceLabel)
+                            .addComponent(analyzingBehaviourLabel)
+                            .addComponent(analyzingBehaviourCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
-                            .addComponent(ActivateBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
-                            .addComponent(InterfaceCombo, 0, 520, Short.MAX_VALUE)
+                            .addComponent(activateBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+                            .addComponent(interfaceCombo, 0, 520, Short.MAX_VALUE)
                             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(OKButton)
+                        .addComponent(okButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(CancelButton)
+                        .addComponent(cancelButton)
                         .addGap(229, 229, 229))))
         );
         layout.setVerticalGroup(
@@ -160,61 +160,61 @@ public class EditReceiverDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(GroupLabel)
-                    .addComponent(PortLabel))
+                    .addComponent(groupLabel)
+                    .addComponent(portLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(GroupField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(PortField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(groupField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(portField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(InterfaceLabel)
+                .addComponent(interfaceLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(InterfaceCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(interfaceCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(AnalyzingBehaviourLabel)
+                .addComponent(analyzingBehaviourLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(AnalyzingBehaviourCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(analyzingBehaviourCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ActivateBox)
+                .addComponent(activateBox)
                 .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(OKButton)
-                    .addComponent(CancelButton))
+                    .addComponent(okButton)
+                    .addComponent(cancelButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         Map<String,String> receiverMap = new HashMap<String, String>();
 
         if(this.receiverGroup == null){
-            receiverMap.put("group", this.GroupField.getText());
-            receiverMap.put("port", this.PortField.getValue().toString());
-            receiverMap.put("ninf",this.interfaceMap.get(this.InterfaceCombo.getSelectedItem().toString()));
-            receiverMap.put("abeh",this.analyzingBehaviourMap.get(this.AnalyzingBehaviourCombo.getSelectedItem().toString()));
-            parent.addReceiverGroup(receiverMap, ActivateBox.isSelected());
+            receiverMap.put("group", this.groupField.getText());
+            receiverMap.put("port", this.portField.getValue().toString());
+            receiverMap.put("ninf",this.interfaceMap.get(this.interfaceCombo.getSelectedItem().toString()));
+            receiverMap.put("abeh",this.analyzingBehaviourMap.get(this.analyzingBehaviourCombo.getSelectedItem().toString()));
+            parent.addReceiverGroup(receiverMap, activateBox.isSelected());
         }
         else{
-            if(this.ActivateBox.isSelected()){
+            if(this.activateBox.isSelected()){
                 this.receiverGroup.activate();
             }
         }
         this.dispose();
-    }//GEN-LAST:event_OKButtonActionPerformed
+    }//GEN-LAST:event_okButtonActionPerformed
 
-    private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         this.dispose();
-    }//GEN-LAST:event_CancelButtonActionPerformed
+    }//GEN-LAST:event_cancelButtonActionPerformed
 
-    private void ActivateBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActivateBoxActionPerformed
+    private void activateBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_activateBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ActivateBoxActionPerformed
+    }//GEN-LAST:event_activateBoxActionPerformed
 
     /**
     * @param args the command line arguments
@@ -234,8 +234,8 @@ public class EditReceiverDialog extends javax.swing.JDialog {
     }
 
     private void loadData(boolean create){
-        this.GroupField.setText(this.receiverGroup.getGroup().getHostAddress());
-        this.PortField.setValue(this.receiverGroup.getPort());
+        this.groupField.setText(this.receiverGroup.getGroup().getHostAddress());
+        this.portField.setValue(this.receiverGroup.getPort());
 
         for (InterfaceAddress interfaceAddress : this.receiverGroup.getNetworkInterface().getInterfaceAddresses()) {
             InetAddress address = interfaceAddress.getAddress();
@@ -252,7 +252,7 @@ public class EditReceiverDialog extends javax.swing.JDialog {
                 }
             }
 
-            this.InterfaceCombo.setSelectedItem(this.receiverGroup.getNetworkInterface().getDisplayName() + " - " + ip);
+            this.interfaceCombo.setSelectedItem(this.receiverGroup.getNetworkInterface().getDisplayName() + " - " + ip);
         }
 
         Iterator it = analyzingBehaviourMap.entrySet().iterator();
@@ -260,19 +260,19 @@ public class EditReceiverDialog extends javax.swing.JDialog {
             Map.Entry entry = (Map.Entry)it.next();
 
             if(entry.getValue().equals(this.receiverGroup.getAnalyzingBehaviour().getIdentifier())){
-                this.AnalyzingBehaviourCombo.setSelectedItem(entry.getKey());
+                this.analyzingBehaviourCombo.setSelectedItem(entry.getKey());
             }
         }
 
         if(!create){
-            this.GroupField.setEnabled(false);
-            this.PortField.setEnabled(false);
-            this.InterfaceCombo.setEnabled(false);
+            this.groupField.setEnabled(false);
+            this.portField.setEnabled(false);
+            this.interfaceCombo.setEnabled(false);
         }
     }
 
     private void loadNetInterfaces(){
-        this.InterfaceCombo.removeAllItems();
+        this.interfaceCombo.removeAllItems();
 	Enumeration<NetworkInterface> interfaces = null;
         try {
             interfaces = NetworkInterface.getNetworkInterfaces();
@@ -285,41 +285,41 @@ public class EditReceiverDialog extends javax.swing.JDialog {
             for (InterfaceAddress interfaceAddress : networkInterface.getInterfaceAddresses()) {
                 InetAddress address = interfaceAddress.getAddress();
 
-                this.InterfaceCombo.addItem(networkInterface.getDisplayName() + " - " + address.getHostAddress());
+                this.interfaceCombo.addItem(networkInterface.getDisplayName() + " - " + address.getHostAddress());
                 this.interfaceMap.put(networkInterface.getDisplayName() + " - " + address.getHostAddress(), address.getHostAddress());
             }
         }
     }
 
     private void setDefaultValues(){
-        this.GroupField.setText("225.1.1.1");
-        this.PortField.setValue(12345);
+        this.groupField.setText("225.1.1.1");
+        this.portField.setValue(12345);
     }
 
     private void initComboBoxes(){
         this.analyzingBehaviourMap.put("Default","default");
         this.analyzingBehaviourMap.put("Lazy","lazy");
         this.analyzingBehaviourMap.put("Eager","eager");
-        this.AnalyzingBehaviourCombo.removeAllItems();
-        this.AnalyzingBehaviourCombo.addItem("Default");
-        this.AnalyzingBehaviourCombo.addItem("Lazy");
-        this.AnalyzingBehaviourCombo.addItem("Eager");
+        this.analyzingBehaviourCombo.removeAllItems();
+        this.analyzingBehaviourCombo.addItem("Default");
+        this.analyzingBehaviourCombo.addItem("Lazy");
+        this.analyzingBehaviourCombo.addItem("Eager");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox ActivateBox;
-    private javax.swing.JComboBox AnalyzingBehaviourCombo;
-    private javax.swing.JLabel AnalyzingBehaviourLabel;
-    private javax.swing.JButton CancelButton;
-    private javax.swing.JTextField GroupField;
-    private javax.swing.JLabel GroupLabel;
-    private javax.swing.JComboBox InterfaceCombo;
-    private javax.swing.JLabel InterfaceLabel;
-    private javax.swing.JButton OKButton;
-    private javax.swing.JSpinner PortField;
-    private javax.swing.JLabel PortLabel;
+    private javax.swing.JCheckBox activateBox;
+    private javax.swing.JComboBox analyzingBehaviourCombo;
+    private javax.swing.JLabel analyzingBehaviourLabel;
+    private javax.swing.JButton cancelButton;
+    private javax.swing.JTextField groupField;
+    private javax.swing.JLabel groupLabel;
+    private javax.swing.JComboBox interfaceCombo;
+    private javax.swing.JLabel interfaceLabel;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JButton okButton;
+    private javax.swing.JSpinner portField;
+    private javax.swing.JLabel portLabel;
     // End of variables declaration//GEN-END:variables
 
 }
