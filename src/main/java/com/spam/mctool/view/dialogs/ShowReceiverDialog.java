@@ -49,7 +49,6 @@ public class ShowReceiverDialog extends javax.swing.JDialog {
         this(parent, modal);
         this.receiver = receiver;
         this.receivergroup = receivergroup;
-        receivergroup.addReceiverDataChangeListener(listener);
         loadData();
     }
 
@@ -274,7 +273,6 @@ public class ShowReceiverDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
-        receivergroup.removeReceiverDataChangeListener(listener);
         this.dispose();
     }//GEN-LAST:event_closeButtonActionPerformed
 
