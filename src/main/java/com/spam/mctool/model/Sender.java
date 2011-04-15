@@ -59,6 +59,9 @@ public class Sender extends MulticastStream {
 	 */
 	@Override
 	public void activate() {
+	    if(state == State.ACTIVE) {
+	        return;
+	    }
 		try {
 			// open the network socket and join group
 			socket = new MulticastSocket(port);
@@ -82,6 +85,9 @@ public class Sender extends MulticastStream {
 	 */
 	@Override
 	public void deactivate() {
+	    if(state == State.INACTIVE) {
+	        return;
+	    }
 		sf.cancel(true);
 		asf.cancel(true);
 		this.socket.close();

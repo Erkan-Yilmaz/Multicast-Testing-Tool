@@ -1,5 +1,6 @@
 package com.spam.mctool.model;
 
+import java.net.InetAddress;
 import java.util.Date;
 
 import com.spam.mctool.model.MulticastStream.PacketType;
@@ -41,6 +42,7 @@ public class Receiver {
 	private byte[] lastPayload;
 	private long lastPacketSize;
 	private PacketType lastPacketType;
+	private InetAddress senderAddress;
 	
 	// is automatically created by ReceiverGroup when new sender id is discovered
 	Receiver(long senderId, MulticastStream.AnalyzingBehaviour abeh) {
@@ -103,6 +105,7 @@ public class Receiver {
 		} else {
 			lastPacketType = PacketType.SPAM;
 		}
+		senderAddress = last.address;
 	}
 	
 	/**
@@ -322,6 +325,13 @@ public class Receiver {
 	 */
 	public PacketType getPacketType() {
 		return lastPacketType;
+	}
+	
+	/**
+	 * @return address of the packet sender
+	 */
+	public InetAddress getSenderAddress() {
+	    return senderAddress;
 	}
 	
 	/**
