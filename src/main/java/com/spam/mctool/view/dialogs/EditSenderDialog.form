@@ -32,7 +32,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="InterfaceLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="477" max="32767" attributes="0"/>
+                      <EmptySpace pref="499" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -42,7 +42,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="PortLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="PortField" pref="257" max="32767" attributes="1"/>
+                          <Component id="PortField" pref="262" max="32767" attributes="1"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -55,9 +55,9 @@
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="PacketRateField" alignment="0" pref="255" max="32767" attributes="1"/>
-                                      <Component id="DataField" alignment="1" pref="255" max="32767" attributes="1"/>
-                                      <Component id="TTLField" alignment="0" pref="255" max="32767" attributes="1"/>
+                                      <Component id="PacketRateField" alignment="0" pref="256" max="32767" attributes="1"/>
+                                      <Component id="DataField" alignment="1" pref="256" max="32767" attributes="1"/>
+                                      <Component id="TTLField" alignment="0" pref="256" max="32767" attributes="1"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                               </Group>
@@ -70,16 +70,16 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="PacketSizeLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="189" max="32767" attributes="0"/>
+                              <EmptySpace pref="216" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="PacketStyleLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="182" max="32767" attributes="0"/>
+                              <EmptySpace pref="211" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="PacketSizeField" alignment="0" pref="255" max="32767" attributes="1"/>
-                                  <Component id="PacketStyleCombo" alignment="1" pref="255" max="32767" attributes="1"/>
+                                  <Component id="PacketSizeField" alignment="0" pref="257" max="32767" attributes="1"/>
+                                  <Component id="PacketStyleCombo" alignment="1" pref="257" max="32767" attributes="1"/>
                               </Group>
                               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                           </Group>
@@ -87,20 +87,20 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="TTLLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="450" max="32767" attributes="0"/>
+                      <EmptySpace pref="483" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="AnalyzingBehaviourLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="411" max="32767" attributes="0"/>
+                      <EmptySpace pref="453" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="AnalyzingBehaviourCombo" pref="255" max="32767" attributes="1"/>
+                      <Component id="AnalyzingBehaviourCombo" pref="258" max="32767" attributes="1"/>
                       <EmptySpace min="-2" pref="286" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jSeparator3" alignment="0" pref="529" max="32767" attributes="0"/>
-                          <Component id="jSeparator2" alignment="1" pref="529" max="32767" attributes="0"/>
+                          <Component id="jSeparator3" alignment="0" pref="534" max="32767" attributes="0"/>
+                          <Component id="jSeparator2" alignment="1" pref="534" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -110,13 +110,13 @@
                           <Component id="ActivateBox" alignment="1" pref="214" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="CancelButton" min="-2" max="-2" attributes="0"/>
+                      <Component id="CancelButton" min="-2" pref="81" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="239" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="InterfaceCombo" alignment="0" pref="529" max="32767" attributes="1"/>
-                          <Component id="jSeparator1" alignment="1" pref="529" max="32767" attributes="0"/>
+                          <Component id="InterfaceCombo" alignment="0" pref="534" max="32767" attributes="1"/>
+                          <Component id="jSeparator1" alignment="1" pref="534" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -135,7 +135,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="GroupField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="PortField" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
+                  <Component id="PortField" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Component id="InterfaceLabel" min="-2" max="-2" attributes="0"/>
@@ -180,9 +180,9 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="OKButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="CancelButton" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="CancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="25" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
