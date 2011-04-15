@@ -76,7 +76,6 @@ public class EditSenderDialog extends javax.swing.JDialog {
         jSpinner1 = new javax.swing.JSpinner();
         InterfaceCombo = new javax.swing.JComboBox();
         OKButton = new javax.swing.JButton();
-        CancelButton = new javax.swing.JButton();
         InterfaceLabel = new javax.swing.JLabel();
         PortLabel = new javax.swing.JLabel();
         GroupLabel = new javax.swing.JLabel();
@@ -89,7 +88,6 @@ public class EditSenderDialog extends javax.swing.JDialog {
         PacketStyleLabel = new javax.swing.JLabel();
         PacketStyleCombo = new javax.swing.JComboBox();
         GroupField = new javax.swing.JFormattedTextField();
-        PortField = new javax.swing.JSpinner();
         PacketRateField = new javax.swing.JSpinner();
         PacketSizeField = new javax.swing.JSpinner();
         TTLField = new javax.swing.JSpinner();
@@ -98,6 +96,8 @@ public class EditSenderDialog extends javax.swing.JDialog {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
+        PortField = new javax.swing.JSpinner();
+        CancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -107,14 +107,6 @@ public class EditSenderDialog extends javax.swing.JDialog {
         OKButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 OKButtonActionPerformed(evt);
-            }
-        });
-
-        CancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
-        CancelButton.setText(bundle.getString("EditSenderDialog.CancelButton.text")); // NOI18N
-        CancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CancelButtonActionPerformed(evt);
             }
         });
 
@@ -136,13 +128,17 @@ public class EditSenderDialog extends javax.swing.JDialog {
 
         PacketStyleLabel.setText(bundle.getString("EditSenderDialog.PacketStyleLabel.text")); // NOI18N
 
-        PortField.setMaximumSize(new java.awt.Dimension(0, 65536));
-        PortField.setMinimumSize(new java.awt.Dimension(10, 28));
-        PortField.setPreferredSize(new java.awt.Dimension(10, 28));
-
         AnalyzingBehaviourLabel.setText(bundle.getString("EditSenderDialog.AnalyzingBehaviourLabel.text")); // NOI18N
 
         AnalyzingBehaviourCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        CancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
+        CancelButton.setText(bundle.getString("EditSenderDialog.CancelButton.text")); // NOI18N
+        CancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CancelButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -153,15 +149,15 @@ public class EditSenderDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(InterfaceLabel)
-                        .addContainerGap(499, Short.MAX_VALUE))
+                        .addContainerGap(519, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(GroupLabel)
                             .addComponent(GroupField, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(PortLabel, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PortField, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(PortLabel)
+                            .addComponent(PortField, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,9 +167,9 @@ public class EditSenderDialog extends javax.swing.JDialog {
                                     .addGap(240, 240, 240))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(PacketRateField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
-                                        .addComponent(DataField, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
-                                        .addComponent(TTLField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE))
+                                        .addComponent(PacketRateField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                                        .addComponent(DataField, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                                        .addComponent(TTLField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE))
                                     .addGap(18, 18, 18)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(PacketRateLabel)
@@ -181,40 +177,40 @@ public class EditSenderDialog extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(PacketSizeLabel)
-                                .addContainerGap(216, Short.MAX_VALUE))
+                                .addContainerGap(224, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(PacketStyleLabel)
-                                .addContainerGap(211, Short.MAX_VALUE))
+                                .addContainerGap(217, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(PacketSizeField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
-                                    .addComponent(PacketStyleCombo, 0, 257, Short.MAX_VALUE))
+                                    .addComponent(PacketSizeField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                                    .addComponent(PacketStyleCombo, 0, 290, Short.MAX_VALUE))
                                 .addGap(13, 13, 13))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(TTLLabel)
-                        .addContainerGap(483, Short.MAX_VALUE))
+                        .addContainerGap(492, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(AnalyzingBehaviourLabel)
                         .addContainerGap(453, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(AnalyzingBehaviourCombo, 0, 258, Short.MAX_VALUE)
+                        .addComponent(AnalyzingBehaviourCombo, 0, 297, Short.MAX_VALUE)
                         .addGap(286, 286, 286))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE))
+                            .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
+                            .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(OKButton)
-                            .addComponent(ActivateBox, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(CancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(239, 239, 239))
+                            .addComponent(ActivateBox, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(CancelButton)
+                        .addGap(225, 225, 225))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(InterfaceCombo, javax.swing.GroupLayout.Alignment.LEADING, 0, 534, Short.MAX_VALUE)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE))
+                            .addComponent(InterfaceCombo, javax.swing.GroupLayout.Alignment.LEADING, 0, 571, Short.MAX_VALUE)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -227,7 +223,7 @@ public class EditSenderDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(GroupField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(PortField, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(PortField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addComponent(InterfaceLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -267,7 +263,7 @@ public class EditSenderDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(OKButton)
-                    .addComponent(CancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CancelButton))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
@@ -304,7 +300,7 @@ public class EditSenderDialog extends javax.swing.JDialog {
 
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         this.dispose();
-    }//GEN-LAST:event_CancelButtonActionPerformed
+}//GEN-LAST:event_CancelButtonActionPerformed
 
     /**
     * @param args the command line arguments
