@@ -33,11 +33,6 @@ public class ShowReceiverDialog extends javax.swing.JDialog {
     private Receiver receiver;
     private ReceiverGroup receivergroup;
     private MainFrame parent;
-    private ReceiverDataChangeListener listener = new ReceiverDataChangeListener() {
-            public void dataChanged(ReceiverDataChangedEvent e) {
-                SwingUtilities.invokeLater(new DataLoader());
-            }
-        };
 
 	/** Creates new form ShowReceiverDialog */
     private ShowReceiverDialog(java.awt.Frame parent, boolean modal) {
