@@ -114,6 +114,7 @@ public final class ReceiverGroup extends MulticastStream {
 			// receive and parse the packet
 			PacketContainer con = new PacketContainer();
 			socket.receive(dp);
+			
 			con.receivedTime = System.nanoTime();
 			con.systemTime = System.currentTimeMillis();
 			con.address = dp.getAddress();
@@ -122,6 +123,7 @@ public final class ReceiverGroup extends MulticastStream {
 			p.fromByteArray(buf);
 			con.packet = p;
 			con.size = dp.getLength();
+			
 			// create new receiver for sender id if not exists
 			if(!receivers.containsKey(p.getSenderId())) {
 				receivers.put(p.getSenderId(), new Receiver(p.getSenderId(), this.analyzingBehaviour));
