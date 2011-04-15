@@ -39,6 +39,7 @@ import org.xml.sax.SAXException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 import org.w3c.dom.bootstrap.DOMImplementationRegistry;
 import org.w3c.dom.Document;
@@ -70,49 +71,18 @@ public class Controller implements ProfileManager, StreamManager {
 
     private static Controller controller;
     private Profile currentProfile;
-    private List<Profile> recentProfiles;
+    private RecentProfiles recentProfiles;
     private List<ProfileChangeListener> profileChangeObservers;
     private SenderManager senderPool;
     private ReceiverManager receiverPool;
     private List<MctoolView> viewers;
 
-    /* This function either inserts the profile directly to the top
-     * of the list or searches for an existing entry(path!), deletes that entry
-     * and inserts the new profile at te top. Max 10 profiles are stored.
-     */
-    private void addOrUpdateProfileInList(Profile profile){
-        //test for null value
-        if(profile == null){
-            throw new IllegalArgumentException();
-        }
-        //Search for existing entries with equal path and delete them
-        Iterator<Profile> it = this.recentProfiles.iterator();
-        while(it.hasNext()){
-            Profile compareObject = it.next();
-            //Delete the entry
-            if(profile.equalPath(compareObject)){
-                this.recentProfiles.remove(compareObject);
-            }
-        }
-        //Add the new profile to the top
-        this.recentProfiles.add(0, profile);
-        //Test if there are more then 10 elements in the list
-        if(this.recentProfiles.size() > 10){
-            //delete the 11. entry until the size equals 10
-            while(this.recentProfiles.size() > 10){
-                this.recentProfiles.remove(10);
-            }
-        }
-    }
+   
 
     /*
      * This function tries to save the profile list to the file named "RecentProfiles.xml"
      */
     private void saveRecentProfiles() throws IOException{
-        //create the xstream object
-        XStream xstream = new XStream();
-        //convert the recent profiles to xml
-        String xml = xstream.toXML(recentProfiles);
         //create a new file
         File recentProfilesPath = new File("RecentProfiles.xml");
         //create a file output stream
@@ -124,6 +94,8 @@ public class Controller implements ProfileManager, StreamManager {
         }
         //Create a data output stream
         DataOutputStream dos = new DataOutputStream(fos);
+        //Get the data from the object
+        String xml = recentProfiles.toXML();
         //Write the list
         dos.writeUTF(xml);
         //close the dos stream
@@ -138,8 +110,6 @@ public class Controller implements ProfileManager, StreamManager {
      * This function tries to load the profile list from the file named "RecentProfiles.xml"
      */
     private void loadRecentProfiles() throws IOException{
-        //create the xstream object
-        XStream xstream = new XStream();
         //create a new file
         File recentProfilesPath = new File("RecentProfiles.xml");
         //create a file input stream
@@ -148,15 +118,14 @@ public class Controller implements ProfileManager, StreamManager {
         DataInputStream dis = new DataInputStream(fis);
         //read the xml data
         String xml = dis.readUTF();
-        System.out.println(xml);
-        //create the object from xstream
-        this.recentProfiles = (ArrayList<Profile>)xstream.fromXML(xml);
+        //Import the data
+        recentProfiles.fromXML(xml);
     }
 
 
     private Controller(){
         this.currentProfile = new Profile();
-        this.recentProfiles = new ArrayList<Profile>();
+        this.recentProfiles = new RecentProfiles();
         this.profileChangeObservers = new ArrayList<ProfileChangeListener>();
         //Init the Sender and Receiver modules
         this.senderPool = new SenderPool();
@@ -195,7 +164,7 @@ public class Controller implements ProfileManager, StreamManager {
             //Start all loaded senders and receivers later?
             boolean enableStartAll = false;
             //The profile to be loaded
-            File desiredProfile = null;
+            Profile desiredProfile = null;
             //iterate over all args
             for(int i = 0; i<args.length; ++i){
                 //CLI desired?
@@ -218,23 +187,14 @@ public class Controller implements ProfileManager, StreamManager {
                         }
                         else if(args[i].contains(":/\\")){
                             //This is a path, load it
-                            desiredProfile = new File("args[i]");
+                            desiredProfile = new Profile("Not set",new File(args[i]));
                             //TODO error
                             ++i;
                         }
                         else{
                             //This could be a name of a recently used profile
                             //Search for it
-                            Iterator<Profile> it = this.recentProfiles.iterator();
-                            while(it.hasNext()){
-                                it.next();
-                                String name = ((Profile)it).getName();
-                                //found the name?
-                                if( name.compareTo(args[i+1]) != 0){
-                                    desiredProfile = ((Profile)it).getPath();
-                                    break;
-                                }
-                            }
+                            recentProfiles.findProfileByName(args[i]);
                             ++i;
                         }
                     }
@@ -266,8 +226,17 @@ public class Controller implements ProfileManager, StreamManager {
             }
 
             //TODO Load desired Profile
+            if(desiredProfile != null){
+                this.setCurrentProfile(desiredProfile);
+                loadProfile();
+            }
 
             //TODO Start the streams if -startall has been defined
+            if(enableStartAll){
+                //Fetch all senders
+                Collection<? extends MulticastStream> senders = getSenders();
+                startStreams(senders);
+            }
     }
 
     /*
@@ -287,7 +256,7 @@ public class Controller implements ProfileManager, StreamManager {
      * This function will return the list of recently used profiles
      */
     public List<Profile> getRecentProfiles() {
-        return recentProfiles;
+        return recentProfiles.getProfileList();
     }
 
 
@@ -308,16 +277,14 @@ public class Controller implements ProfileManager, StreamManager {
     /* (non-Javadoc)
      * @see com.spam.mctool.controller.StreamManager#removeStreams(java.util.Set)
      */
-    public void removeStreams(Set<MulticastStream> streams) {
+    public void removeStreams(Collection <? extends MulticastStream> streams) {
         //Fetch the set iterator
-        Iterator<MulticastStream> it = streams.iterator();
-        while(it.hasNext()){
-            MulticastStream curStream = it.next();
-            if(curStream instanceof Sender){
-                senderPool.remove((Sender)curStream);
+        for(MulticastStream m: streams){
+            if(m instanceof Sender){
+                senderPool.remove((Sender)m);
             }
-            else if(curStream instanceof ReceiverGroup){
-                receiverPool.remove((ReceiverGroup)curStream);
+            else if(m instanceof ReceiverGroup){
+                receiverPool.remove((ReceiverGroup)m);
             }
             else{
                 throw new IllegalArgumentException();
@@ -328,24 +295,19 @@ public class Controller implements ProfileManager, StreamManager {
     /* (non-Javadoc)
      * @see com.spam.mctool.controller.StreamPool#startStreams(java.util.Set)
      */
-    public void startStreams(Set<MulticastStream> streams) {
+    public void startStreams(Collection<? extends MulticastStream> streams) {
         //Fetch the set iterator
-        Iterator<MulticastStream> it = streams.iterator();
-        //Activate all streams
-        while(it.hasNext()){
-            it.next().activate();
+        for(MulticastStream m:streams){
+            m.activate();
         }
     }
 
     /* (non-Javadoc)
      * @see com.spam.mctool.controller.StreamPool#stopStreams(java.util.Set)
      */
-    public void stopStreams(Set<MulticastStream> streams) {
-        //Fetch the set iterator
-        Iterator<MulticastStream> it = streams.iterator();
-        //Dectivate all streams
-        while(it.hasNext()){
-            it.next().deactivate();
+    public void stopStreams(Collection<? extends MulticastStream> streams) {
+        for(MulticastStream m:streams){
+            m.deactivate();
         }
     }
 
@@ -485,14 +447,19 @@ public class Controller implements ProfileManager, StreamManager {
 
         }
         //TODO Remove debug ouput
-        String xmlString = writer.writeToString(xmlDocument);
-        System.out.println(xmlString);
+        //String xmlString = writer.writeToString(xmlDocument);
+        //System.out.println(xmlString);
     }
 
     /* (non-Javadoc)
      * @see com.spam.mctool.controller.ProfilePool#loadProfile()
      */
     public void loadProfile() {
+        //First of all delete all senders and receivers
+        //TODO
+        removeStreams(getReceiverGroups());
+        removeStreams(getSenders());
+        
         DOMImplementationRegistry registry=null;
         try {
             registry = DOMImplementationRegistry.newInstance();
@@ -518,14 +485,78 @@ public class Controller implements ProfileManager, StreamManager {
 
         //Fetch the profile path
         File xmlPath = currentProfile.getPath();
-        System.out.println(xmlPath.toString());
         //Parse the file
         Document xmlDocument = builder.parseURI(xmlPath.toString());
         //Find the profile section
         Node profile = xmlDocument.getElementsByTagName("profile").item(0);
-        if(profile.getNodeType() == Node.ELEMENT_NODE){
-            System.out.println((profile.getChildNodes().item(0).getTextContent()));
+        //fetch the child nodes
+        NodeList profileChilds = profile.getChildNodes();
+        for(int i = 0;i<profileChilds.getLength(); ++i){
+            Node curNode = profileChilds.item(i);
+            if(curNode.getNodeName().compareToIgnoreCase("name") == 0){
+                String name = curNode.getTextContent();
+                if(name == null){
+                    name = "";
+                }
+                currentProfile.setName(name);
+            }
         }
+        //Find the senders section
+        Node senders = xmlDocument.getElementsByTagName("senders").item(0);
+        //fetch the child nodes
+        NodeList sendersChilds = senders.getChildNodes();
+        for(int i = 0;i<sendersChilds.getLength(); ++i){
+            Node curSender = sendersChilds.item(i);
+            //check if it is really a sender
+            if(curSender.getNodeName().compareToIgnoreCase("sender") == 0){
+                //fetch all nodes
+                NodeList senderData = curSender.getChildNodes();
+                //create a map
+                Map<String,String> map = new HashMap<String, String>();
+                for(int j = 0;j<senderData.getLength();++j){
+                    Node curData = senderData.item(j);
+                    //put the pair to the map
+                    map.put(curData.getNodeName(), curData.getTextContent());
+                }
+                //Try to add the sender
+                try{
+                    addSender(map);
+                }
+                catch(Exception e){
+                    System.out.println("The sender could not be added: " + map.toString());
+                }
+            }
+        }
+        
+        //Find the receiver section
+        Node receivers = xmlDocument.getElementsByTagName("receivers").item(0);
+        //fetch the child nodes
+        NodeList receiversChilds = receivers.getChildNodes();
+        for(int i = 0;i<receiversChilds.getLength(); ++i){
+            Node curReceiver = receiversChilds.item(i);
+            //check if it is really a sender
+            if(curReceiver.getNodeName().compareToIgnoreCase("receiver") == 0){
+                //fetch all nodes
+                NodeList receiverData = curReceiver.getChildNodes();
+                //create a map
+                Map<String,String> map = new HashMap<String, String>();
+                for(int j = 0;j<receiverData.getLength();++j){
+                    Node curData = receiverData.item(j);
+                    //put the pair to the map
+                    map.put(curData.getNodeName(), curData.getTextContent());
+                }
+                //Try to add the sender
+                try{
+                    addReceiverGroup(map);
+                }
+                catch(Exception e){
+                    System.out.println("The receiver could not be added: " + map.toString());
+                }
+            }
+        }
+        
+        //Signalize, that the profile has changed
+        profileChanged();
     }
 
     /* (non-Javadoc)
@@ -548,8 +579,7 @@ public class Controller implements ProfileManager, StreamManager {
     public static void main(String[] args) {
         controller = new Controller();
         controller.init(args);
-
-        //Test
+        
         //controller.setCurrentProfile(new Profile("Test",new File("Test.xml")));
         //controller.storeCurrentProfile();
         //controller.loadProfile();
@@ -598,7 +628,7 @@ public class Controller implements ProfileManager, StreamManager {
             e.printStackTrace();
         }
         //if successfully saved, add it to the list of recent profiles
-        this.addOrUpdateProfileInList(this.currentProfile);
+        recentProfiles.addOrUpdateProfileInList(this.currentProfile);
         //save the recent profile list
         try {
             saveRecentProfiles();
@@ -606,7 +636,4 @@ public class Controller implements ProfileManager, StreamManager {
             System.out.println("The recent profile list could not be saved, an IOException was thrown.");
         }
     }
-
-    private static final String MAZE_ELEMENT = "maze";
-
 }
