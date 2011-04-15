@@ -22,25 +22,27 @@ import com.spam.mctool.model.packet.SpamPacket;
 public class Sender extends MulticastStream {
 	
 	// internals
-	transient private AnalyzeSender analyzer;
-	transient private LinkedSplitQueue<Integer> sentTimes;
-	transient private List<SenderDataChangeListener> senderDataChangeListeners = new ArrayList<SenderDataChangeListener>();
-	transient private long lastSent = 0;
-	transient private long nowSent = 0;
-	transient private Map<Long, Exception> exceptions;
+	private AnalyzeSender analyzer;
+	private LinkedSplitQueue<Integer> sentTimes;
+	private List<SenderDataChangeListener> senderDataChangeListeners = new ArrayList<SenderDataChangeListener>();
+	private long lastSent = 0;
+	private long nowSent = 0;
+	private long lastSentPacketNo = 0;
+	private Map<Long, Exception> exceptions;
 	// sender specific
-	transient private long senderId;
+	private long senderId;
 	private byte ttl;
 	private PacketType pType;
 	private byte[] data;
 	private int packetSize;
 	private int senderConfiguredPacketRate;
 	// statistics
-	transient private int statsStepWidth;
-	transient private long sentPacketCount = 0;
-	transient private long avgPPS;
-	transient private long minPPS = Integer.MAX_VALUE;
-	transient private long maxPPS = Integer.MIN_VALUE;
+	private int statsStepWidth;
+	private long sentPacketCount = 0;
+	private long avgPPS;
+	private long minPPS = Integer.MAX_VALUE;
+	private long maxPPS = Integer.MIN_VALUE;
+	private boolean overloaded = false;
 	
 	/**
 	 * Used by the sender manager to create a new receiver.
@@ -107,8 +109,11 @@ public class Sender extends MulticastStream {
 			this.socket.send(dp);
 			// no synchronization needed because usage of java concurrency api
 			nowSent = System.nanoTime();
-			this.sentTimes.enqueue((int)(nowSent-lastSent));
+			if(sentPacketCount == lastSentPacketNo+1) {
+				this.sentTimes.enqueue((int)(nowSent-lastSent));
+			}
 			lastSent = nowSent;
+			lastSentPacketNo = sentPacketCount;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -131,47 +136,11 @@ public class Sender extends MulticastStream {
 			p.setSequenceNumber(++sentPacketCount);
 			p.setSenderMeasuredPacketRate(avgPPS);
 		} catch(Exception e) {
-			System.out.println(e);
-			exceptions.put(System.currentTimeMillis(), e);
+			e.printStackTrace();
 		}
 		return p;
 	}
 	
-	/* old version
-	// this is uses to analyze the queued sending intervals
-	private class AnalyzeSender implements Runnable {
-		
-		transient private LinkedSplitQueue<Integer> data;
-		transient private long counter;
-
-		public void run() {
-			if(sentTimes.size()>statsStepWidth) {
-				// analyze if enough sending intervals are buffered
-				data = sentTimes.split();
-				counter++;
-				if(counter%analyzingBehaviour.getDiv() == 0) {
-					// if stats are to be calced new
-					int valcnt = 0;
-					double avg = 0;
-					data.setIteratorStepSize(statsStepWidth);
-					for(int s : data) {
-						avg += Math.round(s/1.0E6);
-						valcnt++;
-					}
-					avg /= valcnt;
-					avg = 1.0E3 / Math.round(avg);
-					avgPPS = Math.round(avg);
-					minPPS = Math.min(minPPS, avgPPS);
-					maxPPS = Math.max(maxPPS, avgPPS);
-					fireSenderDataChangedEvent();
-				} else {
-					// clear the buffer
-					sentTimes.split();
-				}
-			}
-		}
-	}
-	*/
 	
 	// this is uses to analyze the queued sending intervals
 	private class AnalyzeSender implements Runnable {
@@ -186,14 +155,22 @@ public class Sender extends MulticastStream {
 				if(sentTimes.size()>statsStepWidth) {
 					data = sentTimes.split();
 					// if stats are to be calced new
-					int div = (int) Math.ceil(data.size()/statsStepWidth)-1;
+					int div = 0;
 					double avg = 0;
 					data.setIteratorStepSize(statsStepWidth);
 					for(int s : data) {
-						avg += Math.round(s/1.0E6);
+						div++;
+						avg += s;
 					}
 					avg /= div;
-					avg = 1.0E3 / Math.round(avg);
+					double doubleMsInterval = Math.round(avg/1.0E6);
+					if(doubleMsInterval > 0) {
+						avg = 1.0E3 / doubleMsInterval;
+						overloaded = false;
+					} else {
+						avg = Math.round(1.0E8/avg);
+						overloaded = true;
+					}
 					avgPPS = Math.round(avg);
 					minPPS = Math.min(minPPS, avgPPS);
 					maxPPS = Math.max(maxPPS, avgPPS);
@@ -358,6 +335,13 @@ public class Sender extends MulticastStream {
 		return (maxPPS==Long.MIN_VALUE) ? 0 : maxPPS;
 	}
 	
+	/**
+	 * @return true if sender expects that it is overloaded
+	 */
+	public boolean isOverloaded() {
+		return overloaded;
+	}
+
 	/**
 	 * @return caught exceptions
 	 */

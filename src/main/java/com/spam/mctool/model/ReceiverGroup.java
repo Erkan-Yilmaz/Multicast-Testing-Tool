@@ -148,7 +148,7 @@ public final class ReceiverGroup extends MulticastStream {
 		long receivedTime;
 		long systemTime;
 		Packet packet;
-		private int size;
+		int size;
 		InetAddress address;
 	}
 	
