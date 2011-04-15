@@ -24,7 +24,7 @@ import javax.swing.table.AbstractTableModel;
 public class ReceiverTableModel extends AbstractTableModel implements MouseListener {
 
     private List<ReceiverTableRow> rows    = new ArrayList<ReceiverTableRow>();
-    private int columnCount = 6;
+    private int columnCount = 7;
 
     public int getRowCount() {
         int count = 0;
@@ -48,10 +48,11 @@ public class ReceiverTableModel extends AbstractTableModel implements MouseListe
             switch(columnIndex) {
                 case 0: return receiver.isAlive();
                 case 1: return receiver.getSenderId();
-                case 2: return receiver.getSenderConfiguredPPS();
-                case 3: return receiver.getAvgPPS();
-                case 4: return receiver.getLostPackets();
-                case 5: return receiver.getPayloadAsString();
+                case 2: return receiver.getSenderAddress().getHostAddress();
+                case 3: return receiver.getSenderConfiguredPPS();
+                case 4: return receiver.getAvgPPS();
+                case 5: return receiver.getLostPackets();
+                case 6: return receiver.getPayloadAsString();
                 default:
                     throw new RuntimeException("Illegal columnIndex: " + columnIndex);
             }
