@@ -29,19 +29,19 @@ public interface StreamManager {
 	 * Remove a set of streams from the model layer.
 	 * @param streams streams to be removed from the model layer.
 	 */
-	public void removeStreams(java.util.Set<com.spam.mctool.model.MulticastStream> streams);
+	public void removeStreams(java.util.Collection <? extends com.spam.mctool.model.MulticastStream> streams);
 	
 	/**
-	 * Start a set of streams.
+	 * Start a collection of streams.
 	 * @param streams streams to be started.
 	 */
-	public void startStreams(java.util.Set<com.spam.mctool.model.MulticastStream> streams);
+	public void startStreams(java.util.Collection<? extends com.spam.mctool.model.MulticastStream> streams);
 	
 	/**
-	 * Stop a set of streams.
+	 * Stop a collection of streams.
 	 * @param streams streams to be stopped.
 	 */
-	public void stopStreams(java.util.Set<com.spam.mctool.model.MulticastStream> streams);
+	public void stopStreams(java.util.Collection<? extends com.spam.mctool.model.MulticastStream> streams);
 	
 	//TODO change return type from List to Collection
 	/**
