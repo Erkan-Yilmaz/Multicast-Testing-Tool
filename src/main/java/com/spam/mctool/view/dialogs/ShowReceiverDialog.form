@@ -28,40 +28,40 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="SenderIDLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="InterfaceLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="GroupLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="PortLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="PacketStyleLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="ReceiverPPSLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="LostPacketsLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="PacketSizeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="DataLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="ConfPPSLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="SenderPPSLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="MaxDelayLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="AvgTraversalLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="senderIDLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="interfaceLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="groupLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="portLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="packetStyleLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="receiverPPSLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lostPacketsLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="packetSizeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="dataLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="confPPSLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="senderPPSLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="maxDelayLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="avgTraversalLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="GroupData" pref="149" max="32767" attributes="1"/>
-                          <Component id="InterfaceData" alignment="1" pref="149" max="32767" attributes="1"/>
-                          <Component id="SenderIDData" alignment="1" pref="149" max="32767" attributes="1"/>
-                          <Component id="PacketSizeData" alignment="0" pref="149" max="32767" attributes="0"/>
-                          <Component id="DataData" alignment="1" pref="149" max="32767" attributes="0"/>
-                          <Component id="ConfPPSData" alignment="1" pref="149" max="32767" attributes="0"/>
-                          <Component id="SenderPPSData" alignment="1" pref="149" max="32767" attributes="0"/>
-                          <Component id="ReceiverPPSData" alignment="0" pref="149" max="32767" attributes="0"/>
-                          <Component id="LostPacketsData" alignment="1" pref="149" max="32767" attributes="0"/>
-                          <Component id="MaxDelayData" alignment="1" pref="149" max="32767" attributes="0"/>
-                          <Component id="AvgTraversalData" alignment="1" pref="149" max="32767" attributes="1"/>
-                          <Component id="PacketStyleData" alignment="1" pref="149" max="32767" attributes="0"/>
-                          <Component id="PortData" alignment="1" pref="149" max="32767" attributes="0"/>
+                          <Component id="groupData" pref="149" max="32767" attributes="1"/>
+                          <Component id="interfaceData" alignment="1" pref="149" max="32767" attributes="1"/>
+                          <Component id="senderIDData" alignment="1" pref="149" max="32767" attributes="1"/>
+                          <Component id="packetSizeData" alignment="0" pref="149" max="32767" attributes="0"/>
+                          <Component id="dataData" alignment="1" pref="149" max="32767" attributes="0"/>
+                          <Component id="confPPSData" alignment="1" pref="149" max="32767" attributes="0"/>
+                          <Component id="senderPPSData" alignment="1" pref="149" max="32767" attributes="0"/>
+                          <Component id="receiverPPSData" alignment="0" pref="149" max="32767" attributes="0"/>
+                          <Component id="lostPacketsData" alignment="1" pref="149" max="32767" attributes="0"/>
+                          <Component id="maxDelayData" alignment="1" pref="149" max="32767" attributes="0"/>
+                          <Component id="avgTraversalData" alignment="1" pref="149" max="32767" attributes="1"/>
+                          <Component id="packetStyleData" alignment="1" pref="149" max="32767" attributes="0"/>
+                          <Component id="portData" alignment="1" pref="149" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
-                      <Component id="CloseButton" min="-2" max="-2" attributes="0"/>
+                      <Component id="closeButton" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -74,60 +74,60 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="SenderIDLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="senderIDLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="InterfaceLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="interfaceLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="GroupLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="groupLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="PortLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="portLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="PacketStyleLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="packetStyleLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="PacketSizeLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="packetSizeLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="DataLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="dataLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="ConfPPSLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="confPPSLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="SenderPPSLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="senderPPSLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="ReceiverPPSLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="receiverPPSLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="LostPacketsLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="lostPacketsLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="MaxDelayLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="maxDelayLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="AvgTraversalLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="avgTraversalLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="CloseButton" min="-2" max="-2" attributes="0"/>
+                      <Component id="closeButton" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="SenderIDData" min="-2" max="-2" attributes="0"/>
+                      <Component id="senderIDData" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="InterfaceData" min="-2" max="-2" attributes="0"/>
+                      <Component id="interfaceData" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="GroupData" min="-2" max="-2" attributes="0"/>
+                      <Component id="groupData" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="PortData" min="-2" max="-2" attributes="0"/>
+                      <Component id="portData" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="PacketStyleData" min="-2" max="-2" attributes="0"/>
+                      <Component id="packetStyleData" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="PacketSizeData" min="-2" max="-2" attributes="0"/>
+                      <Component id="packetSizeData" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="DataData" min="-2" max="-2" attributes="0"/>
+                      <Component id="dataData" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="ConfPPSData" min="-2" max="-2" attributes="0"/>
+                      <Component id="confPPSData" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="SenderPPSData" min="-2" max="-2" attributes="0"/>
+                      <Component id="senderPPSData" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="ReceiverPPSData" min="-2" max="-2" attributes="0"/>
+                      <Component id="receiverPPSData" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="LostPacketsData" min="-2" max="-2" attributes="0"/>
+                      <Component id="lostPacketsData" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="MaxDelayData" min="-2" max="-2" attributes="0"/>
+                      <Component id="maxDelayData" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="AvgTraversalData" min="-2" max="-2" attributes="0"/>
+                      <Component id="avgTraversalData" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="36" max="32767" attributes="0"/>
@@ -136,212 +136,212 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="SenderIDLabel">
+    <Component class="javax.swing.JLabel" name="senderIDLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.SenderIDLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.senderIDLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="SenderIDData">
+    <Component class="javax.swing.JLabel" name="senderIDData">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.SenderIDData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.senderIDData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="InterfaceLabel">
+    <Component class="javax.swing.JLabel" name="interfaceLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.InterfaceLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.interfaceLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="InterfaceData">
-      <Properties>
-        <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.InterfaceData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="GroupLabel">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.GroupLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="GroupData">
+    <Component class="javax.swing.JLabel" name="interfaceData">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.GroupData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.interfaceData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="PacketStyleLabel">
+    <Component class="javax.swing.JLabel" name="groupLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.PacketStyleLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.groupLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="PacketStyleData">
-      <Properties>
-        <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.PacketStyleData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="PortLabel">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.PortLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="PortData">
+    <Component class="javax.swing.JLabel" name="groupData">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.PortData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.groupData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="DataData">
+    <Component class="javax.swing.JLabel" name="packetStyleLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.packetStyleLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="packetStyleData">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.DataData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.packetStyleData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="DataLabel">
+    <Component class="javax.swing.JLabel" name="portLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.DataLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.portLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="PacketSizeData">
-      <Properties>
-        <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.PacketSizeData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="PacketSizeLabel">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.PacketSizeLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="ConfPPSData">
+    <Component class="javax.swing.JLabel" name="portData">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.ConfPPSData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.portData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="SenderPPSLabel">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.SenderPPSLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="SenderPPSData">
+    <Component class="javax.swing.JLabel" name="dataData">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.SenderPPSData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.dataData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="ConfPPSLabel">
+    <Component class="javax.swing.JLabel" name="dataLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.ConfPPSLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.dataLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="ReceiverPPSLabel">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.ReceiverPPSLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="ReceiverPPSData">
+    <Component class="javax.swing.JLabel" name="packetSizeData">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.ReceiverPPSData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.packetSizeData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="LostPacketsLabel">
+    <Component class="javax.swing.JLabel" name="packetSizeLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.LostPacketsLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.packetSizeLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="LostPacketsData">
-      <Properties>
-        <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.LostPacketsData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="MaxDelayLabel">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.MaxDelayLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="MaxDelayData">
+    <Component class="javax.swing.JLabel" name="confPPSData">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.MaxDelayData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.confPPSData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="AvgTraversalLabel">
+    <Component class="javax.swing.JLabel" name="senderPPSLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.AvgTraversalLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.senderPPSLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="AvgTraversalData">
+    <Component class="javax.swing.JLabel" name="senderPPSData">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="4"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.AvgTraversalData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.senderPPSData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="CloseButton">
+    <Component class="javax.swing.JLabel" name="confPPSLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.CloseButton.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.confPPSLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="receiverPPSLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.receiverPPSLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="receiverPPSData">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.receiverPPSData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lostPacketsLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.lostPacketsLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lostPacketsData">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.lostPacketsData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="maxDelayLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.maxDelayLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="maxDelayData">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.maxDelayData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="avgTraversalLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.avgTraversalLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="avgTraversalData">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.avgTraversalData.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="closeButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.closeButton.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
         <Property name="actionCommand" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.CloseButton.actionCommand" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="ShowReceiverDialog.closeButton.actionCommand" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CloseButtonActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="closeButtonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

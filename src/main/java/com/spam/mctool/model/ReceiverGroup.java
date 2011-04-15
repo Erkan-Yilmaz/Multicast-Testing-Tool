@@ -3,6 +3,7 @@ package com.spam.mctool.model;
 import com.ChuckNorris;
 import java.io.IOException;
 import java.net.DatagramPacket;
+import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.nio.ByteBuffer;
 import java.util.LinkedHashMap;
@@ -66,10 +67,10 @@ public final class ReceiverGroup extends MulticastStream {
 
 	@Override
 	public void activate() {
+	    if(state == State.ACTIVE) {
+            return;
+        }
 		try {
-			if(state == State.ACTIVE) {
-				return;
-			}
 			// open socket and join group
 			socket = new MulticastSocket(getPort());
 			socket.setNetworkInterface(getNetworkInterface());
@@ -115,6 +116,7 @@ public final class ReceiverGroup extends MulticastStream {
 			socket.receive(dp);
 			con.receivedTime = System.nanoTime();
 			con.systemTime = System.currentTimeMillis();
+			con.address = dp.getAddress();
 			ByteBuffer buf = ByteBuffer.wrap(buffer, 0, dp.getLength());
 			Packet p = new AutoPacket();
 			p.fromByteArray(buf);
@@ -145,6 +147,7 @@ public final class ReceiverGroup extends MulticastStream {
 		long systemTime;
 		Packet packet;
 		private int size;
+		InetAddress address;
 	}
 	
 	// this is scheduled in the executor thread pool to analyze the data of the receivers

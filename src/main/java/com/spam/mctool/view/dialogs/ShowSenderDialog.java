@@ -56,79 +56,79 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        SenderIDLabel = new javax.swing.JLabel();
-        SenderIDData = new javax.swing.JLabel();
-        InterfaceLabel = new javax.swing.JLabel();
-        InterfaceData = new javax.swing.JLabel();
-        GroupLabel = new javax.swing.JLabel();
-        GroupData = new javax.swing.JLabel();
-        PortLabel = new javax.swing.JLabel();
-        PortData = new javax.swing.JLabel();
-        PacketStyleLabel = new javax.swing.JLabel();
-        PacketStyleData = new javax.swing.JLabel();
-        PacketSizeLabel = new javax.swing.JLabel();
-        PacketSizeData = new javax.swing.JLabel();
-        DataLabel = new javax.swing.JLabel();
-        DataData = new javax.swing.JLabel();
-        ConfPPSLabel = new javax.swing.JLabel();
-        ConfPPSData = new javax.swing.JLabel();
-        SentPPSLabel = new javax.swing.JLabel();
-        SentPPSData = new javax.swing.JLabel();
-        CloseButton = new javax.swing.JButton();
+        senderIDLabel = new javax.swing.JLabel();
+        senderIDData = new javax.swing.JLabel();
+        interfaceLabel = new javax.swing.JLabel();
+        interfaceData = new javax.swing.JLabel();
+        groupLabel = new javax.swing.JLabel();
+        groupData = new javax.swing.JLabel();
+        portLabel = new javax.swing.JLabel();
+        portData = new javax.swing.JLabel();
+        packetStyleLabel = new javax.swing.JLabel();
+        packetStyleData = new javax.swing.JLabel();
+        packetSizeLabel = new javax.swing.JLabel();
+        packetSizeData = new javax.swing.JLabel();
+        dataLabel = new javax.swing.JLabel();
+        dataData = new javax.swing.JLabel();
+        confPPSLabel = new javax.swing.JLabel();
+        confPPSData = new javax.swing.JLabel();
+        sentPPSLabel = new javax.swing.JLabel();
+        sentPPSData = new javax.swing.JLabel();
+        closeButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
-        SenderIDLabel.setText(bundle.getString("ShowSenderDialog.SenderIDLabel.text")); // NOI18N
+        senderIDLabel.setText(bundle.getString("ShowSenderDialog.senderIDLabel.text")); // NOI18N
 
-        SenderIDData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        SenderIDData.setText(bundle.getString("ShowSenderDialog.SenderIDData.text")); // NOI18N
+        senderIDData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        senderIDData.setText(bundle.getString("ShowSenderDialog.senderIDData.text")); // NOI18N
 
-        InterfaceLabel.setText(bundle.getString("ShowSenderDialog.InterfaceLabel.text")); // NOI18N
+        interfaceLabel.setText(bundle.getString("ShowSenderDialog.interfaceLabel.text")); // NOI18N
 
-        InterfaceData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        InterfaceData.setText(bundle.getString("ShowSenderDialog.InterfaceData.text")); // NOI18N
+        interfaceData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        interfaceData.setText(bundle.getString("ShowSenderDialog.interfaceData.text")); // NOI18N
 
-        GroupLabel.setText(bundle.getString("ShowSenderDialog.GroupLabel.text")); // NOI18N
+        groupLabel.setText(bundle.getString("ShowSenderDialog.groupLabel.text")); // NOI18N
 
-        GroupData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        GroupData.setText(bundle.getString("ShowSenderDialog.GroupData.text")); // NOI18N
+        groupData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        groupData.setText(bundle.getString("ShowSenderDialog.groupData.text")); // NOI18N
 
-        PortLabel.setText(bundle.getString("ShowSenderDialog.PortLabel.text")); // NOI18N
+        portLabel.setText(bundle.getString("ShowSenderDialog.portLabel.text")); // NOI18N
 
-        PortData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        PortData.setText(bundle.getString("ShowSenderDialog.PortData.text")); // NOI18N
+        portData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        portData.setText(bundle.getString("ShowSenderDialog.portData.text")); // NOI18N
 
-        PacketStyleLabel.setText(bundle.getString("ShowSenderDialog.PacketStyleLabel.text")); // NOI18N
+        packetStyleLabel.setText(bundle.getString("ShowSenderDialog.packetStyleLabel.text")); // NOI18N
 
-        PacketStyleData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        PacketStyleData.setText(bundle.getString("ShowSenderDialog.PacketStyleData.text")); // NOI18N
+        packetStyleData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        packetStyleData.setText(bundle.getString("ShowSenderDialog.packetStyleData.text")); // NOI18N
 
-        PacketSizeLabel.setText(bundle.getString("ShowSenderDialog.PacketSizeLabel.text")); // NOI18N
+        packetSizeLabel.setText(bundle.getString("ShowSenderDialog.packetSizeLabel.text")); // NOI18N
 
-        PacketSizeData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        PacketSizeData.setText(bundle.getString("ShowSenderDialog.PacketSizeData.text")); // NOI18N
+        packetSizeData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        packetSizeData.setText(bundle.getString("ShowSenderDialog.packetSizeData.text")); // NOI18N
 
-        DataLabel.setText(bundle.getString("ShowSenderDialog.DataLabel.text")); // NOI18N
+        dataLabel.setText(bundle.getString("ShowSenderDialog.dataLabel.text")); // NOI18N
 
-        DataData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        DataData.setText(bundle.getString("ShowSenderDialog.DataData.text")); // NOI18N
+        dataData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        dataData.setText(bundle.getString("ShowSenderDialog.dataData.text")); // NOI18N
 
-        ConfPPSLabel.setText(bundle.getString("ShowSenderDialog.ConfPPSLabel.text")); // NOI18N
+        confPPSLabel.setText(bundle.getString("ShowSenderDialog.confPPSLabel.text")); // NOI18N
 
-        ConfPPSData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        ConfPPSData.setText(bundle.getString("ShowSenderDialog.ConfPPSData.text")); // NOI18N
+        confPPSData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        confPPSData.setText(bundle.getString("ShowSenderDialog.confPPSData.text")); // NOI18N
 
-        SentPPSLabel.setText(bundle.getString("ShowSenderDialog.SentPPSLabel.text")); // NOI18N
+        sentPPSLabel.setText(bundle.getString("ShowSenderDialog.sentPPSLabel.text")); // NOI18N
 
-        SentPPSData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        SentPPSData.setText(bundle.getString("ShowSenderDialog.SentPPSData.text")); // NOI18N
+        sentPPSData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        sentPPSData.setText(bundle.getString("ShowSenderDialog.sentPPSData.text")); // NOI18N
 
-        CloseButton.setText(bundle.getString("ShowSenderDialog.CloseButton.text")); // NOI18N
-        CloseButton.setActionCommand(bundle.getString("ShowSenderDialog.CloseButton.actionCommand")); // NOI18N
-        CloseButton.addActionListener(new java.awt.event.ActionListener() {
+        closeButton.setText(bundle.getString("ShowSenderDialog.closeButton.text")); // NOI18N
+        closeButton.setActionCommand(bundle.getString("ShowSenderDialog.closeButton.actionCommand")); // NOI18N
+        closeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CloseButtonActionPerformed(evt);
+                closeButtonActionPerformed(evt);
             }
         });
 
@@ -141,33 +141,33 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(SenderIDLabel)
-                            .addComponent(InterfaceLabel)
-                            .addComponent(GroupLabel)
-                            .addComponent(PortLabel)
-                            .addComponent(PacketStyleLabel))
+                            .addComponent(senderIDLabel)
+                            .addComponent(interfaceLabel)
+                            .addComponent(groupLabel)
+                            .addComponent(portLabel)
+                            .addComponent(packetStyleLabel))
                         .addGap(116, 116, 116)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(GroupData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                            .addComponent(InterfaceData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                            .addComponent(SenderIDData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                            .addComponent(PortData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                            .addComponent(PacketStyleData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)))
+                            .addComponent(groupData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                            .addComponent(interfaceData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                            .addComponent(senderIDData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                            .addComponent(portData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                            .addComponent(packetStyleData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PacketSizeLabel)
-                            .addComponent(DataLabel)
-                            .addComponent(ConfPPSLabel)
-                            .addComponent(SentPPSLabel))
+                            .addComponent(packetSizeLabel)
+                            .addComponent(dataLabel)
+                            .addComponent(confPPSLabel)
+                            .addComponent(sentPPSLabel))
                         .addGap(79, 79, 79)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PacketSizeData, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                            .addComponent(DataData, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                            .addComponent(ConfPPSData, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                            .addComponent(SentPPSData, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)))
+                            .addComponent(packetSizeData, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                            .addComponent(dataData, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                            .addComponent(confPPSData, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                            .addComponent(sentPPSData, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(102, 102, 102)
-                        .addComponent(CloseButton)))
+                        .addComponent(closeButton)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -175,51 +175,51 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(SenderIDLabel)
-                    .addComponent(SenderIDData))
+                    .addComponent(senderIDLabel)
+                    .addComponent(senderIDData))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(InterfaceLabel)
-                    .addComponent(InterfaceData))
+                    .addComponent(interfaceLabel)
+                    .addComponent(interfaceData))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(GroupLabel)
-                    .addComponent(GroupData))
+                    .addComponent(groupLabel)
+                    .addComponent(groupData))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(PortLabel)
-                    .addComponent(PortData))
+                    .addComponent(portLabel)
+                    .addComponent(portData))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(PacketStyleLabel)
-                    .addComponent(PacketStyleData))
+                    .addComponent(packetStyleLabel)
+                    .addComponent(packetStyleData))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(PacketSizeLabel)
-                    .addComponent(PacketSizeData))
+                    .addComponent(packetSizeLabel)
+                    .addComponent(packetSizeData))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(DataLabel)
-                    .addComponent(DataData))
+                    .addComponent(dataLabel)
+                    .addComponent(dataData))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ConfPPSLabel)
-                    .addComponent(ConfPPSData))
+                    .addComponent(confPPSLabel)
+                    .addComponent(confPPSData))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(SentPPSLabel)
-                    .addComponent(SentPPSData))
+                    .addComponent(sentPPSLabel)
+                    .addComponent(sentPPSData))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(CloseButton)
+                .addComponent(closeButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
+    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
         this.dispose();
-    }//GEN-LAST:event_CloseButtonActionPerformed
+    }//GEN-LAST:event_closeButtonActionPerformed
 
     /**
     * @param args the command line arguments
@@ -239,7 +239,7 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
     }
 
     private void loadData() {
-        this.SenderIDData.setText(String.valueOf(this.sender.getSenderId()));
+        this.senderIDData.setText(String.valueOf(this.sender.getSenderId()));
 
         for (InterfaceAddress interfaceAddress : this.sender.getNetworkInterface().getInterfaceAddresses()) {
             InetAddress address = interfaceAddress.getAddress();
@@ -256,16 +256,16 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
                 }
             }
 
-            this.InterfaceData.setText(this.sender.getNetworkInterface().getDisplayName() + " - " + ip);
+            this.interfaceData.setText(this.sender.getNetworkInterface().getDisplayName() + " - " + ip);
         }
 
-        this.GroupData.setText(this.sender.getGroup().getHostAddress());
-        this.PortData.setText(String.valueOf(this.sender.getPort()));
-        this.PacketStyleData.setText(this.sender.getpType().toString());
-        this.PacketSizeData.setText(String.valueOf(this.sender.getPacketSize()));
-        this.DataData.setText(this.sender.getPayloadAsString());
-        this.ConfPPSData.setText(String.valueOf(this.sender.getSenderConfiguredPacketRate()));
-        this.SentPPSData.setText(String.valueOf(this.sender.getAvgPPS()));
+        this.groupData.setText(this.sender.getGroup().getHostAddress());
+        this.portData.setText(String.valueOf(this.sender.getPort()));
+        this.packetStyleData.setText(this.sender.getpType().toString());
+        this.packetSizeData.setText(String.valueOf(this.sender.getPacketSize()));
+        this.dataData.setText(this.sender.getPayloadAsString());
+        this.confPPSData.setText(String.valueOf(this.sender.getSenderConfiguredPacketRate()));
+        this.sentPPSData.setText(String.valueOf(this.sender.getAvgPPS()));
     }
     
     public void dataChanged(SenderDataChangedEvent e) {
@@ -273,25 +273,25 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton CloseButton;
-    private javax.swing.JLabel ConfPPSData;
-    private javax.swing.JLabel ConfPPSLabel;
-    private javax.swing.JLabel DataData;
-    private javax.swing.JLabel DataLabel;
-    private javax.swing.JLabel GroupData;
-    private javax.swing.JLabel GroupLabel;
-    private javax.swing.JLabel InterfaceData;
-    private javax.swing.JLabel InterfaceLabel;
-    private javax.swing.JLabel PacketSizeData;
-    private javax.swing.JLabel PacketSizeLabel;
-    private javax.swing.JLabel PacketStyleData;
-    private javax.swing.JLabel PacketStyleLabel;
-    private javax.swing.JLabel PortData;
-    private javax.swing.JLabel PortLabel;
-    private javax.swing.JLabel SenderIDData;
-    private javax.swing.JLabel SenderIDLabel;
-    private javax.swing.JLabel SentPPSData;
-    private javax.swing.JLabel SentPPSLabel;
+    private javax.swing.JButton closeButton;
+    private javax.swing.JLabel confPPSData;
+    private javax.swing.JLabel confPPSLabel;
+    private javax.swing.JLabel dataData;
+    private javax.swing.JLabel dataLabel;
+    private javax.swing.JLabel groupData;
+    private javax.swing.JLabel groupLabel;
+    private javax.swing.JLabel interfaceData;
+    private javax.swing.JLabel interfaceLabel;
+    private javax.swing.JLabel packetSizeData;
+    private javax.swing.JLabel packetSizeLabel;
+    private javax.swing.JLabel packetStyleData;
+    private javax.swing.JLabel packetStyleLabel;
+    private javax.swing.JLabel portData;
+    private javax.swing.JLabel portLabel;
+    private javax.swing.JLabel senderIDData;
+    private javax.swing.JLabel senderIDLabel;
+    private javax.swing.JLabel sentPPSData;
+    private javax.swing.JLabel sentPPSLabel;
     // End of variables declaration//GEN-END:variables
 
 }

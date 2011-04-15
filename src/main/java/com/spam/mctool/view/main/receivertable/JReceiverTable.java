@@ -42,10 +42,11 @@ public class JReceiverTable extends JTable {
     private void init() {
         this.getColumnModel().getColumn(0).setHeaderValue("Status");
         this.getColumnModel().getColumn(1).setHeaderValue("Sender ID");
-        this.getColumnModel().getColumn(2).setHeaderValue("Conf. Packet Rate");
-        this.getColumnModel().getColumn(3).setHeaderValue("Avg. Packet Rate");
-        this.getColumnModel().getColumn(4).setHeaderValue("Lost Packets");
-        this.getColumnModel().getColumn(5).setHeaderValue("Payload");
+        this.getColumnModel().getColumn(2).setHeaderValue("Sender IP");
+        this.getColumnModel().getColumn(3).setHeaderValue("Conf. Packet Rate");
+        this.getColumnModel().getColumn(4).setHeaderValue("Avg. Packet Rate");
+        this.getColumnModel().getColumn(5).setHeaderValue("Lost Packets");
+        this.getColumnModel().getColumn(6).setHeaderValue("Payload");
         this.getColumnModel().getColumn(0).setCellRenderer(new ReceiverStateRenderer());
         this.addMouseListener((ReceiverTableModel)this.getModel());
         this.setDefaultRenderer(Object.class, new TwoColorRenderer());

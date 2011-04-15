@@ -31,18 +31,18 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="InterfaceLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="477" max="32767" attributes="0"/>
+                      <Component id="interfaceLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="519" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="GroupLabel" min="-2" max="-2" attributes="0"/>
-                          <Component id="GroupField" min="-2" pref="254" max="-2" attributes="1"/>
+                          <Component id="groupLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="groupField" min="-2" pref="254" max="-2" attributes="1"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="PortLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="PortField" pref="257" max="32767" attributes="1"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="portLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="portField" pref="299" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -50,73 +50,73 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="DataLabel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="dataLabel" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="240" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="PacketRateField" alignment="0" pref="255" max="32767" attributes="1"/>
-                                      <Component id="DataField" alignment="1" pref="255" max="32767" attributes="1"/>
-                                      <Component id="TTLField" alignment="0" pref="255" max="32767" attributes="1"/>
+                                      <Component id="packetRateField" alignment="0" pref="262" max="32767" attributes="1"/>
+                                      <Component id="dataField" alignment="1" pref="262" max="32767" attributes="1"/>
+                                      <Component id="ttlField" alignment="0" pref="262" max="32767" attributes="1"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="PacketRateLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="packetRateLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="PacketSizeLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="189" max="32767" attributes="0"/>
+                              <Component id="packetSizeLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="224" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="PacketStyleLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="182" max="32767" attributes="0"/>
+                              <Component id="packetStyleLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="217" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="PacketSizeField" alignment="0" pref="255" max="32767" attributes="1"/>
-                                  <Component id="PacketStyleCombo" alignment="1" pref="255" max="32767" attributes="1"/>
+                                  <Component id="packetSizeField" alignment="0" pref="290" max="32767" attributes="1"/>
+                                  <Component id="packetStyleCombo" alignment="1" pref="290" max="32767" attributes="1"/>
                               </Group>
                               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="TTLLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="450" max="32767" attributes="0"/>
+                      <Component id="ttlLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="492" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="AnalyzingBehaviourLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="411" max="32767" attributes="0"/>
+                      <Component id="analyzingBehaviourLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="453" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="AnalyzingBehaviourCombo" pref="255" max="32767" attributes="1"/>
+                      <Component id="analyzingBehaviourCombo" pref="297" max="32767" attributes="1"/>
                       <EmptySpace min="-2" pref="286" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jSeparator3" alignment="0" pref="529" max="32767" attributes="0"/>
-                          <Component id="jSeparator2" alignment="1" pref="529" max="32767" attributes="0"/>
+                          <Component id="jSeparator3" alignment="0" pref="571" max="32767" attributes="0"/>
+                          <Component id="jSeparator2" alignment="1" pref="571" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="OKButton" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="ActivateBox" alignment="1" pref="214" max="32767" attributes="0"/>
+                          <Component id="okButton" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="activateBox" alignment="1" pref="264" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="CancelButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="239" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="cancelButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="225" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="InterfaceCombo" alignment="0" pref="529" max="32767" attributes="1"/>
-                          <Component id="jSeparator1" alignment="1" pref="529" max="32767" attributes="0"/>
+                          <Component id="interfaceCombo" alignment="0" pref="571" max="32767" attributes="1"/>
+                          <Component id="jSeparator1" alignment="1" pref="571" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -129,199 +129,173 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="GroupLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="PortLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="groupLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="portLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="GroupField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="PortField" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
+                  <Component id="groupField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="portField" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-              <Component id="InterfaceLabel" min="-2" max="-2" attributes="0"/>
+              <Component id="interfaceLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="InterfaceCombo" min="-2" max="-2" attributes="0"/>
+              <Component id="interfaceCombo" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="DataLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="PacketStyleLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="dataLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="packetStyleLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="DataField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="PacketStyleCombo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="dataField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="packetStyleCombo" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="PacketRateLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="PacketSizeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="packetRateLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="packetSizeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="PacketRateField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="PacketSizeField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="packetRateField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="packetSizeField" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="TTLLabel" min="-2" max="-2" attributes="0"/>
+              <Component id="ttlLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="TTLField" min="-2" max="-2" attributes="0"/>
+              <Component id="ttlField" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="AnalyzingBehaviourLabel" min="-2" max="-2" attributes="0"/>
+              <Component id="analyzingBehaviourLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="AnalyzingBehaviourCombo" min="-2" max="-2" attributes="0"/>
+              <Component id="analyzingBehaviourCombo" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator3" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="ActivateBox" min="-2" max="-2" attributes="0"/>
+              <Component id="activateBox" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="OKButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="CancelButton" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="okButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="26" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JComboBox" name="InterfaceCombo">
+    <Component class="javax.swing.JComboBox" name="interfaceCombo">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="OKButton">
+    <Component class="javax.swing.JButton" name="okButton">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/images/check.png"/>
         </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.OKButton.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.okButton.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="OKButtonActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="okButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="CancelButton">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/images/delete.png"/>
-        </Property>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.CancelButton.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CancelButtonActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="InterfaceLabel">
+    <Component class="javax.swing.JLabel" name="interfaceLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.InterfaceLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.interfaceLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="PortLabel">
+    <Component class="javax.swing.JLabel" name="portLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.PortLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.portLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="GroupLabel">
+    <Component class="javax.swing.JLabel" name="groupLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.GroupLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.groupLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="ActivateBox">
+    <Component class="javax.swing.JCheckBox" name="activateBox">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.ActivateBox.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.activateBox.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="DataLabel">
+    <Component class="javax.swing.JLabel" name="dataLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.DataLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.dataLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="DataField">
+    <Component class="javax.swing.JTextField" name="dataField">
     </Component>
-    <Component class="javax.swing.JLabel" name="PacketRateLabel">
+    <Component class="javax.swing.JLabel" name="packetRateLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.PacketRateLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.packetRateLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="PacketSizeLabel">
+    <Component class="javax.swing.JLabel" name="packetSizeLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.PacketSizeLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.packetSizeLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="TTLLabel">
+    <Component class="javax.swing.JLabel" name="ttlLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.TTLLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.ttlLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="PacketStyleLabel">
+    <Component class="javax.swing.JLabel" name="packetStyleLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.PacketStyleLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.packetStyleLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="PacketStyleCombo">
+    <Component class="javax.swing.JComboBox" name="packetStyleCombo">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JFormattedTextField" name="GroupField">
+    <Component class="javax.swing.JFormattedTextField" name="groupField">
     </Component>
-    <Component class="javax.swing.JSpinner" name="PortField">
-      <Properties>
-        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[0, 65536]"/>
-        </Property>
-        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[10, 28]"/>
-        </Property>
-        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[10, 28]"/>
-        </Property>
-      </Properties>
+    <Component class="javax.swing.JSpinner" name="packetRateField">
     </Component>
-    <Component class="javax.swing.JSpinner" name="PacketRateField">
+    <Component class="javax.swing.JSpinner" name="packetSizeField">
     </Component>
-    <Component class="javax.swing.JSpinner" name="PacketSizeField">
+    <Component class="javax.swing.JSpinner" name="ttlField">
     </Component>
-    <Component class="javax.swing.JSpinner" name="TTLField">
-    </Component>
-    <Component class="javax.swing.JLabel" name="AnalyzingBehaviourLabel">
+    <Component class="javax.swing.JLabel" name="analyzingBehaviourLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.AnalyzingBehaviourLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.analyzingBehaviourLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="AnalyzingBehaviourCombo">
+    <Component class="javax.swing.JComboBox" name="analyzingBehaviourCombo">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="4">
@@ -338,6 +312,21 @@
     <Component class="javax.swing.JSeparator" name="jSeparator2">
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator3">
+    </Component>
+    <Component class="javax.swing.JSpinner" name="portField">
+    </Component>
+    <Component class="javax.swing.JButton" name="cancelButton">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/images/delete.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="internationalization/Bundle.properties" key="EditSenderDialog.cancelButton.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelButtonActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
