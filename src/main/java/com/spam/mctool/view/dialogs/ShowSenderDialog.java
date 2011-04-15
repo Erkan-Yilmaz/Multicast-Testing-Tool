@@ -37,7 +37,7 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
         initComponents();
     }
 
-    public ShowSenderDialog(MainFrame parent, boolean modal) {
+    private ShowSenderDialog(MainFrame parent, boolean modal) {
         this((JFrame)parent, modal);
         this.parent = parent;
     }
@@ -77,8 +77,9 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
         closeButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
+        setTitle(bundle.getString("ShowSenderDialog.title")); // NOI18N
+
         senderIDLabel.setText(bundle.getString("ShowSenderDialog.senderIDLabel.text")); // NOI18N
 
         senderIDData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);

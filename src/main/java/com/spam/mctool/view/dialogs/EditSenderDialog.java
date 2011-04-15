@@ -53,6 +53,7 @@ public class EditSenderDialog extends javax.swing.JDialog {
         this((JFrame)parent, modal);
         this.parent = parent;
         setDefaultValues();
+        this.setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("EditSenderDialog.createTitle"));
     }
 
     public EditSenderDialog(MainFrame parent, boolean modal, Sender sender, boolean create) {
@@ -60,8 +61,11 @@ public class EditSenderDialog extends javax.swing.JDialog {
         this.sender = sender;
         loadData(create);
 
+        this.setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("EditSenderDialog.editTitle"));
+
         if(create){
             this.sender = null;
+            this.setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("EditSenderDialog.createTitle"));
         }
     }
 
@@ -100,9 +104,10 @@ public class EditSenderDialog extends javax.swing.JDialog {
         cancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
+        setTitle(bundle.getString("EditSenderDialog.title")); // NOI18N
 
         okButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/check.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
         okButton.setText(bundle.getString("EditSenderDialog.okButton.text")); // NOI18N
         okButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

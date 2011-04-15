@@ -55,15 +55,7 @@ public class ShowReceiverDialog extends javax.swing.JDialog {
         this.receiver = receiver;
         this.receivergroup = receivergroup;
         receivergroup.addReceiverDataChangeListener(listener);
-        SwingUtilities.invokeLater(new DataLoader());
-    }
-
-    private class DataLoader implements Runnable {
-
-        public void run() {
-            loadData();
-        }
-
+        loadData();
     }
 
     /** This method is called from within the constructor to
@@ -103,8 +95,9 @@ public class ShowReceiverDialog extends javax.swing.JDialog {
         closeButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
+        setTitle(bundle.getString("ShowReceiverDialog.title")); // NOI18N
+
         senderIDLabel.setText(bundle.getString("ShowReceiverDialog.senderIDLabel.text")); // NOI18N
 
         senderIDData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);

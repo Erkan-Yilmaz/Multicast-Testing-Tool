@@ -51,6 +51,7 @@ public class EditReceiverDialog extends javax.swing.JDialog {
         this((JFrame)parent, modal);
         this.parent = parent;
         setDefaultValues();
+        this.setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("EditReceiverDialog.createTitle"));
     }
 
     public EditReceiverDialog(MainFrame parent, boolean modal, ReceiverGroup receiverGroup, boolean create) {
@@ -58,8 +59,11 @@ public class EditReceiverDialog extends javax.swing.JDialog {
         this.receiverGroup = receiverGroup;
         loadData(create);
 
+        this.setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("EditReceiverDialog.editTitle"));
+
         if(create){
             this.receiverGroup = null;
+            this.setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("EditReceiverDialog.createTitle"));
         }
     }
 
