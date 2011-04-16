@@ -100,7 +100,7 @@ public class Receiver {
 		senderSentPackets = last.packet.getSequenceNumber();
 		lastPayload = last.packet.getPayload();
 		lastPacketSize = last.packet.getSize();
-		if(last.packet instanceof HirschmannPacket) {
+		if(((com.spam.mctool.model.packet.AutoPacket)last.packet).getPacketType().equals(HirschmannPacket.class)) {
 			lastPacketType = PacketType.HMANN;
 		} else {
 			lastPacketType = PacketType.SPAM;
@@ -332,6 +332,13 @@ public class Receiver {
 	 */
 	public InetAddress getSenderAddress() {
 	    return senderAddress;
+	}
+	
+	/**
+	 * @param alive the alive state to set
+	 */
+	void setAlive(boolean alive) {
+		this.alive = alive;
 	}
 	
 	/**

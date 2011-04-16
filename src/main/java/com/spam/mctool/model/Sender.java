@@ -21,6 +21,9 @@ import com.spam.mctool.model.packet.SpamPacket;
  */
 public class Sender extends MulticastStream {
 	
+	// constants
+	public static final int MAX_SENDER_ID = 65535;
+	public static final long MAX_PACKET_NO = 4294967295L;
 	// internals
 	private AnalyzeSender analyzer;
 	private LinkedSplitQueue<Integer> sentTimes;
@@ -51,7 +54,7 @@ public class Sender extends MulticastStream {
 	protected Sender(ScheduledThreadPoolExecutor stpe) {
 		this.stpe = stpe;
 		this.sentTimes = new LinkedSplitQueue<Integer>();
-		this.senderId = (long) (Integer.MAX_VALUE*Math.random());
+		this.senderId = (long) (MAX_SENDER_ID*Math.random());
 		this.analyzer = new AnalyzeSender();
 		this.exceptions = new LinkedHashMap<Long, Exception>();
 	}
@@ -128,13 +131,15 @@ public class Sender extends MulticastStream {
 			} else {
 				p = new SpamPacket();
 				p.setPayload(data);
+				p.setDispatchTime(System.currentTimeMillis());
+				p.setSenderMeasuredPacketRate(avgPPS);
 			}
 			p.setMinimumSize(packetSize);
 			p.setConfiguredPacketsPerSecond(senderConfiguredPacketRate);
 			p.setSenderId(senderId);
-			p.setDispatchTime(System.currentTimeMillis());
-			p.setSequenceNumber(++sentPacketCount);
-			p.setSenderMeasuredPacketRate(avgPPS);
+			// keep sent packet count in range
+			sentPacketCount = (sentPacketCount+1)%(MAX_PACKET_NO+1);
+			p.setSequenceNumber(sentPacketCount);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

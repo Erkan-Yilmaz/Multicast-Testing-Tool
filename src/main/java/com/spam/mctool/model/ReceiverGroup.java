@@ -99,6 +99,7 @@ public final class ReceiverGroup extends MulticastStream {
 		for(Receiver r : receivers.values()) {
 			if(r != null) {
 				r.calcNewStatistics();
+				r.setAlive(false);
 			}
 		}
 		analyzer.run();
@@ -119,7 +120,7 @@ public final class ReceiverGroup extends MulticastStream {
 			con.systemTime = System.currentTimeMillis();
 			con.address = dp.getAddress();
 			ByteBuffer buf = ByteBuffer.wrap(buffer, 0, dp.getLength());
-			Packet p = new AutoPacket();
+			AutoPacket p = new AutoPacket();
 			p.fromByteArray(buf);
 			con.packet = p;
 			con.size = dp.getLength();
