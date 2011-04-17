@@ -7,96 +7,19 @@ import java.util.zip.DataFormatException;
 
 /**
  * @author konne
- *
+ * 
+ * Represents a packet of the binary Spam format as specified in the SAS.
  */
 public class SpamPacket implements Packet {
-    class TLVParser {
-        void parse(ByteBuffer data) throws DataFormatException {
-            this.data = data;
-            
-            data.order(ByteOrder.BIG_ENDIAN);
-            
-            while(data.hasRemaining()) {
-                try {
-                    int id = data.getShort() & 0xffff;
-                    long length = data.getInt() & 0xffffffffL;
-                    nextTupel(id,length);
-                } catch(BufferUnderflowException e) {
-                    throw new DataFormatException("Illegal TLV Tupel format");
-                }
-            }
-        }
-        
-        protected ByteBuffer data;
-        
-        public void nextTupel(int id, long length) throws DataFormatException {
-            switch(id) {
-            case 1337:
-                if(length != 0)
-                    throw new DataFormatException("Illegal Header Field");  
-                break;
-            case 1:
-                if(length != 4)
-                    throw new DataFormatException("Illegal Sender Id Field");
-                setSenderId(data.getInt() & 0xffffffffL);
-                break;
-            case 2:
-                if(length != 4)
-                    throw new DataFormatException("Illegal Configured Packets Per Second Filed");
-                setConfiguredPacketsPerSecond(data.getInt() & 0xffffffffL);
-                break;
-            case 3:
-                if(length != 4)
-                    throw new DataFormatException("Illegal Sender Measured Packet Rate Field");
-                setSenderMeasuredPacketRate(data.getInt() & 0xffffffffL);
-                break;
-            case 4:
-                if(length != 4)
-                    throw new DataFormatException("Illegal Sequence Number Field");
-                setSequenceNumber(data.getInt() & 0xffffffffL);
-                break;
-            case 5:
-                if(length != 8)
-                    throw new DataFormatException("Illegal Dispatch Time Field");
-                setDispatchTime(data.getLong());
-                break;
-            case 6:
-                if(length > Integer.MAX_VALUE) {
-                    // well java only supports arrays up to 2GB, if the payload is larger 2GB
-                    // we have a problem. Luckily it is not really our problem, because the 
-                    // ByteBuffer that was passed into this function does not support data
-                    // larger 2GB either. So if the length is larger 2GB we can throw an
-                    // BufferUnderflowException.
-                    throw new BufferUnderflowException();
-                }
-                
-                byte[] load = new byte[(int)length];
-                try {
-                    data.get(load);
-                } catch(BufferUnderflowException e) {
-                    // this is thrown if the get operation tries to
-                    // read data outside of the buffers limits.
-                    throw new DataFormatException("Payload size does not match real payload's size");
-                }
-                setPayload(load); 
-                break;
-            default:
-                try {
-                    data.position((int)(data.position()+length));
-                } catch(IllegalArgumentException e) {
-                    // the position is too big and leads to buffer underflow
-                    throw new BufferUnderflowException(); 
-                }
-            }
-        }
-    }
-
+	private final static int SHORT_MASK = 0xFFFF;
+	private final static long INT_MASK = 0xFFFFFFFFL;
+	
     /**
-     * @param data    the data to be set
-     * @throws DataFormatException thrown if badly formated data is passed
+     * @see com.spam.mctool.model.packet.Packet#fromByteArray(ByteBuffer)
      */
     public void fromByteArray(ByteBuffer data) throws DataFormatException 
     {
+        // set default values
         minSize = 0;
         senderID = 0;
         configuredPacketsPerSeconds = 0;
@@ -105,54 +28,92 @@ public class SpamPacket implements Packet {
         dispatchTime = 0;
         payload = new byte[0];
         
-        TLVParser parser = new TLVParser();
-        parser.parse(data);
-    }
-    
-    private static void putTlv(ByteBuffer data, int id, long size) {
-        data.putShort((short)id);
-        data.putInt((int)size);
+        data.order(ByteOrder.BIG_ENDIAN);
+        
+        int lastId = 0;
+        
+        try {
+            // process all tlv tuples
+            outer: while(data.hasRemaining()) {
+                // read the header
+                int id = data.getShort() & SHORT_MASK;
+                long length = data.getInt() & INT_MASK;
+                
+                // find the correct tuple
+                // this over-complicated loop is simply iterating over all
+                // available tuples in TlvTuple. The only reason it is not 
+                // a for-each loop is that this is faster if the tuples are 
+                // coming in in order (which they should be if generated
+                // by our tool)
+                int i = lastId;
+                do {
+                    TlvTuple tuple = TlvTuple.values()[i];
+                    if(id == tuple.id) {
+                        if(tuple.hasFixedSize() && length != tuple.calcSize(this)) {
+                            throw new DataFormatException("Tuple with Id "+id+
+                                    " has illegal data size");
+                        }
+                        
+                        // parse the tuple
+                        tuple.readTupleData(data, length, this);
+                        continue outer;
+                    }
+                    
+                    i = ++i % TlvTuple.values().length;
+                } while(i != lastId);
+                lastId = i;
+                
+                // no tuple matched
+                // advance by the size specified in the tlv header
+                long pos = (long)data.position() + length;
+                // if the position overflows 2GB
+                if((int)pos != pos){
+                    // we know for a fact that a buffer class does not support
+                    // being larger 2GB thus if the position overflows, we know
+                    // we are out of the range of the buffer
+                    throw new DataFormatException("Illegal TLV Tuple length");
+                }
+                
+                data.position((int)pos);
+            }
+        } catch(BufferUnderflowException e) {
+            throw new DataFormatException("Illegal TLV Tuple format");
+        }
+        catch(IllegalArgumentException e) {
+            // thrown if no tuple matches and the length
+            // was too big and lead to buffer underflow
+            throw new DataFormatException("Illegal TLV Tuple length");
+        }
     }
     
     /**
-     * @return    the byte representation of this packet
+     * @see com.spam.mctool.model.packet.Packet#toByteArray()
      */
     public ByteBuffer toByteArray() 
     {
-        Sizes sizes = getSizes();
+        long size = getSize();
         
-        if(sizes.size > Integer.MAX_VALUE) 
-            throw new UnsupportedOperationException("Generating packets larger 2GB is not supported");
-        
-        ByteBuffer buffer = ByteBuffer.allocate((int)sizes.size);
-        buffer.order(ByteOrder.BIG_ENDIAN);
-        
-        buffer.mark();
-        
-        putTlv(buffer,1337,0);    // header
-        putTlv(buffer,1,4);
-        buffer.putInt((int)getSenderId());
-        putTlv(buffer,2,4);
-        buffer.putInt((int)getConfiguredPacketsPerSecond());
-        putTlv(buffer,3,4);
-        buffer.putInt((int)getSenderMeasuredPacketRate());
-        putTlv(buffer,4,4);
-        buffer.putInt((int)getSequenceNumber());
-        putTlv(buffer,5,8);
-        buffer.putLong(getDispatchTime());
-        
-        if(getPayload().length > 0) {
-            putTlv(buffer,6,getPayload().length);
-            buffer.put(getPayload());
+        // even though, not illegal according to specification,
+        // a packet may not be larger 2GB
+        if(size > Integer.MAX_VALUE) {
+            throw new UnsupportedOperationException(
+                    "Generating packets larger 2GB is not supported");
         }
         
-        if(sizes.doPadding) {
-            putTlv(buffer,7,sizes.paddingSize);
-            // we don't need to write data
-            // but if you would like to do it anyway, uncomment
-            // for(int i=0 ; i<sizes.paddingSize ; ++i){
-            //     buffer.put((byte) -1);
-            // }
+        ByteBuffer buffer = ByteBuffer.allocate((int)size);
+        buffer.order(ByteOrder.BIG_ENDIAN);
+        
+        // needed in order to set the position to the beginning again
+        buffer.mark();
+        
+        // write the tuples
+        for(TlvTuple tuple : TlvTuple.values()){
+            // writes the header, rest needs to be 
+            // written by Tuple Implementation
+            buffer.putShort((short)tuple.getId());
+            buffer.putInt((int)tuple.calcSize(this));
+            // which is done here
+            tuple.writeTupleData(buffer, this);
         }
         
         buffer.reset();
@@ -160,155 +121,157 @@ public class SpamPacket implements Packet {
         return buffer;
     }
     
+    
     /**
-     * @return the senderID
+     * Checks if the passed data buffer contains the correct 
+     * header for this type of package.
+     * 
+     * @param data   The ByteBuffer to be checked
+     * @return       Return whether data has a correct header or not.
+     */
+    public static boolean isCorrectHeader(ByteBuffer data) {
+        data.order(ByteOrder.BIG_ENDIAN);
+        int pos = data.position();
+        
+        if(data.remaining() >= TLV_HEADER_SIZE &&
+           data.getShort(pos) == TlvTuple.HEADER.id &&
+           data.getInt(pos + Short.SIZE/Byte.SIZE) == 
+           TlvTuple.HEADER.calcSize(null)) // size is fixed, thus no package 
+                                           // needed and null is ok
+        {
+        	return true;
+        } else {
+        	return false;
+        }
+    }
+    
+    private static final int TLV_HEADER_SIZE = Integer.SIZE/Byte.SIZE + 
+                                               Short.SIZE/Byte.SIZE;
+    
+    long getMinimumSize() {
+        return minSize;
+    }
+    
+    long getSizeWithoutPadding() {
+        long size = TLV_HEADER_SIZE; // Size of the padding header is included
+        for(TlvTuple tuple : TlvTuple.values()){
+            if(tuple != TlvTuple.PADDING){
+                size += TLV_HEADER_SIZE + tuple.calcSize(this);
+            }
+        }
+        
+        return size;
+    }
+    
+    /**
+     * @see com.spam.mctool.model.packet.Packet#getSenderId()
      */
     public long getSenderId() {
         return senderID;
     }
+    
     /**
-     * @param senderID the senderID to set
+     * @see com.spam.mctool.model.packet.Packet#setSenderId(long)
      */
     public void setSenderId(long senderID) {
-        if((senderID & 0xFFFFFFFFL) != senderID)
+        if((senderID & INT_MASK) != senderID){
             throw new IllegalArgumentException();
-            
+        }
         this.senderID = senderID;
     }
+    
     /**
-     * @return the configuredPacketsPerSeconds
+     * @see com.spam.mctool.model.packet.Packet#getConfiguredPacketsPerSecond()
      */
     public long getConfiguredPacketsPerSecond() {
         return configuredPacketsPerSeconds;
     }
+    
     /**
-     * @param configuredPacketsPerSeconds the configuredPacketsPerSeconds to set
+     * @see com.spam.mctool.model.packet.Packet#setConfiguredPacketsPerSecond(long)
      */
     public void setConfiguredPacketsPerSecond(long configuredPacketsPerSeconds) {
-        if((configuredPacketsPerSeconds & 0xFFFFFFFFL) != configuredPacketsPerSeconds)
+        if((configuredPacketsPerSeconds & INT_MASK) != configuredPacketsPerSeconds){
             throw new IllegalArgumentException();
+        }
     
         this.configuredPacketsPerSeconds = configuredPacketsPerSeconds;
     }
+    
     /**
-     * @return the senderMeasuredPacketRate
+     * @see com.spam.mctool.model.packet.Packet#getSenderMeasuredPacketRate()
      */
     public long getSenderMeasuredPacketRate() {
         return senderMeasuredPacketRate;
     }
+    
     /**
-     * @param senderMeasuredPacketRate the senderMeasuredPacketRate to set
+     * @see com.spam.mctool.model.packet.Packet#setSenderMeasuredPacketRate(long)
      */
     public void setSenderMeasuredPacketRate(long senderMeasuredPacketRate) {
-        if((senderMeasuredPacketRate & 0xFFFFFFFFL) != senderMeasuredPacketRate)
+        if((senderMeasuredPacketRate & INT_MASK) != senderMeasuredPacketRate)
             throw new IllegalArgumentException();
     
         this.senderMeasuredPacketRate = senderMeasuredPacketRate;
     }
+    
     /**
-     * @return the sequenceNumber
+     * @see com.spam.mctool.model.packet.Packet#getSequenceNumber()
      */
     public long getSequenceNumber() {
         return sequenceNumber;
     }
+    
     /**
-     * @param sequenceNumber the sequenceNumber to set
+     * @see com.spam.mctool.model.packet.Packet#setSequenceNumber(long)
      */
     public void setSequenceNumber(long sequenceNumber) {
-        if((sequenceNumber & 0xFFFFFFFFL) != sequenceNumber)
+        if((sequenceNumber & INT_MASK) != sequenceNumber)
             throw new IllegalArgumentException();
     
         this.sequenceNumber = sequenceNumber;
     }
+    
     /**
-     * @return the dispatchTime
+     * @see com.spam.mctool.model.packet.Packet#getDispatchTime()
      */
     public long getDispatchTime() {
         return dispatchTime;
     }
+    
     /**
-     * @param dispatchTime the dispatchTime to set
+     * @see com.spam.mctool.model.packet.Packet#setDispatchTime(long)
      */
     public void setDispatchTime(long dispatchTime) {
         this.dispatchTime = dispatchTime;
     }
     
     /**
-     * @param data  The payload's data
+     * @see com.spam.mctool.model.packet.Packet#setPayload(byte[] date)
      */
     public void setPayload(byte[] data) {
         payload = data;
     }
     
     /**
-     * @return      Returns the payload's data
+     * @see com.spam.mctool.model.packet.Packet#getPayload()
      */
     public byte[] getPayload() {
         return payload;
     }
     
     /**
-     * @return      Returns the packet's size
+     * @see com.spam.mctool.model.packet.Packet#getSize()
      */
     public long getSize() {
-        return getSizes().size;
+        return getSizeWithoutPadding() + TlvTuple.PADDING.calcSize(this);
     }
-
-    private static class Sizes {
-        public long size = 0;
-        public long paddingSize = 0;
-        public boolean doPadding = false;
-    }
-
-    private Sizes getSizes() {
-        Sizes sizes = new Sizes();
-        
-        // mandatory tlv headers + fixed size fields
-        sizes.size =(long)(6*6+ 0+4+4+4+4+8);
-        //                ^ ^ ^ ^ ^ ^
-        // 6 Header with  | | | | | |   
-        // 6 Bytes each   | | | | | L Dispatch Time
-        //                | | | | L Sequence Number
-        //                | | | L Sender MEasured Packet Rate
-        //                | | L Configured Packets Per Second
-        //                | L Sender Id
-        //                L Header Data (this is nothing)
-        
-        if(getPayload().length > 0) {
-            // add header + payload
-            sizes.size += 6 + getPayload().length;
-        }
-        
-        if(sizes.size < minSize) {
-            // we need to add some padding
-            // but we first need to add the padding header
-            sizes.size += 6;
-            sizes.doPadding = true;
-            // if the size is still too small calculate padding
-            if(sizes.size < minSize) {
-                sizes.paddingSize = minSize - sizes.size;
-                sizes.size = minSize;
-            }
-        }
-        return sizes;
-    }
+    
     /**
-     * Set the size of the package.
-     * Package may be bigger, e.g. if size is set to 1
-     * because we need to send the header and other stuff
-     * 
-     * @param size  The packets minimum size
+     * @see com.spam.mctool.model.packet.Packet#setMinimumSize(long)
      */
     public void setMinimumSize(long size) {
         minSize = size;
-    }
-
-    public static boolean isCorrectHeader(ByteBuffer data) {
-        data.order(ByteOrder.BIG_ENDIAN);
-        int pos = data.position();
-        return data.remaining() >= 6 &&
-               data.getShort(pos+0) == 1337 &&
-               data.getInt(pos+2) == 0;
     }
     
     private long minSize;
@@ -317,5 +280,5 @@ public class SpamPacket implements Packet {
     private long senderMeasuredPacketRate;
     private long sequenceNumber;
     private long dispatchTime;
-    private byte[] payload = new byte[0];
+    byte[] payload = new byte[0];
 }
