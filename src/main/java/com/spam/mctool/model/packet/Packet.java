@@ -11,7 +11,7 @@ import java.util.zip.DataFormatException;
  * in the class implementing this interface. You may thus get
  * IllegalArgumentExceptions or UnsupportedOperationException exceptions.
  */
-interface Packet {
+public interface Packet {
     /**
      * Creates a Packet from its binary representation.
      * @param  data                   The data to be parsed

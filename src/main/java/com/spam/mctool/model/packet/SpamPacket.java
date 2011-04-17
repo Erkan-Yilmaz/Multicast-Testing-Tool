@@ -10,7 +10,7 @@ import java.util.zip.DataFormatException;
  * 
  * Represents a packet of the binary Spam format as specified in the SAS.
  */
-public class SpamPacket implements Packet {
+final public class SpamPacket implements Packet {
 	private final static int SHORT_MASK = 0xFFFF;
 	private final static long INT_MASK = 0xFFFFFFFFL;
 	
@@ -48,7 +48,7 @@ public class SpamPacket implements Packet {
                 int i = lastId;
                 do {
                     TlvTuple tuple = TlvTuple.values()[i];
-                    if(id == tuple.id) {
+                    if(id == tuple.getId()) {
                         if(tuple.hasFixedSize() && length != tuple.calcSize(this)) {
                             throw new DataFormatException("Tuple with Id "+id+
                                     " has illegal data size");
@@ -77,7 +77,9 @@ public class SpamPacket implements Packet {
                 data.position((int)pos);
             }
         } catch(BufferUnderflowException e) {
-            throw new DataFormatException("Illegal TLV Tuple format");
+        	DataFormatException p = new DataFormatException("Illegal TLV Tuple format");
+        	p.initCause(e);
+            throw p;
         }
         catch(IllegalArgumentException e) {
             // thrown if no tuple matches and the length
@@ -133,16 +135,12 @@ public class SpamPacket implements Packet {
         data.order(ByteOrder.BIG_ENDIAN);
         int pos = data.position();
         
-        if(data.remaining() >= TLV_HEADER_SIZE &&
-           data.getShort(pos) == TlvTuple.HEADER.id &&
+        return (
+           data.remaining() >= TLV_HEADER_SIZE &&
+           data.getShort(pos) == TlvTuple.HEADER.getId() &&
            data.getInt(pos + Short.SIZE/Byte.SIZE) == 
-           TlvTuple.HEADER.calcSize(null)) // size is fixed, thus no package 
-                                           // needed and null is ok
-        {
-        	return true;
-        } else {
-        	return false;
-        }
+           TlvTuple.HEADER.calcSize(null)); // size is fixed, thus no package 
+                                            // needed and null is ok
     }
     
     private static final int TLV_HEADER_SIZE = Integer.SIZE/Byte.SIZE + 
@@ -209,9 +207,9 @@ public class SpamPacket implements Packet {
      * @see com.spam.mctool.model.packet.Packet#setSenderMeasuredPacketRate(long)
      */
     public void setSenderMeasuredPacketRate(long senderMeasuredPacketRate) {
-        if((senderMeasuredPacketRate & INT_MASK) != senderMeasuredPacketRate)
+        if((senderMeasuredPacketRate & INT_MASK) != senderMeasuredPacketRate){
             throw new IllegalArgumentException();
-    
+        }
         this.senderMeasuredPacketRate = senderMeasuredPacketRate;
     }
     
@@ -226,9 +224,9 @@ public class SpamPacket implements Packet {
      * @see com.spam.mctool.model.packet.Packet#setSequenceNumber(long)
      */
     public void setSequenceNumber(long sequenceNumber) {
-        if((sequenceNumber & INT_MASK) != sequenceNumber)
+        if((sequenceNumber & INT_MASK) != sequenceNumber){
             throw new IllegalArgumentException();
-    
+        }
         this.sequenceNumber = sequenceNumber;
     }
     
@@ -250,14 +248,14 @@ public class SpamPacket implements Packet {
      * @see com.spam.mctool.model.packet.Packet#setPayload(byte[] date)
      */
     public void setPayload(byte[] data) {
-        payload = data;
+        payload = data.clone();
     }
     
     /**
      * @see com.spam.mctool.model.packet.Packet#getPayload()
      */
     public byte[] getPayload() {
-        return payload;
+        return payload.clone();
     }
     
     /**

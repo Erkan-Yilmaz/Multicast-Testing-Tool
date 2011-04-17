@@ -147,12 +147,12 @@ enum TlvTuple {
         @Override
         public long calcSize(SpamPacket packet){
             // calculate how much padding is needed
-            long size = packet.getSizeWithoutPadding(); // this does include the
+            long noPadSize = packet.getSizeWithoutPadding(); // this does include the
             
             long minSize = packet.getMinimumSize();
             
-            if(minSize > size) {
-                return minSize - size;
+            if(minSize > noPadSize) {
+                return minSize - noPadSize;
             } else {
                 return 0;
             }
@@ -173,8 +173,8 @@ enum TlvTuple {
     
     public abstract void writeTupleData(ByteBuffer buffer, SpamPacket packet);
     
-    final int id;
-    final long size;
+    private final int id;
+    private final long size;
     private static final long INT_MASK = 0xFFFFFFFFL;
     
     public int getId() {

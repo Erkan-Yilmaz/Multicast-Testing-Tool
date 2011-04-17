@@ -60,7 +60,7 @@ import java.util.zip.DataFormatException;
  * On the receiver side, packets with correct checksums in either 
  * Little Endian or Big Endian encodings will be accepted.
  */
-public class HirschmannPacket implements Packet {
+final public class HirschmannPacket implements Packet {
 	private final static short BYTE_MASK = 0xFF;
 	private final static int SHORT_MASK = 0xFFFF;
 	private final static long INT_MASK = 0xFFFFFFFFL;
@@ -287,9 +287,9 @@ public class HirschmannPacket implements Packet {
         }
         
         // add hi 16 to low 16
-        sum = (sum >> 16) + (sum & SHORT_MASK);
+        sum = (sum >> Short.SIZE) + (sum & SHORT_MASK);
         // add carry
-        sum += (sum >> 16);
+        sum += (sum >> Short.SIZE);
         
         // truncate to 16 bits
         return (short)(~sum);

@@ -25,7 +25,7 @@ public class AutoPacket implements Packet {
      * @param data                   The data to be parsed
      * @throws DataFormatException   Thrown if badly formated data is passed
      */
-    public void fromByteArray(ByteBuffer data) throws DataFormatException 
+    final public void fromByteArray(ByteBuffer data) throws DataFormatException 
     {
         if(SpamPacket.isCorrectHeader(data)){
             packet = new SpamPacket();
@@ -42,112 +42,112 @@ public class AutoPacket implements Packet {
      * Get the type of Packet represented by this AutoPacket.
      * @return  Type of Packet
      */
-    public Class<? extends Packet> getPacketType() {
+    final public Class<? extends Packet> getPacketType() {
         return packet.getClass();
     }
     
     /**
      * @see com.spam.mctool.model.packet.Packet#toByteArray()
      */
-    public ByteBuffer toByteArray() {
+    final public ByteBuffer toByteArray() {
         return packet.toByteArray();
     }
     
     /**
      * @see com.spam.mctool.model.packet.Packet#getSenderID()
      */
-    public long getSenderId() {
+    final public long getSenderId() {
         return packet.getSenderId();
     }
     
     /**
      * @see com.spam.mctool.model.packet.Packet#setSenderID(long)
      */
-    public void setSenderId(long senderID) {
+    final public void setSenderId(long senderID) {
         packet.setSenderId(senderID);
     }
     
     /**
      * @see com.spam.mctool.model.packet.Packet#getConfiguredPacketsPerSecond()
      */
-    public long getConfiguredPacketsPerSecond() {
+    final public long getConfiguredPacketsPerSecond() {
         return packet.getConfiguredPacketsPerSecond();
     }	
     
     /**
      * @see com.spam.mctool.model.packet.Packet#setConfiguredPacketsPerSecond(long)
      */
-    public void setConfiguredPacketsPerSecond(long configuredPacketsPerSeconds) {
+    final public void setConfiguredPacketsPerSecond(long configuredPacketsPerSeconds) {
         packet.setConfiguredPacketsPerSecond(configuredPacketsPerSeconds);
     }
     
     /**
      * @see com.spam.mctool.model.packet.Packet#getSenderMeasuredPacketRate()
      */
-    public long getSenderMeasuredPacketRate() {
+    final public long getSenderMeasuredPacketRate() {
         return packet.getSenderMeasuredPacketRate();
     }
     
     /**
      * @see com.spam.mctool.model.packet.Packet#setSenderMeasuredPacketRate(long)
      */
-    public void setSenderMeasuredPacketRate(long senderMeasuredPacketRate) {
+    final public void setSenderMeasuredPacketRate(long senderMeasuredPacketRate) {
         packet.setSenderMeasuredPacketRate(senderMeasuredPacketRate);
     }
     
     /**
      * @see com.spam.mctool.model.packet.Packet#getSequenceNumber()
      */
-    public long getSequenceNumber() {
+    final public long getSequenceNumber() {
         return packet.getSequenceNumber();
     }
     
     /**
      * @see com.spam.mctool.model.packet.Packet#setSequenceNumber(long)
      */
-    public void setSequenceNumber(long sequenceNumber) {
+    final public void setSequenceNumber(long sequenceNumber) {
         packet.setSequenceNumber(sequenceNumber);
     }
     
     /**
      * @see com.spam.mctool.model.packet.Packet#getDispatchTime()
      */
-    public long getDispatchTime() {
+    final public long getDispatchTime() {
         return packet.getDispatchTime();
     }
     
     /**
      * @see com.spam.mctool.model.packet.Packet#setDispatchTime(long)
      */
-    public void setDispatchTime(long dispatchTime) {
+    final public void setDispatchTime(long dispatchTime) {
         packet.setDispatchTime(dispatchTime);
     }
     
     /**
      * @see com.spam.mctool.model.packet.Packet#setPayload(byte[])
      */
-    public void setPayload(byte[] data) {
+    final public void setPayload(byte[] data) {
         packet.setPayload(data);
     }
     
     /**
      * @see com.spam.mctool.model.packet.Packet#getPayload()
      */
-    public byte[] getPayload() {
+    final public byte[] getPayload() {
         return packet.getPayload();
     }
     
     /**
      * @see com.spam.mctool.model.packet.Packet#getSize()
      */
-    public long getSize() {
+    final public long getSize() {
         return packet.getSize();
     }
     
     /**
      * @see com.spam.mctool.model.packet.Packet#setMinimumSize()
      */
-    public void setMinimumSize(long size) {
+    final public void setMinimumSize(long size) {
         packet.setMinimumSize(size);
     }
     
