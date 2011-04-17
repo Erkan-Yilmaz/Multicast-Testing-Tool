@@ -61,13 +61,6 @@ import java.util.zip.DataFormatException;
  * Little Endian or Big Endian encodings will be accepted.
  */
 final public class HirschmannPacket implements Packet {
-	private final static short BYTE_MASK = 0xFF;
-	private final static int SHORT_MASK = 0xFFFF;
-	private final static long INT_MASK = 0xFFFFFFFFL;
-
-	private final static short DEFAULT_TTL = 0xFF;
-	private final static short DEFAULT_RESET = 0;
-	
     /**
      * @see com.spam.mctool.model.packet.Packet#fromByteArray(ByteBuffer)
      */
@@ -324,6 +317,13 @@ final public class HirschmannPacket implements Packet {
                                                          +Byte.SIZE   /Byte.SIZE
                                                          +Integer.SIZE/Byte.SIZE
                                                          +CHECKSUM_SIZE;
+    
+	private final static short BYTE_MASK = 0xFF;
+	private final static int SHORT_MASK = 0xFFFF;
+	private final static long INT_MASK = 0xFFFFFFFFL;
+
+	private final static short DEFAULT_TTL = 0xFF;
+	private final static short DEFAULT_RESET = 0;
     
     private long minSize;
     private long senderID;

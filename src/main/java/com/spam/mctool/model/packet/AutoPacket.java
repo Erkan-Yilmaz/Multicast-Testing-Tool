@@ -17,6 +17,8 @@ public class AutoPacket implements Packet {
     {
         packet = new SpamPacket();
     }
+
+    private Packet packet;
     
     /**
      * Determines the type of package depending 
@@ -150,6 +152,4 @@ public class AutoPacket implements Packet {
     final public void setMinimumSize(long size) {
         packet.setMinimumSize(size);
     }
-    
-    private Packet packet;
 }
