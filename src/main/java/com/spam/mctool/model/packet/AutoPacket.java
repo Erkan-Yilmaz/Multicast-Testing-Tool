@@ -13,12 +13,7 @@ import java.util.zip.DataFormatException;
  * type is used.
  */
 public class AutoPacket implements Packet {
-    public AutoPacket() 
-    {
-        packet = new SpamPacket();
-    }
-
-    private Packet packet;
+    private Packet packet = new SpamPacket();;
     
     /**
      * Determines the type of package depending 
