@@ -67,17 +67,31 @@ import com.thoughtworks.xstream.XStream;
  * @author davidhildenbrand
  *
  */
-public class Controller implements ProfileManager, StreamManager {
+public class Controller implements ProfileManager, StreamManager, ErrorEventManager {
 
     private static Controller controller;
     private Profile currentProfile;
     private RecentProfiles recentProfiles;
     private List<ProfileChangeListener> profileChangeObservers;
+    private List<ErrorEventListener> newErrorEventObservers;
+    private Map<ErrorEventListener,Integer> newErrorEventObserversErrorLevel;
     private SenderManager senderPool;
     private ReceiverManager receiverPool;
     private List<MctoolView> viewers;
 
-   
+
+    private Controller(){
+        this.currentProfile = new Profile();
+        this.recentProfiles = new RecentProfiles();
+        this.profileChangeObservers = new ArrayList<ProfileChangeListener>();
+        this.newErrorEventObservers = new ArrayList<ErrorEventListener>();
+        this.newErrorEventObserversErrorLevel = new HashMap<ErrorEventListener, Integer>();
+        //Init the Sender and Receiver modules
+        this.senderPool = new SenderPool();
+        this.receiverPool = new ReceiverPool();
+        //Create the vies
+        viewers = new ArrayList<MctoolView>();
+    }
 
     /*
      * This function tries to save the profile list to the file named "RecentProfiles.xml"
@@ -122,25 +136,11 @@ public class Controller implements ProfileManager, StreamManager {
         recentProfiles.fromXML(xml);
     }
 
-
-    private Controller(){
-        this.currentProfile = new Profile();
-        this.recentProfiles = new RecentProfiles();
-        this.profileChangeObservers = new ArrayList<ProfileChangeListener>();
-        //Init the Sender and Receiver modules
-        this.senderPool = new SenderPool();
-        this.receiverPool = new ReceiverPool();
-        //Create the vies
-        viewers = new ArrayList<MctoolView>();
-    }
-
     private void profileChanged(){
         //Get the iterator for the observer list
         ListIterator<ProfileChangeListener> it = profileChangeObservers.listIterator();
-        while(it.hasNext()){
-            ProfileChangeListener observer = it.next();
-            //Inform the observer
-            observer.profileChanged(new ProfileChangeEvent());
+        for(ProfileChangeListener l:profileChangeObservers){
+        	l.profileChanged(new ProfileChangeEvent());
         }
     }
 
@@ -153,9 +153,9 @@ public class Controller implements ProfileManager, StreamManager {
             try {
                 this.loadRecentProfiles();
             } catch (FileNotFoundException e) {
-                System.out.println("The recent profiles list could not be read. The file 'RecentProfiles.xml' does not exist.");
+                this.reportErrorEvent(new ErrorEvent("The recent profiles list could not be read. File not found.",0));
             } catch (IOException e) {
-                System.out.println("The recent profiles list could not be read. An IOException occured");
+                this.reportErrorEvent(new ErrorEvent("The recent profiles list could not be read. File could not be opened.",2));
             }
             //Gui enabled by default
             boolean enableGui = true;
@@ -163,8 +163,8 @@ public class Controller implements ProfileManager, StreamManager {
             boolean enableCli = false;
             //Start all loaded senders and receivers later?
             boolean enableStartAll = false;
-            //The profile to be loaded
-            Profile desiredProfile = null;
+            //The profiles to be loaded
+            List<Profile> desiredProfiles = new ArrayList<Profile>();
             //iterate over all args
             for(int i = 0; i<args.length; ++i){
                 //CLI desired?
@@ -175,40 +175,68 @@ public class Controller implements ProfileManager, StreamManager {
                 else if(args[i].compareToIgnoreCase("-nogui") == 0){
                     enableGui = false;
                 }
-                //load profile?
+                //load profiles by name?
                 else if(args[i].compareToIgnoreCase("-profile") == 0){
+                	//iterate to the potential profile name
+                	++i;
                     //read the next argument if available
-                    if((i+1) >= args.length){
-                        //TODO: Error Message, no profile is defined
+                    if(i >= args.length || args[i].startsWith("-")){
+                        //report the error
+                    	this.reportErrorEvent(new ErrorEvent("The supplied list of arguments is not correct. Please define one or more names of recent profiles.", 5));
+                        //exit the program
+                    	return;
                     }
-                    else{
-                        if(args[i].charAt(0) == '-'){
-                            //TODO this really can't be a name or path
-                        }
-                        else if(args[i].contains(":/\\")){
-                            //This is a path, load it
-                            desiredProfile = new Profile("Not set",new File(args[i]));
-                            //TODO error
-                            ++i;
-                        }
-                        else{
-                            //This could be a name of a recently used profile
-                            //Search for it
-                            recentProfiles.findProfileByName(args[i]);
-                            ++i;
-                        }
+                    //read profile names until one name starts with "-" or there is nothing left
+                    do{
+                    	//try to find a profile by name
+                    	Profile profile = recentProfiles.findProfileByName(args[i]);
+                    	if(profile != null){
+                    		//profile found -> add it to the desired profile list
+                    		desiredProfiles.add(profile);
+                    	}
+                    	else{
+                    		//report the error
+                        	this.reportErrorEvent(new ErrorEvent("The profile with the name \"" + args[i] + "\" could not be found in the recent profile history.", 1));
+                    	}
+                    	//iterate to next potential profile name
+                    	++i;
+                    }while((i < args.length) && !args[i].startsWith("-"));
+                    --i;
+                }
+                //load profiles by path?
+                else if(args[i].compareToIgnoreCase("-path") == 0){
+                	//iterate to the potential profile path
+                	++i;
+                    //read the next argument if available
+                    if(i >= args.length || args[i].startsWith("-")){
+                        //report the error
+                    	this.reportErrorEvent(new ErrorEvent("The supplied list of arguments is not correct. Please define one or more paths to profiles.", 5));
+                        //exit the program
+                    	return;
                     }
+                    //read profile names until one name starts with "-" or there is nothing left
+                    do{
+                    	//try to find a profile by name
+                    	Profile profile = new Profile("Not loaded.",new File(args[i]));
+                		//add it to the desired profile list
+                		desiredProfiles.add(profile);
+                    	//iterate to next potential profile name
+                    	++i;
+                    }while((i < args.length) && !args[i].startsWith("-"));
+                    --i;
                 }
                 //start all receivers and sender
                 else if(args[i].compareToIgnoreCase("-startall") == 0){
                     enableStartAll = true;
                 }
                 else{
-                    //TODO Keyword not valid
+                    //report the error
+                	this.reportErrorEvent(new ErrorEvent("Unknown parameter: " + args[i], 5));
+                    //exit the program
+                	return;
                 }
 
             }
-            //Add views here
 
             //enable the Gui
             if(enableGui){
@@ -220,22 +248,55 @@ public class Controller implements ProfileManager, StreamManager {
             }
             //Init all views
             Iterator<MctoolView> it = viewers.iterator();
-            while(it.hasNext()){
-                    MctoolView curView = it.next();
-                    curView.init(this);
+            for(MctoolView v:viewers){
+            	v.init(this);
             }
 
-            //TODO Load desired Profile
-            if(desiredProfile != null){
-                this.setCurrentProfile(desiredProfile);
-                loadProfile();
+            //Try to load desired Profile
+            if(desiredProfiles != null && desiredProfiles.size() > 0){
+            	int loadCount = 0;
+            	for(Profile p: desiredProfiles){
+                	try{
+                		this.loadProfileWithoutCleanup(p);
+                		loadCount++;
+                		//add the profile to the recent profiles list
+                		recentProfiles.addOrUpdateProfileInList(p);
+                	}
+                	catch(org.w3c.dom.ls.LSException e){
+                    	this.reportErrorEvent(new ErrorEvent("The profile with the path \"" + p.getPath().toString() + "\" could not be found.",3));
+                	}
+                	catch(IOException e){
+                    	this.reportErrorEvent(new ErrorEvent("The profile with the path \"" + p.getPath().toString() + "\" could not be red.",3));
+                	}
+                	catch(Exception e){
+                    	this.reportErrorEvent(new ErrorEvent("An error occured while loading the profile with the path \"" + p.getPath().toString() + "\": " + e.toString() + " : " + e.getMessage(),4));
+                	}
+                }
+            	//save the recent profiles list
+            	try {
+					saveRecentProfiles();
+				} catch (IOException e) {
+					this.reportErrorEvent(new ErrorEvent("Recent profiles could not be saved.",3));
+				}
+            	//Set the new profile name for multiple profiles
+            	if(loadCount > 1){
+            		this.currentProfile.setName("Multiple profiles");
+            		//prevent the user from overwriting a file
+            		this.currentProfile.setPath(new File(""));
+            	}
+            	//Otherwise the red profile name is used...
+            	//send the profile changed event to update the name and path
+            	profileChanged();
             }
 
-            //TODO Start the streams if -startall has been defined
+            //Start the streams if -startall has been defined
             if(enableStartAll){
                 //Fetch all senders
                 Collection<? extends MulticastStream> senders = getSenders();
                 startStreams(senders);
+                //Fetch all receivers
+                Collection<? extends MulticastStream> receivers = getReceiverGroups();
+                startStreams(receivers);
             }
     }
 
@@ -454,27 +515,31 @@ public class Controller implements ProfileManager, StreamManager {
     /* (non-Javadoc)
      * @see com.spam.mctool.controller.ProfilePool#loadProfile()
      */
-    public void loadProfile() {
+    public void loadProfile() throws org.w3c.dom.ls.LSException,IOException,Exception{
         //First of all delete all senders and receivers
-        //TODO
         removeStreams(getReceiverGroups());
         removeStreams(getSenders());
-        
+
+        //Load the profile
+        loadProfileWithoutCleanup(this.currentProfile);
+
+        //Add it to the list of recent profiles
+        recentProfiles.addOrUpdateProfileInList(this.currentProfile);
+
+        //Signalize, that the profile has changed
+        profileChanged();
+    }
+
+    public void loadProfileWithoutCleanup(Profile p) throws org.w3c.dom.ls.LSException,IOException,Exception{
+    	if(p == null){
+    		throw new IllegalArgumentException();
+    	}
+
         DOMImplementationRegistry registry=null;
         try {
             registry = DOMImplementationRegistry.newInstance();
-        } catch (ClassCastException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        } catch (Exception e){
+        	throw new Exception("DOM could not be initialized.");
         }
 
         DOMImplementationLS impl =
@@ -484,7 +549,7 @@ public class Controller implements ProfileManager, StreamManager {
             DOMImplementationLS.MODE_SYNCHRONOUS, null);
 
         //Fetch the profile path
-        File xmlPath = currentProfile.getPath();
+        File xmlPath = p.getPath();
         //Parse the file
         Document xmlDocument = builder.parseURI(xmlPath.toString());
         //Find the profile section
@@ -498,7 +563,8 @@ public class Controller implements ProfileManager, StreamManager {
                 if(name == null){
                     name = "";
                 }
-                currentProfile.setName(name);
+                //set the name but don't send a profilechanged event
+                this.currentProfile.setName(name);
             }
         }
         //Find the senders section
@@ -523,11 +589,11 @@ public class Controller implements ProfileManager, StreamManager {
                     addSender(map);
                 }
                 catch(Exception e){
-                    System.out.println("The sender could not be added: " + map.toString());
+                    this.reportErrorEvent(new ErrorEvent("A sender could not be added: " + e.getMessage()+ " : " +e.toString(), 3));
                 }
             }
         }
-        
+
         //Find the receiver section
         Node receivers = xmlDocument.getElementsByTagName("receivers").item(0);
         //fetch the child nodes
@@ -550,13 +616,13 @@ public class Controller implements ProfileManager, StreamManager {
                     addReceiverGroup(map);
                 }
                 catch(Exception e){
-                    System.out.println("The receiver could not be added: " + map.toString());
+                    this.reportErrorEvent(new ErrorEvent("A receiver could not be added: " + e.getMessage()+ " : " +e.toString(), 3));
                 }
             }
         }
-        
-        //Signalize, that the profile has changed
-        profileChanged();
+        //at this point the profile has been loaded.
+        //Update the current path
+        this.currentProfile.setPath(p.getPath());
     }
 
     /* (non-Javadoc)
@@ -579,7 +645,7 @@ public class Controller implements ProfileManager, StreamManager {
     public static void main(String[] args) {
         controller = new Controller();
         controller.init(args);
-        
+
         //controller.setCurrentProfile(new Profile("Test",new File("Test.xml")));
         //controller.storeCurrentProfile();
         //controller.loadProfile();
@@ -633,7 +699,68 @@ public class Controller implements ProfileManager, StreamManager {
         try {
             saveRecentProfiles();
         } catch (IOException e) {
-            System.out.println("The recent profile list could not be saved, an IOException was thrown.");
+            this.reportErrorEvent(new ErrorEvent("The recent profiles list could not ba saved: " + e.getMessage(),3));
         }
+    }
+
+    @Override
+    public void addErrorEventListener(ErrorEventListener l, int errorLevel) {
+        //the listener must not be null
+        if(l == null){
+            throw new IllegalArgumentException();
+        }
+        //make sure that the error level is in the allowed range
+        if(errorLevel < 0){
+            errorLevel = 0;
+        }
+        else if(errorLevel > 5){
+            errorLevel = 5;
+        }
+        //if it is already contained in the list, remove the mapping and remap
+        else if(this.newErrorEventObservers.contains(l)){
+            this.newErrorEventObserversErrorLevel.remove(l);
+            this.newErrorEventObserversErrorLevel.put(l, errorLevel);
+        }
+        //Add the observer to the list and the map
+        else{
+            this.newErrorEventObservers.add(l);
+            this.newErrorEventObserversErrorLevel.put(l, errorLevel);
+        }
+    }
+
+    @Override
+    public void removeErrorEventListener(ErrorEventListener l) {
+        //the listener must not be null
+        if(l == null){
+            throw new IllegalArgumentException();
+        }
+        //remove it from the list and the map
+        this.newErrorEventObservers.remove(l);
+        this.newErrorEventObserversErrorLevel.remove(l);
+    }
+
+    @Override
+    public void reportErrorEvent(ErrorEvent e) {
+        //the event must not be null
+        if(e == null){
+            throw new IllegalArgumentException();
+        }
+        //fetch the errorLevel from the event
+        int errorLevel = e.getErrorLevel();
+        //if there are no listener, print it to stdout
+        if(newErrorEventObservers.size() <= 0){
+            Date date = new Date();
+            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            System.out.println(dateFormat.format(date) + ": Level " + errorLevel + " :" + e.getErrorMessage());
+
+        }
+        //iterate over all listener
+        for(ErrorEventListener l: newErrorEventObservers){
+            //The listener will only be called if the event error level is higher or equal to the desired level
+            if(this.newErrorEventObserversErrorLevel.get(l) >= errorLevel){
+                l.newErrorEvent(e);
+            }
+        }
+
     }
 }

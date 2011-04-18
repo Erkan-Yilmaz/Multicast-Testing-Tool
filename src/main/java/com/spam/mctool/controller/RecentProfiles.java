@@ -8,7 +8,7 @@ import com.thoughtworks.xstream.XStream;
 
 public class RecentProfiles {
     private List<Profile> profileList;
-    
+
     public RecentProfiles(){
         this.profileList = new ArrayList<Profile>();
     }
@@ -20,7 +20,7 @@ public class RecentProfiles {
     public void setProfileList(List<Profile> profileList) {
         this.profileList = profileList;
     }
-    
+
     /* This function either inserts the profile directly to the top
      * of the list or searches for an existing entry(path!), deletes that entry
      * and inserts the new profile at te top. Max 10 profiles are stored.
@@ -46,14 +46,14 @@ public class RecentProfiles {
             }
         }
     }
-    
+
     public String toXML(){
         //create the xstream object
         XStream xstream = new XStream();
         //convert the recent profiles to xml
         return xstream.toXML(profileList);
     }
-    
+
     public void fromXML(String xml){
         if(xml==null){
             throw new IllegalArgumentException();
@@ -62,7 +62,7 @@ public class RecentProfiles {
         XStream xstream = new XStream();
         this.profileList = (ArrayList<Profile>)xstream.fromXML(xml);
     }
-    
+
     public Profile findProfileByName(String name){
         //if the string is null, we will find no profile...
         if(name == null){
@@ -73,7 +73,7 @@ public class RecentProfiles {
         for(Profile p: profileList){
             String profileName = p.getName();
             //found the name?
-            if( name.compareTo(profileName) != 0){
+            if( name.compareTo(profileName) == 0){
                 foundProfile = p;
                 break;
             }

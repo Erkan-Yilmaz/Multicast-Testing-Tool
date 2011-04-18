@@ -1,5 +1,6 @@
 package com.spam.mctool.controller;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -41,8 +42,11 @@ public interface ProfileManager {
 
         /**
          * Load profile data
+         * @throws Exception
+         * @throws IOException
+         * @throws FileNotFoundException
          */
-        void loadProfile();
+        void loadProfile() throws org.w3c.dom.ls.LSException, IOException, Exception;
 
         /**
          * Save profile data

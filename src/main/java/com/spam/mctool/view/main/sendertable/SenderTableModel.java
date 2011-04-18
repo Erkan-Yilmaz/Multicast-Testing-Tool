@@ -30,14 +30,9 @@ public class SenderTableModel extends DefaultTableModel {
      * Sender representation.
      */
     private void init() {
-        this.addColumn("Status");
-        this.addColumn("Sender ID");
-        this.addColumn("Port");
-        this.addColumn("Multicast Group");
-        this.addColumn("Conf. Packet Rate");
-        this.addColumn("Avg. Packet Rate");
-        this.addColumn("Min. Packet Rate");
-        this.addColumn("Max. Packet Rate");
+        for(SenderTableColumn col : SenderTableColumn.values()) {
+            this.addColumn(col.getCaption());
+        }
     }
 
     /**
@@ -50,18 +45,19 @@ public class SenderTableModel extends DefaultTableModel {
     public void senderAdded(SenderAddedOrRemovedEvent e) {
         Sender s = e.getSource();
         if (!this.contains(s)) {
-            this.addRow (
-                new Object[] {
-                    s,
-                    s.getSenderId(),
-                    s.getPort(),
-                    s.getGroup().getHostAddress(),
-                    s.getSenderConfiguredPacketRate(),
-                    s.getAvgPPS(),
-                    s.getMinPPS(),
-                    s.getMaxPPS()
-                }
-            );
+            SenderTableColumn[] cols = SenderTableColumn.values();
+            Object[] values = new Object[cols.length];
+
+            values[SenderTableColumn.STATUS.ordinal()] = s;
+            values[SenderTableColumn.SENDER_ID.ordinal()] = s.getSenderId();
+            values[SenderTableColumn.PORT.ordinal()] = s.getPort();
+            values[SenderTableColumn.GROUP_ADDRESS.ordinal()] = s.getGroup().getHostAddress();
+            values[SenderTableColumn.CONF_PPS.ordinal()] = s.getSenderConfiguredPacketRate();
+            values[SenderTableColumn.AVG_PPS.ordinal()] = s.getAvgPPS();
+            values[SenderTableColumn.MIN_PPS.ordinal()] = s.getMinPPS();
+            values[SenderTableColumn.MAX_PPS.ordinal()] = s.getMaxPPS();
+            
+            this.addRow (values);
         } else {
             throw new RuntimeException("Sender " + s + " already added to view.");
         }
@@ -77,14 +73,14 @@ public class SenderTableModel extends DefaultTableModel {
         int senderRow = findSenderRow(s);
         if(senderRow > -1) {
             Vector rowVector = (Vector)dataVector.elementAt(senderRow);
-            rowVector.setElementAt(s,               0);
-            rowVector.setElementAt(s.getSenderId(), 1);
-            rowVector.setElementAt(s.getPort(),     2);
-            rowVector.setElementAt(s.getGroup().getHostAddress(),    3);
-            rowVector.setElementAt(s.getSenderConfiguredPacketRate(), 4);
-            rowVector.setElementAt(s.getAvgPPS(),   5);
-            rowVector.setElementAt(s.getMinPPS(),   6);
-            rowVector.setElementAt(s.getMaxPPS(),   7);
+            rowVector.setElementAt(s,               SenderTableColumn.STATUS.ordinal());
+            rowVector.setElementAt(s.getSenderId(), SenderTableColumn.SENDER_ID.ordinal());
+            rowVector.setElementAt(s.getPort(),     SenderTableColumn.PORT.ordinal());
+            rowVector.setElementAt(s.getGroup().getHostAddress(),     SenderTableColumn.GROUP_ADDRESS.ordinal());
+            rowVector.setElementAt(s.getSenderConfiguredPacketRate(), SenderTableColumn.CONF_PPS.ordinal());
+            rowVector.setElementAt(s.getAvgPPS(),   SenderTableColumn.AVG_PPS.ordinal());
+            rowVector.setElementAt(s.getMinPPS(),   SenderTableColumn.MIN_PPS.ordinal());
+            rowVector.setElementAt(s.getMaxPPS(),   SenderTableColumn.MAX_PPS.ordinal());
             this.fireTableRowsUpdated(senderRow, senderRow);
         } else {
             throw new RuntimeException("Sender " + s + " not found in table model.");

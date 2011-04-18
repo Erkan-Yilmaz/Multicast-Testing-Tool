@@ -75,6 +75,7 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
         sentPPSLabel = new javax.swing.JLabel();
         sentPPSData = new javax.swing.JLabel();
         closeButton = new javax.swing.JButton();
+        jGraph = new JPanelGraph(this.sender.getSenderConfiguredPacketRate());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
@@ -133,6 +134,19 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
             }
         });
 
+        jGraph.setBackground(new java.awt.Color(0, 0, 0));
+
+        javax.swing.GroupLayout jGraphLayout = new javax.swing.GroupLayout(jGraph);
+        jGraph.setLayout(jGraphLayout);
+        jGraphLayout.setHorizontalGroup(
+            jGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 341, Short.MAX_VALUE)
+        );
+        jGraphLayout.setVerticalGroup(
+            jGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -142,34 +156,40 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(senderIDLabel)
-                            .addComponent(interfaceLabel)
-                            .addComponent(groupLabel)
-                            .addComponent(portLabel)
-                            .addComponent(packetStyleLabel))
-                        .addGap(116, 116, 116)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(groupData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                            .addComponent(interfaceData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                            .addComponent(senderIDData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                            .addComponent(portData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                            .addComponent(packetStyleData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(packetSizeLabel)
-                            .addComponent(dataLabel)
-                            .addComponent(confPPSLabel)
-                            .addComponent(sentPPSLabel))
-                        .addGap(79, 79, 79)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(packetSizeData, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                            .addComponent(dataData, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                            .addComponent(confPPSData, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                            .addComponent(sentPPSData, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(102, 102, 102)
-                        .addComponent(closeButton)))
-                .addContainerGap())
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(senderIDLabel)
+                                    .addComponent(interfaceLabel)
+                                    .addComponent(groupLabel)
+                                    .addComponent(portLabel)
+                                    .addComponent(packetStyleLabel))
+                                .addGap(116, 116, 116)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(groupData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                                    .addComponent(interfaceData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                                    .addComponent(senderIDData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                                    .addComponent(portData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                                    .addComponent(packetStyleData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(packetSizeLabel)
+                                    .addComponent(dataLabel)
+                                    .addComponent(confPPSLabel)
+                                    .addComponent(sentPPSLabel))
+                                .addGap(79, 79, 79)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(packetSizeData, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                                    .addComponent(dataData, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                                    .addComponent(confPPSData, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                                    .addComponent(sentPPSData, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(102, 102, 102)
+                                .addComponent(closeButton)
+                                .addGap(49, 49, 49)))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jGraph, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -212,7 +232,9 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
                     .addComponent(sentPPSData))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(closeButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(58, 58, 58)
+                .addComponent(jGraph, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         pack();
@@ -267,6 +289,8 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
         this.dataData.setText(this.sender.getPayloadAsString());
         this.confPPSData.setText(String.valueOf(this.sender.getSenderConfiguredPacketRate()));
         this.sentPPSData.setText(String.valueOf(this.sender.getAvgPPS()));
+
+        //this.jGraph.newVal(this.sender.)
     }
     
     public void dataChanged(SenderDataChangedEvent e) {
@@ -283,6 +307,7 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
     private javax.swing.JLabel groupLabel;
     private javax.swing.JLabel interfaceData;
     private javax.swing.JLabel interfaceLabel;
+    private javax.swing.JPanel jGraph;
     private javax.swing.JLabel packetSizeData;
     private javax.swing.JLabel packetSizeLabel;
     private javax.swing.JLabel packetStyleData;
