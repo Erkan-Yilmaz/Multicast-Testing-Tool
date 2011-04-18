@@ -5,7 +5,7 @@ import java.io.File;
 public class Profile {
 	private String name;
 	private File path;
-	
+
 	/*
 	 * Default constructor
 	 */
@@ -13,7 +13,7 @@ public class Profile {
 		this.name = new String();
 		this.path = new File("");
 	}
-	
+
 	/*
 	 * Constructor to initialize the profile directly
 	 */
@@ -34,14 +34,14 @@ public class Profile {
 			this.path = path;
 		}
 	}
-	
+
 	/*
 	 * Getter for attribute name
 	 */
 	public String getName() {
 		return name;
 	}
-	
+
 	/*
 	 * Setter for attribute name
 	 */
@@ -51,14 +51,14 @@ public class Profile {
 		}
 		this.name = name;
 	}
-	
+
 	/*
 	 * Getter for attribute path
 	 */
 	public File getPath() {
 		return path;
 	}
-	
+
 	/*
 	 * Setter for attribute path
 	 */
@@ -68,7 +68,7 @@ public class Profile {
 		}
 		this.path = path;
 	}
-	
+
 	/*
 	 * This function compares the path of two files and returns whether they are equal
 	 * or not
@@ -80,6 +80,6 @@ public class Profile {
 		}
 		//Compare the Path
 		return this.path.equals(testObject.getPath());
-		
+
 	}
 }
