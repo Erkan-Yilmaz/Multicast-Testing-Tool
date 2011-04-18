@@ -11,7 +11,6 @@ import com.spam.mctool.model.Receiver;
 import com.spam.mctool.model.ReceiverGroup;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
@@ -24,7 +23,6 @@ import javax.swing.table.AbstractTableModel;
 public class ReceiverTableModel extends AbstractTableModel implements MouseListener {
 
     private List<ReceiverTableRow> rows    = new ArrayList<ReceiverTableRow>();
-    private int columnCount = 7;
 
     public int getRowCount() {
         int count = 0;
@@ -35,7 +33,7 @@ public class ReceiverTableModel extends AbstractTableModel implements MouseListe
     }
 
     public int getColumnCount() {
-        return columnCount;
+        return ReceiverTableColumn.values().length;
     }
 
     public Object getValueAt(int rowIndex, int columnIndex) {
@@ -45,14 +43,16 @@ public class ReceiverTableModel extends AbstractTableModel implements MouseListe
         } else if(row instanceof ReceiverRow) {
             ReceiverRow rcvRow = (ReceiverRow)row;
             Receiver receiver = rcvRow.getReceiver();
-            switch(columnIndex) {
-                case 0: return receiver.isAlive();
-                case 1: return receiver.getSenderId();
-                case 2: return receiver.getSenderAddress().getHostAddress();
-                case 3: return receiver.getSenderConfiguredPPS();
-                case 4: return receiver.getAvgPPS();
-                case 5: return receiver.getLostPackets();
-                case 6: return receiver.getPayloadAsString();
+            ReceiverTableColumn[] cols = ReceiverTableColumn.values();
+            ReceiverTableColumn   col  = cols[columnIndex];
+            switch(col) {
+                case STATUS: return receiver.isAlive();
+                case SENDER_ID: return receiver.getSenderId();
+                case SENDER_IP: return receiver.getSenderAddress().getHostAddress();
+                case SENDER_CONF_PPS: return receiver.getSenderConfiguredPPS();
+                case AVG_PPS: return receiver.getAvgPPS();
+                case LOST_PACKETS: return receiver.getLostPackets();
+                case PAYLOAD: return receiver.getPayloadAsString();
                 default:
                     throw new RuntimeException("Illegal columnIndex: " + columnIndex);
             }
