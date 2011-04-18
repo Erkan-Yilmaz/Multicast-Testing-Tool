@@ -67,17 +67,31 @@ import com.thoughtworks.xstream.XStream;
  * @author davidhildenbrand
  *
  */
-public class Controller implements ProfileManager, StreamManager {
+public class Controller implements ProfileManager, StreamManager, ErrorEventManager {
 
     private static Controller controller;
     private Profile currentProfile;
     private RecentProfiles recentProfiles;
     private List<ProfileChangeListener> profileChangeObservers;
+    private List<ErrorEventListener> newErrorEventObservers;
+    private Map<ErrorEventListener,Integer> newErrorEventObserversErrorLevel;
     private SenderManager senderPool;
     private ReceiverManager receiverPool;
     private List<MctoolView> viewers;
 
-   
+
+    private Controller(){
+        this.currentProfile = new Profile();
+        this.recentProfiles = new RecentProfiles();
+        this.profileChangeObservers = new ArrayList<ProfileChangeListener>();
+        this.newErrorEventObservers = new ArrayList<ErrorEventListener>();
+        this.newErrorEventObserversErrorLevel = new HashMap<ErrorEventListener, Integer>();
+        //Init the Sender and Receiver modules
+        this.senderPool = new SenderPool();
+        this.receiverPool = new ReceiverPool();
+        //Create the vies
+        viewers = new ArrayList<MctoolView>();
+    }
 
     /*
      * This function tries to save the profile list to the file named "RecentProfiles.xml"
@@ -122,18 +136,6 @@ public class Controller implements ProfileManager, StreamManager {
         recentProfiles.fromXML(xml);
     }
 
-
-    private Controller(){
-        this.currentProfile = new Profile();
-        this.recentProfiles = new RecentProfiles();
-        this.profileChangeObservers = new ArrayList<ProfileChangeListener>();
-        //Init the Sender and Receiver modules
-        this.senderPool = new SenderPool();
-        this.receiverPool = new ReceiverPool();
-        //Create the vies
-        viewers = new ArrayList<MctoolView>();
-    }
-
     private void profileChanged(){
         //Get the iterator for the observer list
         ListIterator<ProfileChangeListener> it = profileChangeObservers.listIterator();
@@ -153,9 +155,9 @@ public class Controller implements ProfileManager, StreamManager {
             try {
                 this.loadRecentProfiles();
             } catch (FileNotFoundException e) {
-                System.out.println("The recent profiles list could not be read. The file 'RecentProfiles.xml' does not exist.");
+                this.reportErrorEvent(new ErrorEvent("The recent profiles list could not be read. File not found.",0));
             } catch (IOException e) {
-                System.out.println("The recent profiles list could not be read. An IOException occured");
+                this.reportErrorEvent(new ErrorEvent("The recent profiles list could not be read. File could not be opened.",2));
             }
             //Gui enabled by default
             boolean enableGui = true;
@@ -459,7 +461,7 @@ public class Controller implements ProfileManager, StreamManager {
         //TODO
         removeStreams(getReceiverGroups());
         removeStreams(getSenders());
-        
+
         DOMImplementationRegistry registry=null;
         try {
             registry = DOMImplementationRegistry.newInstance();
@@ -527,7 +529,7 @@ public class Controller implements ProfileManager, StreamManager {
                 }
             }
         }
-        
+
         //Find the receiver section
         Node receivers = xmlDocument.getElementsByTagName("receivers").item(0);
         //fetch the child nodes
@@ -554,7 +556,7 @@ public class Controller implements ProfileManager, StreamManager {
                 }
             }
         }
-        
+
         //Signalize, that the profile has changed
         profileChanged();
     }
@@ -579,7 +581,7 @@ public class Controller implements ProfileManager, StreamManager {
     public static void main(String[] args) {
         controller = new Controller();
         controller.init(args);
-        
+
         //controller.setCurrentProfile(new Profile("Test",new File("Test.xml")));
         //controller.storeCurrentProfile();
         //controller.loadProfile();
@@ -633,7 +635,68 @@ public class Controller implements ProfileManager, StreamManager {
         try {
             saveRecentProfiles();
         } catch (IOException e) {
-            System.out.println("The recent profile list could not be saved, an IOException was thrown.");
+            this.reportErrorEvent(new ErrorEvent("The recent profiles list could not ba saved: " + e.getMessage(),3));
         }
+    }
+
+    @Override
+    public void addErrorEventListener(ErrorEventListener l, int errorLevel) {
+        //the listener must not be null
+        if(l == null){
+            throw new IllegalArgumentException();
+        }
+        //make sure that the error level is in the allowed range
+        if(errorLevel < 0){
+            errorLevel = 0;
+        }
+        else if(errorLevel > 5){
+            errorLevel = 5;
+        }
+        //if it is already contained in the list, remove the mapping and remap
+        else if(this.newErrorEventObservers.contains(l)){
+            this.newErrorEventObserversErrorLevel.remove(l);
+            this.newErrorEventObserversErrorLevel.put(l, errorLevel);
+        }
+        //Add the observer to the list and the map
+        else{
+            this.newErrorEventObservers.add(l);
+            this.newErrorEventObserversErrorLevel.put(l, errorLevel);
+        }
+    }
+
+    @Override
+    public void removeErrorEventListener(ErrorEventListener l) {
+        //the listener must not be null
+        if(l == null){
+            throw new IllegalArgumentException();
+        }
+        //remove it from the list and the map
+        this.newErrorEventObservers.remove(l);
+        this.newErrorEventObserversErrorLevel.remove(l);
+    }
+
+    @Override
+    public void reportErrorEvent(ErrorEvent e) {
+        //the event must not be null
+        if(e == null){
+            throw new IllegalArgumentException();
+        }
+        //fetch the errorLevel from the event
+        int errorLevel = e.getErrorLevel();
+        //if there are no listener, print it to stdout
+        if(newErrorEventObservers.size() <= 0){
+            Date date = new Date();
+            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            System.out.println(dateFormat.format(date) + ": Level " + errorLevel + " :" + e.getErrorMessage());
+
+        }
+        //iterate over all listener
+        for(ErrorEventListener l: newErrorEventObservers){
+            //The listener will only be called if the event error level is higher or equal to the desired level
+            if(this.newErrorEventObserversErrorLevel.get(l) >= errorLevel){
+                l.newErrorEvent(e);
+            }
+        }
+
     }
 }
