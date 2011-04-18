@@ -31,42 +31,51 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="senderIDLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="interfaceLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="groupLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="portLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="packetStyleLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="senderIDLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="interfaceLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="groupLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="portLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="packetStyleLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="116" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="groupData" alignment="0" pref="173" max="32767" attributes="1"/>
+                                  <Component id="interfaceData" alignment="0" pref="173" max="32767" attributes="1"/>
+                                  <Component id="senderIDData" alignment="0" pref="173" max="32767" attributes="1"/>
+                                  <Component id="portData" alignment="0" pref="173" max="32767" attributes="0"/>
+                                  <Component id="packetStyleData" alignment="0" pref="173" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="packetSizeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="dataLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="confPPSLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="sentPPSLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="packetSizeData" alignment="0" pref="173" max="32767" attributes="0"/>
+                                  <Component id="dataData" alignment="0" pref="173" max="32767" attributes="0"/>
+                                  <Component id="confPPSData" alignment="0" pref="173" max="32767" attributes="0"/>
+                                  <Component id="sentPPSData" alignment="0" pref="173" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
+                              <Component id="closeButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="116" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="groupData" alignment="0" pref="173" max="32767" attributes="1"/>
-                          <Component id="interfaceData" alignment="0" pref="173" max="32767" attributes="1"/>
-                          <Component id="senderIDData" alignment="0" pref="173" max="32767" attributes="1"/>
-                          <Component id="portData" alignment="0" pref="173" max="32767" attributes="0"/>
-                          <Component id="packetStyleData" alignment="0" pref="173" max="32767" attributes="0"/>
-                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="packetSizeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="dataLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="confPPSLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="sentPPSLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="packetSizeData" alignment="0" pref="173" max="32767" attributes="0"/>
-                          <Component id="dataData" alignment="0" pref="173" max="32767" attributes="0"/>
-                          <Component id="confPPSData" alignment="0" pref="173" max="32767" attributes="0"/>
-                          <Component id="sentPPSData" alignment="0" pref="173" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
-                      <Component id="closeButton" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="jGraph" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -120,7 +129,9 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="closeButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+              <Component id="jGraph" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="86" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -274,5 +285,28 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="closeButtonActionPerformed"/>
       </Events>
     </Component>
+    <Container class="javax.swing.JPanel" name="jGraph">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="1" green="1" red="1" type="rgb"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JPanelGraph()"/>
+      </AuxValues>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="341" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="100" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+    </Container>
   </SubComponents>
 </Form>
