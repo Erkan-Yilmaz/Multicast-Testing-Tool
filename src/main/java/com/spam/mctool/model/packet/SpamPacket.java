@@ -10,7 +10,7 @@ import java.util.zip.DataFormatException;
  * 
  * Represents a packet of the binary Spam format as specified in the SAS.
  */
-final public class SpamPacket implements Packet {
+public final class SpamPacket implements Packet {
     /**
      * @see com.spam.mctool.model.packet.Packet#fromByteArray(ByteBuffer)
      */
@@ -47,7 +47,11 @@ final public class SpamPacket implements Packet {
                     TlvTuple tuple = TlvTuple.values()[i];
                     if(id == tuple.getId()) {
                         if(tuple.hasFixedSize() && length != tuple.calcSize(this)) {
-                            throw new DataFormatException("Tuple with Id "+id+
+                        	DataFormatException d = new DataFormatException();
+                        	
+
+                        	
+                        	throw new DataFormatException("Tuple with Id "+id+
                                     " has illegal data size");
                         }
                         
@@ -138,14 +142,7 @@ final public class SpamPacket implements Packet {
                                             // needed and null is ok
     }
     
-    private static final int TLV_HEADER_SIZE = Integer.SIZE/Byte.SIZE + 
-                                               Short.SIZE/Byte.SIZE;
-    
-    long getMinimumSize() {
-        return minSize;
-    }
-    
-    long getSizeWithoutPadding() {
+    private long getSizeWithoutPadding() {
         long size = TLV_HEADER_SIZE; // Size of the padding header is included
         for(TlvTuple tuple : TlvTuple.values()){
             if(tuple != TlvTuple.PADDING){
@@ -156,120 +153,12 @@ final public class SpamPacket implements Packet {
         return size;
     }
     
-    /**
-     * @see com.spam.mctool.model.packet.Packet#getSenderId()
-     */
-    public long getSenderId() {
-        return senderID;
-    }
+    private static final int TLV_HEADER_SIZE = Integer.SIZE/Byte.SIZE + 
+                                               Short.SIZE/Byte.SIZE;
     
-    /**
-     * @see com.spam.mctool.model.packet.Packet#setSenderId(long)
-     */
-    public void setSenderId(long senderID) {
-        if((senderID & INT_MASK) != senderID){
-            throw new IllegalArgumentException();
-        }
-        this.senderID = senderID;
-    }
+    private static final int SHORT_MASK = 0xFFFF;
+    private static final long INT_MASK = 0xFFFFFFFFL;
     
-    /**
-     * @see com.spam.mctool.model.packet.Packet#getConfiguredPacketsPerSecond()
-     */
-    public long getConfiguredPacketsPerSecond() {
-        return configuredPacketsPerSeconds;
-    }
-    
-    /**
-     * @see com.spam.mctool.model.packet.Packet#setConfiguredPacketsPerSecond(long)
-     */
-    public void setConfiguredPacketsPerSecond(long configuredPacketsPerSeconds) {
-        if((configuredPacketsPerSeconds & INT_MASK) != configuredPacketsPerSeconds){
-            throw new IllegalArgumentException();
-        }
-    
-        this.configuredPacketsPerSeconds = configuredPacketsPerSeconds;
-    }
-    
-    /**
-     * @see com.spam.mctool.model.packet.Packet#getSenderMeasuredPacketRate()
-     */
-    public long getSenderMeasuredPacketRate() {
-        return senderMeasuredPacketRate;
-    }
-    
-    /**
-     * @see com.spam.mctool.model.packet.Packet#setSenderMeasuredPacketRate(long)
-     */
-    public void setSenderMeasuredPacketRate(long senderMeasuredPacketRate) {
-        if((senderMeasuredPacketRate & INT_MASK) != senderMeasuredPacketRate){
-            throw new IllegalArgumentException();
-        }
-        this.senderMeasuredPacketRate = senderMeasuredPacketRate;
-    }
-    
-    /**
-     * @see com.spam.mctool.model.packet.Packet#getSequenceNumber()
-     */
-    public long getSequenceNumber() {
-        return sequenceNumber;
-    }
-    
-    /**
-     * @see com.spam.mctool.model.packet.Packet#setSequenceNumber(long)
-     */
-    public void setSequenceNumber(long sequenceNumber) {
-        if((sequenceNumber & INT_MASK) != sequenceNumber){
-            throw new IllegalArgumentException();
-        }
-        this.sequenceNumber = sequenceNumber;
-    }
-    
-    /**
-     * @see com.spam.mctool.model.packet.Packet#getDispatchTime()
-     */
-    public long getDispatchTime() {
-        return dispatchTime;
-    }
-    
-    /**
-     * @see com.spam.mctool.model.packet.Packet#setDispatchTime(long)
-     */
-    public void setDispatchTime(long dispatchTime) {
-        this.dispatchTime = dispatchTime;
-    }
-    
-    /**
-     * @see com.spam.mctool.model.packet.Packet#setPayload(byte[] date)
-     */
-    public void setPayload(byte[] data) {
-        payload = data.clone();
-    }
-    
-    /**
-     * @see com.spam.mctool.model.packet.Packet#getPayload()
-     */
-    public byte[] getPayload() {
-        return payload.clone();
-    }
-    
-    /**
-     * @see com.spam.mctool.model.packet.Packet#getSize()
-     */
-    public long getSize() {
-        return getSizeWithoutPadding() + TlvTuple.PADDING.calcSize(this);
-    }
-    
-    /**
-     * @see com.spam.mctool.model.packet.Packet#setMinimumSize(long)
-     */
-    public void setMinimumSize(long size) {
-        minSize = size;
-    }
-
-	private final static int SHORT_MASK = 0xFFFF;
-	private final static long INT_MASK = 0xFFFFFFFFL;
-	
     private long minSize;
     private long senderID;
     private long configuredPacketsPerSeconds;
@@ -278,7 +167,6 @@ final public class SpamPacket implements Packet {
     private long dispatchTime;
     private byte[] payload = new byte[0];
     
-
     private enum TlvTuple {
         HEADER(1337, 0) {
             @Override
@@ -424,10 +312,8 @@ final public class SpamPacket implements Packet {
                 // calculate how much padding is needed
                 long noPadSize = packet.getSizeWithoutPadding(); // this does include the
                 
-                long minSize = packet.getMinimumSize();
-                
-                if(minSize > noPadSize) {
-                    return minSize - noPadSize;
+                if(packet.minSize > noPadSize) {
+                    return packet.minSize - noPadSize;
                 } else {
                     return 0;
                 }
@@ -467,5 +353,116 @@ final public class SpamPacket implements Packet {
             }
             return size;
         }
+    }
+    
+    /**
+     * @see com.spam.mctool.model.packet.Packet#getSenderId()
+     */
+    public long getSenderId() {
+        return senderID;
+    }
+    
+    /**
+     * @see com.spam.mctool.model.packet.Packet#setSenderId(long)
+     */
+    public void setSenderId(long senderID) {
+        if((senderID & INT_MASK) != senderID){
+            throw new IllegalArgumentException();
+        }
+        this.senderID = senderID;
+    }
+    
+    /**
+     * @see com.spam.mctool.model.packet.Packet#getConfiguredPacketsPerSecond()
+     */
+    public long getConfiguredPacketsPerSecond() {
+        return configuredPacketsPerSeconds;
+    }
+    
+    /**
+     * @see com.spam.mctool.model.packet.Packet#setConfiguredPacketsPerSecond(long)
+     */
+    public void setConfiguredPacketsPerSecond(long configuredPacketsPerSeconds) {
+        if((configuredPacketsPerSeconds & INT_MASK) != configuredPacketsPerSeconds){
+            throw new IllegalArgumentException();
+        }
+    
+        this.configuredPacketsPerSeconds = configuredPacketsPerSeconds;
+    }
+    
+    /**
+     * @see com.spam.mctool.model.packet.Packet#getSenderMeasuredPacketRate()
+     */
+    public long getSenderMeasuredPacketRate() {
+        return senderMeasuredPacketRate;
+    }
+    
+    /**
+     * @see com.spam.mctool.model.packet.Packet#setSenderMeasuredPacketRate(long)
+     */
+    public void setSenderMeasuredPacketRate(long senderMeasuredPacketRate) {
+        if((senderMeasuredPacketRate & INT_MASK) != senderMeasuredPacketRate){
+            throw new IllegalArgumentException();
+        }
+        this.senderMeasuredPacketRate = senderMeasuredPacketRate;
+    }
+    
+    /**
+     * @see com.spam.mctool.model.packet.Packet#getSequenceNumber()
+     */
+    public long getSequenceNumber() {
+        return sequenceNumber;
+    }
+    
+    /**
+     * @see com.spam.mctool.model.packet.Packet#setSequenceNumber(long)
+     */
+    public void setSequenceNumber(long sequenceNumber) {
+        if((sequenceNumber & INT_MASK) != sequenceNumber){
+            throw new IllegalArgumentException();
+        }
+        this.sequenceNumber = sequenceNumber;
+    }
+    
+    /**
+     * @see com.spam.mctool.model.packet.Packet#getDispatchTime()
+     */
+    public long getDispatchTime() {
+        return dispatchTime;
+    }
+    
+    /**
+     * @see com.spam.mctool.model.packet.Packet#setDispatchTime(long)
+     */
+    public void setDispatchTime(long dispatchTime) {
+        this.dispatchTime = dispatchTime;
+    }
+    
+    /**
+     * @see com.spam.mctool.model.packet.Packet#setPayload(byte[] date)
+     */
+    public void setPayload(byte[] data) {
+        payload = data.clone();
+    }
+    
+    /**
+     * @see com.spam.mctool.model.packet.Packet#getPayload()
+     */
+    public byte[] getPayload() {
+        return payload.clone();
+    }
+    
+    /**
+     * @see com.spam.mctool.model.packet.Packet#getSize()
+     */
+    public long getSize() {
+        return getSizeWithoutPadding() + TlvTuple.PADDING.calcSize(this);
+    }
+    
+    /**
+     * @see com.spam.mctool.model.packet.Packet#setMinimumSize(long)
+     */
+    public void setMinimumSize(long size) {
+        minSize = size;
     }
 }
