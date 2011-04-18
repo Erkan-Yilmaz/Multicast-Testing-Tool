@@ -75,7 +75,7 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
         sentPPSLabel = new javax.swing.JLabel();
         sentPPSData = new javax.swing.JLabel();
         closeButton = new javax.swing.JButton();
-        jGraph = new JPanelGraph();
+        jGraph = new JPanelGraph(this.sender.getSenderConfiguredPacketRate());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
@@ -134,7 +134,7 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
             }
         });
 
-        jGraph.setBackground(new java.awt.Color(1, 1, 1));
+        jGraph.setBackground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout jGraphLayout = new javax.swing.GroupLayout(jGraph);
         jGraph.setLayout(jGraphLayout);
@@ -289,6 +289,8 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
         this.dataData.setText(this.sender.getPayloadAsString());
         this.confPPSData.setText(String.valueOf(this.sender.getSenderConfiguredPacketRate()));
         this.sentPPSData.setText(String.valueOf(this.sender.getAvgPPS()));
+
+        //this.jGraph.newVal(this.sender.)
     }
     
     public void dataChanged(SenderDataChangedEvent e) {
