@@ -78,8 +78,8 @@
   </properties>
 
   <issueManagement>
-  	<system>redmine</system>
-  	<url>http://swe.jjedele.de/projects/swe-mctool</url>
+  	<system>trac</system>
+  	<url>https://swe.jjedele.de/tickets/</url>
   </issueManagement>
   <scm>
   	<developerConnection>scm:hg:https://hg.jjedele.de:444/var/repos/trunk/MCTOOL/</developerConnection>
@@ -216,4 +216,8 @@
   		<version>2.9.1</version>
   	</dependency>
   </dependencies>
+  <ciManagement>
+  	<system>sonar</system>
+  	<url>https://swe.jjedele.de/sonar/</url>
+  </ciManagement>
 </project>
