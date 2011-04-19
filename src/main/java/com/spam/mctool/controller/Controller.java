@@ -153,9 +153,9 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
             try {
                 this.loadRecentProfiles();
             } catch (FileNotFoundException e) {
-                this.reportErrorEvent(new ErrorEvent("The recent profiles list could not be read. File not found.",0));
+                this.reportErrorEvent(new ErrorEvent(1,"Controller.failedLoadingRecentProfiles.text",""));
             } catch (IOException e) {
-                this.reportErrorEvent(new ErrorEvent("The recent profiles list could not be read. File could not be opened.",2));
+                this.reportErrorEvent(new ErrorEvent(1,"Controller.failedLoadingRecentProfiles2.text",""));
             }
             //Gui enabled by default
             boolean enableGui = true;
@@ -182,7 +182,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
                     //read the next argument if available
                     if(i >= args.length || args[i].startsWith("-")){
                         //report the error
-                    	this.reportErrorEvent(new ErrorEvent("The supplied list of arguments is not correct. Please define one or more names of recent profiles.", 5));
+                    	this.reportErrorEvent(new ErrorEvent(5,"Controller.missingArgumentProfileName.text",""));
                         //exit the program
                     	return;
                     }
@@ -196,7 +196,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
                     	}
                     	else{
                     		//report the error
-                        	this.reportErrorEvent(new ErrorEvent("The profile with the name \"" + args[i] + "\" could not be found in the recent profile history.", 1));
+                        	this.reportErrorEvent(new ErrorEvent(2,"Controller.nameNotFoundInRecentProfiles.text", args[i]));
                     	}
                     	//iterate to next potential profile name
                     	++i;
@@ -210,7 +210,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
                     //read the next argument if available
                     if(i >= args.length || args[i].startsWith("-")){
                         //report the error
-                    	this.reportErrorEvent(new ErrorEvent("The supplied list of arguments is not correct. Please define one or more paths to profiles.", 5));
+                    	this.reportErrorEvent(new ErrorEvent(5,"Controller.missingArgumentProfilePath.text", ""));
                         //exit the program
                     	return;
                     }
@@ -231,7 +231,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
                 }
                 else{
                     //report the error
-                	this.reportErrorEvent(new ErrorEvent("Unknown parameter: " + args[i], 5));
+                	this.reportErrorEvent(new ErrorEvent(5, "Controller.unknownArgument.text", args[i]));
                     //exit the program
                 	return;
                 }
@@ -257,36 +257,31 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
             	int loadCount = 0;
             	for(Profile p: desiredProfiles){
                 	try{
-                		this.loadProfileWithoutCleanup(p);
+                		this.loadProfileWithoutCleanup(p,"default");
                 		loadCount++;
                 		//add the profile to the recent profiles list
                 		recentProfiles.addOrUpdateProfileInList(p);
                 	}
                 	catch(org.w3c.dom.ls.LSException e){
-                    	this.reportErrorEvent(new ErrorEvent("The profile with the path \"" + p.getPath().toString() + "\" could not be found.",3));
+                    	this.reportErrorEvent(new ErrorEvent(3,"Controller.profileLoadingError.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
                 	}
                 	catch(IOException e){
-                    	this.reportErrorEvent(new ErrorEvent("The profile with the path \"" + p.getPath().toString() + "\" could not be red.",3));
+                    	this.reportErrorEvent(new ErrorEvent(3,"Controller.profileLoadingError2.text", p.getPath().toString()));
                 	}
                 	catch(Exception e){
-                    	this.reportErrorEvent(new ErrorEvent("An error occured while loading the profile with the path \"" + p.getPath().toString() + "\": " + e.toString() + " : " + e.getMessage(),4));
+                    	this.reportErrorEvent(new ErrorEvent(4,"Controller.profileLoadingError3.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
                 	}
                 }
             	//save the recent profiles list
             	try {
 					saveRecentProfiles();
 				} catch (IOException e) {
-					this.reportErrorEvent(new ErrorEvent("Recent profiles could not be saved.",3));
+					this.reportErrorEvent(new ErrorEvent(3,"Controller.failedSavingRecentProfiles.text",e.getLocalizedMessage()));
 				}
             	//Set the new profile name for multiple profiles
             	if(loadCount > 1){
-            		this.currentProfile.setName("Multiple profiles");
-            		//prevent the user from overwriting a file
-            		this.currentProfile.setPath(new File(""));
+            		this.setCurrentProfile(new Profile("Multiple profiles loaded.",new File("")));
             	}
-            	//Otherwise the red profile name is used...
-            	//send the profile changed event to update the name and path
-            	profileChanged();
             }
 
             //Start the streams if -startall has been defined
@@ -376,7 +371,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
      * This function will save the sender/receiver settings to the specified profile path
      * in currentProfile.
      */
-    public void saveProfile() throws Exception {
+    public void saveProfileToFile(Profile p) throws Exception {
         //Register the xerces DOM-Implementation
         DOMImplementationRegistry registry = null;
         try {
@@ -413,7 +408,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         Element profileNameElement = xmlDocument.createElement("name");
         profileElement.appendChild(profileNameElement);
         //The name as text
-        Text profileNameText = xmlDocument.createTextNode(currentProfile.getName());
+        Text profileNameText = xmlDocument.createTextNode(p.getName());
         profileNameElement.appendChild(profileNameText);
         //The Time Section
         Element profileCreationTimeElement = xmlDocument.createElement("creationTime");
@@ -488,7 +483,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         }*/
 
         //get the desired profile path
-        File profilePath = this.currentProfile.getPath();
+        File profilePath = p.getPath();
 
         //Our LSSerializer will create the XML output
         LSSerializer writer = impl.createLSSerializer();
@@ -515,24 +510,45 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
     /* (non-Javadoc)
      * @see com.spam.mctool.controller.ProfilePool#loadProfile()
      */
-    public void loadProfile() throws org.w3c.dom.ls.LSException,IOException,Exception{
+    public void loadProfile(File path){
+    	//path must not be null
+    	if(path == null){
+    		throw new IllegalArgumentException();
+    	}
         //First of all delete all senders and receivers
         removeStreams(getReceiverGroups());
         removeStreams(getSenders());
 
-        //Load the profile
-        loadProfileWithoutCleanup(this.currentProfile);
+        //Create a temporary profile
+        Profile p = new Profile("Not loaded.",path);
+        
+        //Load the profile, streams are reverted to the saved activity state
+    	try{
+    		this.loadProfileWithoutCleanup(p,"default");
+    	}
+    	catch(org.w3c.dom.ls.LSException e){
+        	this.reportErrorEvent(new ErrorEvent(3,"Controller.profileLoadingError.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
+    	}
+    	catch(IOException e){
+        	this.reportErrorEvent(new ErrorEvent(3,"Controller.profileLoadingError2.text", p.getPath().toString()));
+    	}
+    	catch(Exception e){
+        	this.reportErrorEvent(new ErrorEvent(4,"Controller.profileLoadingError3.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
+    	}
 
         //Add it to the list of recent profiles
-        recentProfiles.addOrUpdateProfileInList(this.currentProfile);
-
-        //Signalize, that the profile has changed
-        profileChanged();
+        recentProfiles.addOrUpdateProfileInList(p);
+        
+        //Make it the new profile and signalize it to the observers
+        this.setCurrentProfile(p);
     }
 
-    public void loadProfileWithoutCleanup(Profile p) throws org.w3c.dom.ls.LSException,IOException,Exception{
+    public void loadProfileWithoutCleanup(Profile p,String startModus) throws org.w3c.dom.ls.LSException,IOException,Exception{
     	if(p == null){
     		throw new IllegalArgumentException();
+    	}
+    	if(startModus == null){
+    		startModus = "default";
     	}
 
         DOMImplementationRegistry registry=null;
@@ -563,8 +579,8 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
                 if(name == null){
                     name = "";
                 }
-                //set the name but don't send a profilechanged event
-                this.currentProfile.setName(name);
+                //set the name of the profile
+                p.setName(name);
             }
         }
         //Find the senders section
@@ -589,7 +605,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
                     addSender(map);
                 }
                 catch(Exception e){
-                    this.reportErrorEvent(new ErrorEvent("A sender could not be added: " + e.getMessage()+ " : " +e.toString(), 3));
+                    this.reportErrorEvent(new ErrorEvent(3,"Controller.failedAddingSender", e.getLocalizedMessage()));
                 }
             }
         }
@@ -616,13 +632,10 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
                     addReceiverGroup(map);
                 }
                 catch(Exception e){
-                    this.reportErrorEvent(new ErrorEvent("A receiver could not be added: " + e.getMessage()+ " : " +e.toString(), 3));
+                    this.reportErrorEvent(new ErrorEvent(3,"Controller.failedAdddingReceiverGroup", e.getLocalizedMessage()));
                 }
             }
         }
-        //at this point the profile has been loaded.
-        //Update the current path
-        this.currentProfile.setPath(p.getPath());
     }
 
     /* (non-Javadoc)
@@ -646,9 +659,6 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         controller = new Controller();
         controller.init(args);
 
-        //controller.setCurrentProfile(new Profile("Test",new File("Test.xml")));
-        //controller.storeCurrentProfile();
-        //controller.loadProfile();
     }
 
     public Sender addSender(Map<String, String> params) {
@@ -686,21 +696,29 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         receiverPool.removeReceiverAddedOrRemovedListener(l);
     }
 
-    public void storeCurrentProfile() {
-        try {
-            saveProfile();
+    public void saveProfile(Profile p) {
+    	if(p == null){
+    		throw new IllegalArgumentException();
+    	}
+    	try {
+            saveProfileToFile(p);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            this.reportErrorEvent(new ErrorEvent(3,"Controller.profileSavingError.text",p.getPath() + ": " + e.getLocalizedMessage()));
+            return;
         }
-        //if successfully saved, add it to the list of recent profiles
+        //if successfully saved, add or update it to the list of recent profiles
         recentProfiles.addOrUpdateProfileInList(this.currentProfile);
+        
         //save the recent profile list
         try {
             saveRecentProfiles();
         } catch (IOException e) {
-            this.reportErrorEvent(new ErrorEvent("The recent profiles list could not ba saved: " + e.getMessage(),3));
+            this.reportErrorEvent(new ErrorEvent(3,"Controller.failedSavingRecentProfiles.text",e.getLocalizedMessage()));
         }
+    }
+    
+    public void saveCurrentProfile(){
+    	saveProfile(this.currentProfile);
     }
 
     @Override
@@ -751,7 +769,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         if(newErrorEventObservers.size() <= 0){
             Date date = new Date();
             DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-            System.out.println(dateFormat.format(date) + ": Level " + errorLevel + " :" + e.getErrorMessage());
+            System.out.println(dateFormat.format(date) + ": Level " + errorLevel + " :" + e.getCompleteMessage());
 
         }
         //iterate over all listener

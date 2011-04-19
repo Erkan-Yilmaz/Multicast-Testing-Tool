@@ -1,12 +1,19 @@
 package com.spam.mctool.controller;
 
+import org.omg.CORBA.LocalObject;
+
 public class ErrorEvent {
 
     /**
-     * The error message. Constructor and setter deny to set this to null.
+     * The error message. Constructor and setter, denied to set this to null.
      */
-    private String errorMessage;
-
+    private String additionalErrorMessage;
+    
+    /**
+     * The key for the message error message. Constructor and setter, denied to set this to null.
+     */
+    private String localizedMessageIdentifier;
+    
     /**
      * The error level.
      */
@@ -17,7 +24,8 @@ public class ErrorEvent {
      * and the error message to "Unknown error occured."
      */
     public ErrorEvent(){
-        this.errorMessage = "Unknown error occured.";
+        this.localizedMessageIdentifier = "";
+        this.additionalErrorMessage = "Unknown error occured.";
         this.errorLevel = 5;
     }
 
@@ -26,30 +34,32 @@ public class ErrorEvent {
      * @param errorMessage The real message as string
      * @param errorLevel The error level as int (0 = lowest priority, 5 = highest priority)
      */
-    public ErrorEvent(String errorMessage, int errorLevel){
+    public ErrorEvent(int errorLevel, String localizedErrorMessage, String additionalErrorMessage){
         super();
-        this.setErrorMessage(errorMessage);
+        this.setLocalizedMessageIdentifier(localizedErrorMessage);
+        this.setAdditionalErrorMessage(additionalErrorMessage);
         this.setErrorLevel(errorLevel);
     }
 
     /**
      * @return the error message as string
      */
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getAdditionalErrorMessage() {
+        return additionalErrorMessage;
     }
 
     /**
-     * Set the error message. Must not be null.
+     * Set the error message. If set to null it is automatically set to "".
      * @param errorMessage
      */
-    public void setErrorMessage(String errorMessage) {
+    public void setAdditionalErrorMessage(String additionalErrorMessage) {
         //errorMessage must not be null;
-        if(errorMessage == null){
-            throw new IllegalArgumentException();
+        if(additionalErrorMessage == null){
+            this.additionalErrorMessage = "";
         }
-
-        this.errorMessage = errorMessage;
+        else{
+        	this.additionalErrorMessage = additionalErrorMessage;
+        }
     }
 
     /**
@@ -69,7 +79,7 @@ public class ErrorEvent {
         if(errorLevel < 0){
             this.errorLevel = 0;
         }
-        //Don't allowe numbers bigger than 5
+        //Don't allow numbers bigger than 5
         else if(errorLevel >5){
             this.errorLevel = 5;
         }
@@ -78,5 +88,38 @@ public class ErrorEvent {
         }
     }
 
+	public String getLocalizedMessageIdentifier() {
+		return localizedMessageIdentifier;
+	}
+	
+	public String getLocalizedMessage(){
+		String localizedMessage;
+		try{
+	        localizedMessage = java.util.ResourceBundle.getBundle("internationalization/Bundle").getString(localizedMessageIdentifier);
+		}
+		catch(Exception e){
+			localizedMessage = "";
+		}
+		return localizedMessage;
+	}
+
+	public void setLocalizedMessageIdentifier(String localizedMessageIdentifier) {
+		if(localizedMessageIdentifier == null){
+			throw new IllegalArgumentException();
+		}
+		this.localizedMessageIdentifier = localizedMessageIdentifier;
+	}
+	
+	public String getCompleteMessage() {
+		String localizedErrorMessage = this.getLocalizedMessage();
+		if(localizedErrorMessage.compareTo("") == 0 || localizedErrorMessage == null){
+			return getAdditionalErrorMessage();
+		}
+		if(additionalErrorMessage.compareTo("") == 0){
+			return localizedErrorMessage;
+		}
+		return localizedErrorMessage + ": " + additionalErrorMessage;
+	}
+    
 
 }

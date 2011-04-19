@@ -1,5 +1,6 @@
 package com.spam.mctool.controller;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -14,7 +15,7 @@ public interface ProfileManager {
     /**
      * Saves the current settings and streams to a file
      */
-    public void storeCurrentProfile();
+    //public void storeCurrentProfile();
 
     /**
      * ProfileChangeListener Observer
@@ -42,24 +43,24 @@ public interface ProfileManager {
 
         /**
          * Load profile data
-         * @throws Exception
-         * @throws IOException
-         * @throws FileNotFoundException
+         * @param path The path to the file.
          */
-        void loadProfile() throws org.w3c.dom.ls.LSException, IOException, Exception;
+        void loadProfile(File path);
 
         /**
          * Save profile data
-         * @throws IOException
-         * @throws Exception
+         * @param p The profile containing the name and path for the profile
          */
-        void saveProfile() throws IOException, Exception;
+        void saveProfile(Profile p);
+        
+        /**
+         * Save the profile to the settings defined in currentProfile
+         */
+        void saveCurrentProfile();
 
         /**
          * Change the profile to currentProfile
          * @param currentProfile the new profile
          */
         void setCurrentProfile(Profile currentProfile);
-
-
 }
