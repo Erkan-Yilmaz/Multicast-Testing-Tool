@@ -6,6 +6,8 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.nio.ByteBuffer;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -348,6 +350,30 @@ public final class ReceiverGroup extends MulticastStream {
 		sb.append("R.Trav (MIN|AVG|MAX): "+getMinTraversal()+"|"+getAvgTraversal()+"|"+getMaxTraversal()+"\n");
 		sb.append("-----------------------------------------------\n");
 		return sb.toString();
+	}
+	
+	/**
+	 * @return a map with the configuration of this ReceiverGroup. Has the same entries
+	 * as the parameter map for creation.
+	 */
+	public Map<String, String> getConfiguration() {
+		HashMap<String, String> conf = new HashMap<String, String>();
+		
+		// get interface ip address in fitting ip mode
+		Enumeration<InetAddress> addresses = this.getNetworkInterface().getInetAddresses();
+		InetAddress ninf = null;
+		while(addresses.hasMoreElements()) {
+			ninf = addresses.nextElement();
+			if(ninf.getClass().equals(ipMode)) {
+				break;
+			}
+		}
+		conf.put("ninf", ninf.getHostAddress());
+		conf.put("group", this.getGroup().getHostAddress().replace("/", ""));
+		conf.put("port", ""+this.getPort());
+		conf.put("abeh", this.getAnalyzingBehaviour().getIdentifier());
+		
+		return conf;
 	}
 
 }
