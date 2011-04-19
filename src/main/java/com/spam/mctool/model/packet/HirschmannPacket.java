@@ -60,7 +60,7 @@ import java.util.zip.DataFormatException;
  * On the receiver side, packets with correct checksums in either 
  * Little Endian or Big Endian encodings will be accepted.
  */
-final public class HirschmannPacket implements Packet {
+public final class HirschmannPacket implements Packet {
     /**
      * @see com.spam.mctool.model.packet.Packet#fromByteArray(ByteBuffer)
      */
@@ -127,6 +127,108 @@ final public class HirschmannPacket implements Packet {
         
         return data;
     }
+    
+    /**
+     * Checks if the passed data buffer contains the correct 
+     * header for this type of package.
+     * This operation starts the check at the ByteBuffer's current position 
+     * but does not move the ByteBuffers position at all.
+     * 
+     * @param data   The ByteBuffer to be checked
+     * @return       Return whether data has a correct header or not.
+     */
+    public static boolean isCorrectHeader(ByteBuffer data) {
+        // the package must be at least the headers size
+        if(data.remaining() >= HEADER.length) {
+            // extract the header and reset the buffer's position
+            byte[] head = new byte[HEADER.length];
+            data.mark();
+            data.get(head);
+            data.reset();
+            
+            // check if the header is correct
+            if(Arrays.equals(HEADER,head)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private static short generateChecksum(ByteBuffer data, ByteOrder order) {
+        // holds the results of the calculations
+        long sum = 0;
+        
+        // set the endianess we generate the checksum for
+        data.order(order);
+        
+        // Our algorithm is simply using a 32 bit accumulator (sum),
+        // we add sequential 16 bit words to it, and at the end, fold
+        // back all the carry bits from the top 16 bits into the lower
+        // 16 bits
+        
+        // do the easy accumulation part
+        while (data.remaining() > 1) {
+            int c = data.getShort() & SHORT_MASK;
+            sum += c;
+        }
+        
+        // if buffer can't be split in shorts
+        // imagine appending 0x00 to the buffer
+        if (data.limit() % 2 != 0) {
+            sum += (data.get(data.limit()-1) & BYTE_MASK);
+        }
+        
+        // add hi 16 to low 16
+        sum = (sum >> Short.SIZE) + (sum & SHORT_MASK);
+        // add carry
+        sum += (sum >> Short.SIZE);
+        
+        // truncate to 16 bits
+        return (short)(~sum);
+    }
+    
+    private ByteBuffer createUncheckedByteArray(short ttl, long reset, ByteOrder endian) {
+        // create the binary representation of the package without a checksum
+        ByteBuffer data = ByteBuffer.allocate((int) getSize());
+        data.order(endian);
+        data.put(HEADER);
+        
+        data.putShort((short)getSenderId());
+        data.putInt((int)getSequenceNumber());
+        data.putShort((short)getConfiguredPacketsPerSecond());
+        data.put((byte)ttl);
+        data.putInt((int)reset);
+        
+        data.rewind();
+        
+        return data;
+    }
+    
+    private static final byte[] HEADER = {
+    	                          'H','i','r','s','c','h','m','a','n','n',
+                                  ' ','I','P',' ','T','e','s','t','-','M',
+                                  'u','l','t','i','c','a','s','t','\0'};
+    
+    private static final int CHECKSUM_SIZE = Short.SIZE/Byte.SIZE;
+    
+    private static final int ENTIRE_SIZE = HEADER.length +Short.SIZE  /Byte.SIZE
+                                                         +Integer.SIZE/Byte.SIZE
+                                                         +Short.SIZE  /Byte.SIZE
+                                                         +Byte.SIZE   /Byte.SIZE
+                                                         +Integer.SIZE/Byte.SIZE
+                                                         +CHECKSUM_SIZE;
+    
+	private static final short BYTE_MASK = 0xFF;
+	private static final int SHORT_MASK = 0xFFFF;
+	private static final long INT_MASK = 0xFFFFFFFFL;
+
+	private static final short DEFAULT_TTL = 0xFF;
+	private static final short DEFAULT_RESET = 0;
+    
+    private long minSize;
+    private long senderID;
+    private long configuredPacketsPerSeconds;
+    private long sequenceNumber;
     
     /**
      * @see com.spam.mctool.model.packet.Packet#getSenderId()
@@ -228,105 +330,4 @@ final public class HirschmannPacket implements Packet {
     public void setMinimumSize(long size) {
         minSize = size;
     }
-    
-    /**
-     * Checks if the passed data buffer contains the correct 
-     * header for this type of package.
-     * This operation starts the check at the ByteBuffer's current position 
-     * but does not move the ByteBuffers position at all.
-     * 
-     * @param data   The ByteBuffer to be checked
-     * @return       Return whether data has a correct header or not.
-     */
-    public static boolean isCorrectHeader(ByteBuffer data) {
-        // the package must be at least the headers size
-        if(data.remaining() >= HEADER.length) {
-            // extract the header and reset the buffer's position
-            byte[] head = new byte[HEADER.length];
-            data.mark();
-            data.get(head);
-            data.reset();
-            
-            // check if the header is correct
-            if(Arrays.equals(HEADER,head)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    private static short generateChecksum(ByteBuffer data, ByteOrder order) {
-        // holds the results of the calculations
-        long sum = 0;
-        
-        // set the endianess we generate the checksum for
-        data.order(order);
-        
-        // Our algorithm is simply using a 32 bit accumulator (sum),
-        // we add sequential 16 bit words to it, and at the end, fold
-        // back all the carry bits from the top 16 bits into the lower
-        // 16 bits
-        
-        // do the easy accumulation part
-        while (data.remaining() > 1) {
-            int c = data.getShort() & SHORT_MASK;
-            sum += c;
-        }
-        
-        // if buffer can't be split in shorts
-        // imagine appending 0x00 to the buffer
-        if (data.limit() % 2 != 0) {
-            sum += (data.get(data.limit()-1) & BYTE_MASK);
-        }
-        
-        // add hi 16 to low 16
-        sum = (sum >> Short.SIZE) + (sum & SHORT_MASK);
-        // add carry
-        sum += (sum >> Short.SIZE);
-        
-        // truncate to 16 bits
-        return (short)(~sum);
-    }
-    
-    private ByteBuffer createUncheckedByteArray(short ttl, long reset, ByteOrder endian) {
-        // create the binary representation of the package without a checksum
-        ByteBuffer data = ByteBuffer.allocate((int) getSize());
-        data.order(endian);
-        data.put(HEADER);
-        
-        data.putShort((short)getSenderId());
-        data.putInt((int)getSequenceNumber());
-        data.putShort((short)getConfiguredPacketsPerSecond());
-        data.put((byte)ttl);
-        data.putInt((int)reset);
-        
-        data.rewind();
-        
-        return data;
-    }
-    
-    private static final byte[] HEADER = {'H','i','r','s','c','h','m','a','n','n',
-                                  ' ','I','P',' ','T','e','s','t','-','M',
-                                  'u','l','t','i','c','a','s','t','\0'};
-    
-    private static final int CHECKSUM_SIZE = Short.SIZE/Byte.SIZE;
-    
-    private static final int ENTIRE_SIZE = HEADER.length +Short.SIZE  /Byte.SIZE
-                                                         +Integer.SIZE/Byte.SIZE
-                                                         +Short.SIZE  /Byte.SIZE
-                                                         +Byte.SIZE   /Byte.SIZE
-                                                         +Integer.SIZE/Byte.SIZE
-                                                         +CHECKSUM_SIZE;
-    
-	private final static short BYTE_MASK = 0xFF;
-	private final static int SHORT_MASK = 0xFFFF;
-	private final static long INT_MASK = 0xFFFFFFFFL;
-
-	private final static short DEFAULT_TTL = 0xFF;
-	private final static short DEFAULT_RESET = 0;
-    
-    private long minSize;
-    private long senderID;
-    private long configuredPacketsPerSeconds;
-    private long sequenceNumber;
 }
