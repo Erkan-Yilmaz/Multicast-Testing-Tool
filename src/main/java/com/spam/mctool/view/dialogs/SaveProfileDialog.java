@@ -1,9 +1,4 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * SaveProfileDialog.java
  *
  * Created on 12.04.2011, 17:04:34
@@ -14,15 +9,41 @@ package com.spam.mctool.view.dialogs;
 import java.io.File;
 
 /**
+ * A dialog window for saving a multicast streaming profile. This class displays
+ * a dialog containing standard file choosing elements, as well as an additional
+ * text field for specifying a profile name.
+ * 
+ * After disposal of the dialog, the client can query it for the type of action
+ * the user committed (accept, or cancel), the file the user selected and the
+ * profile name the user entered.
  *
- * @author Tobias
+ * Note that this dialog does not provide any sanity checks of the input data.
+ *
+ * @author Tobias Stöckel
  */
 public class SaveProfileDialog extends javax.swing.JDialog {
-    private String selection;
-    private String profileName;
-    private File selectedFile;
 
-    /** Creates new form SaveProfileDialog */
+    /**
+     * Stores the type of action the user committed. One of
+     * JFileChooser.APPROVE_SELECTION and JFileChooser.CANCEL_SELECTION.
+     */
+    private String selection;
+
+    /**
+     * Stores the profile name the user specified in the dialog.
+     */
+    private String profileName;
+
+    /**
+     * Stores the path the user specified in the dialog as a File object.
+     */
+    private File   selectedFile;
+
+    /**
+     * Creates a SaveProfileDialog with the specified parent frame and modality.
+     * @param parent the owner of this dialog
+     * @param modal the modality of this dialog
+     */
     public SaveProfileDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -79,6 +100,13 @@ public class SaveProfileDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * This method will be invoked if the user either confirms (by pressing
+     * Enter or the OK-button) or cancels the file selection. It stores the
+     * selected path, profile name and the way the user exited the selection, to
+     * according fields and closes the dialog.
+     * @param evt The event invoked by the JFileChooser component.
+     */
     private void jFileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooserActionPerformed
         selection = evt.getActionCommand();
         profileName = txtProfileName.getText();
@@ -89,6 +117,7 @@ public class SaveProfileDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jFileChooserActionPerformed
 
     /**
+     * Main method for testing purposes.
     * @param args the command line arguments
     */
     public static void main(String args[]) {
@@ -96,6 +125,7 @@ public class SaveProfileDialog extends javax.swing.JDialog {
             public void run() {
                 SaveProfileDialog dialog = new SaveProfileDialog(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }
@@ -111,14 +141,31 @@ public class SaveProfileDialog extends javax.swing.JDialog {
     private javax.swing.JTextField txtProfileName;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Returns the way the user ended the dialog selection. This could either
+     * an approval of the selected file and profile name or a cancellation of
+     * the process. The returned constant will be one of
+     * JFileChooser.APPROVE_SELECTION and JFileChooser.CANCEL_SELECTION.
+     *
+     * @return The type of dialog submission by means of JFileChooser's constants.
+     */
     public String getSelection() {
         return selection;
     }
 
+    /**
+     * Returns the profile name specified by the user in the dialog.
+     * @return The specified profile name.
+     */
     public String getProfileName() {
         return profileName;
     }
 
+    /**
+     * Returns the file path as selected by the user. The file path is wrapped
+     * in a File object.
+     * @return The selected file path wrapped in a File object.
+     */
     public File getSelectedFile() {
         return selectedFile;
     }

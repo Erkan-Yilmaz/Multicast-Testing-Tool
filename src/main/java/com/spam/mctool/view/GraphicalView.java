@@ -33,6 +33,13 @@ import javax.swing.UIManager;
  * @author Tobias Schoknecht, Tobias Stöckel
  * 
  * Represents the graphical user interface of the MCTool.
+ * 
+ * This class serves as the entry point for the controller to the view. All
+ * incoming events are queued to the EventDispatcherThread here and thus
+ * distributed safely to the remaining Swing components.
+ *
+ * In order to fully initialize and show the view, the init()-method has to
+ * be invoked.
  *
  */
 public class GraphicalView implements MctoolView,
@@ -40,8 +47,19 @@ public class GraphicalView implements MctoolView,
 		ProfileChangeListener, SenderAddedOrRemovedListener,
 		ReceiverAddedOrRemovedListener {
 
-	private MainFrame mainFrame;
-	private StreamManager streamManager;
+	/**
+         * Reference to the main frame of the application
+         */
+        private MainFrame mainFrame;
+
+        /**
+         * Reference to the controller, seen as manager of multicast streams
+         */
+        private StreamManager streamManager;
+
+        /**
+         * Reference ot the controller, seen as manager of streaming profiles
+         */
         private ProfileManager profileManager;
 
 	public void receiverGroupAdded(final ReceiverAddedOrRemovedEvent e) {
@@ -101,6 +119,9 @@ public class GraphicalView implements MctoolView,
 
 	/**
 	 * Initializes the graphical user interface and displays the main window.
+         * This method will also try to set the current operating system's
+         * look-and-feel (L&F). This will only succeed if the application doesn't
+         * already reference any other swing components.
 	 */
 	public void init(Controller c) {
 
@@ -112,7 +133,7 @@ public class GraphicalView implements MctoolView,
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("Failed to set system Look and Feel. Defaulting to Java Look and Feel.");
             }
             mainFrame = new MainFrame(this);
             loadState();
