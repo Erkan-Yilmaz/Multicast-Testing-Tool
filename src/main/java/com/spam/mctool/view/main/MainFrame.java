@@ -716,6 +716,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     private void buEditSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buEditSenderActionPerformed
         Sender s = senderTable.getSelectedSenders().get(0);
         new EditSenderDialog(this, true, s, false).setVisible(true);
+        refreshSenderButtons();
     }//GEN-LAST:event_buEditSenderActionPerformed
 
     private void buDeleteSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buDeleteSenderActionPerformed
@@ -764,6 +765,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     private void buEditReceiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buEditReceiverActionPerformed
         ReceiverGroup rg = receiverTable.getSelectedReceiverGroups().get(0);
         new EditReceiverDialog(this, true, rg, false).setVisible(true);
+        refreshReceiverButtons();
     }//GEN-LAST:event_buEditReceiverActionPerformed
 
     private void buDeleteReceiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buDeleteReceiverActionPerformed
