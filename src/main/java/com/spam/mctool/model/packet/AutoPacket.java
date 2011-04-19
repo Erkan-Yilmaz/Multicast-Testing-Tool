@@ -4,27 +4,23 @@ import java.nio.ByteBuffer;
 import java.util.zip.DataFormatException;
 
 /**
+ * @author konne
+ *
  * This class represents a package that chooses it's
  * binary representation (protocol) automatically.
  * Which representation to use is determined by either
- * the bytestream passed to fromByteArray or a
- * default is used.
- * 
- * @author konne
- *
+ * the ByteBuffer passed to fromByteArray or a default
+ * type is used.
  */
 public class AutoPacket implements Packet {
-    public AutoPacket() 
-    {
-        packet = new SpamPacket();
-    }
     /**
      * Determines the type of package depending 
      * on the data passed to this function.
-     * @param data    The data to be parsed
-     * @throws DataFormatException   thrown if badly formated data is passed
+     * @see com.spam.mctool.model.packet.Packet#fromByteArray(ByteBuffer)
+     * @param data                   The data to be parsed
+     * @throws DataFormatException   Thrown if badly formated data is passed
      */
-    public void fromByteArray(ByteBuffer data) throws DataFormatException 
+    public final void fromByteArray(ByteBuffer data) throws DataFormatException 
     {
         if(SpamPacket.isCorrectHeader(data)){
             packet = new SpamPacket();
@@ -40,127 +36,115 @@ public class AutoPacket implements Packet {
     /**
      * Get the type of Packet represented by this AutoPacket.
      * @return  Type of Packet
-     * @see com.spam.mctool.model.packet.Packet#toByteArray()
      */
-    public Class<? extends Packet> getPacketType() {
+    public final Class<? extends Packet> getPacketType() {
         return packet.getClass();
     }
     
     /**
-     * @return
      * @see com.spam.mctool.model.packet.Packet#toByteArray()
      */
-    public ByteBuffer toByteArray() {
+    public final ByteBuffer toByteArray() {
         return packet.toByteArray();
     }
-
+    
     /**
-     * @return
      * @see com.spam.mctool.model.packet.Packet#getSenderID()
      */
-    public long getSenderId() {
+    public final long getSenderId() {
         return packet.getSenderId();
     }
-
+    
     /**
-     * @param senderID
      * @see com.spam.mctool.model.packet.Packet#setSenderID(long)
      */
-    public void setSenderId(long senderID) {
+    public final void setSenderId(long senderID) {
         packet.setSenderId(senderID);
     }
-
+    
     /**
-     * @return
      * @see com.spam.mctool.model.packet.Packet#getConfiguredPacketsPerSecond()
      */
-    public long getConfiguredPacketsPerSecond() {
+    public final long getConfiguredPacketsPerSecond() {
         return packet.getConfiguredPacketsPerSecond();
-    }
-
+    }	
+    
     /**
-     * @param configuredPacketsPerSeconds
      * @see com.spam.mctool.model.packet.Packet#setConfiguredPacketsPerSecond(long)
      */
-    public void setConfiguredPacketsPerSecond(long configuredPacketsPerSeconds) {
+    public final void setConfiguredPacketsPerSecond(long configuredPacketsPerSeconds) {
         packet.setConfiguredPacketsPerSecond(configuredPacketsPerSeconds);
     }
-
+    
     /**
-     * @return
      * @see com.spam.mctool.model.packet.Packet#getSenderMeasuredPacketRate()
      */
-    public long getSenderMeasuredPacketRate() {
+    public final long getSenderMeasuredPacketRate() {
         return packet.getSenderMeasuredPacketRate();
     }
-
+    
     /**
-     * @param senderMeasuredPacketRate
      * @see com.spam.mctool.model.packet.Packet#setSenderMeasuredPacketRate(long)
      */
-    public void setSenderMeasuredPacketRate(long senderMeasuredPacketRate) {
+    public final void setSenderMeasuredPacketRate(long senderMeasuredPacketRate) {
         packet.setSenderMeasuredPacketRate(senderMeasuredPacketRate);
     }
-
+    
     /**
-     * @return
      * @see com.spam.mctool.model.packet.Packet#getSequenceNumber()
      */
-    public long getSequenceNumber() {
+    public final long getSequenceNumber() {
         return packet.getSequenceNumber();
     }
-
+    
     /**
-     * @param sequenceNumber
      * @see com.spam.mctool.model.packet.Packet#setSequenceNumber(long)
      */
-    public void setSequenceNumber(long sequenceNumber) {
+    public final void setSequenceNumber(long sequenceNumber) {
         packet.setSequenceNumber(sequenceNumber);
     }
-
+    
     /**
-     * @return
      * @see com.spam.mctool.model.packet.Packet#getDispatchTime()
      */
-    public long getDispatchTime() {
+    public final long getDispatchTime() {
         return packet.getDispatchTime();
     }
-
+    
     /**
-     * @param dispatchTime
      * @see com.spam.mctool.model.packet.Packet#setDispatchTime(long)
      */
-    public void setDispatchTime(long dispatchTime) {
+    public final void setDispatchTime(long dispatchTime) {
         packet.setDispatchTime(dispatchTime);
     }
+    
     /**
-     * @param data
      * @see com.spam.mctool.model.packet.Packet#setPayload(byte[])
      */
-    public void setPayload(byte[] data) {
+    public final void setPayload(byte[] data) {
         packet.setPayload(data);
     }
+    
     /**
      * @see com.spam.mctool.model.packet.Packet#getPayload()
      */
-    public byte[] getPayload() {
+    public final byte[] getPayload() {
         return packet.getPayload();
     }
-
+    
     /**
      * @see com.spam.mctool.model.packet.Packet#getSize()
      */
-    public long getSize() {
+    public final long getSize() {
         return packet.getSize();
     }
     
     /**
-     * @param size
      * @see com.spam.mctool.model.packet.Packet#setMinimumSize()
      */
-    public void setMinimumSize(long size) {
+    public final void setMinimumSize(long size) {
         packet.setMinimumSize(size);
     }
     
-    private Packet packet;
+    private Packet packet = new SpamPacket();;
 }

@@ -15,7 +15,6 @@ import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
 import com.spam.mctool.intermediates.SenderAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.SenderDataChangedEvent;
 import com.spam.mctool.model.MulticastStream;
-import com.spam.mctool.model.Receiver;
 import com.spam.mctool.model.ReceiverAddedOrRemovedListener;
 import com.spam.mctool.model.ReceiverDataChangeListener;
 import com.spam.mctool.model.ReceiverGroup;
@@ -23,7 +22,6 @@ import com.spam.mctool.model.Sender;
 import com.spam.mctool.model.SenderAddedOrRemovedListener;
 import com.spam.mctool.model.SenderDataChangeListener;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.SwingUtilities;
@@ -45,16 +43,19 @@ public class GraphicalView implements MctoolView,
 	private StreamManager streamManager;
         private ProfileManager profileManager;
 
-	// receiver oder receivergroup???
-        public void receiverGroupAdded(final ReceiverAddedOrRemovedEvent e) {
+	public void receiverGroupAdded(final ReceiverAddedOrRemovedEvent e) {
             Runnable groupAddedRunnable = new Runnable() {
                 public void run() {mainFrame.receiverGroupAdded(e);}
             };
             SwingUtilities.invokeLater(groupAddedRunnable);
+
+            // This call should be safe without synchronization with the GUI
+            // because all incoming events that result from this registration
+            // will themselves be enqueued to the EventDispatcherThread.
+            e.getSource().addReceiverDataChangeListener(this);
 	}
 
-        // receiverGroupRemoved???
-	public void receiverGroupRemoved(final ReceiverAddedOrRemovedEvent e) {
+        public void receiverGroupRemoved(final ReceiverAddedOrRemovedEvent e) {
             Runnable groupRemovedRunnable = new Runnable() {
                 public void run() {mainFrame.receiverGroupRemoved(e);}
             };
@@ -66,6 +67,11 @@ public class GraphicalView implements MctoolView,
                 public void run() {mainFrame.senderAdded(e);}
             };
             SwingUtilities.invokeLater(senderAddedRunnable);
+            
+            // This call should be safe without synchronization with the GUI
+            // because all incoming events that result from this registration 
+            // will themselves be enqueued to the EventDispatcherThread.
+            e.getSource().addSenderDataChangeListener(this);
 	}
 
 	public void senderRemoved(final SenderAddedOrRemovedEvent e) {
@@ -80,15 +86,13 @@ public class GraphicalView implements MctoolView,
             });
 	}
 
-        // TODO nobody calls this method so far
-	public void dataChanged(final ReceiverDataChangedEvent e) {
+        public void dataChanged(final ReceiverDataChangedEvent e) {
             SwingUtilities.invokeLater( new Runnable() {
                 public void run() { mainFrame.dataChanged(e); }
             });
 	}
 
-        // TODO nobody calls this method so far
-	public void dataChanged(final SenderDataChangedEvent e) {
+        public void dataChanged(final SenderDataChangedEvent e) {
             SwingUtilities.invokeLater( new Runnable() {
                 public void run() {mainFrame.dataChanged(e);}
             });
@@ -98,21 +102,21 @@ public class GraphicalView implements MctoolView,
 	 * Initializes the graphical user interface and displays the main window.
 	 */
 	public void init(Controller c) {
-		// TODO Auto-generated method stub
-                streamManager = c;
-                profileManager = c;
 
-                // Set System L&F. Will only work, if the application did not
-                // yet reference any other swing component!
-                try {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-		mainFrame = new MainFrame(this);
-                //loadState();
-                attachObservers();
-		mainFrame.setVisible(true);
+            streamManager = c;
+            profileManager = c;
+
+            // Set System L&F. Will only work, if the application did not
+            // yet reference any other swing component!
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            mainFrame = new MainFrame(this);
+            loadState();
+            attachObservers();
+            mainFrame.setVisible(true);
 	}
 
     private void loadState() {
@@ -138,23 +142,15 @@ public class GraphicalView implements MctoolView,
         streamManager.addSenderAddedOrRemovedListener(this);
         streamManager.addReceiverAddedOrRemovedListener(this);
         profileManager.addProfileChangeListener(this);
-        //for (ReceiverGroup r : streamManager.getReceivers()) {
-            // TODO howto register on receiver group?
-        //}
-        //for (Sender s : streamManager.getSenders()) {
-        //    s.addSenderDataChangeListener(this);
-        //}
     }
 
     public void addSender(Map<String, String> senderMap, boolean activate) {
         Sender s = this.streamManager.addSender(senderMap);
-        s.addSenderDataChangeListener(this);
         if(activate) s.activate();
     }
 
     public void addReceiver(Map<String, String> receiverMap, boolean activate) {
         ReceiverGroup r = this.streamManager.addReceiverGroup(receiverMap);
-        r.addReceiverDataChangeListener(this);
         if(activate) r.activate();
     }
 

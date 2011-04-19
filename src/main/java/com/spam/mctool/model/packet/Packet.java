@@ -5,76 +5,96 @@ import java.util.zip.DataFormatException;
 
 /**
  * @author konne
- * packet
+ * 
+ * A Packet represents one self contained piece of information that is send 
+ * over the network. The specific implementation of the Package is defined
+ * in the class implementing this interface. You may thus get
+ * IllegalArgumentExceptions or UnsupportedOperationException exceptions.
  */
 public interface Packet {
     /**
-     * @param data    the data to be set
-     * @throws DataFormatException    thrown if badly formated data is passed
+     * Creates a Packet from its binary representation.
+     * @param  data                   The data to be parsed
+     * @throws DataFormatException    Thrown if badly formated data is passed
      */
-    public void fromByteArray(ByteBuffer data) throws DataFormatException ;
+    void fromByteArray(ByteBuffer data) throws DataFormatException ;
     /**
-     * @return    the byte representation of this packet
+     * Create the binary representation of this Packer
+     * @return    The byte representation of this packet
      */
-    public ByteBuffer toByteArray();
+    ByteBuffer toByteArray();
     /**
-     * @return the senderID
+     * Returns the senderId.
+     * @return    The senderId
      */
-    public long getSenderId();
+    long getSenderId();
     /**
-     * @param senderID the senderID to set
+     * 
+     * @param senderId   The senderId to set
      */
-    public void setSenderId(long senderId);
+    void setSenderId(long senderId);
     /**
      * @return the configuredPacketsPerSeconds
      */
-    public long getConfiguredPacketsPerSecond();
+    long getConfiguredPacketsPerSecond();
     /**
      * @param configuredPacketsPerSeconds the configuredPacketsPerSeconds to set
      */
-    public void setConfiguredPacketsPerSecond(long configuredPacketsPerSeconds);
+    void setConfiguredPacketsPerSecond(long configuredPacketsPerSeconds);
     /**
      * @return the senderMeasuredPacketRate
      */
-    public long getSenderMeasuredPacketRate();
+    long getSenderMeasuredPacketRate();
     /**
      * @param senderMeasuredPacketRate the senderMeasuredPacketRate to set
      */
-    public void setSenderMeasuredPacketRate(long senderMeasuredPacketRate);
+    void setSenderMeasuredPacketRate(long senderMeasuredPacketRate);
     /**
      * @return the sequenceNumber
      */
-    public long getSequenceNumber();
+    long getSequenceNumber();
     /**
      * @param sequenceNumber the sequenceNumber to set
      */
-    public void setSequenceNumber(long sequenceNumber);
+    void setSequenceNumber(long sequenceNumber);
     /**
      * @return the dispatchTime
      */
-    public long getDispatchTime();
+    long getDispatchTime();
     /**
      * @param dispatchTime the dispatchTime to set
      */
-    public void setDispatchTime(long dispatchTime);
+    void setDispatchTime(long dispatchTime);
+    
     /**
+     * Set the packet's payload.
+     * A payload is arbitrary data that can be attached to the packet.
+     * 
      * @param data  The payload's data
      */
-    public void setPayload(byte[] data);
+    void setPayload(byte[] data);
+    
     /**
-     * @return      Returns the payload's data
+     * Get the packet's payload.
+     * 
+     * @return      Returns the payload's payload
      */
-    public byte[] getPayload();
+    byte[] getPayload();
+    
     /**
-     * @return      Returns the packet's size
-     */
-    public long getSize();
-    /**
-     * Set the size of the package.
-     * Package may be bigger, e.g. if size is set to 1
-     * because we need to send the header and other stuff
+     * Set the minimum size of the package.
+     * The package may be larger than the size specified.
+     * For example if the size is set to 1, the package will
+     * be larger because of header that need to be send also.
      * 
      * @param size  The packets minimum size
      */
-    public void setMinimumSize(long size);
+    void setMinimumSize(long size);
+    
+    /**
+     * Get the packet's size.
+     * 
+     * @return      Returns the packet's size
+     */
+    long getSize();
 }
