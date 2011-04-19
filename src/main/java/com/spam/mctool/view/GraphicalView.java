@@ -48,6 +48,11 @@ public class GraphicalView implements MctoolView,
                 public void run() {mainFrame.receiverGroupAdded(e);}
             };
             SwingUtilities.invokeLater(groupAddedRunnable);
+
+            // This call should be safe without synchronization with the GUI
+            // because all incoming events that result from this registration
+            // will themselves be enqueued to the EventDispatcherThread.
+            e.getSource().addReceiverDataChangeListener(this);
 	}
 
         public void receiverGroupRemoved(final ReceiverAddedOrRemovedEvent e) {
@@ -62,6 +67,11 @@ public class GraphicalView implements MctoolView,
                 public void run() {mainFrame.senderAdded(e);}
             };
             SwingUtilities.invokeLater(senderAddedRunnable);
+            
+            // This call should be safe without synchronization with the GUI
+            // because all incoming events that result from this registration 
+            // will themselves be enqueued to the EventDispatcherThread.
+            e.getSource().addSenderDataChangeListener(this);
 	}
 
 	public void senderRemoved(final SenderAddedOrRemovedEvent e) {
@@ -136,13 +146,11 @@ public class GraphicalView implements MctoolView,
 
     public void addSender(Map<String, String> senderMap, boolean activate) {
         Sender s = this.streamManager.addSender(senderMap);
-        s.addSenderDataChangeListener(this);
         if(activate) s.activate();
     }
 
     public void addReceiver(Map<String, String> receiverMap, boolean activate) {
         ReceiverGroup r = this.streamManager.addReceiverGroup(receiverMap);
-        r.addReceiverDataChangeListener(this);
         if(activate) r.activate();
     }
 
