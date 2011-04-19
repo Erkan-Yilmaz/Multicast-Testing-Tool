@@ -21,6 +21,7 @@ import com.spam.mctool.model.ReceiverGroup;
 import com.spam.mctool.model.Sender;
 import com.spam.mctool.model.SenderAddedOrRemovedListener;
 import com.spam.mctool.model.SenderDataChangeListener;
+import java.io.File;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -168,6 +169,18 @@ public class GraphicalView implements MctoolView,
 
     public Profile getCurrentProfile() {
         return profileManager.getCurrentProfile();
+    }
+
+    public void loadProfile(File selectedFile) {
+        profileManager.loadProfile(selectedFile);
+    }
+
+    public void saveProfile(String profileName, File path) {
+        profileManager.saveProfile(new Profile(profileName, path));
+    }
+
+    public void saveCurrentProfile() {
+        profileManager.saveCurrentProfile();
     }
 
 }

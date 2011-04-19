@@ -11,13 +11,16 @@
 
 package com.spam.mctool.view.dialogs;
 
-import javax.swing.JFileChooser;
+import java.io.File;
 
 /**
  *
  * @author Tobias
  */
 public class SaveProfileDialog extends javax.swing.JDialog {
+    private String selection;
+    private String profileName;
+    private File selectedFile;
 
     /** Creates new form SaveProfileDialog */
     public SaveProfileDialog(java.awt.Frame parent, boolean modal) {
@@ -77,18 +80,11 @@ public class SaveProfileDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jFileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooserActionPerformed
-        if (evt.getActionCommand().equals(JFileChooser.CANCEL_SELECTION))
-        {
-            System.out.printf("CancelSelection\n");
-            this.setVisible(false);
-            this.dispose();
-        }
-        if (evt.getActionCommand().equals(JFileChooser.APPROVE_SELECTION))
-        {
-            System.out.printf("ApproveSelection\n");
-            this.setVisible(false);
-            this.dispose();
-        }
+        selection = evt.getActionCommand();
+        profileName = txtProfileName.getText();
+        selectedFile = jFileChooser.getSelectedFile();
+        setVisible(false);
+        dispose();
 
     }//GEN-LAST:event_jFileChooserActionPerformed
 
@@ -114,5 +110,17 @@ public class SaveProfileDialog extends javax.swing.JDialog {
     private javax.swing.JLabel laProfileName;
     private javax.swing.JTextField txtProfileName;
     // End of variables declaration//GEN-END:variables
+
+    public String getSelection() {
+        return selection;
+    }
+
+    public String getProfileName() {
+        return profileName;
+    }
+
+    public File getSelectedFile() {
+        return selectedFile;
+    }
 
 }
