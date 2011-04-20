@@ -46,6 +46,7 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
         this(parent, modal);
         this.sender = sender;
         loadData();
+        this.jGraph.setMaxPacketRate(this.sender.getSenderConfiguredPacketRate());
     }
 
     /** This method is called from within the constructor to
@@ -75,7 +76,7 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
         sentPPSLabel = new javax.swing.JLabel();
         sentPPSData = new javax.swing.JLabel();
         closeButton = new javax.swing.JButton();
-        jGraph = new JPanelGraph(this.sender.getSenderConfiguredPacketRate());
+        jGraph = new com.spam.mctool.view.dialogs.JPanelGraph();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
@@ -290,7 +291,8 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
         this.confPPSData.setText(String.valueOf(this.sender.getSenderConfiguredPacketRate()));
         this.sentPPSData.setText(String.valueOf(this.sender.getAvgPPS()));
 
-        //this.jGraph.newVal(this.sender.)
+        this.jGraph.newVal((int)this.sender.getAvgPPS());
+
     }
     
     public void dataChanged(SenderDataChangedEvent e) {
@@ -307,7 +309,7 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
     private javax.swing.JLabel groupLabel;
     private javax.swing.JLabel interfaceData;
     private javax.swing.JLabel interfaceLabel;
-    private javax.swing.JPanel jGraph;
+    private com.spam.mctool.view.dialogs.JPanelGraph jGraph;
     private javax.swing.JLabel packetSizeData;
     private javax.swing.JLabel packetSizeLabel;
     private javax.swing.JLabel packetStyleData;
