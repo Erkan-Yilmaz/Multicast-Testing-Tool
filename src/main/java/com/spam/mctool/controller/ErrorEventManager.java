@@ -26,4 +26,10 @@ public interface ErrorEventManager {
      */
     public void reportErrorEvent(ErrorEvent e);
 
+    public static final int DEBUG = 0;
+    public static final int WARNING = 1;
+    public static final int SEVERE = 2;
+    public static final int ERROR = 3;
+    public static final int CRITICAL = 4;
+    public static final int FATAL = 5;
 }

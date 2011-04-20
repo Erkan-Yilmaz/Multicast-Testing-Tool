@@ -161,8 +161,8 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
             boolean enableGui = true;
             //Cli disabled by default
             boolean enableCli = false;
-            //Start all loaded senders and receivers later?
-            boolean enableStartAll = false;
+            //The desired start mode for senders and receivers
+            String startMode = "default";
             //The profiles to be loaded
             List<Profile> desiredProfiles = new ArrayList<Profile>();
             //iterate over all args
@@ -227,7 +227,36 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
                 }
                 //start all receivers and sender
                 else if(args[i].compareToIgnoreCase("-startall") == 0){
-                    enableStartAll = true;
+                	//startmode has already been set
+                	if(startMode.compareTo("default") != 0){
+                        //report the error
+                    	this.reportErrorEvent(new ErrorEvent(5, "Controller.falseStartmode.text", args[i]));
+                        //exit the program
+                    	return;	
+                	}
+                	startMode = "all";
+                }
+                //start none of the receivers and sender
+                else if(args[i].compareToIgnoreCase("-startnone") == 0){
+                	//startmode has already been set
+                	if(startMode.compareTo("default") != 0){
+                        //report the error
+                    	this.reportErrorEvent(new ErrorEvent(5, "Controller.falseStartmode.text", args[i]));
+                        //exit the program
+                    	return;	
+                	}
+                	startMode = "none";
+                }
+                //restore the state of receivers and sender
+                else if(args[i].compareToIgnoreCase("-restore") == 0){
+                	//startmode has already been set
+                	if(startMode.compareTo("default") != 0){
+                        //report the error
+                    	this.reportErrorEvent(new ErrorEvent(5, "Controller.falseStartmode.text", args[i]));
+                        //exit the program
+                    	return;	
+                	}
+                	startMode = "restore";
                 }
                 else{
                     //report the error
@@ -255,12 +284,14 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
             //Try to load desired Profile
             if(desiredProfiles != null && desiredProfiles.size() > 0){
             	int loadCount = 0;
+            	Profile loadedProfile = null;
             	for(Profile p: desiredProfiles){
                 	try{
-                		this.loadProfileWithoutCleanup(p,"default");
+                		this.loadProfileWithoutCleanup(p,startMode);
                 		loadCount++;
                 		//add the profile to the recent profiles list
                 		recentProfiles.addOrUpdateProfileInList(p);
+                		loadedProfile = p;
                 	}
                 	catch(org.w3c.dom.ls.LSException e){
                     	this.reportErrorEvent(new ErrorEvent(3,"Controller.profileLoadingError.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
@@ -282,16 +313,10 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
             	if(loadCount > 1){
             		this.setCurrentProfile(new Profile("Multiple profiles loaded.",new File("")));
             	}
-            }
-
-            //Start the streams if -startall has been defined
-            if(enableStartAll){
-                //Fetch all senders
-                Collection<? extends MulticastStream> senders = getSenders();
-                startStreams(senders);
-                //Fetch all receivers
-                Collection<? extends MulticastStream> receivers = getReceiverGroups();
-                startStreams(receivers);
+            	//Only one profile loaded? make it the active one
+            	else if(loadedProfile!=null){
+            		this.setCurrentProfile(loadedProfile);
+            	}
             }
     }
 
@@ -427,7 +452,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         java.util.Collection<Sender> senders = getSenders();
         Iterator<Sender> itS = senders.iterator();
         //iterate over the collection
-        /*
+        
         while(itS.hasNext()){
             Sender curSender = itS.next();
             //Create sender element
@@ -447,10 +472,19 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
                 senderElement.appendChild(keyElement);
                 //Add its value as text
                 Text valueText = xmlDocument.createTextNode(value);
-                keyElement.appendChild(keyElement);
+                keyElement.appendChild(valueText);
             }
+            //save the active state
+            Element keyElement = xmlDocument.createElement("active");
+            senderElement.appendChild(keyElement);
+            String state = "false";
+            if(curSender.isActive()){
+            	state = "true";
+            }
+            Text valueText = xmlDocument.createTextNode(state);
+            keyElement.appendChild(valueText);
         }
-        */
+        
         //Receivers section
         Element receiversElement = xmlDocument.createElement("receivers");
         rootElement.appendChild(receiversElement);
@@ -459,13 +493,13 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         java.util.Collection<ReceiverGroup> receivers = getReceiverGroups();
         Iterator<ReceiverGroup> itR = receivers.iterator();
         //iterate over the collection
-        /*while(itR.hasNext()){
+        while(itR.hasNext()){
             ReceiverGroup curReceiver = itR.next();
             //Create receiver element
             Element receiverElement = xmlDocument.createElement("receiver");
             receiversElement.appendChild(receiverElement);
             //Fetch the receiver configuration MAP
-            ;Map<String, String> map = curReceiver.getConfiguration();
+            Map<String, String> map = curReceiver.getConfiguration();
             //Fetch all keys
             Set<String> set = map.keySet();
             Iterator<String> it = set.iterator();
@@ -478,9 +512,18 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
                 receiverElement.appendChild(keyElement);
                 //Add its value as text
                 Text valueText = xmlDocument.createTextNode(value);
-                keyElement.appendChild(keyElement);
+                keyElement.appendChild(valueText);
             }
-        }*/
+            //save the active state
+            Element keyElement = xmlDocument.createElement("active");
+            receiverElement.appendChild(keyElement);
+            String state = "false";
+            if(curReceiver.isActive()){
+            	state = "true";
+            }
+            Text valueText = xmlDocument.createTextNode(state);
+            keyElement.appendChild(valueText);
+        }
 
         //get the desired profile path
         File profilePath = p.getPath();
@@ -543,12 +586,12 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         this.setCurrentProfile(p);
     }
 
-    public void loadProfileWithoutCleanup(Profile p,String startModus) throws org.w3c.dom.ls.LSException,IOException,Exception{
+    public void loadProfileWithoutCleanup(Profile p,String startMode) throws org.w3c.dom.ls.LSException,IOException,Exception{
     	if(p == null){
     		throw new IllegalArgumentException();
     	}
-    	if(startModus == null){
-    		startModus = "default";
+    	if(startMode == null || startMode.compareToIgnoreCase("restore") == 0){
+    		startMode = "default";
     	}
 
         DOMImplementationRegistry registry=null;
@@ -591,18 +634,42 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
             Node curSender = sendersChilds.item(i);
             //check if it is really a sender
             if(curSender.getNodeName().compareToIgnoreCase("sender") == 0){
+            	//start the sender
+            	Boolean startSender = false;
                 //fetch all nodes
                 NodeList senderData = curSender.getChildNodes();
                 //create a map
                 Map<String,String> map = new HashMap<String, String>();
                 for(int j = 0;j<senderData.getLength();++j){
                     Node curData = senderData.item(j);
-                    //put the pair to the map
-                    map.put(curData.getNodeName(), curData.getTextContent());
+                    if(curData.getNodeName().compareToIgnoreCase("active") == 0){
+                    	//marked to be activated
+                    	if(curData.getTextContent().compareToIgnoreCase("true") == 0){
+                    		startSender = true;
+                    	}
+                    	//marked to not be activated
+                    	else if(curData.getTextContent().compareToIgnoreCase("false") == 0){
+                    		startSender = false;
+                    	}
+                    	//unknown definition
+                    	else{
+                    		startSender = false;
+                            this.reportErrorEvent(new ErrorEvent(1,"Controller.profileActiveModeError.text", null));
+                    	}
+                    }
+                    else{
+                        //put the pair to the map
+                    	map.put(curData.getNodeName(), curData.getTextContent());
+                    }
                 }
                 //Try to add the sender
                 try{
-                    addSender(map);
+                    Sender newSender = addSender(map);
+                    //if startMode=none -> Start none
+                    //otherwise test if all should be started or the stream is marked to be started
+                    if(startMode.compareToIgnoreCase("none") != 0 && (startMode.compareToIgnoreCase("all") == 0 || startSender)){
+                    	newSender.activate();
+                    }   
                 }
                 catch(Exception e){
                     this.reportErrorEvent(new ErrorEvent(3,"Controller.failedAddingSender", e.getLocalizedMessage()));
@@ -618,21 +685,45 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
             Node curReceiver = receiversChilds.item(i);
             //check if it is really a sender
             if(curReceiver.getNodeName().compareToIgnoreCase("receiver") == 0){
+            	//start the receiver
+            	Boolean startReceiver = false;
                 //fetch all nodes
                 NodeList receiverData = curReceiver.getChildNodes();
                 //create a map
                 Map<String,String> map = new HashMap<String, String>();
                 for(int j = 0;j<receiverData.getLength();++j){
                     Node curData = receiverData.item(j);
-                    //put the pair to the map
-                    map.put(curData.getNodeName(), curData.getTextContent());
+                    if(curData.getNodeName().compareToIgnoreCase("active") == 0){
+                    	//marked to be activated
+                    	if(curData.getTextContent().compareToIgnoreCase("true") == 0){
+                    		startReceiver = true;
+                    	}
+                    	//marked to not be activated
+                    	else if(curData.getTextContent().compareToIgnoreCase("false") == 0){
+                    		startReceiver = false;
+                    	}
+                    	//unknown definition
+                    	else{
+                    		startReceiver = false;
+                            this.reportErrorEvent(new ErrorEvent(1,"Controller.profileActiveModeError.text", null));
+                    	}
+                    }
+                    else{
+                        //put the pair to the map
+                    	map.put(curData.getNodeName(), curData.getTextContent());
+                    }
                 }
                 //Try to add the sender
                 try{
-                    addReceiverGroup(map);
+                    ReceiverGroup newReceiver = addReceiverGroup(map);
+                    //if startMode=none -> Start none
+                    //otherwise test if all should be started or the stream is marked to be started
+                    if(startMode.compareToIgnoreCase("none") != 0 && (startMode.compareToIgnoreCase("all") == 0 || startReceiver)){
+                    	newReceiver.activate();
+                    }
                 }
                 catch(Exception e){
-                    this.reportErrorEvent(new ErrorEvent(3,"Controller.failedAdddingReceiverGroup", e.getLocalizedMessage()));
+                    this.reportErrorEvent(new ErrorEvent(3,"Controller.failedAdddingReceiverGroup.text", e.getLocalizedMessage()));
                 }
             }
         }
@@ -706,8 +797,10 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
             this.reportErrorEvent(new ErrorEvent(3,"Controller.profileSavingError.text",p.getPath() + ": " + e.getLocalizedMessage()));
             return;
         }
+        //refresh the profile name and path
+        this.setCurrentProfile(p);
         //if successfully saved, add or update it to the list of recent profiles
-        recentProfiles.addOrUpdateProfileInList(this.currentProfile);
+        recentProfiles.addOrUpdateProfileInList(p);
         
         //save the recent profile list
         try {
@@ -775,7 +868,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         //iterate over all listener
         for(ErrorEventListener l: newErrorEventObservers){
             //The listener will only be called if the event error level is higher or equal to the desired level
-            if(this.newErrorEventObserversErrorLevel.get(l) >= errorLevel){
+            if(this.newErrorEventObserversErrorLevel.get(l) <= errorLevel){
                 l.newErrorEvent(e);
             }
         }

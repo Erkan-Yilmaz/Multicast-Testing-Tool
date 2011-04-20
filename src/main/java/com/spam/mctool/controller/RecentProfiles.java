@@ -31,11 +31,7 @@ public class RecentProfiles {
             throw new IllegalArgumentException();
         }
         //Search for existing entries with equal path and delete them
-        for(Profile p:profileList){
-            if(profile.equalPath(p)){
-                this.profileList.remove(p);
-            }
-        }
+        profileList.remove(profile);
         //Add the new profile to the top
         this.profileList.add(0, profile);
         //Test if there are more then 10 elements in the list
