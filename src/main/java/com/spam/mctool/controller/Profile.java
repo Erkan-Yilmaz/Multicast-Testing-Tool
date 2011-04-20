@@ -73,7 +73,7 @@ public class Profile {
 	 * This function compares the path of two files and returns whether they are equal
 	 * or not
 	 */
-	public boolean equalPath(Profile testObject) {
+	public boolean equals(Profile testObject) {
 		//Test for correct input
 		if(testObject == null){
 			throw new IllegalArgumentException();

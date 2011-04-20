@@ -433,7 +433,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         java.util.Collection<Sender> senders = getSenders();
         Iterator<Sender> itS = senders.iterator();
         //iterate over the collection
-        /*
+        
         while(itS.hasNext()){
             Sender curSender = itS.next();
             //Create sender element
@@ -453,10 +453,19 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
                 senderElement.appendChild(keyElement);
                 //Add its value as text
                 Text valueText = xmlDocument.createTextNode(value);
-                keyElement.appendChild(keyElement);
+                keyElement.appendChild(valueText);
             }
+            //save the active state
+            Element keyElement = xmlDocument.createElement("active");
+            senderElement.appendChild(keyElement);
+            String state = "false";
+            if(curSender.isActive()){
+            	state = "true";
+            }
+            Text valueText = xmlDocument.createTextNode(state);
+            keyElement.appendChild(valueText);
         }
-        */
+        
         //Receivers section
         Element receiversElement = xmlDocument.createElement("receivers");
         rootElement.appendChild(receiversElement);
@@ -465,13 +474,13 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         java.util.Collection<ReceiverGroup> receivers = getReceiverGroups();
         Iterator<ReceiverGroup> itR = receivers.iterator();
         //iterate over the collection
-        /*while(itR.hasNext()){
+        while(itR.hasNext()){
             ReceiverGroup curReceiver = itR.next();
             //Create receiver element
             Element receiverElement = xmlDocument.createElement("receiver");
             receiversElement.appendChild(receiverElement);
             //Fetch the receiver configuration MAP
-            ;Map<String, String> map = curReceiver.getConfiguration();
+            Map<String, String> map = curReceiver.getConfiguration();
             //Fetch all keys
             Set<String> set = map.keySet();
             Iterator<String> it = set.iterator();
@@ -484,9 +493,18 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
                 receiverElement.appendChild(keyElement);
                 //Add its value as text
                 Text valueText = xmlDocument.createTextNode(value);
-                keyElement.appendChild(keyElement);
+                keyElement.appendChild(valueText);
             }
-        }*/
+            //save the active state
+            Element keyElement = xmlDocument.createElement("active");
+            receiverElement.appendChild(keyElement);
+            String state = "false";
+            if(curReceiver.isActive()){
+            	state = "true";
+            }
+            Text valueText = xmlDocument.createTextNode(state);
+            keyElement.appendChild(valueText);
+        }
 
         //get the desired profile path
         File profilePath = p.getPath();
@@ -638,7 +656,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
                     addReceiverGroup(map);
                 }
                 catch(Exception e){
-                    this.reportErrorEvent(new ErrorEvent(3,"Controller.failedAdddingReceiverGroup", e.getLocalizedMessage()));
+                    this.reportErrorEvent(new ErrorEvent(3,"Controller.failedAdddingReceiverGroup.text", e.getLocalizedMessage()));
                 }
             }
         }
@@ -712,8 +730,10 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
             this.reportErrorEvent(new ErrorEvent(3,"Controller.profileSavingError.text",p.getPath() + ": " + e.getLocalizedMessage()));
             return;
         }
+        //refresh the profile name and path
+        this.setCurrentProfile(p);
         //if successfully saved, add or update it to the list of recent profiles
-        recentProfiles.addOrUpdateProfileInList(this.currentProfile);
+        recentProfiles.addOrUpdateProfileInList(p);
         
         //save the recent profile list
         try {
