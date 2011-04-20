@@ -255,12 +255,14 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
             //Try to load desired Profile
             if(desiredProfiles != null && desiredProfiles.size() > 0){
             	int loadCount = 0;
+            	Profile loadedProfile = null;
             	for(Profile p: desiredProfiles){
                 	try{
                 		this.loadProfileWithoutCleanup(p,"default");
                 		loadCount++;
                 		//add the profile to the recent profiles list
                 		recentProfiles.addOrUpdateProfileInList(p);
+                		loadedProfile = p;
                 	}
                 	catch(org.w3c.dom.ls.LSException e){
                     	this.reportErrorEvent(new ErrorEvent(3,"Controller.profileLoadingError.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
@@ -281,6 +283,10 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
             	//Set the new profile name for multiple profiles
             	if(loadCount > 1){
             		this.setCurrentProfile(new Profile("Multiple profiles loaded.",new File("")));
+            	}
+            	//Only one profile loaded? make it the active one
+            	else if(loadedProfile!=null){
+            		this.setCurrentProfile(loadedProfile);
             	}
             }
 
