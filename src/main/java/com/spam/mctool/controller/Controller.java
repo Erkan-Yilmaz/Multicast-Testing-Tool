@@ -868,7 +868,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         //iterate over all listener
         for(ErrorEventListener l: newErrorEventObservers){
             //The listener will only be called if the event error level is higher or equal to the desired level
-            if(this.newErrorEventObserversErrorLevel.get(l) >= errorLevel){
+            if(this.newErrorEventObserversErrorLevel.get(l) <= errorLevel){
                 l.newErrorEvent(e);
             }
         }
