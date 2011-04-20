@@ -74,6 +74,7 @@ public class SenderPool implements SenderManager {
 
 	public void remove(Sender sender) {
 		sender.deactivate();
+		senders.remove(sender);
 		this.fireSenderRemovedEvent(sender);
 	}
 
