@@ -507,6 +507,11 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         menuFile.add(miOpenProfile);
 
         miSaveProfile.setText(bundle.getString("MainFrame.miSaveProfile.text")); // NOI18N
+        miSaveProfile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miSaveProfileActionPerformed(evt);
+            }
+        });
         menuFile.add(miSaveProfile);
 
         miSaveProfileAs.setText(bundle.getString("MainFrame.miSaveProfileAs.text")); // NOI18N
@@ -788,16 +793,28 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     }//GEN-LAST:event_jScrollPane1MouseClicked
 
     private void miOpenProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miOpenProfileActionPerformed
-        new JFileChooser().showOpenDialog(this);
+        JFileChooser chooser = new JFileChooser();
+        int returnVal = chooser.showOpenDialog(this);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            view.loadProfile(chooser.getSelectedFile());
+        }
     }//GEN-LAST:event_miOpenProfileActionPerformed
 
     private void miSaveProfileAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSaveProfileAsActionPerformed
-        new SaveProfileDialog(this, true).setVisible(true);
+        SaveProfileDialog dlg = new SaveProfileDialog(this, true);
+        dlg.setVisible(true);
+        if(dlg.getSelection().equals(JFileChooser.APPROVE_SELECTION)) {
+            view.saveProfile(dlg.getProfileName(), dlg.getSelectedFile());
+        }
     }//GEN-LAST:event_miSaveProfileAsActionPerformed
 
     private void miSenderActivateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSenderActivateActionPerformed
         this.buActivateSenderActionPerformed(evt);
     }//GEN-LAST:event_miSenderActivateActionPerformed
+
+    private void miSaveProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSaveProfileActionPerformed
+        view.saveCurrentProfile();
+    }//GEN-LAST:event_miSaveProfileActionPerformed
 
     /**
     * @param args the command line arguments
