@@ -12,3 +12,7 @@ syntax: regexp
 \.conflict\~$
 private.properties
 private.xml
+^bin(/.*)?$
+^\.classpath$
+^\.project$
+^\.settings(/.*)?$

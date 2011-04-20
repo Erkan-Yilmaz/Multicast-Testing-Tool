@@ -8,8 +8,12 @@ public interface ReceiverManager {
 
 	//TODO change parameter type to map in uml, change return type to receiver
 	/**
-	 * Create a new receiver.
+	 * Create a new receiver. Possible values:
 	 * @param params See moddoc for possible values
+	 * group: ip address of multicast group to join
+	 * port: port of multicast group
+	 * ninf: ip address of network interface to receive packets
+	 * abeh: analyzing granularity, may be EAGER, DEFAULT, LAZY, defaults to DEFAULT
 	 * @return the created receiver
 	 */
 	public com.spam.mctool.model.ReceiverGroup create(java.util.Map<String, String> params);
