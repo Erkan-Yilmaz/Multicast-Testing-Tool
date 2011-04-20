@@ -3,8 +3,11 @@
  */
 package com.spam.mctool.view;
 
+import com.spam.mctool.controller.ErrorEvent;
+import com.spam.mctool.controller.ErrorEventListener;
 import com.spam.mctool.view.main.MainFrame;
 import com.spam.mctool.controller.Controller;
+import com.spam.mctool.controller.ErrorEventManager;
 import com.spam.mctool.controller.Profile;
 import com.spam.mctool.controller.ProfileChangeListener;
 import com.spam.mctool.controller.ProfileManager;
@@ -25,6 +28,7 @@ import java.io.File;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import javax.swing.UIManager;
@@ -45,7 +49,8 @@ import javax.swing.UIManager;
 public class GraphicalView implements MctoolView,
 		SenderDataChangeListener, ReceiverDataChangeListener,
 		ProfileChangeListener, SenderAddedOrRemovedListener,
-		ReceiverAddedOrRemovedListener {
+		ReceiverAddedOrRemovedListener,
+                ErrorEventListener {
 
 	/**
          * Reference to the main frame of the application
@@ -61,6 +66,7 @@ public class GraphicalView implements MctoolView,
          * Reference ot the controller, seen as manager of streaming profiles
          */
         private ProfileManager profileManager;
+        private ErrorEventManager errorEventManager;
 
 	public void receiverGroupAdded(final ReceiverAddedOrRemovedEvent e) {
             Runnable groupAddedRunnable = new Runnable() {
@@ -127,6 +133,7 @@ public class GraphicalView implements MctoolView,
 
             streamManager = c;
             profileManager = c;
+            errorEventManager = c;
 
             // Set System L&F. Will only work, if the application did not
             // yet reference any other swing component!
@@ -164,6 +171,7 @@ public class GraphicalView implements MctoolView,
         streamManager.addSenderAddedOrRemovedListener(this);
         streamManager.addReceiverAddedOrRemovedListener(this);
         profileManager.addProfileChangeListener(this);
+        errorEventManager.addErrorEventListener(this, ErrorEventManager.DEBUG);
     }
 
     public void addSender(Map<String, String> senderMap, boolean activate) {
@@ -202,6 +210,11 @@ public class GraphicalView implements MctoolView,
 
     public void saveCurrentProfile() {
         profileManager.saveCurrentProfile();
+    }
+
+    public void newErrorEvent(ErrorEvent e) {
+        System.out.println("Error");
+        JOptionPane.showMessageDialog(mainFrame, e.getCompleteMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
 
 }
