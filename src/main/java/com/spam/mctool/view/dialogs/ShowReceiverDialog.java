@@ -317,7 +317,7 @@ public class ShowReceiverDialog extends javax.swing.JDialog {
         this.dataData.setText(this.receiver.getPayloadAsString());
         this.confPPSData.setText(String.valueOf(this.receiver.getSenderConfiguredPPS()));
         this.senderPPSData.setText(String.valueOf(this.receiver.getSenderMeasuredPPS()));
-        this.receiverPPSData.setText(String.valueOf(this.receiver.getSenderMeasuredPPS()));
+        this.receiverPPSData.setText(String.valueOf(this.receiver.getAvgPPS()));
         this.lostPacketsData.setText(String.valueOf(this.receiver.getLostPackets()));
         this.maxDelayData.setText(String.valueOf(this.receiver.getMaxDelay()));
         this.avgTraversalData.setText(String.valueOf(this.receiver.getAvgTraversal()));
