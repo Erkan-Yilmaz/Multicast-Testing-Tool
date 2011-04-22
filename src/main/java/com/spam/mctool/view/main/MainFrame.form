@@ -3,16 +3,26 @@
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
     <Component class="com.spam.mctool.view.main.sendertable.SenderStateRenderer" name="statusRenderer1">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="statusRenderer1" noResource="true"/>
+      </Properties>
     </Component>
     <Component class="com.spam.mctool.view.main.TwoColorRenderer" name="twoColorRenderer1">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="twoColorRenderer1" noResource="true"/>
+      </Properties>
     </Component>
     <Menu class="javax.swing.JMenuBar" name="menuBar">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="menuBar" noResource="true"/>
+      </Properties>
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="menuFile">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.menuFile.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
+            <Property name="name" type="java.lang.String" value="menuFile" noResource="true"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="miOpenProfile">
@@ -20,6 +30,7 @@
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.miOpenProfile.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
+                <Property name="name" type="java.lang.String" value="miOpenProfile" noResource="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miOpenProfileActionPerformed"/>
@@ -30,6 +41,7 @@
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.miSaveProfile.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
+                <Property name="name" type="java.lang.String" value="miSaveProfile" noResource="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miSaveProfileActionPerformed"/>
@@ -40,30 +52,39 @@
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.miSaveProfileAs.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
+                <Property name="name" type="java.lang.String" value="miSaveProfileAs" noResource="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miSaveProfileAsActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
+              <Properties>
+                <Property name="name" type="java.lang.String" value="jSeparator1" noResource="true"/>
+              </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="miPreferences">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.miPreferences.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
+                <Property name="name" type="java.lang.String" value="miPreferences" noResource="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miPreferencesActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator2">
+              <Properties>
+                <Property name="name" type="java.lang.String" value="jSeparator2" noResource="true"/>
+              </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="miExit">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.miExit.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
+                <Property name="name" type="java.lang.String" value="miExit" noResource="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miExitActionPerformed"/>
@@ -76,6 +97,7 @@
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.menuHelp.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
+            <Property name="name" type="java.lang.String" value="menuHelp" noResource="true"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="miAbout">
@@ -83,6 +105,7 @@
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.miAbout.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
+                <Property name="name" type="java.lang.String" value="miAbout" noResource="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miAboutActionPerformed"/>
@@ -93,6 +116,7 @@
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.miHelp.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
+                <Property name="name" type="java.lang.String" value="miHelp" noResource="true"/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -105,6 +129,7 @@
     <Property name="title" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
       <Connection code="java.util.ResourceBundle.getBundle(&quot;internationalization/Bundle&quot;).getString(&quot;MainFrame.title&quot;) + (view.getCurrentProfile().getName() != null ? &quot; - &quot; + view.getCurrentProfile().getName() : &quot;&quot;)" type="code"/>
     </Property>
+    <Property name="name" type="java.lang.String" value="Form" noResource="true"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="menuBar"/>
@@ -112,7 +137,7 @@
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="1"/>
-    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="true"/>
     <AuxValue name="FormSettings_formBundle" type="java.lang.String" value="internationalization/Bundle"/>
     <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
     <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
@@ -155,6 +180,7 @@
         <Property name="orientation" type="int" value="0"/>
         <Property name="resizeWeight" type="double" value="0.5"/>
         <Property name="continuousLayout" type="boolean" value="true"/>
+        <Property name="name" type="java.lang.String" value="mainSplitPane" noResource="true"/>
         <Property name="oneTouchExpandable" type="boolean" value="true"/>
       </Properties>
 
@@ -168,6 +194,7 @@
             <Property name="dividerLocation" type="int" value="590"/>
             <Property name="resizeWeight" type="double" value="1.0"/>
             <Property name="continuousLayout" type="boolean" value="true"/>
+            <Property name="name" type="java.lang.String" value="senderSplitPane" noResource="true"/>
             <Property name="oneTouchExpandable" type="boolean" value="true"/>
           </Properties>
           <Constraints>
@@ -179,6 +206,9 @@
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
           <SubComponents>
             <Container class="javax.swing.JPanel" name="paSendingStatistics">
+              <Properties>
+                <Property name="name" type="java.lang.String" value="paSendingStatistics" noResource="true"/>
+              </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
                   <JSplitPaneConstraints position="right"/>
@@ -236,6 +266,7 @@
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.laSendingStatistics.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
+                    <Property name="name" type="java.lang.String" value="laSendingStatistics" noResource="true"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="laSentCaption">
@@ -243,6 +274,7 @@
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.laSentCaption.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
+                    <Property name="name" type="java.lang.String" value="laSentCaption" noResource="true"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="laSenderRateCaption">
@@ -250,15 +282,20 @@
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.laSenderRateCaption.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
+                    <Property name="name" type="java.lang.String" value="laSenderRateCaption" noResource="true"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JSeparator" name="sendingStatisticsSeparator">
+                  <Properties>
+                    <Property name="name" type="java.lang.String" value="sendingStatisticsSeparator" noResource="true"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="laSent">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.laSent.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
+                    <Property name="name" type="java.lang.String" value="laSent" noResource="true"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="laSenderRate">
@@ -266,11 +303,15 @@
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.laSenderRate.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
+                    <Property name="name" type="java.lang.String" value="laSenderRate" noResource="true"/>
                   </Properties>
                 </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="paSenderTableOuter">
+              <Properties>
+                <Property name="name" type="java.lang.String" value="paSenderTableOuter" noResource="true"/>
+              </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
                   <JSplitPaneConstraints position="left"/>
@@ -280,6 +321,9 @@
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
               <SubComponents>
                 <Container class="javax.swing.JPanel" name="paSenderButtons">
+                  <Properties>
+                    <Property name="name" type="java.lang.String" value="paSenderButtons" noResource="true"/>
+                  </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="South"/>
@@ -299,6 +343,7 @@
                           <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.buActivateSender.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
                         <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="name" type="java.lang.String" value="buActivateSender" noResource="true"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buActivateSenderActionPerformed"/>
@@ -313,6 +358,7 @@
                           <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.buDeactivateSender.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
                         <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="name" type="java.lang.String" value="buDeactivateSender" noResource="true"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buDeactivateSenderActionPerformed"/>
@@ -326,6 +372,7 @@
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                           <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.buAddSender.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
+                        <Property name="name" type="java.lang.String" value="buAddSender" noResource="true"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buAddSenderActionPerformed"/>
@@ -340,6 +387,7 @@
                           <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.buShowSender.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
                         <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="name" type="java.lang.String" value="buShowSender" noResource="true"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buShowSenderActionPerformed"/>
@@ -354,6 +402,7 @@
                           <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.buEditSender.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
                         <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="name" type="java.lang.String" value="buEditSender" noResource="true"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buEditSenderActionPerformed"/>
@@ -368,6 +417,7 @@
                           <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.buDeleteSender.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
                         <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="name" type="java.lang.String" value="buDeleteSender" noResource="true"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buDeleteSenderActionPerformed"/>
@@ -376,6 +426,9 @@
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="paSenderTableInner">
+                  <Properties>
+                    <Property name="name" type="java.lang.String" value="paSenderTableInner" noResource="true"/>
+                  </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="Center"/>
@@ -385,6 +438,9 @@
                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
                   <SubComponents>
                     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+                      <Properties>
+                        <Property name="name" type="java.lang.String" value="jScrollPane2" noResource="true"/>
+                      </Properties>
                       <Events>
                         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jScrollPane2MouseClicked"/>
                       </Events>
@@ -400,6 +456,9 @@
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
                         <Component class="com.spam.mctool.view.main.sendertable.JSenderTable" name="senderTable">
+                          <Properties>
+                            <Property name="name" type="java.lang.String" value="senderTable" noResource="true"/>
+                          </Properties>
                           <Events>
                             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="senderTableMouseClicked"/>
                           </Events>
@@ -412,6 +471,9 @@
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="paSenderTableCaption">
+                  <Properties>
+                    <Property name="name" type="java.lang.String" value="paSenderTableCaption" noResource="true"/>
+                  </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="North"/>
@@ -427,6 +489,7 @@
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                           <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.laSenderTableCaption.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
+                        <Property name="name" type="java.lang.String" value="laSenderTableCaption" noResource="true"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="senderTableIcon">
@@ -434,6 +497,7 @@
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                           <Image iconType="3" name="/images/sender.png"/>
                         </Property>
+                        <Property name="name" type="java.lang.String" value="senderTableIcon" noResource="true"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -450,6 +514,7 @@
             <Property name="dividerLocation" type="int" value="590"/>
             <Property name="resizeWeight" type="double" value="1.0"/>
             <Property name="continuousLayout" type="boolean" value="true"/>
+            <Property name="name" type="java.lang.String" value="receiverSplitPane" noResource="true"/>
             <Property name="oneTouchExpandable" type="boolean" value="true"/>
           </Properties>
           <Constraints>
@@ -461,6 +526,9 @@
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
           <SubComponents>
             <Container class="javax.swing.JPanel" name="paReceivingStatistics">
+              <Properties>
+                <Property name="name" type="java.lang.String" value="paReceivingStatistics" noResource="true"/>
+              </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
                   <JSplitPaneConstraints position="right"/>
@@ -538,6 +606,7 @@
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.laReceivingStatisticsCaption.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
+                    <Property name="name" type="java.lang.String" value="laReceivingStatisticsCaption" noResource="true"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="laReceivedCaption">
@@ -545,6 +614,7 @@
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.laReceivedCaption.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
+                    <Property name="name" type="java.lang.String" value="laReceivedCaption" noResource="true"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="laReceivingRateCaption">
@@ -552,6 +622,7 @@
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.laReceivingRateCaption.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
+                    <Property name="name" type="java.lang.String" value="laReceivingRateCaption" noResource="true"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="laLostPacketsCaption">
@@ -559,6 +630,7 @@
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.laLostPacketsCaption.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
+                    <Property name="name" type="java.lang.String" value="laLostPacketsCaption" noResource="true"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="laFaultyPacketsCaption">
@@ -566,15 +638,20 @@
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.laFaultyPacketsCaption.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
+                    <Property name="name" type="java.lang.String" value="laFaultyPacketsCaption" noResource="true"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JSeparator" name="receivingStatisticsSeparator">
+                  <Properties>
+                    <Property name="name" type="java.lang.String" value="receivingStatisticsSeparator" noResource="true"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="laReceived">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.laReceived.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
+                    <Property name="name" type="java.lang.String" value="laReceived" noResource="true"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="laReceivingRate">
@@ -582,6 +659,7 @@
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.laReceivingRate.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
+                    <Property name="name" type="java.lang.String" value="laReceivingRate" noResource="true"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="laLostPackets">
@@ -589,6 +667,7 @@
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.laLostPackets.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
+                    <Property name="name" type="java.lang.String" value="laLostPackets" noResource="true"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="laFaultyPackets">
@@ -596,11 +675,15 @@
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.laFaultyPackets.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
+                    <Property name="name" type="java.lang.String" value="laFaultyPackets" noResource="true"/>
                   </Properties>
                 </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="paReceiverTableOuter">
+              <Properties>
+                <Property name="name" type="java.lang.String" value="paReceiverTableOuter" noResource="true"/>
+              </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
                   <JSplitPaneConstraints position="left"/>
@@ -610,6 +693,9 @@
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
               <SubComponents>
                 <Container class="javax.swing.JPanel" name="paReceiverButtons">
+                  <Properties>
+                    <Property name="name" type="java.lang.String" value="paReceiverButtons" noResource="true"/>
+                  </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="Last"/>
@@ -629,6 +715,7 @@
                           <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.buActivateReceiver.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
                         <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="name" type="java.lang.String" value="buActivateReceiver" noResource="true"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buActivateReceiverActionPerformed"/>
@@ -643,6 +730,7 @@
                           <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.buDeactivateReceiver.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
                         <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="name" type="java.lang.String" value="buDeactivateReceiver" noResource="true"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buDeactivateReceiverActionPerformed"/>
@@ -656,6 +744,7 @@
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                           <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.buAddReceiver.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
+                        <Property name="name" type="java.lang.String" value="buAddReceiver" noResource="true"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buAddReceiverActionPerformed"/>
@@ -670,6 +759,7 @@
                           <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.buShowReceiver.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
                         <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="name" type="java.lang.String" value="buShowReceiver" noResource="true"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buShowReceiverActionPerformed"/>
@@ -684,6 +774,7 @@
                           <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.buEditReceiver.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
                         <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="name" type="java.lang.String" value="buEditReceiver" noResource="true"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buEditReceiverActionPerformed"/>
@@ -698,6 +789,7 @@
                           <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.buDeleteReceiver.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
                         <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="name" type="java.lang.String" value="buDeleteReceiver" noResource="true"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buDeleteReceiverActionPerformed"/>
@@ -706,6 +798,9 @@
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="paReceiverTableInner">
+                  <Properties>
+                    <Property name="name" type="java.lang.String" value="paReceiverTableInner" noResource="true"/>
+                  </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="Center"/>
@@ -715,6 +810,9 @@
                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
                   <SubComponents>
                     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+                      <Properties>
+                        <Property name="name" type="java.lang.String" value="jScrollPane1" noResource="true"/>
+                      </Properties>
                       <Events>
                         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jScrollPane1MouseClicked"/>
                       </Events>
@@ -737,6 +835,7 @@
                             <Property name="intercellSpacing" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[0, 1]"/>
                             </Property>
+                            <Property name="name" type="java.lang.String" value="receiverTable" noResource="true"/>
                           </Properties>
                           <AuxValues>
                             <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="receiverTable.getSelectionModel().addListSelectionListener(this);"/>
@@ -747,6 +846,9 @@
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="paReceiverTableCaption">
+                  <Properties>
+                    <Property name="name" type="java.lang.String" value="paReceiverTableCaption" noResource="true"/>
+                  </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                       <BorderConstraints direction="North"/>
@@ -762,6 +864,7 @@
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                           <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.laReceiverTableCaption.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
+                        <Property name="name" type="java.lang.String" value="laReceiverTableCaption" noResource="true"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="laReceiverTableIcon">
@@ -769,6 +872,7 @@
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                           <Image iconType="3" name="/images/receiver.png"/>
                         </Property>
+                        <Property name="name" type="java.lang.String" value="laReceiverTableIcon" noResource="true"/>
                       </Properties>
                     </Component>
                   </SubComponents>

@@ -63,16 +63,21 @@ public class SaveProfileDialog extends javax.swing.JDialog {
         laProfileName = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setName("Form"); // NOI18N
 
         jFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+        jFileChooser.setName("jFileChooser"); // NOI18N
         jFileChooser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFileChooserActionPerformed(evt);
             }
         });
 
+        txtProfileName.setName("txtProfileName"); // NOI18N
+
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
         laProfileName.setText(bundle.getString("SaveProfileDialog.laProfileName.text_1")); // NOI18N
+        laProfileName.setName("laProfileName"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

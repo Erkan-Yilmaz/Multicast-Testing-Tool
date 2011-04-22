@@ -88,4 +88,12 @@ public class SenderStateRenderer extends javax.swing.JPanel implements TableCell
     private ImageIcon deactivated = new ImageIcon(getClass().getResource("/images/stop_red.png"));
     private ImageIcon error       = new ImageIcon(getClass().getResource("/images/error.png"));
     private ImageIcon negative    = new ImageIcon(getClass().getResource("/images/negative.png"));
+
+    @Override
+    public String toString() {
+        String s = laActiveIcon.getIcon() == activated ? "> " : "II ";
+        s = s + (laErrorIcon.getIcon() == error ? "X " : "");
+        s = s + (laErrorIcon.getIcon() == negative ? ":( " : "");
+        return s;
+    }
 }
