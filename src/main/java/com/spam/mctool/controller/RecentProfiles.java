@@ -7,23 +7,39 @@ import java.util.List;
 import com.thoughtworks.xstream.XStream;
 
 public class RecentProfiles {
+    /**
+     * The list storing recent profiles.
+     */
     private List<Profile> profileList;
 
+    /**
+     * The default constructor. Will initialize an empty list for the recent profiles.
+     */
     public RecentProfiles(){
         this.profileList = new ArrayList<Profile>();
     }
 
+    /**
+     * Get the recent profiles list.
+     * @return The profile list.
+     */
     public List<Profile> getProfileList() {
         return profileList;
     }
 
+    /**
+     * Set the profile list. This function should not be used.
+     * @param profileList The profile list to be set.
+     */
     public void setProfileList(List<Profile> profileList) {
         this.profileList = profileList;
     }
 
     /* This function either inserts the profile directly to the top
      * of the list or searches for an existing entry(path!), deletes that entry
-     * and inserts the new profile at te top. Max 10 profiles are stored.
+     * and inserts the new profile at the top. This will deny the storage of equal profiles
+     * in the list. Max 10 profiles are stored.
+     * @param profile The profile to be updated/added to the list.
      */
     public void addOrUpdateProfileInList(Profile profile){
         //test for null value
@@ -43,6 +59,10 @@ public class RecentProfiles {
         }
     }
 
+    /**
+     * This method will convert the recent profiles list to xml data using xstream.
+     * @return XML data of the recent profiles list as string.
+     */
     public String toXML(){
         //create the xstream object
         XStream xstream = new XStream();
@@ -50,6 +70,10 @@ public class RecentProfiles {
         return xstream.toXML(profileList);
     }
 
+    /**
+     * This method will set the recent profiles list from xml data extracted previously using toXML() using xstream.
+     * @param xml The xml data to be used to deserialize the list.
+     */
     public void fromXML(String xml){
         if(xml==null){
             throw new IllegalArgumentException();
@@ -59,6 +83,11 @@ public class RecentProfiles {
         this.profileList = (ArrayList<Profile>)xstream.fromXML(xml);
     }
 
+    /**
+     * This function will scan through the recent profile list, searching for a recently used profile with the given name.
+     * @param name The name to be searched for in the list.
+     * @return null if no profile has been found. Otherwise the first profile matching the given name.
+     */
     public Profile findProfileByName(String name){
         //if the string is null, we will find no profile...
         if(name == null){

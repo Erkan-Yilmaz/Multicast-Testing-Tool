@@ -69,19 +69,50 @@ import com.thoughtworks.xstream.XStream;
  */
 public class Controller implements ProfileManager, StreamManager, ErrorEventManager {
 
+    /**
+     *
+     */
     private static Controller controller;
+    /**
+     *
+     */
     private Profile currentProfile;
+    /**
+     *
+     */
     private RecentProfiles recentProfiles;
+    /**
+     *
+     */
     private List<ProfileChangeListener> profileChangeObservers;
+    /**
+     *
+     */
     private List<ErrorEventListener> newErrorEventObservers;
+    /**
+     *
+     */
     private Map<ErrorEventListener,Integer> newErrorEventObserversErrorLevel;
+    /**
+     *
+     */
     private SenderManager senderPool;
+    /**
+     *
+     */
     private ReceiverManager receiverPool;
+    /**
+     *
+     */
     private List<MctoolView> viewers;
 
 
+    /**
+     * The default constructor for the Controller.
+     * Initiates all members.
+     */
     private Controller(){
-        this.currentProfile = new Profile();
+        this.currentProfile = null;
         this.recentProfiles = new RecentProfiles();
         this.profileChangeObservers = new ArrayList<ProfileChangeListener>();
         this.newErrorEventObservers = new ArrayList<ErrorEventListener>();
@@ -93,8 +124,197 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         viewers = new ArrayList<MctoolView>();
     }
 
-    /*
-     * This function tries to save the profile list to the file named "RecentProfiles.xml"
+    /**
+     * This is the entry point for the mctool.
+     * It creates a new controller, initiates it and passes the program control to the controller.
+     * @param args The parameters passed to the application
+     */
+    public static void main(String[] args) {
+        controller = new Controller();
+        controller.init(args);
+
+    }
+
+    /**
+     * This method initiates the controller.
+     * Parses the parameter, initiates the views and loads + starts profiles if defined in the argument list.
+     * @param args The arguments passed to the application.
+     */
+    public void init(String[] args) {
+        //try to load recent profiles
+        try {
+            this.loadRecentProfiles();
+        } catch (FileNotFoundException e) {
+            this.reportErrorEvent(new ErrorEvent(1,"Controller.failedLoadingRecentProfiles.text",""));
+        } catch (IOException e) {
+            this.reportErrorEvent(new ErrorEvent(1,"Controller.failedLoadingRecentProfiles2.text",""));
+        }
+        //Gui enabled by default
+        boolean enableGui = true;
+        //Cli disabled by default
+        boolean enableCli = false;
+        //The desired start mode for senders and receivers
+        String startMode = "default";
+        //The profiles to be loaded
+        List<Profile> desiredProfiles = new ArrayList<Profile>();
+        //iterate over all args
+        for(int i = 0; i<args.length; ++i){
+            //CLI desired?
+            if(args[i].compareToIgnoreCase("-cli") == 0){
+                enableCli = true;
+            }
+            //Disable the gui?
+            else if(args[i].compareToIgnoreCase("-nogui") == 0){
+                enableGui = false;
+            }
+            //load profiles by name?
+            else if(args[i].compareToIgnoreCase("-profile") == 0){
+            	//iterate to the potential profile name
+            	++i;
+                //read the next argument if available
+                if(i >= args.length || args[i].startsWith("-")){
+                    //report the error
+                	this.reportErrorEvent(new ErrorEvent(5,"Controller.missingArgumentProfileName.text",""));
+                    //exit the program
+                	return;
+                }
+                //read profile names until one name starts with "-" or there is nothing left
+                do{
+                	//try to find a profile by name
+                	Profile profile = recentProfiles.findProfileByName(args[i]);
+                	if(profile != null){
+                		//profile found -> add it to the desired profile list
+                		desiredProfiles.add(profile);
+                	}
+                	else{
+                		//report the error
+                    	this.reportErrorEvent(new ErrorEvent(2,"Controller.nameNotFoundInRecentProfiles.text", args[i]));
+                	}
+                	//iterate to next potential profile name
+                	++i;
+                }while((i < args.length) && !args[i].startsWith("-"));
+                --i;
+            }
+            //load profiles by path?
+            else if(args[i].compareToIgnoreCase("-path") == 0){
+            	//iterate to the potential profile path
+            	++i;
+                //read the next argument if available
+                if(i >= args.length || args[i].startsWith("-")){
+                    //report the error
+                	this.reportErrorEvent(new ErrorEvent(5,"Controller.missingArgumentProfilePath.text", ""));
+                    //exit the program
+                	return;
+                }
+                //read profile names until one name starts with "-" or there is nothing left
+                do{
+                	//try to find a profile by name
+                	Profile profile = new Profile("Not loaded.",new File(args[i]));
+            		//add it to the desired profile list
+            		desiredProfiles.add(profile);
+                	//iterate to next potential profile name
+                	++i;
+                }while((i < args.length) && !args[i].startsWith("-"));
+                --i;
+            }
+            //start all receivers and sender
+            else if(args[i].compareToIgnoreCase("-startall") == 0){
+            	//startmode has already been set
+            	if(startMode.compareTo("default") != 0){
+                    //report the error
+                	this.reportErrorEvent(new ErrorEvent(5, "Controller.falseStartmode.text", args[i]));
+                    //exit the program
+                	return;
+            	}
+            	startMode = "all";
+            }
+            //start none of the receivers and sender
+            else if(args[i].compareToIgnoreCase("-startnone") == 0){
+            	//startmode has already been set
+            	if(startMode.compareTo("default") != 0){
+                    //report the error
+                	this.reportErrorEvent(new ErrorEvent(5, "Controller.falseStartmode.text", args[i]));
+                    //exit the program
+                	return;
+            	}
+            	startMode = "none";
+            }
+            //restore the state of receivers and sender
+            else if(args[i].compareToIgnoreCase("-restore") == 0){
+            	//startmode has already been set
+            	if(startMode.compareTo("default") != 0){
+                    //report the error
+                	this.reportErrorEvent(new ErrorEvent(5, "Controller.falseStartmode.text", args[i]));
+                    //exit the program
+                	return;
+            	}
+            	startMode = "restore";
+            }
+            else{
+                //report the error
+            	this.reportErrorEvent(new ErrorEvent(5, "Controller.unknownArgument.text", args[i]));
+                //exit the program
+            	return;
+            }
+
+        }
+
+        //enable the Gui
+        if(enableGui){
+            viewers.add(new GraphicalView());
+        }
+        //enable the cli/logger
+        if(enableCli){
+            //viewers.add(new CommandLineView());
+        }
+        //Init all views
+        Iterator<MctoolView> it = viewers.iterator();
+        for(MctoolView v:viewers){
+        	v.init(this);
+        }
+
+        //Try to load desired Profile
+        if(desiredProfiles != null && desiredProfiles.size() > 0){
+        	int loadCount = 0;
+        	Profile loadedProfile = null;
+        	for(Profile p: desiredProfiles){
+            	try{
+            		this.loadProfileWithoutCleanup(p,startMode);
+            		loadCount++;
+            		//add the profile to the recent profiles list
+            		recentProfiles.addOrUpdateProfileInList(p);
+            		loadedProfile = p;
+            	}
+            	catch(org.w3c.dom.ls.LSException e){
+                	this.reportErrorEvent(new ErrorEvent(3,"Controller.profileLoadingError.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
+            	}
+            	catch(IOException e){
+                	this.reportErrorEvent(new ErrorEvent(3,"Controller.profileLoadingError2.text", p.getPath().toString()));
+            	}
+            	catch(Exception e){
+                	this.reportErrorEvent(new ErrorEvent(4,"Controller.profileLoadingError3.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
+            	}
+            }
+        	//save the recent profiles list
+        	try {
+				saveRecentProfiles();
+			} catch (IOException e) {
+				this.reportErrorEvent(new ErrorEvent(3,"Controller.failedSavingRecentProfiles.text",e.getLocalizedMessage()));
+			}
+        	//No current profile for multiple profiles
+        	if(loadCount > 1){
+        		this.setCurrentProfile(null);
+        	}
+        	//Only one profile loaded? make it the active one
+        	else if(loadedProfile!=null){
+        		this.setCurrentProfile(loadedProfile);
+        	}
+        }
+    }
+
+    /**
+     * This method tries to save the profile list to the file named "RecentProfiles.xml"
+     * @throws IOException If the recent profile list could not be saved.
      */
     private void saveRecentProfiles() throws IOException{
         //create a new file
@@ -121,7 +341,8 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
     }
 
     /*
-     * This function tries to load the profile list from the file named "RecentProfiles.xml"
+     * This method tries to load the profile list from the file named "RecentProfiles.xml"
+     * @throws IOException if the file could not be found/red/parsed.
      */
     private void loadRecentProfiles() throws IOException{
         //create a new file
@@ -136,6 +357,10 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         recentProfiles.fromXML(xml);
     }
 
+    /**
+     * This method informs all profileChanged observers about a changed profile.
+     * The new profile can be retrieved by calling the getCurrentProfile method
+     */
     private void profileChanged(){
         //Get the iterator for the observer list
         ListIterator<ProfileChangeListener> it = profileChangeObservers.listIterator();
@@ -144,219 +369,8 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         }
     }
 
-    public Profile getCurrentProfile() {
-        return currentProfile;
-    }
-
-    public void init(String[] args) {
-            //try to load recent profiles
-            try {
-                this.loadRecentProfiles();
-            } catch (FileNotFoundException e) {
-                this.reportErrorEvent(new ErrorEvent(1,"Controller.failedLoadingRecentProfiles.text",""));
-            } catch (IOException e) {
-                this.reportErrorEvent(new ErrorEvent(1,"Controller.failedLoadingRecentProfiles2.text",""));
-            }
-            //Gui enabled by default
-            boolean enableGui = true;
-            //Cli disabled by default
-            boolean enableCli = false;
-            //The desired start mode for senders and receivers
-            String startMode = "default";
-            //The profiles to be loaded
-            List<Profile> desiredProfiles = new ArrayList<Profile>();
-            //iterate over all args
-            for(int i = 0; i<args.length; ++i){
-                //CLI desired?
-                if(args[i].compareToIgnoreCase("-cli") == 0){
-                    enableCli = true;
-                }
-                //Disable the gui?
-                else if(args[i].compareToIgnoreCase("-nogui") == 0){
-                    enableGui = false;
-                }
-                //load profiles by name?
-                else if(args[i].compareToIgnoreCase("-profile") == 0){
-                	//iterate to the potential profile name
-                	++i;
-                    //read the next argument if available
-                    if(i >= args.length || args[i].startsWith("-")){
-                        //report the error
-                    	this.reportErrorEvent(new ErrorEvent(5,"Controller.missingArgumentProfileName.text",""));
-                        //exit the program
-                    	return;
-                    }
-                    //read profile names until one name starts with "-" or there is nothing left
-                    do{
-                    	//try to find a profile by name
-                    	Profile profile = recentProfiles.findProfileByName(args[i]);
-                    	if(profile != null){
-                    		//profile found -> add it to the desired profile list
-                    		desiredProfiles.add(profile);
-                    	}
-                    	else{
-                    		//report the error
-                        	this.reportErrorEvent(new ErrorEvent(2,"Controller.nameNotFoundInRecentProfiles.text", args[i]));
-                    	}
-                    	//iterate to next potential profile name
-                    	++i;
-                    }while((i < args.length) && !args[i].startsWith("-"));
-                    --i;
-                }
-                //load profiles by path?
-                else if(args[i].compareToIgnoreCase("-path") == 0){
-                	//iterate to the potential profile path
-                	++i;
-                    //read the next argument if available
-                    if(i >= args.length || args[i].startsWith("-")){
-                        //report the error
-                    	this.reportErrorEvent(new ErrorEvent(5,"Controller.missingArgumentProfilePath.text", ""));
-                        //exit the program
-                    	return;
-                    }
-                    //read profile names until one name starts with "-" or there is nothing left
-                    do{
-                    	//try to find a profile by name
-                    	Profile profile = new Profile("Not loaded.",new File(args[i]));
-                		//add it to the desired profile list
-                		desiredProfiles.add(profile);
-                    	//iterate to next potential profile name
-                    	++i;
-                    }while((i < args.length) && !args[i].startsWith("-"));
-                    --i;
-                }
-                //start all receivers and sender
-                else if(args[i].compareToIgnoreCase("-startall") == 0){
-                	//startmode has already been set
-                	if(startMode.compareTo("default") != 0){
-                        //report the error
-                    	this.reportErrorEvent(new ErrorEvent(5, "Controller.falseStartmode.text", args[i]));
-                        //exit the program
-                    	return;	
-                	}
-                	startMode = "all";
-                }
-                //start none of the receivers and sender
-                else if(args[i].compareToIgnoreCase("-startnone") == 0){
-                	//startmode has already been set
-                	if(startMode.compareTo("default") != 0){
-                        //report the error
-                    	this.reportErrorEvent(new ErrorEvent(5, "Controller.falseStartmode.text", args[i]));
-                        //exit the program
-                    	return;	
-                	}
-                	startMode = "none";
-                }
-                //restore the state of receivers and sender
-                else if(args[i].compareToIgnoreCase("-restore") == 0){
-                	//startmode has already been set
-                	if(startMode.compareTo("default") != 0){
-                        //report the error
-                    	this.reportErrorEvent(new ErrorEvent(5, "Controller.falseStartmode.text", args[i]));
-                        //exit the program
-                    	return;	
-                	}
-                	startMode = "restore";
-                }
-                else{
-                    //report the error
-                	this.reportErrorEvent(new ErrorEvent(5, "Controller.unknownArgument.text", args[i]));
-                    //exit the program
-                	return;
-                }
-
-            }
-
-            //enable the Gui
-            if(enableGui){
-                viewers.add(new GraphicalView());
-            }
-            //enable the cli/logger
-            if(enableCli){
-                //viewers.add(new CommandLineView());
-            }
-            //Init all views
-            Iterator<MctoolView> it = viewers.iterator();
-            for(MctoolView v:viewers){
-            	v.init(this);
-            }
-
-            //Try to load desired Profile
-            if(desiredProfiles != null && desiredProfiles.size() > 0){
-            	int loadCount = 0;
-            	Profile loadedProfile = null;
-            	for(Profile p: desiredProfiles){
-                	try{
-                		this.loadProfileWithoutCleanup(p,startMode);
-                		loadCount++;
-                		//add the profile to the recent profiles list
-                		recentProfiles.addOrUpdateProfileInList(p);
-                		loadedProfile = p;
-                	}
-                	catch(org.w3c.dom.ls.LSException e){
-                    	this.reportErrorEvent(new ErrorEvent(3,"Controller.profileLoadingError.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
-                	}
-                	catch(IOException e){
-                    	this.reportErrorEvent(new ErrorEvent(3,"Controller.profileLoadingError2.text", p.getPath().toString()));
-                	}
-                	catch(Exception e){
-                    	this.reportErrorEvent(new ErrorEvent(4,"Controller.profileLoadingError3.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
-                	}
-                }
-            	//save the recent profiles list
-            	try {
-					saveRecentProfiles();
-				} catch (IOException e) {
-					this.reportErrorEvent(new ErrorEvent(3,"Controller.failedSavingRecentProfiles.text",e.getLocalizedMessage()));
-				}
-            	//Set the new profile name for multiple profiles
-            	if(loadCount > 1){
-            		this.setCurrentProfile(new Profile("Multiple profiles loaded.",new File("")));
-            	}
-            	//Only one profile loaded? make it the active one
-            	else if(loadedProfile!=null){
-            		this.setCurrentProfile(loadedProfile);
-            	}
-            }
-    }
-
-    /*
-     * This function will set the current profile and inform all observers
-     */
-    public void setCurrentProfile(Profile currentProfile) {
-        if(currentProfile == null){
-            throw new IllegalArgumentException();
-        }
-        //This will be our new profile
-        this.currentProfile = currentProfile;
-        //Inform observers
-        profileChanged();
-    }
-
-    /*
-     * This function will return the list of recently used profiles
-     */
-    public List<Profile> getRecentProfiles() {
-        return recentProfiles.getProfileList();
-    }
-
-
     /* (non-Javadoc)
-     * @see com.spam.mctool.controller.StreamManager#addSender(java.util.HashMap)
-     */
-    public Sender addSender(HashMap<String, String> params) {
-        return senderPool.create(params);
-    }
-
-    /* (non-Javadoc)
-     * @see com.spam.mctool.controller.StreamManager#addReceiver(java.util.HashMap)
-     */
-    public ReceiverGroup addReceiver(HashMap<String, String> params) {
-        return receiverPool.create(params);
-    }
-
-    /* (non-Javadoc)
-     * @see com.spam.mctool.controller.StreamManager#removeStreams(java.util.Set)
+     * @see com.spam.mctool.controller.StreamManager#removeStreams(java.util.Collection)
      */
     public void removeStreams(Collection <? extends MulticastStream> streams) {
         //Fetch the set iterator
@@ -374,7 +388,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
     }
 
     /* (non-Javadoc)
-     * @see com.spam.mctool.controller.StreamPool#startStreams(java.util.Set)
+     * @see com.spam.mctool.controller.StreamManager#startStreams(java.util.Collection)
      */
     public void startStreams(Collection<? extends MulticastStream> streams) {
         //Fetch the set iterator
@@ -384,7 +398,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
     }
 
     /* (non-Javadoc)
-     * @see com.spam.mctool.controller.StreamPool#stopStreams(java.util.Set)
+     * @see com.spam.mctool.controller.StreamManager#stopStreams(java.util.Collection)
      */
     public void stopStreams(Collection<? extends MulticastStream> streams) {
         for(MulticastStream m:streams){
@@ -393,8 +407,10 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
     }
 
     /*
-     * This function will save the sender/receiver settings to the specified profile path
+     * This method will save the sender/receiver settings to the specified profile path
      * in currentProfile.
+     * @param p The profile containing the path and
+     * @throws Exception if an Error occured serializing the profile.
      */
     public void saveProfileToFile(Profile p) throws Exception {
         //Register the xerces DOM-Implementation
@@ -402,8 +418,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         try {
             registry = DOMImplementationRegistry.newInstance();
         } catch (Exception e){
-            System.out.println("DOM could not be serialized!");
-            //TODO throw exception
+            throw new Exception("DOM implementation could not be registered!");
         }
 
         //Load the xerces DOM implementation
@@ -416,8 +431,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         try {
             docBuilder = dbfac.newDocumentBuilder();
         } catch (ParserConfigurationException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
+        	throw new Exception("The dom document could not be created.");
         }
         //Create a XML DOM document
         Document xmlDocument = docBuilder.newDocument();
@@ -452,7 +466,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         java.util.Collection<Sender> senders = getSenders();
         Iterator<Sender> itS = senders.iterator();
         //iterate over the collection
-        
+
         while(itS.hasNext()){
             Sender curSender = itS.next();
             //Create sender element
@@ -484,7 +498,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
             Text valueText = xmlDocument.createTextNode(state);
             keyElement.appendChild(valueText);
         }
-        
+
         //Receivers section
         Element receiversElement = xmlDocument.createElement("receivers");
         rootElement.appendChild(receiversElement);
@@ -537,55 +551,23 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
             writer.writeToURI(xmlDocument, profilePath.toString());
         }
         catch(LSException e){
-            System.out.println("The data could not be serialized to XML.");
             throw new Exception("The data could not be serialized to XML.");
         }
         catch(Exception e){
-            System.out.println("The file could not be written.");
             throw new Exception("The file could not be written.");
 
         }
-        //TODO Remove debug ouput
-        //String xmlString = writer.writeToString(xmlDocument);
-        //System.out.println(xmlString);
     }
 
-    /* (non-Javadoc)
-     * @see com.spam.mctool.controller.ProfilePool#loadProfile()
+
+    /**
+     * @param p The profile containing the path to load the profile from.
+     * @param startMode The start mode. Default is "default" or "restore" - Restores
+     * the active state. "all" starts all streams and "none" starts no streams.
+     * @throws org.w3c.dom.ls.LSException If there was a problem loading and parsing the profile file.
+     * @throws IOException If the profile file could not be red.
+     * @throws Exception If there was a problem initiating the dom environment.
      */
-    public void loadProfile(File path){
-    	//path must not be null
-    	if(path == null){
-    		throw new IllegalArgumentException();
-    	}
-        //First of all delete all senders and receivers
-        removeStreams(getReceiverGroups());
-        removeStreams(getSenders());
-
-        //Create a temporary profile
-        Profile p = new Profile("Not loaded.",path);
-        
-        //Load the profile, streams are reverted to the saved activity state
-    	try{
-    		this.loadProfileWithoutCleanup(p,"default");
-    	}
-    	catch(org.w3c.dom.ls.LSException e){
-        	this.reportErrorEvent(new ErrorEvent(3,"Controller.profileLoadingError.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
-    	}
-    	catch(IOException e){
-        	this.reportErrorEvent(new ErrorEvent(3,"Controller.profileLoadingError2.text", p.getPath().toString()));
-    	}
-    	catch(Exception e){
-        	this.reportErrorEvent(new ErrorEvent(4,"Controller.profileLoadingError3.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
-    	}
-
-        //Add it to the list of recent profiles
-        recentProfiles.addOrUpdateProfileInList(p);
-        
-        //Make it the new profile and signalize it to the observers
-        this.setCurrentProfile(p);
-    }
-
     public void loadProfileWithoutCleanup(Profile p,String startMode) throws org.w3c.dom.ls.LSException,IOException,Exception{
     	if(p == null){
     		throw new IllegalArgumentException();
@@ -669,7 +651,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
                     //otherwise test if all should be started or the stream is marked to be started
                     if(startMode.compareToIgnoreCase("none") != 0 && (startMode.compareToIgnoreCase("all") == 0 || startSender)){
                     	newSender.activate();
-                    }   
+                    }
                 }
                 catch(Exception e){
                     this.reportErrorEvent(new ErrorEvent(3,"Controller.failedAddingSender", e.getLocalizedMessage()));
@@ -730,63 +712,67 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
     }
 
     /* (non-Javadoc)
-     * @see com.spam.mctool.controller.ProfilePool#addProfileChangeListener(com.spam.mctool.controller.ProfileChangeListener)
+     * @see com.spam.mctool.controller.StreamManager#addSender(java.util.Map)
      */
-    public void addProfileChangeListener(ProfileChangeListener listener) {
-        this.profileChangeObservers.add(listener);
-    }
-
-    /* (non-Javadoc)
-     * @see com.spam.mctool.controller.ProfilePool#removeProfileChangeListener(com.spam.mctool.controller.ProfileChangeListener)
-     */
-    public void removeProfileChangeListener(ProfileChangeListener listener) {
-        this.profileChangeObservers.remove(listener);
-    }
-
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-        controller = new Controller();
-        controller.init(args);
-
-    }
-
     public Sender addSender(Map<String, String> params) {
         return this.senderPool.create(params);
     }
 
+    /* (non-Javadoc)
+     * @see com.spam.mctool.controller.StreamManager#addReceiverGroup(java.util.Map)
+     */
     public ReceiverGroup addReceiverGroup(Map<String, String> params) {
         return receiverPool.create(params);
     }
 
+    /* (non-Javadoc)
+     * @see com.spam.mctool.controller.StreamManager#getSenders()
+     */
     public Collection<Sender> getSenders() {
         return senderPool.getSenders();
     }
 
+    /* (non-Javadoc)
+     * @see com.spam.mctool.controller.StreamManager#getReceiverGroups()
+     */
     public Collection<ReceiverGroup> getReceiverGroups() {
         return receiverPool.getReceiverGroups();
     }
 
+    /* (non-Javadoc)
+     * @see com.spam.mctool.controller.StreamManager#addSenderAddedOrRemovedListener(com.spam.mctool.model.SenderAddedOrRemovedListener)
+     */
     public void addSenderAddedOrRemovedListener(SenderAddedOrRemovedListener l) {
         senderPool.addSenderAddedOrRemovedListener(l);
     }
 
+    /* (non-Javadoc)
+     * @see com.spam.mctool.controller.StreamManager#removeSenderAddedOrRemovedListener(com.spam.mctool.model.SenderAddedOrRemovedListener)
+     */
     public void removeSenderAddedOrRemovedListener(
             SenderAddedOrRemovedListener l) {
         senderPool.removeSenderAddedOrRemovedListener(l);
     }
 
+    /* (non-Javadoc)
+     * @see com.spam.mctool.controller.StreamManager#addReceiverAddedOrRemovedListener(com.spam.mctool.model.ReceiverAddedOrRemovedListener)
+     */
     public void addReceiverAddedOrRemovedListener(
             ReceiverAddedOrRemovedListener l) {
         receiverPool.addReceiverAddedOrRemovedListener(l);
     }
 
+    /* (non-Javadoc)
+     * @see com.spam.mctool.controller.StreamManager#removeReceiverAddedOrRemovedListener(com.spam.mctool.model.ReceiverAddedOrRemovedListener)
+     */
     public void removeReceiverAddedOrRemovedListener(
             ReceiverAddedOrRemovedListener l) {
         receiverPool.removeReceiverAddedOrRemovedListener(l);
     }
 
+    /* (non-Javadoc)
+     * @see com.spam.mctool.controller.ProfileManager#saveProfile(com.spam.mctool.controller.Profile)
+     */
     public void saveProfile(Profile p) {
     	if(p == null){
     		throw new IllegalArgumentException();
@@ -801,7 +787,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         this.setCurrentProfile(p);
         //if successfully saved, add or update it to the list of recent profiles
         recentProfiles.addOrUpdateProfileInList(p);
-        
+
         //save the recent profile list
         try {
             saveRecentProfiles();
@@ -809,11 +795,23 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
             this.reportErrorEvent(new ErrorEvent(3,"Controller.failedSavingRecentProfiles.text",e.getLocalizedMessage()));
         }
     }
-    
+
+    /* (non-Javadoc)
+     * @see com.spam.mctool.controller.ProfileManager#saveCurrentProfile()
+     */
     public void saveCurrentProfile(){
-    	saveProfile(this.currentProfile);
+    	//if we have no current profile, report an error
+    	if(this.currentProfile == null){
+            this.reportErrorEvent(new ErrorEvent(3,"Controller.noCurrentProfile.text",null));
+    	}
+    	else{
+    		saveProfile(this.currentProfile);
+    	}
     }
 
+    /* (non-Javadoc)
+     * @see com.spam.mctool.controller.ErrorEventManager#addErrorEventListener(com.spam.mctool.controller.ErrorEventListener, int)
+     */
     @Override
     public void addErrorEventListener(ErrorEventListener l, int errorLevel) {
         //the listener must not be null
@@ -839,6 +837,9 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         }
     }
 
+    /* (non-Javadoc)
+     * @see com.spam.mctool.controller.ErrorEventManager#removeErrorEventListener(com.spam.mctool.controller.ErrorEventListener)
+     */
     @Override
     public void removeErrorEventListener(ErrorEventListener l) {
         //the listener must not be null
@@ -850,6 +851,9 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         this.newErrorEventObserversErrorLevel.remove(l);
     }
 
+    /* (non-Javadoc)
+     * @see com.spam.mctool.controller.ErrorEventManager#reportErrorEvent(com.spam.mctool.controller.ErrorEvent)
+     */
     @Override
     public void reportErrorEvent(ErrorEvent e) {
         //the event must not be null
@@ -874,4 +878,80 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         }
 
     }
+
+    /* (non-Javadoc)
+     * @see com.spam.mctool.controller.ProfileManager#addProfileChangeListener(com.spam.mctool.controller.ProfileChangeListener)
+     */
+    public void addProfileChangeListener(ProfileChangeListener listener) {
+        this.profileChangeObservers.add(listener);
+    }
+
+    /* (non-Javadoc)
+     * @see com.spam.mctool.controller.ProfileManager#removeProfileChangeListener(com.spam.mctool.controller.ProfileChangeListener)
+     */
+    public void removeProfileChangeListener(ProfileChangeListener listener) {
+        this.profileChangeObservers.remove(listener);
+    }
+
+    /* (non-Javadoc)
+     * @see com.spam.mctool.controller.ProfileManager#getCurrentProfile()
+     */
+    public Profile getCurrentProfile() {
+        return currentProfile;
+    }
+
+    /* (non-Javadoc)
+     * @see com.spam.mctool.controller.ProfileManager#loadProfile(java.io.File)
+     */
+    public void loadProfile(File path){
+    	//path must not be null
+    	if(path == null){
+    		throw new IllegalArgumentException();
+    	}
+        //First of all delete all senders and receivers
+        removeStreams(getReceiverGroups());
+        removeStreams(getSenders());
+
+        //Create a temporary profile
+        Profile p = new Profile("Not loaded.",path);
+
+        //Load the profile, streams are reverted to the saved activity state
+    	try{
+    		this.loadProfileWithoutCleanup(p,"default");
+    	}
+    	catch(org.w3c.dom.ls.LSException e){
+        	this.reportErrorEvent(new ErrorEvent(3,"Controller.profileLoadingError.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
+    	}
+    	catch(IOException e){
+        	this.reportErrorEvent(new ErrorEvent(3,"Controller.profileLoadingError2.text", p.getPath().toString()));
+    	}
+    	catch(Exception e){
+        	this.reportErrorEvent(new ErrorEvent(4,"Controller.profileLoadingError3.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
+    	}
+
+        //Add it to the list of recent profiles
+        recentProfiles.addOrUpdateProfileInList(p);
+
+        //Make it the new profile and signalize it to the observers
+        this.setCurrentProfile(p);
+    }
+
+    /* (non-Javadoc)
+     * @see com.spam.mctool.controller.ProfileManager#setCurrentProfile(com.spam.mctool.controller.Profile)
+     */
+    public void setCurrentProfile(Profile currentProfile) {
+        //This will be our new profile
+        this.currentProfile = currentProfile;
+        //Inform observers
+        profileChanged();
+    }
+
+    /* (non-Javadoc)
+     * @see com.spam.mctool.controller.ProfileManager#getRecentProfiles()
+     */
+    public List<Profile> getRecentProfiles() {
+        return recentProfiles.getProfileList();
+    }
+
+
 }

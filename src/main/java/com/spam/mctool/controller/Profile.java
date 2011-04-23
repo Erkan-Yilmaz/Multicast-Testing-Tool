@@ -3,64 +3,68 @@ package com.spam.mctool.controller;
 import java.io.File;
 
 public class Profile {
+	/**
+	 * The profile name.
+	 */
 	private String name;
+
+	/**
+	 * The path to the profile.
+	 */
 	private File path;
 
 	/*
 	 * Default constructor
 	 */
 	public Profile(){
-		this.name = new String();
+		this.name = null;
 		this.path = new File("");
 	}
 
-	/*
-	 * Constructor to initialize the profile directly
+	/**
+	 * Constructor to initialize the profile directly with a ame and a path.
+	 * @param name The name of the profile.
+	 * @param path The path of the profile. Must not be null.
 	 */
 	public Profile(String name, File path){
 		//set the name
-		if(name == null){
-			this.name = new String();
-		}
-		else{
-			this.name = name;
-		}
-		//set the path
+		this.name = name;
+		//set the path, the path must not be null
 		if(path == null){
-			//empty filename
-			this.path = new File("");
+			throw new IllegalArgumentException();
 		}
 		else{
 			this.path = path;
 		}
 	}
 
-	/*
-	 * Getter for attribute name
+	/**
+	 * Get the profile name.
+	 * @return the name as string. Null if no name has been set.
 	 */
 	public String getName() {
 		return name;
 	}
 
-	/*
-	 * Setter for attribute name
+	/**
+	 * Set the profile name.
+	 * @param name The new profile name. Can be null.
 	 */
 	public void setName(String name) {
-		if(name == null){
-			throw new IllegalArgumentException();
-		}
 		this.name = name;
 	}
 
-	/*
-	 * Getter for attribute path
+	/**
+	 * Get the path to the profile file.
+	 * @return The path to the profile file. Will never be null.
 	 */
 	public File getPath() {
 		return path;
 	}
 
-	/*
-	 * Setter for attribute path
+	/**
+	 * Set the path to the profile file.
+	 * @param path The path to the profile file as path. Must not be null.
 	 */
 	public void setPath(File path) {
 		if(path == null){
@@ -69,9 +73,11 @@ public class Profile {
 		this.path = path;
 	}
 
-	/*
+	/**
 	 * This function compares the path of two files and returns whether they are equal
-	 * or not
+	 * or not.
+	 * @param testObject The profile to compare with.
+	 * @return true if both share the same path. false if not.
 	 */
 	public boolean equals(Profile testObject) {
 		//Test for correct input
