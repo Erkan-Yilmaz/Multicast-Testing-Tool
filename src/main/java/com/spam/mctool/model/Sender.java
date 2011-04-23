@@ -333,14 +333,14 @@ public class Sender extends MulticastStream {
 	 * @return minimum measured packets per second
 	 */
 	public long getMinPPS() {
-		return (minPPS==Long.MAX_VALUE) ? 0 : minPPS;
+		return (minPPS==Integer.MAX_VALUE) ? 0 : minPPS;
 	}
 
 	/**
 	 * @return maximum measured packets per second
 	 */
 	public long getMaxPPS() {
-		return (maxPPS==Long.MIN_VALUE) ? 0 : maxPPS;
+		return (maxPPS==Integer.MIN_VALUE) ? 0 : maxPPS;
 	}
 	
 	/**
