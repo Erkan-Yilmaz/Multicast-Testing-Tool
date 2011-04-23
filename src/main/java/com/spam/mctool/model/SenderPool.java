@@ -79,7 +79,7 @@ public class SenderPool implements SenderManager {
 	}
 
 	public Collection<Sender> getSenders() {
-		return senders;
+		return new HashSet<Sender>(senders);
 	}
 
 	public void killAll() {

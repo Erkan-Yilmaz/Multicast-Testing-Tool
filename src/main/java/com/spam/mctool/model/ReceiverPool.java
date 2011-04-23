@@ -3,6 +3,7 @@ package com.spam.mctool.model;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -88,7 +89,7 @@ public class ReceiverPool implements ReceiverManager {
 	}
 
 	public Collection<ReceiverGroup> getReceiverGroups() {
-		return receiverGroups;
+		return new HashSet<ReceiverGroup>(receiverGroups);
 	}
 
 	public void killAll() {
