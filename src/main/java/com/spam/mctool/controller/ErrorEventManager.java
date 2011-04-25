@@ -26,6 +26,9 @@ public interface ErrorEventManager {
      */
     public void reportErrorEvent(ErrorEvent e);
 
+    /**
+     * A mapping of the valid error levels to constants.
+     */
     public static final int DEBUG = 0;
     public static final int WARNING = 1;
     public static final int SEVERE = 2;

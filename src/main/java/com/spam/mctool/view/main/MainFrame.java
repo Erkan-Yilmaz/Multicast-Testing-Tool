@@ -128,7 +128,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         twoColorRenderer1.setName("twoColorRenderer1"); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("MainFrame.title") + (view.getCurrentProfile().getName() != null ? " - " + view.getCurrentProfile().getName() : ""));
+        setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("MainFrame.title") + ((view.getCurrentProfile() != null && view.getCurrentProfile().getName() != null) ? " - " + view.getCurrentProfile().getName() : ""));
         setName("Form"); // NOI18N
 
         mainSplitPane.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -1022,11 +1022,11 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     }
 
     public void profileChanged(ProfileChangeEvent e) {
-        setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("MainFrame.title") + (view.getCurrentProfile().getName() != null ? " - " + view.getCurrentProfile().getName() : ""));
+        setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("MainFrame.title") + ((view.getCurrentProfile() != null && view.getCurrentProfile().getName() != null) ? " - " + view.getCurrentProfile().getName() : ""));
     }
 
-    
 
-    
+
+
 
 }
