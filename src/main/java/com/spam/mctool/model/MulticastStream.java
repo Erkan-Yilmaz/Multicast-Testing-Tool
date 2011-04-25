@@ -96,7 +96,7 @@ public abstract class MulticastStream implements Runnable {
 		
 		private String dispName;
 		
-		PacketType(String dispName) {
+		private PacketType(String dispName) {
 			this.dispName = dispName;
 		}
 		
@@ -107,8 +107,10 @@ public abstract class MulticastStream implements Runnable {
 		public static PacketType getByIdentifier(String ident) {
 			if(ident.equals("hmann")) {
 				return PacketType.HMANN;
-			} else {
+			} else if(ident.equals("spam")) {
 				return PacketType.SPAM;
+			} else {
+				throw new IllegalArgumentException();
 			}
 		}
 	}
