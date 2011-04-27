@@ -1,10 +1,9 @@
 package com.spam.mctool.model;
 
-import java.net.Inet4Address;
-import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -44,18 +43,9 @@ public class ReceiverPool implements ReceiverManager {
 			group = InetAddress.getByName(
 				params.get("group")
 			);
-			if(group instanceof Inet4Address) {
-				if(group.getAddress()[0]+256<224 || group.getAddress()[0]+256>239) {
-					// if IPv4 address is not in multicast range
-					throw new Exception();
-				}
-			}
-			if(group instanceof Inet6Address) {
-				if(group.getAddress()[0]!=-1) {
-					if(group.getAddress()[1]<0 || group.getAddress()[1]>15) {
-						// if IPv6 address is not in multicast range
-					}
-				}
+			if(!group.isMulticastAddress()) {
+				// if address is not in multicast range
+				throw new Exception();
 			}
 			// try to parse the port
 			errorType = ReceiverCreationException.ErrorType.PORT;
@@ -76,12 +66,13 @@ public class ReceiverPool implements ReceiverManager {
 			errorType = ReceiverCreationException.ErrorType.ANALYZINGBEHAVIOR;
 			if(params.containsKey("abeh")) {
 				abeh = MulticastStream.AnalyzingBehaviour.getByIdentifier(
-						params.get("abeh")	
+						params.get("abeh").toLowerCase()
 				);
 			} else {
 				abeh = MulticastStream.AnalyzingBehaviour.DEFAULT;
 			}
 		} catch(Exception e) {
+			System.out.println(errorType);
 			throw new ReceiverCreationException(errorType);
 		}
 		
@@ -98,7 +89,7 @@ public class ReceiverPool implements ReceiverManager {
 	}
 
 	public Collection<ReceiverGroup> getReceiverGroups() {
-		return receiverGroups;
+		return new HashSet<ReceiverGroup>(receiverGroups);
 	}
 
 	public void killAll() {

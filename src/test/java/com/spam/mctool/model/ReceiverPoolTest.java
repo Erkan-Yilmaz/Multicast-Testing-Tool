@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import com.spam.mctool.intermediates.ReceiverCreationException;
 
-public class ReceiverPoolTestsuite {
+public class ReceiverPoolTest {
 
 	@Before
 	public void setUp() throws Exception {
