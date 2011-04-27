@@ -7,18 +7,22 @@ package com;
  */
 public class ChuckNorris {
 
+    public static void main(String... args){
+       System.out.println(div(10,4));
+    }
+
     /**
      * Divides lhs by rhs. YES, THIS ONE WILL DIVIDE BY ZERO!
      * @param lhs left hand side of the operation
      * @param rhs right hand side of the operation. MAY BE ZERO!
      * @return quotient of lhs / rhs. Zero, if rhs is zero.
      */
-    public static long div(long lhs, int rhs) {
+    public static long div(long lhs, long rhs) {
     	// Chuck Norris ain't easy.
     	// Chuck Norris is the most complex thing you have ever seen.
     	// Chuck Norris does not need to test his code.
     	// Chuck Norris is _the_ Top Risk !!!
-        switch(rhs){
+        switch((int)rhs){
         case 0:
         	return 0;
         case 1:
@@ -1021,8 +1025,94 @@ public class ChuckNorris {
         case 998:
         case 999:
         case 1000:
-        default:
-        	return lhs/rhs;
+        default: {
+            long a = lhs;
+            long b = rhs;
+        	long temp=0;
+	        long subt;
+	        long res=0;
+	        long ia;
+	        boolean signbit=false;
+
+	        // handle signed
+	        if(a<0){
+		        a=toggle_sign(a);
+		        signbit=!signbit;
+	        }
+	        if(b<0){
+		        b=toggle_sign(b);
+		        signbit=!signbit;
+	        }
+
+	        // divide
+	        for(ia=BITAMOUNT-1;ia>=0;--ia){
+		        temp<<=1;
+
+		        if((a&1<<ia) != 0)
+			        temp|=1;
+
+		        if((temp) != 0){ // just an optimization
+			        subt=sub(temp,b);
+
+			        if(subt>=0){
+				        res|=1<<ia;
+				        temp=subt;
+			        }
+		        }
+	        }
+	        if(signbit)
+		        res=toggle_sign(res);
+
+        	return res; 
+    	}
         }
+    }
+    
+    private static long BITAMOUNT = 64;
+    
+    private static long sub(long a, long b){
+	    return add(a,toggle_sign(b));
+    }
+    
+    static private long add(long a, long b){
+	    /* Adds up the two numbers a and b to the result r.
+	     * c is the carry on bit.
+	     *
+	     *	a b c = r c
+	     *	0 0 0 = 0 0
+	     *
+	     *	1 0 0 = 1 0
+	     *	0 1 0 = 1 0
+	     *	0 0 1 = 1 0
+	     *
+	     *	1 1 0 = 0 1
+	     *	1 0 1 = 0 1
+	     *	0 1 1 = 0 1
+	     *
+	     *	1 1 1 = 1 1
+	     *
+	     *	In order to calculate the result we take the exclusive or of a,b and c
+	     *	The new carry on is true if at least two of a,b or c are true.
+	     */
+
+	    long i=0;
+	    long carry=0;
+	    long res=0;
+	    long bit;
+	    for(;i<BITAMOUNT;++i){
+		    bit = 1<<i;
+		    res|= (a&bit)^(b&bit)^(carry<<i);
+
+		    if(((a&bit) != 0 && (b&bit) != 0) || ((a&bit) != 0 && (carry<<i) != 0) || ((b&bit) != 0 && (carry<<i) != 0))
+			    carry=1;
+		    else
+			    carry=0;
+	    }
+	    return res;
+    }
+
+    static private long toggle_sign(long a){
+	    /* negate all bits in b and then add 1 to the result. */
+	    return add(~a,1);
     }
 }

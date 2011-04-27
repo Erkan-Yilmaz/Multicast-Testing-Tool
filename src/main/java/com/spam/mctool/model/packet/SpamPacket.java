@@ -47,10 +47,6 @@ public final class SpamPacket implements Packet {
                     TlvTuple tuple = TlvTuple.values()[i];
                     if(id == tuple.getId()) {
                         if(tuple.hasFixedSize() && length != tuple.calcSize(this)) {
-                        	DataFormatException d = new DataFormatException();
-                        	
-
-                        	
                         	throw new DataFormatException("Tuple with Id "+id+
                                     " has illegal data size");
                         }
@@ -243,7 +239,7 @@ public final class SpamPacket implements Packet {
         PAYLOAD(6, -1 /* size is variable */) {
             @Override
             public void readTupleData(ByteBuffer buffer, long length, SpamPacket packet) throws DataFormatException {
-                if(length > Integer.MAX_VALUE) {
+                if(length > Integer.MAX_VALUE || length > buffer.capacity()) {
                     // well java only supports arrays up to 2GB, if the payload is larger 2GB
                     // we have a problem. Luckily it is not really our problem, because the 
                     // ByteBuffer that was passed into this function does not support data
@@ -363,13 +359,16 @@ public final class SpamPacket implements Packet {
     }
     
     /**
+     * @exception IllegalArgumentException thrown if senderId is negative or 
+     *                                     greater 0xFFFFFFFF (max of unsigned int).
+     *                                     
      * @see com.spam.mctool.model.packet.Packet#setSenderId(long)
      */
-    public void setSenderId(long senderID) {
-        if((senderID & INT_MASK) != senderID){
+    public void setSenderId(long senderId) {
+        if((senderId & INT_MASK) != senderId){
             throw new IllegalArgumentException();
         }
-        this.senderID = senderID;
+        this.senderID = senderId;
     }
     
     /**
@@ -380,6 +379,9 @@ public final class SpamPacket implements Packet {
     }
     
     /**
+     * @exception IllegalArgumentException thrown if configuredPacketsPerSeconds is negative or 
+     *                                     greater 0xFFFFFFFF (max of unsigned int).
+     *                                     
      * @see com.spam.mctool.model.packet.Packet#setConfiguredPacketsPerSecond(long)
      */
     public void setConfiguredPacketsPerSecond(long configuredPacketsPerSeconds) {
@@ -398,6 +400,9 @@ public final class SpamPacket implements Packet {
     }
     
     /**
+     * @exception IllegalArgumentException thrown if senderMeasuredPacketRate is negative or 
+     *                                     greater 0xFFFFFFFF (max of unsigned int).
+     *                                     
      * @see com.spam.mctool.model.packet.Packet#setSenderMeasuredPacketRate(long)
      */
     public void setSenderMeasuredPacketRate(long senderMeasuredPacketRate) {
@@ -415,6 +420,9 @@ public final class SpamPacket implements Packet {
     }
     
     /**
+     * @exception IllegalArgumentException thrown if sequenceNumber is negative or 
+     *                                     greater 0xFFFFFFFF (max of unsigned int).
+     *                                     
      * @see com.spam.mctool.model.packet.Packet#setSequenceNumber(long)
      */
     public void setSequenceNumber(long sequenceNumber) {

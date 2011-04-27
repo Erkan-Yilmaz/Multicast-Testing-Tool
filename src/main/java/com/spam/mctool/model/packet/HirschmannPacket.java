@@ -238,13 +238,16 @@ public final class HirschmannPacket implements Packet {
     }
     
     /**
+     * @exception IllegalArgumentException thrown if senderId is negative or 
+     *                                     greater 0xFFFF (max of unsigned short).
+     * 
      * @see com.spam.mctool.model.packet.Packet#setSenderId(long)
      */
-    public void setSenderId(long senderID) {
-        if((senderID & SHORT_MASK) != senderID) {
+    public void setSenderId(long senderId) {
+        if((senderId & SHORT_MASK) != senderId) {
             throw new IllegalArgumentException();
         }
-        this.senderID = senderID;
+        this.senderID = senderId;
     }
     
     /**
@@ -255,6 +258,9 @@ public final class HirschmannPacket implements Packet {
     }
     
     /**
+     * @exception IllegalArgumentException thrown if configuredPacketsPerSeconds is negative or 
+     *                                     greater 0xFFFF (max of unsigned short).
+     *                                     
      * @see com.spam.mctool.model.packet.Packet#setConfiguredPacketsPerSecond(long)
      */
     public void setConfiguredPacketsPerSecond(long configuredPacketsPerSeconds) {
@@ -272,6 +278,9 @@ public final class HirschmannPacket implements Packet {
     }
     
     /**
+     * @exception UnsupportedOperationException senderMeasuredPacketRate is not
+     *                                          supported by packet.
+     *                                     
      * @see com.spam.mctool.model.packet.Packet#setSenderMeasuredPacketRate(long)
      */
     public void setSenderMeasuredPacketRate(long senderMeasuredPacketRate) 
@@ -287,6 +296,9 @@ public final class HirschmannPacket implements Packet {
     }
     
     /**
+     * @exception IllegalArgumentException thrown if sequenceNumber is negative or 
+     *                                     greater 0xFFFFFFFF (max of unsigned int).
+     *                                     
      * @see com.spam.mctool.model.packet.Packet#setSequenceNumber(long)
      */
     public void setSequenceNumber(long sequenceNumber) {
@@ -304,6 +316,9 @@ public final class HirschmannPacket implements Packet {
     }
     
     /**
+     * @exception UnsupportedOperationException dispatchTime is not
+     *                                          supported by packet.
+     *                                     
      * @see com.spam.mctool.model.packet.Packet#setDispatchTime(long)
      */
     public void setDispatchTime(long dispatchTime) {
@@ -311,6 +326,9 @@ public final class HirschmannPacket implements Packet {
     }
     
     /**
+     * @exception UnsupportedOperationException payload is not
+     *                                          supported by packet.
+     *                                     
      * @see com.spam.mctool.model.packet.Packet#setPayload(byte[])
      */
     public void setPayload(byte[] data) {
