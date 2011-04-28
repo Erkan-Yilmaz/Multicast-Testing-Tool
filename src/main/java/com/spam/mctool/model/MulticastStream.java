@@ -105,6 +105,7 @@ public abstract class MulticastStream implements Runnable {
 		}
 		
 		public static PacketType getByIdentifier(String ident) {
+			ident = ident.toLowerCase();
 			if(ident.equals("hmann")) {
 				return PacketType.HMANN;
 			} else if(ident.equals("spam")) {
