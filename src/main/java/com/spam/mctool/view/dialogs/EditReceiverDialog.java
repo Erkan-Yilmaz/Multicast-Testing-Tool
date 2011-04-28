@@ -90,18 +90,26 @@ public class EditReceiverDialog extends javax.swing.JDialog {
         jSeparator2 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setName("Form"); // NOI18N
+
+        groupField.setName("groupField"); // NOI18N
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
         groupLabel.setText(bundle.getString("EditReceiverDialog.groupLabel.text")); // NOI18N
+        groupLabel.setName("groupLabel"); // NOI18N
 
         portLabel.setText(bundle.getString("EditReceiverDialog.portLabel.text")); // NOI18N
+        portLabel.setName("portLabel"); // NOI18N
 
         interfaceLabel.setText(bundle.getString("EditReceiverDialog.interfaceLabel.text")); // NOI18N
+        interfaceLabel.setName("interfaceLabel"); // NOI18N
 
         interfaceCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        interfaceCombo.setName("interfaceCombo"); // NOI18N
 
         activateBox.setText(bundle.getString("EditReceiverDialog.activateBox.text")); // NOI18N
         activateBox.setActionCommand(bundle.getString("EditReceiverDialog.activateBox.actionCommand")); // NOI18N
+        activateBox.setName("activateBox"); // NOI18N
         activateBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 activateBoxActionPerformed(evt);
@@ -110,6 +118,7 @@ public class EditReceiverDialog extends javax.swing.JDialog {
 
         okButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/check.png"))); // NOI18N
         okButton.setText(bundle.getString("EditReceiverDialog.okButton.text")); // NOI18N
+        okButton.setName("okButton"); // NOI18N
         okButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 okButtonActionPerformed(evt);
@@ -118,15 +127,24 @@ public class EditReceiverDialog extends javax.swing.JDialog {
 
         cancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
         cancelButton.setText(bundle.getString("EditReceiverDialog.cancelButton.text")); // NOI18N
+        cancelButton.setName("cancelButton"); // NOI18N
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
             }
         });
 
+        portField.setName("portField"); // NOI18N
+
         analyzingBehaviourLabel.setText(bundle.getString("EditReceiverDialog.analyzingBehaviourLabel.text")); // NOI18N
+        analyzingBehaviourLabel.setName("analyzingBehaviourLabel"); // NOI18N
 
         analyzingBehaviourCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        analyzingBehaviourCombo.setName("analyzingBehaviourCombo"); // NOI18N
+
+        jSeparator1.setName("jSeparator1"); // NOI18N
+
+        jSeparator2.setName("jSeparator2"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

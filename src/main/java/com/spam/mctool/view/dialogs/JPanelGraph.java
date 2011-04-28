@@ -48,8 +48,8 @@ public class JPanelGraph extends javax.swing.JPanel {
         for(int i = 1; i < 10; i++){
             g.drawLine(i*width/10, 0, i*width/10, height);
         }
-        for(int i = 1; i < 4; i++){
-            g.drawLine(0, i*height/4, width, i*height/4);
+        for(int i = 1; i < 5; i++){
+            g.drawLine(0, i*height/5, width, i*height/5);
         }
 
         g.setColor(Color.GREEN);

@@ -103,12 +103,18 @@ public class EditSenderDialog extends javax.swing.JDialog {
         portField = new javax.swing.JSpinner();
         cancelButton = new javax.swing.JButton();
 
+        jSpinner1.setName("jSpinner1"); // NOI18N
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
         setTitle(bundle.getString("EditSenderDialog.title")); // NOI18N
+        setName("Form"); // NOI18N
+
+        interfaceCombo.setName("interfaceCombo"); // NOI18N
 
         okButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/check.png"))); // NOI18N
         okButton.setText(bundle.getString("EditSenderDialog.okButton.text")); // NOI18N
+        okButton.setName("okButton"); // NOI18N
         okButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 okButtonActionPerformed(evt);
@@ -116,29 +122,61 @@ public class EditSenderDialog extends javax.swing.JDialog {
         });
 
         interfaceLabel.setText(bundle.getString("EditSenderDialog.interfaceLabel.text")); // NOI18N
+        interfaceLabel.setName("interfaceLabel"); // NOI18N
 
         portLabel.setText(bundle.getString("EditSenderDialog.portLabel.text")); // NOI18N
+        portLabel.setName("portLabel"); // NOI18N
 
         groupLabel.setText(bundle.getString("EditSenderDialog.groupLabel.text")); // NOI18N
+        groupLabel.setName("groupLabel"); // NOI18N
 
         activateBox.setText(bundle.getString("EditSenderDialog.activateBox.text")); // NOI18N
+        activateBox.setName("activateBox"); // NOI18N
 
         dataLabel.setText(bundle.getString("EditSenderDialog.dataLabel.text")); // NOI18N
+        dataLabel.setName("dataLabel"); // NOI18N
+
+        dataField.setName("dataField"); // NOI18N
 
         packetRateLabel.setText(bundle.getString("EditSenderDialog.packetRateLabel.text")); // NOI18N
+        packetRateLabel.setName("packetRateLabel"); // NOI18N
 
         packetSizeLabel.setText(bundle.getString("EditSenderDialog.packetSizeLabel.text")); // NOI18N
+        packetSizeLabel.setName("packetSizeLabel"); // NOI18N
 
         ttlLabel.setText(bundle.getString("EditSenderDialog.ttlLabel.text")); // NOI18N
+        ttlLabel.setName("ttlLabel"); // NOI18N
 
         packetStyleLabel.setText(bundle.getString("EditSenderDialog.packetStyleLabel.text")); // NOI18N
+        packetStyleLabel.setName("packetStyleLabel"); // NOI18N
+
+        packetStyleCombo.setName("packetStyleCombo"); // NOI18N
+
+        groupField.setName("groupField"); // NOI18N
+
+        packetRateField.setName("packetRateField"); // NOI18N
+
+        packetSizeField.setName("packetSizeField"); // NOI18N
+
+        ttlField.setName("ttlField"); // NOI18N
 
         analyzingBehaviourLabel.setText(bundle.getString("EditSenderDialog.analyzingBehaviourLabel.text")); // NOI18N
+        analyzingBehaviourLabel.setName("analyzingBehaviourLabel"); // NOI18N
 
         analyzingBehaviourCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        analyzingBehaviourCombo.setName("analyzingBehaviourCombo"); // NOI18N
+
+        jSeparator1.setName("jSeparator1"); // NOI18N
+
+        jSeparator2.setName("jSeparator2"); // NOI18N
+
+        jSeparator3.setName("jSeparator3"); // NOI18N
+
+        portField.setName("portField"); // NOI18N
 
         cancelButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
         cancelButton.setText(bundle.getString("EditSenderDialog.cancelButton.text")); // NOI18N
+        cancelButton.setName("cancelButton"); // NOI18N
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
