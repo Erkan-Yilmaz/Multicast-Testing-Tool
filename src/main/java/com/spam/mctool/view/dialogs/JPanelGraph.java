@@ -55,7 +55,7 @@ public class JPanelGraph extends javax.swing.JPanel {
         g.setColor(Color.GREEN);
         for(int i = 0; i < 10; i++){
 
-            g.drawLine(i*width/10, list.get(i)/maxPacketRate*height, (i+1)*width/10, list.get(i+1)/maxPacketRate*height);
+            g.drawLine(i*width/10, height-list.get(i)/maxPacketRate*(height*4/5), (i+1)*width/10, height-list.get(i+1)/maxPacketRate*(height*4/5));
 
         }
 
