@@ -113,4 +113,8 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
 		
 	}
 
+    public void kill() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }
