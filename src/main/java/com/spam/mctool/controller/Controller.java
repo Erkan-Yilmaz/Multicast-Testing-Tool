@@ -579,7 +579,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         writer.getDomConfig().setParameter("format-pretty-print", Boolean.TRUE);
         //Try to write it to the file
         try{
-            writer.writeToURI(xmlDocument, profilePath.toString());
+            writer.writeToURI(xmlDocument, profilePath.toURI().toString());
         }
         catch(LSException e){
             throw new Exception("The data could not be serialized to XML."+e.getMessage());
