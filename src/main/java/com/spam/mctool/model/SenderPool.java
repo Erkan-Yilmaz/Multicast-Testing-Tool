@@ -3,7 +3,6 @@ package com.spam.mctool.model;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +17,7 @@ public class SenderPool implements SenderManager {
 	private Set<Sender> senders = new HashSet<Sender>();
 	private List<SenderAddedOrRemovedListener> saorl;
 	
-	private int threadPoolSize = 15;
+	private int threadPoolSize = 5;
 	private int statsInterval = 1000;
 	
 	public SenderPool() {
@@ -49,7 +48,7 @@ public class SenderPool implements SenderManager {
 			psize = new Integer(params.get("psize"));
 			if(psize<150 || psize>9000) throw new Exception();
 			payload = params.get("payload");
-			ptype = Sender.PacketType.getByIdentifier(params.get("ptype"));
+			ptype = Sender.PacketType.getByIdentifier(params.get("ptype").toUpperCase());
 			abeh = MulticastStream.AnalyzingBehaviour.getByIdentifier(params.get("abeh"));
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -75,11 +74,12 @@ public class SenderPool implements SenderManager {
 
 	public void remove(Sender sender) {
 		sender.deactivate();
+		senders.remove(sender);
 		this.fireSenderRemovedEvent(sender);
 	}
 
 	public Collection<Sender> getSenders() {
-		return senders;
+		return new HashSet<Sender>(senders);
 	}
 
 	public void killAll() {
@@ -125,25 +125,6 @@ public class SenderPool implements SenderManager {
 
 	public void setStatsInterval(int statsInterval) {
 		this.statsInterval = statsInterval;
-	}
-	
-	public static void main(String... args) {
-		SenderManager sm = new SenderPool();
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("group", "224.0.0.1");
-		params.put("port", "1234");
-		params.put("ttl", "127");
-		params.put("ninf", "127.0.0.1");
-		params.put("pps", "500");
-		params.put("psize", "300");
-		params.put("payload", "Hallo Welt");
-		params.put("ptype", "spam");
-		params.put("abeh", "default");
-		for(int i=0; i<1; i++) {
-			sm.create(params).activate();
-		}
-		try { Thread.sleep(30*1000); } catch(Exception e) {}
-		sm.killAll();
 	}
 
 }

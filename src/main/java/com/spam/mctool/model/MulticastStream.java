@@ -14,15 +14,16 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 public abstract class MulticastStream implements Runnable {
 	
 	// internals
-	transient protected State state = State.INACTIVE;
+	protected State state = State.INACTIVE;
 	protected AnalyzingBehaviour analyzingBehaviour;
-	transient protected ScheduledThreadPoolExecutor stpe;
-	transient protected ScheduledFuture<? extends Object> sf, asf;
+	protected ScheduledThreadPoolExecutor stpe;
+	protected ScheduledFuture<? extends Object> sf, asf;
 	// network
 	protected NetworkInterface networkInterface;
 	protected InetAddress group;
 	protected int port;
 	protected MulticastSocket socket;
+	protected Class<?> ipMode;
 	// statistics
 	protected int statsInterval;
 
@@ -95,7 +96,7 @@ public abstract class MulticastStream implements Runnable {
 		
 		private String dispName;
 		
-		PacketType(String dispName) {
+		private PacketType(String dispName) {
 			this.dispName = dispName;
 		}
 		
@@ -104,10 +105,13 @@ public abstract class MulticastStream implements Runnable {
 		}
 		
 		public static PacketType getByIdentifier(String ident) {
+			ident = ident.toLowerCase();
 			if(ident.equals("hmann")) {
 				return PacketType.HMANN;
-			} else {
+			} else if(ident.equals("spam")) {
 				return PacketType.SPAM;
+			} else {
+				throw new IllegalArgumentException();
 			}
 		}
 	}
@@ -123,6 +127,7 @@ public abstract class MulticastStream implements Runnable {
 	 * @param group IP multicast group to set
 	 */
 	public void setGroup(InetAddress group) {
+		this.ipMode = group.getClass();
 		this.group = group;
 	}
 	

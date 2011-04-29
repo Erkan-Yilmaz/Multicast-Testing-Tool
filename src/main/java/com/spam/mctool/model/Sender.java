@@ -2,9 +2,12 @@ package com.spam.mctool.model;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
+import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -330,14 +333,14 @@ public class Sender extends MulticastStream {
 	 * @return minimum measured packets per second
 	 */
 	public long getMinPPS() {
-		return (minPPS==Long.MAX_VALUE) ? 0 : minPPS;
+		return (minPPS==Integer.MAX_VALUE) ? 0 : minPPS;
 	}
 
 	/**
 	 * @return maximum measured packets per second
 	 */
 	public long getMaxPPS() {
-		return (maxPPS==Long.MIN_VALUE) ? 0 : maxPPS;
+		return (maxPPS==Integer.MIN_VALUE) ? 0 : maxPPS;
 	}
 	
 	/**
@@ -352,6 +355,35 @@ public class Sender extends MulticastStream {
 	 */
 	public Map<Long, Exception> getExceptions() {
 		return Collections.unmodifiableMap(exceptions);
+	}
+	
+	/**
+	 * @return a map with the configuration of this sender. Is in same format as map used to
+	 * create the sender with the SenderPool.
+	 */
+	public Map<String, String> getConfiguration() {
+		HashMap<String, String> conf = new HashMap<String, String>();
+		
+		// get interface ip address in fitting ip mode
+		Enumeration<InetAddress> addresses = this.getNetworkInterface().getInetAddresses();
+		InetAddress ninf = null;
+		while(addresses.hasMoreElements()) {
+			ninf = addresses.nextElement();
+			if(ninf.getClass().equals(ipMode)) {
+				break;
+			}
+		}
+		conf.put("ninf", ninf.getHostAddress());
+		conf.put("group", this.getGroup().getHostAddress());
+		conf.put("port", ""+this.getPort());
+		conf.put("pps", ""+this.getSenderConfiguredPacketRate());
+		conf.put("psize", ""+this.getPacketSize());
+		conf.put("ttl", ""+this.getTtl());
+		conf.put("payload", this.getPayloadAsString());
+		conf.put("ptype", this.getpType().name());
+		conf.put("abeh", this.getAnalyzingBehaviour().getIdentifier());
+		
+		return conf;
 	}
 	
 	/**

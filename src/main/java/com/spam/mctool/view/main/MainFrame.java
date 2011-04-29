@@ -6,6 +6,7 @@
 
 package com.spam.mctool.view.main;
 
+import com.spam.mctool.controller.Profile;
 import com.spam.mctool.intermediates.ProfileChangeEvent;
 import com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
@@ -16,19 +17,23 @@ import com.spam.mctool.model.Receiver;
 import com.spam.mctool.model.ReceiverGroup;
 import com.spam.mctool.model.Sender;
 import com.spam.mctool.view.GraphicalView;
+import com.spam.mctool.view.dialogs.AboutDialog;
 import com.spam.mctool.view.dialogs.EditReceiverDialog;
 import com.spam.mctool.view.dialogs.EditSenderDialog;
+import com.spam.mctool.view.dialogs.PreferencesDialog;
 import com.spam.mctool.view.dialogs.SaveProfileDialog;
 import com.spam.mctool.view.dialogs.ShowReceiverDialog;
 import com.spam.mctool.view.dialogs.ShowSenderDialog;
 import com.spam.mctool.view.main.receivertable.ReceiverTableModel;
-import com.spam.mctool.view.main.sendertable.JSenderTable;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.JFileChooser;
+import javax.swing.JMenuItem;
 import javax.swing.event.ListSelectionEvent;
 
 /**
@@ -116,72 +121,55 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         miSaveProfileAs = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         miPreferences = new javax.swing.JMenuItem();
-        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        sepBeforeRecentProfiles = new javax.swing.JPopupMenu.Separator();
+        sepAfterRecentProfiles = new javax.swing.JPopupMenu.Separator();
         miExit = new javax.swing.JMenuItem();
-        menuSender = new javax.swing.JMenu();
-        miShowSenders = new javax.swing.JCheckBoxMenuItem();
-        miShowSendingStatistics = new javax.swing.JCheckBoxMenuItem();
-        jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        miSenderActivate = new javax.swing.JMenuItem();
-        miSenderDeactivate = new javax.swing.JMenuItem();
-        jSeparator9 = new javax.swing.JPopupMenu.Separator();
-        miSenderAdd = new javax.swing.JMenuItem();
-        miSenderEdit = new javax.swing.JMenuItem();
-        miSenderDelete = new javax.swing.JMenuItem();
-        miSenderDetails = new javax.swing.JMenuItem();
-        jSeparator4 = new javax.swing.JPopupMenu.Separator();
-        miSenderSelectAll = new javax.swing.JMenuItem();
-        jSeparator5 = new javax.swing.JPopupMenu.Separator();
-        miSenderActivateAll = new javax.swing.JMenuItem();
-        miSenderDeactivateAll = new javax.swing.JMenuItem();
-        miSenderDeleteAll = new javax.swing.JMenuItem();
-        menuReceiver = new javax.swing.JMenu();
-        miShowReceivers = new javax.swing.JCheckBoxMenuItem();
-        miShowReceivingStatistics = new javax.swing.JCheckBoxMenuItem();
-        jSeparator6 = new javax.swing.JPopupMenu.Separator();
-        miReceiverActivate = new javax.swing.JMenuItem();
-        miReceiverDeactivate = new javax.swing.JMenuItem();
-        jSeparator10 = new javax.swing.JPopupMenu.Separator();
-        miReceiverAdd = new javax.swing.JMenuItem();
-        miReceiverEdit = new javax.swing.JMenuItem();
-        miReceiverDelete = new javax.swing.JMenuItem();
-        mirReceiverDetails = new javax.swing.JMenuItem();
-        jSeparator7 = new javax.swing.JPopupMenu.Separator();
-        miReceiverSelectAll = new javax.swing.JMenuItem();
-        jSeparator8 = new javax.swing.JPopupMenu.Separator();
-        miReceiverActivateAll = new javax.swing.JMenuItem();
-        miReceiverDeactivateAll = new javax.swing.JMenuItem();
-        miReceiverDeleteAll = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
         miAbout = new javax.swing.JMenuItem();
         miHelp = new javax.swing.JMenuItem();
 
+        statusRenderer1.setName("statusRenderer1"); // NOI18N
+
+        twoColorRenderer1.setName("twoColorRenderer1"); // NOI18N
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("MainFrame.title") + (view.getCurrentProfile().getName() != null ? " - " + view.getCurrentProfile().getName() : ""));
+        setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("MainFrame.title") + ((view.getCurrentProfile() != null && view.getCurrentProfile().getName() != null) ? " - " + view.getCurrentProfile().getName() : ""));
+        setName("Form"); // NOI18N
 
         mainSplitPane.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         mainSplitPane.setDividerLocation(267);
         mainSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         mainSplitPane.setResizeWeight(0.5);
         mainSplitPane.setContinuousLayout(true);
+        mainSplitPane.setName("mainSplitPane"); // NOI18N
         mainSplitPane.setOneTouchExpandable(true);
 
         senderSplitPane.setBorder(null);
         senderSplitPane.setDividerLocation(590);
         senderSplitPane.setResizeWeight(1.0);
         senderSplitPane.setContinuousLayout(true);
+        senderSplitPane.setName("senderSplitPane"); // NOI18N
         senderSplitPane.setOneTouchExpandable(true);
+
+        paSendingStatistics.setName("paSendingStatistics"); // NOI18N
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
         laSendingStatistics.setText(bundle.getString("MainFrame.laSendingStatistics.text")); // NOI18N
+        laSendingStatistics.setName("laSendingStatistics"); // NOI18N
 
         laSentCaption.setText(bundle.getString("MainFrame.laSentCaption.text")); // NOI18N
+        laSentCaption.setName("laSentCaption"); // NOI18N
 
         laSenderRateCaption.setText(bundle.getString("MainFrame.laSenderRateCaption.text")); // NOI18N
+        laSenderRateCaption.setName("laSenderRateCaption"); // NOI18N
+
+        sendingStatisticsSeparator.setName("sendingStatisticsSeparator"); // NOI18N
 
         laSent.setText(bundle.getString("MainFrame.laSent.text")); // NOI18N
+        laSent.setName("laSent"); // NOI18N
 
         laSenderRate.setText(bundle.getString("MainFrame.laSenderRate.text")); // NOI18N
+        laSenderRate.setName("laSenderRate"); // NOI18N
 
         javax.swing.GroupLayout paSendingStatisticsLayout = new javax.swing.GroupLayout(paSendingStatistics);
         paSendingStatistics.setLayout(paSendingStatisticsLayout);
@@ -222,13 +210,16 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         senderSplitPane.setRightComponent(paSendingStatistics);
 
+        paSenderTableOuter.setName("paSenderTableOuter"); // NOI18N
         paSenderTableOuter.setLayout(new java.awt.BorderLayout());
 
+        paSenderButtons.setName("paSenderButtons"); // NOI18N
         paSenderButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         buActivateSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/play_green.png"))); // NOI18N
         buActivateSender.setText(bundle.getString("MainFrame.buActivateSender.text")); // NOI18N
         buActivateSender.setEnabled(false);
+        buActivateSender.setName("buActivateSender"); // NOI18N
         buActivateSender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buActivateSenderActionPerformed(evt);
@@ -239,6 +230,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         buDeactivateSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/stop_red.png"))); // NOI18N
         buDeactivateSender.setText(bundle.getString("MainFrame.buDeactivateSender.text")); // NOI18N
         buDeactivateSender.setEnabled(false);
+        buDeactivateSender.setName("buDeactivateSender"); // NOI18N
         buDeactivateSender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buDeactivateSenderActionPerformed(evt);
@@ -248,6 +240,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         buAddSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add_green.png"))); // NOI18N
         buAddSender.setText(bundle.getString("MainFrame.buAddSender.text")); // NOI18N
+        buAddSender.setName("buAddSender"); // NOI18N
         buAddSender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buAddSenderActionPerformed(evt);
@@ -258,6 +251,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         buShowSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/preview.png"))); // NOI18N
         buShowSender.setText(bundle.getString("MainFrame.buShowSender.text")); // NOI18N
         buShowSender.setEnabled(false);
+        buShowSender.setName("buShowSender"); // NOI18N
         buShowSender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buShowSenderActionPerformed(evt);
@@ -268,6 +262,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         buEditSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
         buEditSender.setText(bundle.getString("MainFrame.buEditSender.text")); // NOI18N
         buEditSender.setEnabled(false);
+        buEditSender.setName("buEditSender"); // NOI18N
         buEditSender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buEditSenderActionPerformed(evt);
@@ -278,6 +273,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         buDeleteSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
         buDeleteSender.setText(bundle.getString("MainFrame.buDeleteSender.text")); // NOI18N
         buDeleteSender.setEnabled(false);
+        buDeleteSender.setName("buDeleteSender"); // NOI18N
         buDeleteSender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buDeleteSenderActionPerformed(evt);
@@ -287,14 +283,17 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         paSenderTableOuter.add(paSenderButtons, java.awt.BorderLayout.SOUTH);
 
+        paSenderTableInner.setName("paSenderTableInner"); // NOI18N
         paSenderTableInner.setLayout(new java.awt.BorderLayout());
 
+        jScrollPane2.setName("jScrollPane2"); // NOI18N
         jScrollPane2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jScrollPane2MouseClicked(evt);
             }
         });
 
+        senderTable.setName("senderTable"); // NOI18N
         senderTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 senderTableMouseClicked(evt);
@@ -307,12 +306,15 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         paSenderTableOuter.add(paSenderTableInner, java.awt.BorderLayout.CENTER);
 
+        paSenderTableCaption.setName("paSenderTableCaption"); // NOI18N
         paSenderTableCaption.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         laSenderTableCaption.setText(bundle.getString("MainFrame.laSenderTableCaption.text")); // NOI18N
+        laSenderTableCaption.setName("laSenderTableCaption"); // NOI18N
         paSenderTableCaption.add(laSenderTableCaption);
 
         senderTableIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/sender.png"))); // NOI18N
+        senderTableIcon.setName("senderTableIcon"); // NOI18N
         paSenderTableCaption.add(senderTableIcon);
 
         paSenderTableOuter.add(paSenderTableCaption, java.awt.BorderLayout.NORTH);
@@ -325,25 +327,39 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         receiverSplitPane.setDividerLocation(590);
         receiverSplitPane.setResizeWeight(1.0);
         receiverSplitPane.setContinuousLayout(true);
+        receiverSplitPane.setName("receiverSplitPane"); // NOI18N
         receiverSplitPane.setOneTouchExpandable(true);
 
+        paReceivingStatistics.setName("paReceivingStatistics"); // NOI18N
+
         laReceivingStatisticsCaption.setText(bundle.getString("MainFrame.laReceivingStatisticsCaption.text")); // NOI18N
+        laReceivingStatisticsCaption.setName("laReceivingStatisticsCaption"); // NOI18N
 
         laReceivedCaption.setText(bundle.getString("MainFrame.laReceivedCaption.text")); // NOI18N
+        laReceivedCaption.setName("laReceivedCaption"); // NOI18N
 
         laReceivingRateCaption.setText(bundle.getString("MainFrame.laReceivingRateCaption.text")); // NOI18N
+        laReceivingRateCaption.setName("laReceivingRateCaption"); // NOI18N
 
         laLostPacketsCaption.setText(bundle.getString("MainFrame.laLostPacketsCaption.text")); // NOI18N
+        laLostPacketsCaption.setName("laLostPacketsCaption"); // NOI18N
 
         laFaultyPacketsCaption.setText(bundle.getString("MainFrame.laFaultyPacketsCaption.text")); // NOI18N
+        laFaultyPacketsCaption.setName("laFaultyPacketsCaption"); // NOI18N
+
+        receivingStatisticsSeparator.setName("receivingStatisticsSeparator"); // NOI18N
 
         laReceived.setText(bundle.getString("MainFrame.laReceived.text")); // NOI18N
+        laReceived.setName("laReceived"); // NOI18N
 
         laReceivingRate.setText(bundle.getString("MainFrame.laReceivingRate.text")); // NOI18N
+        laReceivingRate.setName("laReceivingRate"); // NOI18N
 
         laLostPackets.setText(bundle.getString("MainFrame.laLostPackets.text")); // NOI18N
+        laLostPackets.setName("laLostPackets"); // NOI18N
 
         laFaultyPackets.setText(bundle.getString("MainFrame.laFaultyPackets.text")); // NOI18N
+        laFaultyPackets.setName("laFaultyPackets"); // NOI18N
 
         javax.swing.GroupLayout paReceivingStatisticsLayout = new javax.swing.GroupLayout(paReceivingStatistics);
         paReceivingStatistics.setLayout(paReceivingStatisticsLayout);
@@ -400,13 +416,16 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         receiverSplitPane.setRightComponent(paReceivingStatistics);
 
+        paReceiverTableOuter.setName("paReceiverTableOuter"); // NOI18N
         paReceiverTableOuter.setLayout(new java.awt.BorderLayout());
 
+        paReceiverButtons.setName("paReceiverButtons"); // NOI18N
         paReceiverButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         buActivateReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/play_green.png"))); // NOI18N
         buActivateReceiver.setText(bundle.getString("MainFrame.buActivateReceiver.text")); // NOI18N
         buActivateReceiver.setEnabled(false);
+        buActivateReceiver.setName("buActivateReceiver"); // NOI18N
         buActivateReceiver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buActivateReceiverActionPerformed(evt);
@@ -417,6 +436,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         buDeactivateReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/stop_red.png"))); // NOI18N
         buDeactivateReceiver.setText(bundle.getString("MainFrame.buDeactivateReceiver.text")); // NOI18N
         buDeactivateReceiver.setEnabled(false);
+        buDeactivateReceiver.setName("buDeactivateReceiver"); // NOI18N
         buDeactivateReceiver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buDeactivateReceiverActionPerformed(evt);
@@ -426,6 +446,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         buAddReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add_green.png"))); // NOI18N
         buAddReceiver.setText(bundle.getString("MainFrame.buAddReceiver.text")); // NOI18N
+        buAddReceiver.setName("buAddReceiver"); // NOI18N
         buAddReceiver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buAddReceiverActionPerformed(evt);
@@ -436,6 +457,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         buShowReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/preview.png"))); // NOI18N
         buShowReceiver.setText(bundle.getString("MainFrame.buShowReceiver.text")); // NOI18N
         buShowReceiver.setEnabled(false);
+        buShowReceiver.setName("buShowReceiver"); // NOI18N
         buShowReceiver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buShowReceiverActionPerformed(evt);
@@ -446,6 +468,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         buEditReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
         buEditReceiver.setText(bundle.getString("MainFrame.buEditReceiver.text")); // NOI18N
         buEditReceiver.setEnabled(false);
+        buEditReceiver.setName("buEditReceiver"); // NOI18N
         buEditReceiver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buEditReceiverActionPerformed(evt);
@@ -456,6 +479,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         buDeleteReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
         buDeleteReceiver.setText(bundle.getString("MainFrame.buDeleteReceiver.text")); // NOI18N
         buDeleteReceiver.setEnabled(false);
+        buDeleteReceiver.setName("buDeleteReceiver"); // NOI18N
         buDeleteReceiver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buDeleteReceiverActionPerformed(evt);
@@ -465,8 +489,10 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         paReceiverTableOuter.add(paReceiverButtons, java.awt.BorderLayout.PAGE_END);
 
+        paReceiverTableInner.setName("paReceiverTableInner"); // NOI18N
         paReceiverTableInner.setLayout(new java.awt.BorderLayout());
 
+        jScrollPane1.setName("jScrollPane1"); // NOI18N
         jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jScrollPane1MouseClicked(evt);
@@ -475,6 +501,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         receiverTable.setGridColor(javax.swing.UIManager.getDefaults().getColor("control"));
         receiverTable.setIntercellSpacing(new java.awt.Dimension(0, 1));
+        receiverTable.setName("receiverTable"); // NOI18N
         receiverTable.getSelectionModel().addListSelectionListener(this);
         jScrollPane1.setViewportView(receiverTable);
 
@@ -482,12 +509,15 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         paReceiverTableOuter.add(paReceiverTableInner, java.awt.BorderLayout.CENTER);
 
+        paReceiverTableCaption.setName("paReceiverTableCaption"); // NOI18N
         paReceiverTableCaption.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         laReceiverTableCaption.setText(bundle.getString("MainFrame.laReceiverTableCaption.text")); // NOI18N
+        laReceiverTableCaption.setName("laReceiverTableCaption"); // NOI18N
         paReceiverTableCaption.add(laReceiverTableCaption);
 
         laReceiverTableIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/receiver.png"))); // NOI18N
+        laReceiverTableIcon.setName("laReceiverTableIcon"); // NOI18N
         paReceiverTableCaption.add(laReceiverTableIcon);
 
         paReceiverTableOuter.add(paReceiverTableCaption, java.awt.BorderLayout.NORTH);
@@ -496,9 +526,22 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         mainSplitPane.setRightComponent(receiverSplitPane);
 
+        menuBar.setName("menuBar"); // NOI18N
+
         menuFile.setText(bundle.getString("MainFrame.menuFile.text")); // NOI18N
+        menuFile.setName("menuFile"); // NOI18N
+        menuFile.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                menuFileMenuSelected(evt);
+            }
+        });
 
         miOpenProfile.setText(bundle.getString("MainFrame.miOpenProfile.text")); // NOI18N
+        miOpenProfile.setName("miOpenProfile"); // NOI18N
         miOpenProfile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 miOpenProfileActionPerformed(evt);
@@ -507,129 +550,66 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         menuFile.add(miOpenProfile);
 
         miSaveProfile.setText(bundle.getString("MainFrame.miSaveProfile.text")); // NOI18N
+        miSaveProfile.setName("miSaveProfile"); // NOI18N
+        miSaveProfile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miSaveProfileActionPerformed(evt);
+            }
+        });
         menuFile.add(miSaveProfile);
 
         miSaveProfileAs.setText(bundle.getString("MainFrame.miSaveProfileAs.text")); // NOI18N
+        miSaveProfileAs.setName("miSaveProfileAs"); // NOI18N
         miSaveProfileAs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 miSaveProfileAsActionPerformed(evt);
             }
         });
         menuFile.add(miSaveProfileAs);
+
+        jSeparator1.setName("jSeparator1"); // NOI18N
         menuFile.add(jSeparator1);
 
         miPreferences.setText(bundle.getString("MainFrame.miPreferences.text")); // NOI18N
+        miPreferences.setName("miPreferences"); // NOI18N
+        miPreferences.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miPreferencesActionPerformed(evt);
+            }
+        });
         menuFile.add(miPreferences);
-        menuFile.add(jSeparator2);
+
+        sepBeforeRecentProfiles.setName("sepBeforeRecentProfiles"); // NOI18N
+        menuFile.add(sepBeforeRecentProfiles);
+
+        sepAfterRecentProfiles.setName("sepAfterRecentProfiles"); // NOI18N
+        menuFile.add(sepAfterRecentProfiles);
 
         miExit.setText(bundle.getString("MainFrame.miExit.text")); // NOI18N
+        miExit.setName("miExit"); // NOI18N
+        miExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miExitActionPerformed(evt);
+            }
+        });
         menuFile.add(miExit);
 
         menuBar.add(menuFile);
 
-        menuSender.setText(bundle.getString("MainFrame.menuSender.text")); // NOI18N
-
-        miShowSenders.setSelected(true);
-        miShowSenders.setText(bundle.getString("MainFrame.miShowSenders.text")); // NOI18N
-        menuSender.add(miShowSenders);
-
-        miShowSendingStatistics.setSelected(true);
-        miShowSendingStatistics.setText(bundle.getString("MainFrame.miShowSendingStatistics.text")); // NOI18N
-        menuSender.add(miShowSendingStatistics);
-        menuSender.add(jSeparator3);
-
-        miSenderActivate.setText(bundle.getString("MainFrame.miSenderActivate.text")); // NOI18N
-        miSenderActivate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miSenderActivateActionPerformed(evt);
-            }
-        });
-        menuSender.add(miSenderActivate);
-
-        miSenderDeactivate.setText(bundle.getString("MainFrame.miSenderDeactivate.text")); // NOI18N
-        menuSender.add(miSenderDeactivate);
-        menuSender.add(jSeparator9);
-
-        miSenderAdd.setText(bundle.getString("MainFrame.miSenderAdd.text")); // NOI18N
-        menuSender.add(miSenderAdd);
-
-        miSenderEdit.setText(bundle.getString("MainFrame.miSenderEdit.text")); // NOI18N
-        menuSender.add(miSenderEdit);
-
-        miSenderDelete.setText(bundle.getString("MainFrame.miSenderDelete.text")); // NOI18N
-        menuSender.add(miSenderDelete);
-
-        miSenderDetails.setText(bundle.getString("MainFrame.miSenderDetails.text")); // NOI18N
-        menuSender.add(miSenderDetails);
-        menuSender.add(jSeparator4);
-
-        miSenderSelectAll.setText(bundle.getString("MainFrame.miSenderSelectAll.text")); // NOI18N
-        menuSender.add(miSenderSelectAll);
-        menuSender.add(jSeparator5);
-
-        miSenderActivateAll.setText(bundle.getString("MainFrame.miSenderActivateAll.text")); // NOI18N
-        menuSender.add(miSenderActivateAll);
-
-        miSenderDeactivateAll.setText(bundle.getString("MainFrame.miSenderDeactivateAll.text")); // NOI18N
-        menuSender.add(miSenderDeactivateAll);
-
-        miSenderDeleteAll.setText(bundle.getString("MainFrame.miSenderDeleteAll.text")); // NOI18N
-        menuSender.add(miSenderDeleteAll);
-
-        menuBar.add(menuSender);
-
-        menuReceiver.setText(bundle.getString("MainFrame.menuReceiver.text")); // NOI18N
-
-        miShowReceivers.setSelected(true);
-        miShowReceivers.setText(bundle.getString("MainFrame.miShowReceivers.text")); // NOI18N
-        menuReceiver.add(miShowReceivers);
-
-        miShowReceivingStatistics.setSelected(true);
-        miShowReceivingStatistics.setText(bundle.getString("MainFrame.miShowReceivingStatistics.text")); // NOI18N
-        menuReceiver.add(miShowReceivingStatistics);
-        menuReceiver.add(jSeparator6);
-
-        miReceiverActivate.setText(bundle.getString("MainFrame.miReceiverActivate.text")); // NOI18N
-        menuReceiver.add(miReceiverActivate);
-
-        miReceiverDeactivate.setText(bundle.getString("MainFrame.miReceiverDeactivate.text")); // NOI18N
-        menuReceiver.add(miReceiverDeactivate);
-        menuReceiver.add(jSeparator10);
-
-        miReceiverAdd.setText(bundle.getString("MainFrame.miReceiverAdd.text")); // NOI18N
-        menuReceiver.add(miReceiverAdd);
-
-        miReceiverEdit.setText(bundle.getString("MainFrame.miReceiverEdit.text")); // NOI18N
-        menuReceiver.add(miReceiverEdit);
-
-        miReceiverDelete.setText(bundle.getString("MainFrame.miReceiverDelete.text")); // NOI18N
-        menuReceiver.add(miReceiverDelete);
-
-        mirReceiverDetails.setText(bundle.getString("MainFrame.mirReceiverDetails.text")); // NOI18N
-        menuReceiver.add(mirReceiverDetails);
-        menuReceiver.add(jSeparator7);
-
-        miReceiverSelectAll.setText(bundle.getString("MainFrame.miReceiverSelectAll.text")); // NOI18N
-        menuReceiver.add(miReceiverSelectAll);
-        menuReceiver.add(jSeparator8);
-
-        miReceiverActivateAll.setText(bundle.getString("MainFrame.miReceiverActivateAll.text")); // NOI18N
-        menuReceiver.add(miReceiverActivateAll);
-
-        miReceiverDeactivateAll.setText(bundle.getString("MainFrame.miReceiverDeactivateAll.text")); // NOI18N
-        menuReceiver.add(miReceiverDeactivateAll);
-
-        miReceiverDeleteAll.setText(bundle.getString("MainFrame.miReceiverDeleteAll.text")); // NOI18N
-        menuReceiver.add(miReceiverDeleteAll);
-
-        menuBar.add(menuReceiver);
-
         menuHelp.setText(bundle.getString("MainFrame.menuHelp.text")); // NOI18N
+        menuHelp.setName("menuHelp"); // NOI18N
 
         miAbout.setText(bundle.getString("MainFrame.miAbout.text")); // NOI18N
+        miAbout.setName("miAbout"); // NOI18N
+        miAbout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miAboutActionPerformed(evt);
+            }
+        });
         menuHelp.add(miAbout);
 
         miHelp.setText(bundle.getString("MainFrame.miHelp.text")); // NOI18N
+        miHelp.setName("miHelp"); // NOI18N
         menuHelp.add(miHelp);
 
         menuBar.add(menuHelp);
@@ -660,7 +640,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         for(Sender s : senderTable.getSelectedSenders()) {
             s.activate();
         }
-        refreshSenderButtons();
+        refreshSenderControls();
     }//GEN-LAST:event_buActivateSenderActionPerformed
 
     /**
@@ -687,7 +667,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         for(Sender s : senderTable.getSelectedSenders()) {
             s.deactivate();
         }
-        refreshSenderButtons();
+        refreshSenderControls();
     }//GEN-LAST:event_buDeactivateSenderActionPerformed
 
     private void buAddReceiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buAddReceiverActionPerformed
@@ -716,6 +696,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     private void buEditSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buEditSenderActionPerformed
         Sender s = senderTable.getSelectedSenders().get(0);
         new EditSenderDialog(this, true, s, false).setVisible(true);
+        refreshSenderControls();
     }//GEN-LAST:event_buEditSenderActionPerformed
 
     private void buDeleteSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buDeleteSenderActionPerformed
@@ -731,7 +712,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         for(ReceiverGroup r : receiverTable.getSelectedReceiverGroups()) {
             r.activate();
         }
-        refreshReceiverButtons();
+        refreshReceiverControls();
     }//GEN-LAST:event_buActivateReceiverActionPerformed
 
     /**
@@ -742,7 +723,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         for(ReceiverGroup r : receiverTable.getSelectedReceiverGroups()) {
             r.deactivate();
         }
-        refreshReceiverButtons();
+        refreshReceiverControls();
     }//GEN-LAST:event_buDeactivateReceiverActionPerformed
 
     /**
@@ -764,6 +745,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     private void buEditReceiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buEditReceiverActionPerformed
         ReceiverGroup rg = receiverTable.getSelectedReceiverGroups().get(0);
         new EditReceiverDialog(this, true, rg, false).setVisible(true);
+        refreshReceiverControls();
     }//GEN-LAST:event_buEditReceiverActionPerformed
 
     private void buDeleteReceiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buDeleteReceiverActionPerformed
@@ -786,16 +768,43 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     }//GEN-LAST:event_jScrollPane1MouseClicked
 
     private void miOpenProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miOpenProfileActionPerformed
-        new JFileChooser().showOpenDialog(this);
+        JFileChooser chooser = new JFileChooser();
+        int returnVal = chooser.showOpenDialog(this);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            view.loadProfile(chooser.getSelectedFile());
+        }
     }//GEN-LAST:event_miOpenProfileActionPerformed
 
     private void miSaveProfileAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSaveProfileAsActionPerformed
-        new SaveProfileDialog(this, true).setVisible(true);
+        SaveProfileDialog dlg = new SaveProfileDialog(this, true);
+        dlg.setVisible(true);
+        if(dlg.getSelection().equals(JFileChooser.APPROVE_SELECTION)) {
+            view.saveProfile(dlg.getProfileName(), dlg.getSelectedFile());
+        }
+        loadRecentProfiles();
     }//GEN-LAST:event_miSaveProfileAsActionPerformed
 
-    private void miSenderActivateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSenderActivateActionPerformed
-        this.buActivateSenderActionPerformed(evt);
-    }//GEN-LAST:event_miSenderActivateActionPerformed
+    private void miSaveProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSaveProfileActionPerformed
+        view.saveCurrentProfile();
+    }//GEN-LAST:event_miSaveProfileActionPerformed
+
+    private void miExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miExitActionPerformed
+        // TODO use the controller's exit method!
+        this.dispose();
+    }//GEN-LAST:event_miExitActionPerformed
+
+    private void miAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAboutActionPerformed
+        new AboutDialog(this, true).setVisible(true);
+    }//GEN-LAST:event_miAboutActionPerformed
+
+    private void miPreferencesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miPreferencesActionPerformed
+        new PreferencesDialog(this, false).setVisible(true);
+    }//GEN-LAST:event_miPreferencesActionPerformed
+
+    private void menuFileMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_menuFileMenuSelected
+        System.out.println("MenuSelected");
+        loadRecentProfiles();
+    }//GEN-LAST:event_menuFileMenuSelected
 
     /**
     * @param args the command line arguments
@@ -826,15 +835,6 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JPopupMenu.Separator jSeparator10;
-    private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JPopupMenu.Separator jSeparator3;
-    private javax.swing.JPopupMenu.Separator jSeparator4;
-    private javax.swing.JPopupMenu.Separator jSeparator5;
-    private javax.swing.JPopupMenu.Separator jSeparator6;
-    private javax.swing.JPopupMenu.Separator jSeparator7;
-    private javax.swing.JPopupMenu.Separator jSeparator8;
-    private javax.swing.JPopupMenu.Separator jSeparator9;
     private javax.swing.JLabel laFaultyPackets;
     private javax.swing.JLabel laFaultyPacketsCaption;
     private javax.swing.JLabel laLostPackets;
@@ -856,39 +856,13 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenu menuHelp;
-    private javax.swing.JMenu menuReceiver;
-    private javax.swing.JMenu menuSender;
     private javax.swing.JMenuItem miAbout;
     private javax.swing.JMenuItem miExit;
     private javax.swing.JMenuItem miHelp;
     private javax.swing.JMenuItem miOpenProfile;
     private javax.swing.JMenuItem miPreferences;
-    private javax.swing.JMenuItem miReceiverActivate;
-    private javax.swing.JMenuItem miReceiverActivateAll;
-    private javax.swing.JMenuItem miReceiverAdd;
-    private javax.swing.JMenuItem miReceiverDeactivate;
-    private javax.swing.JMenuItem miReceiverDeactivateAll;
-    private javax.swing.JMenuItem miReceiverDelete;
-    private javax.swing.JMenuItem miReceiverDeleteAll;
-    private javax.swing.JMenuItem miReceiverEdit;
-    private javax.swing.JMenuItem miReceiverSelectAll;
     private javax.swing.JMenuItem miSaveProfile;
     private javax.swing.JMenuItem miSaveProfileAs;
-    private javax.swing.JMenuItem miSenderActivate;
-    private javax.swing.JMenuItem miSenderActivateAll;
-    private javax.swing.JMenuItem miSenderAdd;
-    private javax.swing.JMenuItem miSenderDeactivate;
-    private javax.swing.JMenuItem miSenderDeactivateAll;
-    private javax.swing.JMenuItem miSenderDelete;
-    private javax.swing.JMenuItem miSenderDeleteAll;
-    private javax.swing.JMenuItem miSenderDetails;
-    private javax.swing.JMenuItem miSenderEdit;
-    private javax.swing.JMenuItem miSenderSelectAll;
-    private javax.swing.JCheckBoxMenuItem miShowReceivers;
-    private javax.swing.JCheckBoxMenuItem miShowReceivingStatistics;
-    private javax.swing.JCheckBoxMenuItem miShowSenders;
-    private javax.swing.JCheckBoxMenuItem miShowSendingStatistics;
-    private javax.swing.JMenuItem mirReceiverDetails;
     private javax.swing.JPanel paReceiverButtons;
     private javax.swing.JPanel paReceiverTableCaption;
     private javax.swing.JPanel paReceiverTableInner;
@@ -906,6 +880,8 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     private com.spam.mctool.view.main.sendertable.JSenderTable senderTable;
     private javax.swing.JLabel senderTableIcon;
     private javax.swing.JSeparator sendingStatisticsSeparator;
+    private javax.swing.JPopupMenu.Separator sepAfterRecentProfiles;
+    private javax.swing.JPopupMenu.Separator sepBeforeRecentProfiles;
     private com.spam.mctool.view.main.sendertable.SenderStateRenderer statusRenderer1;
     private com.spam.mctool.view.main.TwoColorRenderer twoColorRenderer1;
     // End of variables declaration//GEN-END:variables
@@ -930,8 +906,19 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         ReceiverTableModel tableModel = (ReceiverTableModel)receiverTable.getModel();
     }
 
-    public void addSender(Map<String, String> senderMap, boolean activate) {
-        this.view.addSender(senderMap, activate);
+    /**
+     * Tells the GUI controller to create a new sender and optionally activate it
+     * afterwards. Provides feedback, whether the operation was successful or not.
+     * More information about why the creation has failed will be communicated
+     * via ErrorEvents.
+     * @param senderMap Map containing parameters for the sender to be created.
+     * The map's contents are specified in SenderManager.
+     * @param activate Shall the sender be activated after creation?
+     * @return True, if the sender was created successfully. False, if the Sender
+     * could not be created.
+     */
+    public boolean addSender(Map<String, String> senderMap, boolean activate) {
+        return this.view.addSender(senderMap, activate);
     }
 
     public void senderAdded(SenderAddedOrRemovedEvent e) {
@@ -996,19 +983,31 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         laFaultyPackets.setText(faulty.toString());
     }
 
-    public void addReceiverGroup(Map<String, String> receiverMap, boolean activate) {
-        this.view.addReceiver(receiverMap, activate);
+    /**
+     * Tells the GUI controller to add a receiver group to this view's
+     * controller and optionally activate it
+     * afterwards. Provides feedback, whether the operation was successful or not.
+     * More information about why the creation has failed will be communicated
+     * via ErrorEvents.
+     * @param receiverMap Map containing parameters for the receiver group to be created.
+     * The map's contents are specified in ReceiverManager.
+     * @param activate Shall the receiver group be activated after creation?
+     * @return True, if the receiver group was created successfully. False, if
+     * rhe receiver group could not be created.
+     */
+    public boolean addReceiverGroup(Map<String, String> receiverMap, boolean activate) {
+        return this.view.addReceiverGroup(receiverMap, activate);
     }
 
     public void valueChanged(ListSelectionEvent e) {
         if(e.getSource() == senderTable.getSelectionModel()) {
-            refreshSenderButtons();
+            refreshSenderControls();
         } else if (e.getSource() == receiverTable.getSelectionModel()) {
-            refreshReceiverButtons();
+            refreshReceiverControls();
         }
     }
 
-    private void refreshSenderButtons() {
+    private void refreshSenderControls() {
         int rc = senderTable.getSelectedRowCount();
         if(rc == 0) {
             buActivateSender.setEnabled(false);
@@ -1036,7 +1035,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         }
     }
 
-    private void refreshReceiverButtons() {
+    private void refreshReceiverControls() {
         int rowCount = receiverTable.getSelectedRowCount();
 
         if(rowCount > 0) {
@@ -1070,11 +1069,63 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     }
 
     public void profileChanged(ProfileChangeEvent e) {
-        setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("MainFrame.title") + (view.getCurrentProfile().getName() != null ? " - " + view.getCurrentProfile().getName() : ""));
+        setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("MainFrame.title") + ((view.getCurrentProfile() != null && view.getCurrentProfile().getName() != null) ? " - " + view.getCurrentProfile().getName() : ""));
     }
 
-    
+    private void loadRecentProfiles() {
+        javax.swing.JMenuItem miRecentProfile;
+        
+        // get a list of profile items in menu. Also determine the position where
+        // to insert the new items.
+        List<JMenuItem> profileItems = new ArrayList<JMenuItem>();
+        int insertPos = 0;
+        boolean passedSeparator = false;
+        for(int i=0; i< menuFile.getMenuComponentCount(); i++) {
+            if(menuFile.getMenuComponent(i) == sepBeforeRecentProfiles) {
+                passedSeparator = true;
+                insertPos = i+1;
+                continue;
+            }
+            if(menuFile.getMenuComponent(i) == sepAfterRecentProfiles) {
+                break;
+            }
+            if(passedSeparator) {
+                profileItems.add((JMenuItem)menuFile.getMenuComponent(i));
+            }
+        }
+        
+        // remove profile items from menu
+        for(JMenuItem item : profileItems) {
+            menuFile.remove(item);
+        }
 
-    
+        // set insert position to end of menu as fallback solution
+        if(insertPos == 0) {
+            insertPos = menuFile.getMenuComponentCount();
+        }
+
+        // add the profiles
+        for(Profile p : view.getRecentProfiles()) {
+            miRecentProfile = new javax.swing.JMenuItem();
+            miRecentProfile.setText(p.getName());
+            miRecentProfile.setName("miRecentProfile" + p.getName());
+            miRecentProfile.setActionCommand(p.getName());
+            miRecentProfile.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    for(Profile p : view.getRecentProfiles()) {
+                        if(p.getName().equals(evt.getActionCommand())) {
+                            view.loadProfile(p.getPath());
+                            return;
+                        }
+                    }
+                }
+            });
+            menuFile.insert(miRecentProfile, insertPos++);
+        }
+    }
+
+
+
+
 
 }
