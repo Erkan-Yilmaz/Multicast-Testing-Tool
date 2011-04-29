@@ -59,4 +59,24 @@ public interface ReceiverManager {
 	 */
 	public void removeOverallReceiverStatisticsUpdateListener(com.spam.mctool.model.OverallReceiverStatisticsUpdatedListener l);
 	
+	/**
+	 * @return overall packets received by all active receiving streams
+	 */
+	public long getOverallReceivedPackets();
+	
+	/**
+	 * @return sum of receiving rates by all active receivers
+	 */
+	public long getOverallReceivedPPS();
+	
+	/**
+	 * @return sum of lost packets by all active receivers
+	 */
+	public long getOverallLostPackets();
+	
+	/**
+	 * @return sum of faulty packets by all active receivers
+	 */
+	public long getOverallFaultyPackets();
+	
 }

@@ -53,4 +53,26 @@ public interface SenderManager {
 	 */
 	public void removeSenderAddedOrRemovedListener(com.spam.mctool.model.SenderAddedOrRemovedListener l);
 	
+	/**
+	 * OverallSenderStatisticsUpdated Observer
+	 * @param l listener to be added
+	 */
+	public void addOverallSenderStatisticsUpdatedListener(com.spam.mctool.model.OverallSenderStatisticsUpdatedListener l);
+	
+	/**
+	 * OverallSenderStatisticsUpdated Observer
+	 * @param l listener to be removed
+	 */
+	public void removeOverallSenderStatisticsUpdatedListener(com.spam.mctool.model.OverallSenderStatisticsUpdatedListener l);
+	
+	/**
+	 * @return sum of sent packets by all active senders
+	 */
+	public long getOverallSentPackets();
+	
+	/**
+	 * @return sum of sending packet rates by all active senders
+	 */
+	public long getOverallSentPPS();
+	
 }
