@@ -12,4 +12,8 @@ public class CommandLineView implements MctoolView {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    public void kill() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }

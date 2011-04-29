@@ -174,14 +174,46 @@ public class GraphicalView implements MctoolView,
         errorEventManager.addErrorEventListener(this, ErrorEventManager.DEBUG);
     }
 
-    public void addSender(Map<String, String> senderMap, boolean activate) {
+    /**
+     * Adds a sender to this view's controller and optionally activates it
+     * afterwards. Provides feedback, whether the operation was successful or not.
+     * More information about why the creation has failed will be communicated
+     * via ErrorEvents.
+     * @param senderMap Map containing parameters for the sender to be created.
+     * The map's contents are specified in SenderManager.
+     * @param activate Shall the sender be activated after creation?
+     * @return True, if the sender was created successfully. False, if the Sender
+     * could not be created.
+     */
+    public boolean addSender(Map<String, String> senderMap, boolean activate) {
         Sender s = this.streamManager.addSender(senderMap);
-        if(activate) s.activate();
+        if(s != null) {
+            if(activate) s.activate();
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public void addReceiver(Map<String, String> receiverMap, boolean activate) {
+    /**
+     * Adds a receiver group to this view's controller and optionally activates it
+     * afterwards. Provides feedback, whether the operation was successful or not.
+     * More information about why the creation has failed will be communicated
+     * via ErrorEvents.
+     * @param receiverMap Map containing parameters for the receiver group to be created.
+     * The map's contents are specified in ReceiverManager.
+     * @param activate Shall the receiver group be activated after creation?
+     * @return True, if the receiver group was created successfully. False, if
+     * rhe receiver group could not be created.
+     */
+    public boolean addReceiverGroup(Map<String, String> receiverMap, boolean activate) {
         ReceiverGroup r = this.streamManager.addReceiverGroup(receiverMap);
-        if(activate) r.activate();
+        if(r != null) {
+            if(activate) r.activate();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void removeStreams(Set<MulticastStream> streams) {
@@ -258,6 +290,11 @@ public class GraphicalView implements MctoolView,
 
     public Iterable<Profile> getRecentProfiles() {
         return profileManager.getRecentProfiles();
+    }
+
+    public void kill() {
+        // unregister all listeners
+        mainFrame.dispose();
     }
 
 }

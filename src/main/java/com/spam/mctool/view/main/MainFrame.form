@@ -23,7 +23,6 @@
               <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.menuFile.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
             <Property name="name" type="java.lang.String" value="menuFile" noResource="true"/>
-            <Property name="name" type="java.lang.String" value="menuFile" noResource="true"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="miOpenProfile">
