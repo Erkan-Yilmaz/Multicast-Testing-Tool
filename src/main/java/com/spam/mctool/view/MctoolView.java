@@ -12,5 +12,10 @@ public interface MctoolView {
 	 * @param c the application controller to be stored.
 	 */
 	public void init(com.spam.mctool.controller.Controller c);
+
+        /**
+         * Tell the view to free it's resources and terminate all it's threads.
+         */
+        public void kill();
 	
 }

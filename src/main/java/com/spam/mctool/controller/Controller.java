@@ -67,7 +67,7 @@ import com.thoughtworks.xstream.XStream;
  * @author davidhildenbrand
  *
  */
-public class Controller implements ProfileManager, StreamManager, ErrorEventManager {
+public class Controller implements ProfileManager, StreamManager, ErrorEventManager, LanguageManager {
 
     /**
      *
@@ -85,6 +85,10 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
      *
      */
     private List<ProfileChangeListener> profileChangeObservers;
+    /**
+    *
+    */
+   private List<LanguageChangeListener> languageChangeObservers;
     /**
      *
      */
@@ -115,6 +119,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         this.currentProfile = null;
         this.recentProfiles = new RecentProfiles();
         this.profileChangeObservers = new ArrayList<ProfileChangeListener>();
+        this.languageChangeObservers = new ArrayList<LanguageChangeListener>();
         this.newErrorEventObservers = new ArrayList<ErrorEventListener>();
         this.newErrorEventObserversErrorLevel = new HashMap<ErrorEventListener, Integer>();
         //Init the Sender and Receiver modules
@@ -312,6 +317,32 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         }
     }
 
+    /**
+     * This method is called by the gui to exit the application.
+     */
+    private void exitApplication(){
+    	//Stop all senders and remove them
+    	if(senderPool != null){
+    		senderPool.killAll();
+    	}
+    	//Stop all receivers and remove them
+    	if(receiverPool != null){
+    		receiverPool.killAll();
+    	}
+    	//Write the recent profile list
+        try {
+            saveRecentProfiles();
+        } catch (IOException e) {
+            this.reportErrorEvent(new ErrorEvent(3,"Controller.failedSavingRecentProfiles.text",e.getLocalizedMessage()));
+        }
+    	//Kill all views
+    	for(MctoolView v:viewers){
+    		v.kill();
+    	}
+    	//Exit the application
+    	System.exit(0);
+    }
+    
     /**
      * This method tries to save the profile list to the file named "RecentProfiles.xml"
      * @throws IOException If the recent profile list could not be saved.
@@ -548,10 +579,10 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         writer.getDomConfig().setParameter("format-pretty-print", Boolean.TRUE);
         //Try to write it to the file
         try{
-            writer.writeToURI(xmlDocument, profilePath.toString());
+            writer.writeToURI(xmlDocument, profilePath.toURI().toString());
         }
         catch(LSException e){
-            throw new Exception("The data could not be serialized to XML.");
+            throw new Exception("The data could not be serialized to XML."+e.getMessage());
         }
         catch(Exception e){
             throw new Exception("The file could not be written.");
@@ -952,6 +983,32 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
     public List<Profile> getRecentProfiles() {
         return recentProfiles.getProfileList();
     }
+
+	@Override
+	public void addLanguageChangeListener(LanguageChangeListener l) {
+		if(l==null){
+			throw new IllegalArgumentException();		
+		}
+		//add it to the list
+		languageChangeObservers.add(l);
+	}
+
+	@Override
+	public void removeProfileChangeListener(LanguageChangeListener l) {
+		if(l==null){
+			throw new IllegalArgumentException();		
+		}
+		//remove it from the list
+		languageChangeObservers.remove(l);
+	}
+
+	@Override
+	public void reportLanguageChange() {
+		for(LanguageChangeListener li:languageChangeObservers){
+			li.languageChanged();
+		}
+		
+	}
 
 
 }
