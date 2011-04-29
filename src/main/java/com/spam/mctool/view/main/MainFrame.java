@@ -26,12 +26,14 @@ import com.spam.mctool.view.dialogs.ShowReceiverDialog;
 import com.spam.mctool.view.dialogs.ShowSenderDialog;
 import com.spam.mctool.view.main.receivertable.ReceiverTableModel;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.JFileChooser;
+import javax.swing.JMenuItem;
 import javax.swing.event.ListSelectionEvent;
 
 /**
@@ -51,7 +53,6 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     public MainFrame(GraphicalView view) {
         this.view = view;
         initComponents();
-        loadRecentProfiles();
     }
 
     /** This method is called from within the constructor to
@@ -120,7 +121,8 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         miSaveProfileAs = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         miPreferences = new javax.swing.JMenuItem();
-        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        sepBeforeRecentProfiles = new javax.swing.JPopupMenu.Separator();
+        sepAfterRecentProfiles = new javax.swing.JPopupMenu.Separator();
         miExit = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
         miAbout = new javax.swing.JMenuItem();
@@ -528,6 +530,15 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         menuFile.setText(bundle.getString("MainFrame.menuFile.text")); // NOI18N
         menuFile.setName("menuFile"); // NOI18N
+        menuFile.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                menuFileMenuSelected(evt);
+            }
+        });
 
         miOpenProfile.setText(bundle.getString("MainFrame.miOpenProfile.text")); // NOI18N
         miOpenProfile.setName("miOpenProfile"); // NOI18N
@@ -568,8 +579,11 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         });
         menuFile.add(miPreferences);
 
-        jSeparator2.setName("jSeparator2"); // NOI18N
-        menuFile.add(jSeparator2);
+        sepBeforeRecentProfiles.setName("sepBeforeRecentProfiles"); // NOI18N
+        menuFile.add(sepBeforeRecentProfiles);
+
+        sepAfterRecentProfiles.setName("sepAfterRecentProfiles"); // NOI18N
+        menuFile.add(sepAfterRecentProfiles);
 
         miExit.setText(bundle.getString("MainFrame.miExit.text")); // NOI18N
         miExit.setName("miExit"); // NOI18N
@@ -767,6 +781,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         if(dlg.getSelection().equals(JFileChooser.APPROVE_SELECTION)) {
             view.saveProfile(dlg.getProfileName(), dlg.getSelectedFile());
         }
+        loadRecentProfiles();
     }//GEN-LAST:event_miSaveProfileAsActionPerformed
 
     private void miSaveProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSaveProfileActionPerformed
@@ -785,6 +800,11 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     private void miPreferencesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miPreferencesActionPerformed
         new PreferencesDialog(this, false).setVisible(true);
     }//GEN-LAST:event_miPreferencesActionPerformed
+
+    private void menuFileMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_menuFileMenuSelected
+        System.out.println("MenuSelected");
+        loadRecentProfiles();
+    }//GEN-LAST:event_menuFileMenuSelected
 
     /**
     * @param args the command line arguments
@@ -815,7 +835,6 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JLabel laFaultyPackets;
     private javax.swing.JLabel laFaultyPacketsCaption;
     private javax.swing.JLabel laLostPackets;
@@ -861,6 +880,8 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     private com.spam.mctool.view.main.sendertable.JSenderTable senderTable;
     private javax.swing.JLabel senderTableIcon;
     private javax.swing.JSeparator sendingStatisticsSeparator;
+    private javax.swing.JPopupMenu.Separator sepAfterRecentProfiles;
+    private javax.swing.JPopupMenu.Separator sepBeforeRecentProfiles;
     private com.spam.mctool.view.main.sendertable.SenderStateRenderer statusRenderer1;
     private com.spam.mctool.view.main.TwoColorRenderer twoColorRenderer1;
     // End of variables declaration//GEN-END:variables
@@ -1053,6 +1074,37 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
     private void loadRecentProfiles() {
         javax.swing.JMenuItem miRecentProfile;
+        
+        // get a list of profile items in menu. Also determine the position where
+        // to insert the new items.
+        List<JMenuItem> profileItems = new ArrayList<JMenuItem>();
+        int insertPos = 0;
+        boolean passedSeparator = false;
+        for(int i=0; i< menuFile.getMenuComponentCount(); i++) {
+            if(menuFile.getMenuComponent(i) == sepBeforeRecentProfiles) {
+                passedSeparator = true;
+                insertPos = i+1;
+                continue;
+            }
+            if(menuFile.getMenuComponent(i) == sepAfterRecentProfiles) {
+                break;
+            }
+            if(passedSeparator) {
+                profileItems.add((JMenuItem)menuFile.getMenuComponent(i));
+            }
+        }
+        
+        // remove profile items from menu
+        for(JMenuItem item : profileItems) {
+            menuFile.remove(item);
+        }
+
+        // set insert position to end of menu as fallback solution
+        if(insertPos == 0) {
+            insertPos = menuFile.getMenuComponentCount();
+        }
+
+        // add the profiles
         for(Profile p : view.getRecentProfiles()) {
             miRecentProfile = new javax.swing.JMenuItem();
             miRecentProfile.setText(p.getName());
@@ -1063,11 +1115,12 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
                     for(Profile p : view.getRecentProfiles()) {
                         if(p.getName().equals(evt.getActionCommand())) {
                             view.loadProfile(p.getPath());
+                            return;
                         }
                     }
                 }
             });
-            menuFile.add(miRecentProfile);
+            menuFile.insert(miRecentProfile, insertPos++);
         }
     }
 
