@@ -9,20 +9,31 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
+import com.spam.mctool.intermediates.OverallSenderStatisticsUpdatedEvent;
 import com.spam.mctool.intermediates.SenderAddedOrRemovedEvent;
 
 public class SenderPool implements SenderManager {
 	private ScheduledThreadPoolExecutor stfe;
 	private Set<Sender> senders = new HashSet<Sender>();
 	private List<SenderAddedOrRemovedListener> saorl;
+	private List<OverallSenderStatisticsUpdatedListener> statsListeners;
 	
 	private int threadPoolSize = 5;
+	// statistics
+	private Runnable analyzer;
 	private int statsInterval = 1000;
+	private Byte statsLock = new Byte((byte)0);
+	private long overallSentPackets;
+	private long overallSendingPPS;
 	
 	public SenderPool() {
 		this.saorl = new LinkedList<SenderAddedOrRemovedListener>();
+		this.statsListeners = new LinkedList<OverallSenderStatisticsUpdatedListener>();
+		analyzer = new OverallSenderStatisticAnalyzer();
 		this.stfe = new ScheduledThreadPoolExecutor(threadPoolSize);
+		stfe.scheduleAtFixedRate(analyzer, statsInterval, statsInterval, TimeUnit.MILLISECONDS);
 	}
 
 	public Sender create(Map<String, String> params) throws IllegalArgumentException {
@@ -125,6 +136,53 @@ public class SenderPool implements SenderManager {
 
 	public void setStatsInterval(int statsInterval) {
 		this.statsInterval = statsInterval;
+	}
+	
+	private class OverallSenderStatisticAnalyzer implements Runnable {
+		@Override
+		public void run() {
+			int senderCount = senders.size();
+			overallSentPackets = 0;
+			overallSendingPPS = 0;
+			synchronized(statsLock) {
+				if(senderCount > 0) {
+					for(Sender s : senders) {
+						overallSentPackets += s.getSentPacketCount();
+						overallSendingPPS += s.getAvgPPS();
+					}
+				}
+			}
+			OverallSenderStatisticsUpdatedEvent e = new OverallSenderStatisticsUpdatedEvent(SenderPool.this);
+			for(OverallSenderStatisticsUpdatedListener l : statsListeners) {
+				l.overallSenderStatisticsUpdated(e);
+			}
+		}
+	}
+
+	@Override
+	public long getOverallSentPackets() {
+		synchronized(statsLock) {
+			return overallSentPackets;
+		}
+	}
+
+	@Override
+	public long getOverallSentPPS() {
+		synchronized(statsLock) {
+			return overallSendingPPS;
+		}
+	}
+
+	@Override
+	public void addOverallSenderStatisticsUpdatedListener(
+			OverallSenderStatisticsUpdatedListener l) {
+		statsListeners.add(l);
+	}
+
+	@Override
+	public void removeOverallSenderStatisticsUpdatedListener(
+			OverallSenderStatisticsUpdatedListener l) {
+		statsListeners.remove(l);
 	}
 
 }

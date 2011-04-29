@@ -40,6 +40,7 @@ public class ReceiverPool implements ReceiverManager {
 		receiverGroups = new LinkedList<ReceiverGroup>();
 		raorListeners = new LinkedList<ReceiverAddedOrRemovedListener>();
 		analyzer = new ReceiverSummaryAnalyzer();
+                statsListeners = new LinkedList<OverallReceiverStatisticsUpdatedListener>();
 		stpe.scheduleAtFixedRate(analyzer, overallStatsIntervall, overallStatsIntervall, TimeUnit.MILLISECONDS);
 	}
 
@@ -203,13 +204,13 @@ public class ReceiverPool implements ReceiverManager {
 	}
 
 	@Override
-	public void addOverallReceiverStatisticsUpdateListener(
+	public void addOverallReceiverStatisticsUpdatedListener(
 			OverallReceiverStatisticsUpdatedListener l) {
 		statsListeners.add(l);
 	}
 
 	@Override
-	public void removeOverallReceiverStatisticsUpdateListener(
+	public void removeOverallReceiverStatisticsUpdatedListener(
 			OverallReceiverStatisticsUpdatedListener l) {
 		statsListeners.remove(l);
 	}

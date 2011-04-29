@@ -51,12 +51,32 @@ public interface ReceiverManager {
 	 * OverallReceiverStatisticsUpdate Observer
 	 * @param l listener to be added
 	 */
-	public void addOverallReceiverStatisticsUpdateListener(com.spam.mctool.model.OverallReceiverStatisticsUpdatedListener l);
+	public void addOverallReceiverStatisticsUpdatedListener(com.spam.mctool.model.OverallReceiverStatisticsUpdatedListener l);
 	
 	/**
 	 * OverallReceiverStatisticsUpdate Observer
 	 * @param l listener to be removed
 	 */
-	public void removeOverallReceiverStatisticsUpdateListener(com.spam.mctool.model.OverallReceiverStatisticsUpdatedListener l);
+	public void removeOverallReceiverStatisticsUpdatedListener(com.spam.mctool.model.OverallReceiverStatisticsUpdatedListener l);
+	
+	/**
+	 * @return overall packets received by all active receiving streams
+	 */
+	public long getOverallReceivedPackets();
+	
+	/**
+	 * @return sum of receiving rates by all active receivers
+	 */
+	public long getOverallReceivedPPS();
+	
+	/**
+	 * @return sum of lost packets by all active receivers
+	 */
+	public long getOverallLostPackets();
+	
+	/**
+	 * @return sum of faulty packets by all active receivers
+	 */
+	public long getOverallFaultyPackets();
 	
 }

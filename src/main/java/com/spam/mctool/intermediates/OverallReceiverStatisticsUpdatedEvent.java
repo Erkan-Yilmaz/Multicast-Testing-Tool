@@ -1,16 +1,16 @@
 package com.spam.mctool.intermediates;
 
-import com.spam.mctool.model.ReceiverPool;
+import com.spam.mctool.model.ReceiverManager;
 
 public class OverallReceiverStatisticsUpdatedEvent {
 	
-	private ReceiverPool source;
+	private ReceiverManager source;
 	
-	public OverallReceiverStatisticsUpdatedEvent(ReceiverPool source) {
+	public OverallReceiverStatisticsUpdatedEvent(ReceiverManager source) {
 		this.source = source;
 	}
 	
-	public ReceiverPool getSource() {
+	public ReceiverManager getSource() {
 		return source;
 	}
 	
