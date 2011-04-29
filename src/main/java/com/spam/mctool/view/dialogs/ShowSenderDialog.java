@@ -22,8 +22,9 @@ import java.net.InterfaceAddress;
 import javax.swing.JFrame;
 
 /**
+ * Dialog to show sender statistics
  *
- * @author Tobias Schoknecht (Tobias.Schoknecht@de.ibm.com)
+ * @author Tobias Schoknecht (tobias.schoknecht@gmail.com)
  */
 public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataChangeListener{
 
@@ -31,17 +32,35 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
     private Sender sender;
     private MainFrame parent;
 
-	/** Creates new form ShowSenderDialog */
+    /**
+     * Main constructor
+     *
+     * @param parent Reference to the parent window
+     * @param modal Currently not used
+     */
     public ShowSenderDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
 
+    /**
+     * Chained constructor to assign parent reference and to typecast parent to jframe
+     *
+     * @param parent Reference to the parent MainFrame
+     * @param modal Currently not used
+     */
     private ShowSenderDialog(MainFrame parent, boolean modal) {
         this((JFrame)parent, modal);
         this.parent = parent;
     }
 
+    /**
+     * Constructor to be called
+     *
+     * @param parent Reference to the parent MainFrame
+     * @param modal Currently not used
+     * @param sender Reference to the sender for which statistics are to be shown
+     */
     public ShowSenderDialog(MainFrame parent, boolean modal, Sender sender) {
         this(parent, modal);
         this.sender = sender;
@@ -314,30 +333,21 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Button to handle close event
+     *
+     * @param evt Click-event
+     */
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_closeButtonActionPerformed
 
     /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                ShowSenderDialog dialog = new ShowSenderDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
-
+     * Loads and updates data in the UI Dialog
+     */
     private void loadData() {
-        this.senderIDData.setText(String.valueOf(this.sender.getSenderId()));
 
+        //set the ip address and the NetworkInterface in the corresponding UI field
         for (InterfaceAddress interfaceAddress : this.sender.getNetworkInterface().getInterfaceAddresses()) {
             InetAddress address = interfaceAddress.getAddress();
             String ip = null;
@@ -356,6 +366,8 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
             this.interfaceData.setText(this.sender.getNetworkInterface().getDisplayName() + " - " + ip);
         }
 
+        //load all data from sender and insert them to the UI dialog
+        this.senderIDData.setText(String.valueOf(this.sender.getSenderId()));
         this.groupData.setText(this.sender.getGroup().getHostAddress());
         this.portData.setText(String.valueOf(this.sender.getPort()));
         this.packetStyleData.setText(this.sender.getpType().toString());
@@ -363,13 +375,19 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
         this.dataData.setText(this.sender.getPayloadAsString());
         this.confPPSData.setText(String.valueOf(this.sender.getSenderConfiguredPacketRate()));
         this.sentPPSData.setText(String.valueOf(this.sender.getAvgPPS()));
-
-        this.jGraph.setMaxPacketRate(this.sender.getSenderConfiguredPacketRate());
         this.diagramMaxVal.setText(String.valueOf(this.sender.getSenderConfiguredPacketRate()));
+        
+        //initialize graph packetRate and insert new measured value on update
+        this.jGraph.setMaxPacketRate(this.sender.getSenderConfiguredPacketRate());
         this.jGraph.newVal((int)this.sender.getAvgPPS());
 
     }
-    
+
+   /**
+    * Function to be executed on change event
+    *
+    * @param e SenderDataChangedEvent thrown on every update of the senderData
+    */
     public void dataChanged(SenderDataChangedEvent e) {
         loadData();
     }
