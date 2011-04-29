@@ -885,8 +885,19 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         ReceiverTableModel tableModel = (ReceiverTableModel)receiverTable.getModel();
     }
 
-    public void addSender(Map<String, String> senderMap, boolean activate) {
-        this.view.addSender(senderMap, activate);
+    /**
+     * Tells the GUI controller to create a new sender and optionally activate it
+     * afterwards. Provides feedback, whether the operation was successful or not.
+     * More information about why the creation has failed will be communicated
+     * via ErrorEvents.
+     * @param senderMap Map containing parameters for the sender to be created.
+     * The map's contents are specified in SenderManager.
+     * @param activate Shall the sender be activated after creation?
+     * @return True, if the sender was created successfully. False, if the Sender
+     * could not be created.
+     */
+    public boolean addSender(Map<String, String> senderMap, boolean activate) {
+        return this.view.addSender(senderMap, activate);
     }
 
     public void senderAdded(SenderAddedOrRemovedEvent e) {
@@ -951,8 +962,20 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         laFaultyPackets.setText(faulty.toString());
     }
 
-    public void addReceiverGroup(Map<String, String> receiverMap, boolean activate) {
-        this.view.addReceiver(receiverMap, activate);
+    /**
+     * Tells the GUI controller to add a receiver group to this view's
+     * controller and optionally activate it
+     * afterwards. Provides feedback, whether the operation was successful or not.
+     * More information about why the creation has failed will be communicated
+     * via ErrorEvents.
+     * @param receiverMap Map containing parameters for the receiver group to be created.
+     * The map's contents are specified in ReceiverManager.
+     * @param activate Shall the receiver group be activated after creation?
+     * @return True, if the receiver group was created successfully. False, if
+     * rhe receiver group could not be created.
+     */
+    public boolean addReceiverGroup(Map<String, String> receiverMap, boolean activate) {
+        return this.view.addReceiverGroup(receiverMap, activate);
     }
 
     public void valueChanged(ListSelectionEvent e) {
