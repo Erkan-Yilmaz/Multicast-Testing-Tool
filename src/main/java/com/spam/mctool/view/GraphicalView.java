@@ -270,7 +270,7 @@ public class GraphicalView implements MctoolView,
                 messageType = JOptionPane.WARNING_MESSAGE;
                 break;
             case ErrorEventManager.ERROR:
-                title = bundle.getString("View.Error.error.title");
+                title = "Error";//bundle.getString("View.Error.error.title");
                 messageType = JOptionPane.ERROR_MESSAGE;
                 break;
             case ErrorEventManager.CRITICAL:
