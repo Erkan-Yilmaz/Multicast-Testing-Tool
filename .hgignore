@@ -16,3 +16,4 @@ private.xml
 ^\.classpath$
 ^\.project$
 ^\.settings(/.*)?$
+RecentProfiles.xml
