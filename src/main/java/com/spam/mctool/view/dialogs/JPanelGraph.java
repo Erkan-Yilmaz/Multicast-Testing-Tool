@@ -5,29 +5,45 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 /**
+ * UI Component for drawing a graph
  *
- * @author Tobias Schoknecht (Tobias.Schoknecht@de.ibm.com)
+ * @author Tobias Schoknecht (tobias.schoknecht@gmail.com)
  */
 public class JPanelGraph extends javax.swing.JPanel {
 
     ArrayList<Integer> list = new ArrayList<Integer>();
     int maxPacketRate = 1;
 
-    /** Creates new form JPanelGraph */
+    /** 
+     * Creates new form JPanelGraph and initialises the dataList
+     */
     public JPanelGraph() {
         initArrayList();
     }
 
+   /**
+    * Initializes the maximum packet rate
+    *
+    * @param maxPacketRate Configured packet rate
+    */
     public void setMaxPacketRate(int maxPacketRate){
         this.maxPacketRate = maxPacketRate;
     }
 
+   /**
+    * Initializes the list for drawing the graph with 0-values
+    */
     private void initArrayList(){
         for(int i = 0; i < 11; i++){
             list.add(0);
         }
     }
 
+   /**
+    * Inserts a new value to list and removes the first value
+    *
+    * @param val Value of the current measured packet rate
+    */
     public void newVal(int val){
         list.add(val);
         list.remove(0);
@@ -35,15 +51,25 @@ public class JPanelGraph extends javax.swing.JPanel {
     }
 
     @Override
+   /**
+    * Draws a black field with 4 horizontal and 9 vertical gray lines.
+    * The graph is painted in green between the vertical lines.
+    * The maximum drawn value on the vertical line is at 80% of the panel size
+    */
     public void paintComponent(Graphics g){
+
+        //get width and height set for this component
         int width = getWidth();
         int height = getHeight();
 
+        //draw background in black
+        //due to some weird bug it is down by black lines over all of the area of the component
         g.setColor(Color.BLACK);
         for(int i = 0; i <= height; i++){
             g.drawLine(0, i, width, i);
         }
 
+        //draw help lines
         g.setColor(Color.GRAY);
         for(int i = 1; i < 10; i++){
             g.drawLine(i*width/10, 0, i*width/10, height);
@@ -52,6 +78,7 @@ public class JPanelGraph extends javax.swing.JPanel {
             g.drawLine(0, i*height/5, width, i*height/5);
         }
 
+        //draw the graph
         g.setColor(Color.GREEN);
         for(int i = 0; i < 10; i++){
 
