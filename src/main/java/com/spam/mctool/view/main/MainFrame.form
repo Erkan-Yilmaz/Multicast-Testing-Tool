@@ -238,7 +238,7 @@
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="laSenderRateCaption" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="48" max="32767" attributes="0"/>
+                                  <EmptySpace pref="33" max="32767" attributes="0"/>
                                   <Component id="laSenderRate" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -558,7 +558,7 @@
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="laReceivingRateCaption" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="48" max="32767" attributes="0"/>
+                                  <EmptySpace pref="33" max="32767" attributes="0"/>
                                   <Component id="laReceivingRate" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">

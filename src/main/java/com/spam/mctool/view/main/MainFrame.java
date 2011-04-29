@@ -191,7 +191,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
                         .addComponent(laSent))
                     .addGroup(paSendingStatisticsLayout.createSequentialGroup()
                         .addComponent(laSenderRateCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                         .addComponent(laSenderRate)))
                 .addContainerGap())
         );
@@ -381,7 +381,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
                         .addComponent(laReceived))
                     .addGroup(paReceivingStatisticsLayout.createSequentialGroup()
                         .addComponent(laReceivingRateCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                         .addComponent(laReceivingRate))
                     .addGroup(paReceivingStatisticsLayout.createSequentialGroup()
                         .addComponent(laLostPacketsCaption)
@@ -938,18 +938,6 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         // update the sender table
         senderTable.dataChanged(e);
-
-        // update the sender statistics section
-        Collection<Sender> senders = this.view.getSenders();
-        Long rate = 0l;
-        Long sent = 0l;
-        for(Sender s : senders) {
-            sent += s.getSentPacketCount();
-            rate += s.getAvgPPS();
-        }
-        if(!senders.isEmpty()) rate /= senders.size();
-        laSent.setText(sent.toString());
-        laSenderRate.setText(rate.toString());
     }
 
     public void receiverGroupAdded(ReceiverAddedOrRemovedEvent e) {
