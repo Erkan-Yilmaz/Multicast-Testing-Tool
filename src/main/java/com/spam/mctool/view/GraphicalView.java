@@ -213,8 +213,51 @@ public class GraphicalView implements MctoolView,
     }
 
     public void newErrorEvent(ErrorEvent e) {
-        System.out.println("Error");
-        JOptionPane.showMessageDialog(mainFrame, e.getCompleteMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        String title;
+        int messageType;
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle");
+
+        switch(e.getErrorLevel()) {
+            case ErrorEventManager.DEBUG:
+                title = bundle.getString("View.Error.debug.title");
+                messageType = JOptionPane.INFORMATION_MESSAGE;
+                break;
+            case ErrorEventManager.WARNING:
+                title = bundle.getString("View.Error.warning.title");
+                messageType = JOptionPane.WARNING_MESSAGE;
+                break;
+            case ErrorEventManager.SEVERE:
+                title = bundle.getString("View.Error.severe.title");
+                messageType = JOptionPane.WARNING_MESSAGE;
+                break;
+            case ErrorEventManager.ERROR:
+                title = bundle.getString("View.Error.error.title");
+                messageType = JOptionPane.ERROR_MESSAGE;
+                break;
+            case ErrorEventManager.CRITICAL:
+                title = bundle.getString("View.Error.critical.title");
+                messageType = JOptionPane.ERROR_MESSAGE;
+                break;
+            case ErrorEventManager.FATAL:
+                title = bundle.getString("View.Error.fatal.title");
+                messageType = JOptionPane.ERROR_MESSAGE;
+                break;
+            default:
+                title = bundle.getString("View.Error.unknown.title");
+                messageType = JOptionPane.INFORMATION_MESSAGE;
+                break;
+        }
+
+        JOptionPane.showMessageDialog (
+                mainFrame,
+                e.getCompleteMessage(),
+                title,
+                messageType
+        );
+    }
+
+    public Iterable<Profile> getRecentProfiles() {
+        return profileManager.getRecentProfiles();
     }
 
 }

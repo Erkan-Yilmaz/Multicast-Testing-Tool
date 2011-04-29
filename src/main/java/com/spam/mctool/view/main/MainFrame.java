@@ -6,6 +6,7 @@
 
 package com.spam.mctool.view.main;
 
+import com.spam.mctool.controller.Profile;
 import com.spam.mctool.intermediates.ProfileChangeEvent;
 import com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
@@ -24,6 +25,7 @@ import com.spam.mctool.view.dialogs.SaveProfileDialog;
 import com.spam.mctool.view.dialogs.ShowReceiverDialog;
 import com.spam.mctool.view.dialogs.ShowSenderDialog;
 import com.spam.mctool.view.main.receivertable.ReceiverTableModel;
+import java.awt.event.ActionEvent;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -49,6 +51,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     public MainFrame(GraphicalView view) {
         this.view = view;
         initComponents();
+        loadRecentProfiles();
     }
 
     /** This method is called from within the constructor to
@@ -1023,6 +1026,26 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
     public void profileChanged(ProfileChangeEvent e) {
         setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("MainFrame.title") + ((view.getCurrentProfile() != null && view.getCurrentProfile().getName() != null) ? " - " + view.getCurrentProfile().getName() : ""));
+    }
+
+    private void loadRecentProfiles() {
+        javax.swing.JMenuItem miRecentProfile;
+        for(Profile p : view.getRecentProfiles()) {
+            miRecentProfile = new javax.swing.JMenuItem();
+            miRecentProfile.setText(p.getName());
+            miRecentProfile.setName("miRecentProfile" + p.getName());
+            miRecentProfile.setActionCommand(p.getName());
+            miRecentProfile.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    for(Profile p : view.getRecentProfiles()) {
+                        if(p.getName().equals(evt.getActionCommand())) {
+                            view.loadProfile(p.getPath());
+                        }
+                    }
+                }
+            });
+            menuFile.add(miRecentProfile);
+        }
     }
 
 
