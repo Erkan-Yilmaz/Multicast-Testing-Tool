@@ -28,8 +28,9 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
+ * Dialog window for adding and editing receiver groups
  *
- * @author Tobias Schoknecht (Tobias.Schoknecht@de.ibm.com)
+ * @author Tobias Schoknecht (tobias.schoknecht@gmail.com)
  */
 public class EditReceiverDialog extends javax.swing.JDialog {
 
@@ -39,14 +40,27 @@ public class EditReceiverDialog extends javax.swing.JDialog {
     private Map<String,String> analyzingBehaviourMap = new HashMap<String, String>();
     private MainFrame parent;
 
-	/** Creates new form EditReceiverDialog */
+    /**
+     * Main Constructor
+     * Initializes components, loads networkinterface data and initializes ComboBox values
+     *
+     * @param parent Reference to the parent window
+     * @param modal
+     */
     private EditReceiverDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         loadNetInterfaces();
         initComboBoxes();
     }
-    
+
+    /**
+     * Chained constructor to assign parent reference and to typecast parent to jframe
+     * Sets default values and dialog title
+     *
+     * @param parent Reference to the parent MainFrame
+     * @param modal
+     */
     public EditReceiverDialog(MainFrame parent, boolean modal) {
         this((JFrame)parent, modal);
         this.parent = parent;
@@ -54,6 +68,14 @@ public class EditReceiverDialog extends javax.swing.JDialog {
         this.setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("EditReceiverDialog.createTitle"));
     }
 
+    /**
+     * Constructor to be called with reference to an existing ReceiverGroup in order to use the corresponding data as default values
+     *
+     * @param parent Reference to the parent MainFrame
+     * @param modal
+     * @param receiverGroup Reference to the ReceiverGroup which sets the default values for this case
+     * @param create Differentiation whether a new ReceiverGroup is to be created or an existing to be edited
+     */
     public EditReceiverDialog(MainFrame parent, boolean modal, ReceiverGroup receiverGroup, boolean create) {
         this(parent, modal);
         this.receiverGroup = receiverGroup;
@@ -110,11 +132,6 @@ public class EditReceiverDialog extends javax.swing.JDialog {
         activateBox.setText(bundle.getString("EditReceiverDialog.activateBox.text")); // NOI18N
         activateBox.setActionCommand(bundle.getString("EditReceiverDialog.activateBox.actionCommand")); // NOI18N
         activateBox.setName("activateBox"); // NOI18N
-        activateBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                activateBoxActionPerformed(evt);
-            }
-        });
 
         okButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/check.png"))); // NOI18N
         okButton.setText(bundle.getString("EditReceiverDialog.okButton.text")); // NOI18N
@@ -212,10 +229,17 @@ public class EditReceiverDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Creates a map for a new ReceiverGroup and passes it to the parent to create a new ReceiverGroup
+     * or changes the Activated-status and closes the dialog afterwards
+     *
+     * @param evt ClickEvent
+     */
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         Map<String,String> receiverMap = new HashMap<String, String>();
 
         if(this.receiverGroup == null){
+            //if no ReceiverGroup is set, create a map with the specified values and pass it to the parent for creation
             receiverMap.put("group", this.groupField.getText());
             receiverMap.put("port", this.portField.getValue().toString());
             receiverMap.put("ninf",this.interfaceMap.get(this.interfaceCombo.getSelectedItem().toString()));
@@ -223,6 +247,7 @@ public class EditReceiverDialog extends javax.swing.JDialog {
             parent.addReceiverGroup(receiverMap, this.activateBox.isSelected());
         }
         else{
+            //activate/deactivate
             this.receiverGroup.deactivate();
             if(this.activateBox.isSelected()){
                 this.receiverGroup.activate();
@@ -231,35 +256,26 @@ public class EditReceiverDialog extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 
+    /**
+     * Closes the dialog
+     *
+     * @param evt Click-Event
+     */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
-    private void activateBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_activateBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_activateBoxActionPerformed
-
     /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                EditReceiverDialog dialog = new EditReceiverDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
-
+     * Loads the data from the corresponding ReceiverGroup
+     *
+     * @param create When false some fields are diabled for editing
+     */
     private void loadData(boolean create){
+        //get data from receiverGroup
         this.groupField.setText(this.receiverGroup.getGroup().getHostAddress());
         this.portField.setValue(this.receiverGroup.getPort());
 
+        //set corresponding display name to configured interface from receivergroup
         for (InterfaceAddress interfaceAddress : this.receiverGroup.getNetworkInterface().getInterfaceAddresses()) {
             InetAddress address = interfaceAddress.getAddress();
             String ip = null;
@@ -278,6 +294,7 @@ public class EditReceiverDialog extends javax.swing.JDialog {
             this.interfaceCombo.setSelectedItem(this.receiverGroup.getNetworkInterface().getDisplayName() + " - " + ip);
         }
 
+        //set corresponding analyzing behaviour in UI
         Iterator it = analyzingBehaviourMap.entrySet().iterator();
         while(it.hasNext()){
             Map.Entry entry = (Map.Entry)it.next();
@@ -287,10 +304,12 @@ public class EditReceiverDialog extends javax.swing.JDialog {
             }
         }
 
+        //set active-CheckBox value
         if(this.receiverGroup.isActive()){
             this.activateBox.setSelected(true);
         }
 
+        //if in edit-mode disable certain UI components
         if(!create){
             this.groupField.setEnabled(false);
             this.portField.setEnabled(false);
@@ -298,7 +317,11 @@ public class EditReceiverDialog extends javax.swing.JDialog {
         }
     }
 
+    /**
+     * Loads and initializes the list of NetworkInterfaces and the corresponding ComboBox
+     */
     private void loadNetInterfaces(){
+        //remove all current items from ComboBox
         this.interfaceCombo.removeAllItems();
 	Enumeration<NetworkInterface> interfaces = null;
         try {
@@ -306,28 +329,43 @@ public class EditReceiverDialog extends javax.swing.JDialog {
         } catch (SocketException ex) {
             Logger.getLogger(EditSenderDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //loop over all interfaces
         while (interfaces.hasMoreElements()) {
             NetworkInterface networkInterface = interfaces.nextElement();
 
+            //loop over all addresses (IPv4 & IPv6) corresponding to the current NetworkInterface
             for (InterfaceAddress interfaceAddress : networkInterface.getInterfaceAddresses()) {
                 InetAddress address = interfaceAddress.getAddress();
 
+                //insert display names to ComboBox
                 this.interfaceCombo.addItem(networkInterface.getDisplayName() + " - " + address.getHostAddress());
+                //insert internal and UI name to interfaceMap
                 this.interfaceMap.put(networkInterface.getDisplayName() + " - " + address.getHostAddress(), address.getHostAddress());
             }
         }
     }
 
+    /**
+     * Sets default values
+     */
     private void setDefaultValues(){
+        //set default group
         this.groupField.setText("225.1.1.1");
+        //set default port
         this.portField.setValue(12345);
     }
 
+    /**
+     * Initializes ComboBox-Values
+     */
     private void initComboBoxes(){
+        //set analyzing map with values shown in the UI and internal names
         this.analyzingBehaviourMap.put("Default","default");
         this.analyzingBehaviourMap.put("Lazy","lazy");
         this.analyzingBehaviourMap.put("Eager","eager");
+        //remove all items set by default (e.g. due to netbeans)
         this.analyzingBehaviourCombo.removeAllItems();
+        //set new values to ComboBox
         this.analyzingBehaviourCombo.addItem("Default");
         this.analyzingBehaviourCombo.addItem("Lazy");
         this.analyzingBehaviourCombo.addItem("Eager");

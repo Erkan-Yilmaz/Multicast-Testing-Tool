@@ -13,7 +13,6 @@ package com.spam.mctool.view.dialogs;
 
 import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
 import com.spam.mctool.model.Receiver;
-import com.spam.mctool.model.ReceiverDataChangeListener;
 import com.spam.mctool.model.ReceiverGroup;
 import com.spam.mctool.view.main.MainFrame;
 import java.net.Inet4Address;
@@ -21,11 +20,11 @@ import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 
 /**
+ * Dialog to show receiver statistics
  *
- * @author Tobias Schoknecht (Tobias.Schoknecht@de.ibm.com)
+ * @author Tobias Schoknecht (tobias.schoknecht@gmail.com)
  */
 public class ShowReceiverDialog extends javax.swing.JDialog {
 
@@ -34,17 +33,36 @@ public class ShowReceiverDialog extends javax.swing.JDialog {
     private ReceiverGroup receivergroup;
     private MainFrame parent;
 
-	/** Creates new form ShowReceiverDialog */
+    /**
+     * Main constructor
+     *
+     * @param parent Reference to the parent window
+     * @param modal Currently not used
+     */
     private ShowReceiverDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
 
+    /**
+     * Chained constructor to assign parent reference and to typecast parent to jframe
+     *
+     * @param parent Reference to the parent MainFrame
+     * @param modal Currently not used
+     */
     private ShowReceiverDialog(MainFrame parent, boolean modal) {
         this((JFrame)parent, modal);
         this.parent = parent;
     }
 
+    /**
+     * Constructor to be called
+     *
+     * @param parent Reference to the parent MainFrame
+     * @param modal Currently not used
+     * @param receiver Reference to the receivergroup for which statistics are to be shown
+     * @param receivergroup Reference to the receivergroup to which the receiver belongs
+     */
     public ShowReceiverDialog(MainFrame parent, boolean modal, Receiver receiver, ReceiverGroup receivergroup) {
         this(parent, modal);
         this.receiver = receiver;
@@ -339,28 +357,22 @@ public class ShowReceiverDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
+    /**
+     * Button to handle close event
+     *
+     * @param evt Click-event
+     */
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_closeButtonActionPerformed
 
     /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                ShowReceiverDialog dialog = new ShowReceiverDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
-
+     * Loads and updates data in the UI Dialog
+     */
     private void loadData(){
+
+        //load address and interface name and display them on UI
         for (InterfaceAddress interfaceAddress : this.receivergroup.getNetworkInterface().getInterfaceAddresses()) {
             InetAddress address = interfaceAddress.getAddress();
             String ip = null;
@@ -378,6 +390,8 @@ public class ShowReceiverDialog extends javax.swing.JDialog {
 
             this.interfaceData.setText(this.receivergroup.getNetworkInterface().getDisplayName() + " - " + ip);
         }
+
+        //load all data from corresponding receiver/receivergroup and insert them to UI dialog
         this.senderIDData.setText(String.valueOf(this.receiver.getSenderId()));
         this.packetStyleData.setText(this.receiver.getPacketType().toString());
         this.packetSizeData.setText(String.valueOf(this.receiver.getPacketSize()));
@@ -390,13 +404,22 @@ public class ShowReceiverDialog extends javax.swing.JDialog {
         this.avgTraversalData.setText(String.valueOf(this.receiver.getAvgTraversal()));
         this.groupData.setText(this.receivergroup.getGroup().getHostAddress());
         this.portData.setText(String.valueOf(this.receivergroup.getPort()));
-
-        this.jGraph.setMaxPacketRate((int)this.receiver.getSenderConfiguredPPS());
         this.diagramMaxVal.setText(String.valueOf(this.receiver.getSenderConfiguredPPS()));
+
+        //initialize graph packetRate and insert new measured value
+        this.jGraph.setMaxPacketRate((int)this.receiver.getSenderConfiguredPPS());
         this.jGraph.newVal((int)this.receiver.getAvgPPS());
         
     }
-    
+
+   /**
+    * Function to be executed on change event
+    *
+    * @param e ReceiverDataChangedEvent thrown on every update of the senderData
+    */
+    public void dataChanged(ReceiverDataChangedEvent e) {
+        loadData();
+    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

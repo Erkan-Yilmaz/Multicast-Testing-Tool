@@ -28,8 +28,9 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
+ * Dialog window for adding and editing senders
  *
- * @author Tobias Schoknecht (Tobias.Schoknecht@de.ibm.com)
+ * @author Tobias Schoknecht (tobias.schoknecht@gmail.com)
  */
 public class EditSenderDialog extends javax.swing.JDialog {
 
@@ -39,9 +40,14 @@ public class EditSenderDialog extends javax.swing.JDialog {
     private Map<String,String> packageMap = new HashMap<String, String>();
     private Map<String,String> analyzingBehaviourMap = new HashMap<String, String>();
     private MainFrame parent;
-    //TODO loglevel?
 
-	/** Creates new form EditSenderDialog */
+    /**
+     * Main Constructor
+     * Initializes components, loads networkinterface data and initializes ComboBox values
+     *
+     * @param parent Reference to the parent window
+     * @param modal
+     */
     private EditSenderDialog(JFrame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -49,6 +55,13 @@ public class EditSenderDialog extends javax.swing.JDialog {
         initComboBoxes();
     }
 
+    /**
+     * Chained constructor to assign parent reference and to typecast parent to jframe
+     * Sets default values and dialog title
+     *
+     * @param parent Reference to the parent MainFrame
+     * @param modal
+     */
     public EditSenderDialog(MainFrame parent, boolean modal) {
         this((JFrame)parent, modal);
         this.parent = parent;
@@ -56,6 +69,14 @@ public class EditSenderDialog extends javax.swing.JDialog {
         this.setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("EditSenderDialog.createTitle"));
     }
 
+    /**
+     * Constructor to be called with reference to an existing Sender in order to use the corresponding data as default values
+     *
+     * @param parent Reference to the parent MainFrame
+     * @param modal
+     * @param sender Reference to the Sender which sets the default values for this case
+     * @param create Differentiation whether a new ReceiverGroup is to be created or an existing to be edited
+     */
     public EditSenderDialog(MainFrame parent, boolean modal, Sender sender, boolean create) {
         this(parent, modal);
         this.sender = sender;
@@ -313,10 +334,18 @@ public class EditSenderDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Creates a map for a new Sender and passes it to the parent to create a new Sender
+     * or changes the values on edit-modus and closes the dialog afterwards
+     *
+     * @param evt Click-Event
+     */
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         Map<String,String> senderMap = new HashMap<String, String>();
 
         if(this.sender == null){
+            //if no sender reference exists
+            // create map and pass it to parent
             senderMap.put("group", this.groupField.getText());
             senderMap.put("port", this.portField.getValue().toString());
             senderMap.put("pps", this.packetRateField.getValue().toString());
@@ -329,42 +358,37 @@ public class EditSenderDialog extends javax.swing.JDialog {
             parent.addSender(senderMap, this.activateBox.isSelected());
         }
         else{
+            //if sender reference exists, change the values
             this.sender.setSenderConfiguredPacketRate(Integer.parseInt(this.packetRateField.getValue().toString()));
             this.sender.setPacketSize(Integer.parseInt(this.packetSizeField.getValue().toString()));
             this.sender.setTtl(Byte.parseByte(this.ttlField.getValue().toString()));
+            //deactivate sender and according to the settings reactivate it to change values on running stream
             this.sender.deactivate();
             if(this.activateBox.isSelected()){
                 this.sender.activate();
             }
         }
 
-
         this.dispose();
 }//GEN-LAST:event_okButtonActionPerformed
 
+    /**
+     * Closes the dialog
+     *
+     * @param evt Click-Event
+     */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         this.dispose();
 }//GEN-LAST:event_cancelButtonActionPerformed
 
     /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                EditSenderDialog dialog = new EditSenderDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
-
+     * Loads the data from the corresponding Sender
+     *
+     * @param create When false some fields are diabled for editing
+     */
     private void loadData(boolean create){
+
+        //loads all the data from the sender given in the constructor
         this.groupField.setText(this.sender.getGroup().getHostAddress());
         this.portField.setValue(this.sender.getPort());
         this.dataField.setText(this.sender.getPayloadAsString());
@@ -373,6 +397,7 @@ public class EditSenderDialog extends javax.swing.JDialog {
         this.ttlField.setValue(this.sender.getTtl());
         this.packetStyleCombo.setSelectedItem(this.sender.getpType().getDisplayName());
 
+        //iterate over all networkinterface addresses to set the value from the sender
         for (InterfaceAddress interfaceAddress : this.sender.getNetworkInterface().getInterfaceAddresses()) {
             InetAddress address = interfaceAddress.getAddress();
             String ip = null;
@@ -391,6 +416,7 @@ public class EditSenderDialog extends javax.swing.JDialog {
             this.interfaceCombo.setSelectedItem(this.sender.getNetworkInterface().getDisplayName() + " - " + ip);
         }
 
+        //interate over analizing behaviour map to set the value from the sender
         Iterator it = analyzingBehaviourMap.entrySet().iterator();
         while(it.hasNext()){
             Map.Entry entry = (Map.Entry)it.next();
@@ -400,10 +426,12 @@ public class EditSenderDialog extends javax.swing.JDialog {
             }
         }
 
+        //set active-CheckBox
         if(this.sender.isActive()){
             this.activateBox.setSelected(true);
         }
 
+        //disables certain fields when sender is in edit-mode
         if(!create){
             this.groupField.setEnabled(false);
             this.portField.setEnabled(false);
@@ -412,47 +440,77 @@ public class EditSenderDialog extends javax.swing.JDialog {
         }
     }
 
+    /**
+     * Loads and initializes the list of NetworkInterfaces and the corresponding ComboBox
+     */
     private void loadNetInterfaces(){
+        //remove all current items from the ComboBox
         this.interfaceCombo.removeAllItems();
+        //initialize enumeration
 	Enumeration<NetworkInterface> interfaces = null;
         try {
             interfaces = NetworkInterface.getNetworkInterfaces();
         } catch (SocketException ex) {
             Logger.getLogger(EditSenderDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        //loop over all NetworkInterfaces
         while (interfaces.hasMoreElements()) {
             NetworkInterface networkInterface = interfaces.nextElement();
 
+            //loop over all corresponding InterfaceAddresses (IPv4 & IPv6)
             for (InterfaceAddress interfaceAddress : networkInterface.getInterfaceAddresses()) {
+                //get corresponding InetAddress
                 InetAddress address = interfaceAddress.getAddress();
 
+                //insert UI Name to the interfaceComboBox
                 this.interfaceCombo.addItem(networkInterface.getDisplayName() + " - " + address.getHostAddress());
+                //insert UI Name and address to the interfaceMap
                 this.interfaceMap.put(networkInterface.getDisplayName() + " - " + address.getHostAddress(),address.getHostAddress());
             }
         }       
     }
 
+    /**
+     * Sets default values
+     */
     private void setDefaultValues(){
+        //default group
         this.groupField.setText("225.1.1.1");
+        //default port
         this.portField.setValue(12345);
+        //default text
         this.dataField.setText("Default");
+        //default packetRate
         this.packetRateField.setValue(10);
+        //default packetSize
         this.packetSizeField.setValue(200);
+        //default timeToLive
         this.ttlField.setValue(32);
+        //default packetStyle
         this.packetStyleCombo.setSelectedItem("Spam Packet Format");
     }
 
+    /**
+     * Initializes ComboBox-Values
+     */
     private void initComboBoxes(){
+        //putting the mapping from internal packet format to the UI Name
         this.packageMap.put("Spam Packet Format","spam");
         this.packageMap.put("Hirschmann Packet Format","hmann");
+        //remove all current items (values automatically inserted by netbeans)
         this.packetStyleCombo.removeAllItems();
+        //Add new values to the packet list
         this.packetStyleCombo.addItem("Spam Packet Format");
         this.packetStyleCombo.addItem("Hirschmann Packet Format");
 
+        //putting the mapping from internal analyzing-behaviour-name to the UI Name
         this.analyzingBehaviourMap.put("Default","default");
         this.analyzingBehaviourMap.put("Lazy","lazy");
         this.analyzingBehaviourMap.put("Eager","eager");
+        //remove all current items (values automatically inserted by netbeans)
         this.analyzingBehaviourCombo.removeAllItems();
+        //Add new values to the packet list
         this.analyzingBehaviourCombo.addItem("Default");
         this.analyzingBehaviourCombo.addItem("Lazy");
         this.analyzingBehaviourCombo.addItem("Eager");
