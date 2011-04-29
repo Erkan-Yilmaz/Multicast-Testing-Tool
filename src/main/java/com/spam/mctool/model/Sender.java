@@ -110,8 +110,9 @@ public class Sender extends MulticastStream {
 	 */
 	public void run() {
 		try {
-			byte[] p = this.getPacket().toByteArray().array();
-			DatagramPacket dp = new DatagramPacket(p, packetSize, this.getGroup(), this.getPort());
+			//byte[] p = this.getPacket().toByteArray().array();
+			byte[] p = new byte[]{1,2,3,4};
+			DatagramPacket dp = new DatagramPacket(p, p.length, this.getGroup(), this.getPort());
 			this.socket.send(dp);
 			// no synchronization needed because usage of java concurrency api
 			nowSent = System.nanoTime();

@@ -117,7 +117,6 @@ public final class ReceiverGroup extends MulticastStream {
 			// receive and parse the packet
 			PacketContainer con = new PacketContainer();
 			socket.receive(dp);
-			
 			con.receivedTime = System.nanoTime();
 			con.systemTime = System.currentTimeMillis();
 			con.address = dp.getAddress();
@@ -134,13 +133,17 @@ public final class ReceiverGroup extends MulticastStream {
 			// add the packet container
 			receivers.get(p.getSenderId()).addPacketContainer(con);
 			// schedule the next fetch
-			if(state == State.ACTIVE) {
-				stpe.execute(this);
-			}
 		} catch (IOException e) {
+			e.printStackTrace();
 			exceptions.put(System.currentTimeMillis(), e);
 		} catch (DataFormatException dfe) {
 			faultyPackets++;
+		} catch(Throwable e) {
+			e.printStackTrace();
+		} finally {
+			if(state == State.ACTIVE) {
+				stpe.execute(this);
+			}
 		}
 	}
 

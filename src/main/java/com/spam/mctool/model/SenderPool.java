@@ -18,7 +18,9 @@ public class SenderPool implements SenderManager {
 	private List<SenderAddedOrRemovedListener> saorl;
 	
 	private int threadPoolSize = 5;
+	// statistics
 	private int statsInterval = 1000;
+	private long overallSendingPPS;
 	
 	public SenderPool() {
 		this.saorl = new LinkedList<SenderAddedOrRemovedListener>();
@@ -125,6 +127,13 @@ public class SenderPool implements SenderManager {
 
 	public void setStatsInterval(int statsInterval) {
 		this.statsInterval = statsInterval;
+	}
+	
+	private class OverallSenderStatisticAnalyzer implements Runnable {
+		@Override
+		public void run() {
+			
+		}
 	}
 
 }
