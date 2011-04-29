@@ -71,6 +71,20 @@ public class ProfileTest extends UISpecTestCase {
         })
         .run();
         
+        WindowInterceptor.init(window.getButton("buAddReceiver").triggerClick())
+        .process(new WindowHandler() {
+            public Trigger process(Window dialog) {
+            	dialog.getTextBox("groupField").setText("225.1.1.3");
+            	dialog.getSpinner("portField").setValue(1337);
+
+                dialog.getComboBox("analyzingBehaviourCombo").select("Eager");
+                dialog.getCheckBox("activateBox").unselect();
+            	
+                return dialog.getButton("okButton").triggerClick();
+            }
+        })
+        .run();
+        
         final File file = new File(
         		System.getProperty("java.io.tmpdir")+
         		File.separator + "mc_test_profile");
@@ -98,7 +112,16 @@ public class ProfileTest extends UISpecTestCase {
 
         // Restart the application
         ComponentUtils.close(window);
+        setAdapter(new MainClassAdapter(Controller.class, new String[0]));
         window = getMainWindow();
+        
+        Table stable = window.getTable("senderTable");
+        assertTrue(stable.isEmpty());
+        
+        Table rtable = window.getTable("receiverTable");
+        assertTrue(rtable.isEmpty());
+        
+        assertFalse(window.titleContains("Test Profile"));
         
         // Load Profile
         WindowInterceptor
@@ -113,11 +136,12 @@ public class ProfileTest extends UISpecTestCase {
         )
         .run();
         
-        Table table = window.getTable("senderTable");
-        assertFalse(table.isEmpty());
+        assertTrue(window.titleContains("Test Profile"));
+        
+        assertFalse(stable.isEmpty());
         
         // Edit the first Element in the table
-        table.selectRow(0);
+        stable.selectRow(0);
         
         WindowInterceptor.init(window.getButton("buEditSender").triggerClick())
         .process(new WindowHandler() {
@@ -134,7 +158,26 @@ public class ProfileTest extends UISpecTestCase {
                 assertTrue(dialog.getSpinner("ttlField").valueEquals(new Byte((byte)12)));
                 assertTrue(dialog.getComboBox("analyzingBehaviourCombo").selectionEquals("Lazy"));
 
-                assertTrue(dialog.getCheckBox("activateBox").isEnabled());
+                assertTrue(dialog.getCheckBox("activateBox").isSelected());
+            	
+                return dialog.getButton("okButton").triggerClick();
+            }
+        })
+        .run();
+        
+        assertFalse(rtable.isEmpty());
+        
+        // Edit the first Element in the table
+        rtable.selectRow(0);
+        
+        WindowInterceptor.init(window.getButton("buEditReceiver").triggerClick())
+        .process(new WindowHandler() {
+            public Trigger process(Window dialog) {
+            	assertTrue(dialog.getTextBox("groupField").textEquals("225.1.1.3"));
+            	assertTrue(dialog.getSpinner("portField").valueEquals(1337));
+
+                assertTrue(dialog.getComboBox("analyzingBehaviourCombo").selectionEquals("Eager"));
+                assertFalse(dialog.getCheckBox("activateBox").isSelected());
             	
                 return dialog.getButton("okButton").triggerClick();
             }
