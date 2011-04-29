@@ -6,6 +6,9 @@
 
 package com.spam.mctool.view.main;
 
+import com.spam.mctool.controller.Profile;
+import com.spam.mctool.intermediates.OverallReceiverStatisticsUpdatedEvent;
+import com.spam.mctool.intermediates.OverallSenderStatisticsUpdatedEvent;
 import com.spam.mctool.intermediates.ProfileChangeEvent;
 import com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
@@ -14,7 +17,10 @@ import com.spam.mctool.intermediates.SenderDataChangedEvent;
 import com.spam.mctool.model.MulticastStream;
 import com.spam.mctool.model.Receiver;
 import com.spam.mctool.model.ReceiverGroup;
+import com.spam.mctool.model.ReceiverManager;
+import com.spam.mctool.model.ReceiverPool;
 import com.spam.mctool.model.Sender;
+import com.spam.mctool.model.SenderManager;
 import com.spam.mctool.view.GraphicalView;
 import com.spam.mctool.view.dialogs.AboutDialog;
 import com.spam.mctool.view.dialogs.EditReceiverDialog;
@@ -24,12 +30,15 @@ import com.spam.mctool.view.dialogs.SaveProfileDialog;
 import com.spam.mctool.view.dialogs.ShowReceiverDialog;
 import com.spam.mctool.view.dialogs.ShowSenderDialog;
 import com.spam.mctool.view.main.receivertable.ReceiverTableModel;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.JFileChooser;
+import javax.swing.JMenuItem;
 import javax.swing.event.ListSelectionEvent;
 
 /**
@@ -117,7 +126,8 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         miSaveProfileAs = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         miPreferences = new javax.swing.JMenuItem();
-        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        sepBeforeRecentProfiles = new javax.swing.JPopupMenu.Separator();
+        sepAfterRecentProfiles = new javax.swing.JPopupMenu.Separator();
         miExit = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
         miAbout = new javax.swing.JMenuItem();
@@ -525,6 +535,15 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         menuFile.setText(bundle.getString("MainFrame.menuFile.text")); // NOI18N
         menuFile.setName("menuFile"); // NOI18N
+        menuFile.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                menuFileMenuSelected(evt);
+            }
+        });
 
         miOpenProfile.setText(bundle.getString("MainFrame.miOpenProfile.text")); // NOI18N
         miOpenProfile.setName("miOpenProfile"); // NOI18N
@@ -565,8 +584,11 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         });
         menuFile.add(miPreferences);
 
-        jSeparator2.setName("jSeparator2"); // NOI18N
-        menuFile.add(jSeparator2);
+        sepBeforeRecentProfiles.setName("sepBeforeRecentProfiles"); // NOI18N
+        menuFile.add(sepBeforeRecentProfiles);
+
+        sepAfterRecentProfiles.setName("sepAfterRecentProfiles"); // NOI18N
+        menuFile.add(sepAfterRecentProfiles);
 
         miExit.setText(bundle.getString("MainFrame.miExit.text")); // NOI18N
         miExit.setName("miExit"); // NOI18N
@@ -764,6 +786,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         if(dlg.getSelection().equals(JFileChooser.APPROVE_SELECTION)) {
             view.saveProfile(dlg.getProfileName(), dlg.getSelectedFile());
         }
+        loadRecentProfiles();
     }//GEN-LAST:event_miSaveProfileAsActionPerformed
 
     private void miSaveProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSaveProfileActionPerformed
@@ -782,6 +805,11 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     private void miPreferencesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miPreferencesActionPerformed
         new PreferencesDialog(this, false).setVisible(true);
     }//GEN-LAST:event_miPreferencesActionPerformed
+
+    private void menuFileMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_menuFileMenuSelected
+        System.out.println("MenuSelected");
+        loadRecentProfiles();
+    }//GEN-LAST:event_menuFileMenuSelected
 
     /**
     * @param args the command line arguments
@@ -812,7 +840,6 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JLabel laFaultyPackets;
     private javax.swing.JLabel laFaultyPacketsCaption;
     private javax.swing.JLabel laLostPackets;
@@ -858,6 +885,8 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     private com.spam.mctool.view.main.sendertable.JSenderTable senderTable;
     private javax.swing.JLabel senderTableIcon;
     private javax.swing.JSeparator sendingStatisticsSeparator;
+    private javax.swing.JPopupMenu.Separator sepAfterRecentProfiles;
+    private javax.swing.JPopupMenu.Separator sepBeforeRecentProfiles;
     private com.spam.mctool.view.main.sendertable.SenderStateRenderer statusRenderer1;
     private com.spam.mctool.view.main.TwoColorRenderer twoColorRenderer1;
     // End of variables declaration//GEN-END:variables
@@ -882,8 +911,19 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         ReceiverTableModel tableModel = (ReceiverTableModel)receiverTable.getModel();
     }
 
-    public void addSender(Map<String, String> senderMap, boolean activate) {
-        this.view.addSender(senderMap, activate);
+    /**
+     * Tells the GUI controller to create a new sender and optionally activate it
+     * afterwards. Provides feedback, whether the operation was successful or not.
+     * More information about why the creation has failed will be communicated
+     * via ErrorEvents.
+     * @param senderMap Map containing parameters for the sender to be created.
+     * The map's contents are specified in SenderManager.
+     * @param activate Shall the sender be activated after creation?
+     * @return True, if the sender was created successfully. False, if the Sender
+     * could not be created.
+     */
+    public boolean addSender(Map<String, String> senderMap, boolean activate) {
+        return this.view.addSender(senderMap, activate);
     }
 
     public void senderAdded(SenderAddedOrRemovedEvent e) {
@@ -924,32 +964,22 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         // update the receiver table
         receiverTable.dataChanged(e);
-
-        // update the receiver statistics section
-        Collection<ReceiverGroup> groups = view.getReceiverGroups();
-
-        Long received = 0l;
-        Long rate     = 0l;
-        Long lost     = 0l;
-        Long faulty   = 0l;
-
-        for(ReceiverGroup g : groups) {
-            received += g.getReceivedPackets();
-            rate     += g.getAvgPPS();
-            lost     += g.getLostPackets();
-            faulty   += g.getFaultyPackets();
-        }
-
-        if(!groups.isEmpty()) rate /= groups.size();
-
-        laReceived.setText(received.toString());
-        laReceivingRate.setText(rate.toString());
-        laLostPackets.setText(lost.toString());
-        laFaultyPackets.setText(faulty.toString());
     }
 
-    public void addReceiverGroup(Map<String, String> receiverMap, boolean activate) {
-        this.view.addReceiver(receiverMap, activate);
+    /**
+     * Tells the GUI controller to add a receiver group to this view's
+     * controller and optionally activate it
+     * afterwards. Provides feedback, whether the operation was successful or not.
+     * More information about why the creation has failed will be communicated
+     * via ErrorEvents.
+     * @param receiverMap Map containing parameters for the receiver group to be created.
+     * The map's contents are specified in ReceiverManager.
+     * @param activate Shall the receiver group be activated after creation?
+     * @return True, if the receiver group was created successfully. False, if
+     * rhe receiver group could not be created.
+     */
+    public boolean addReceiverGroup(Map<String, String> receiverMap, boolean activate) {
+        return this.view.addReceiverGroup(receiverMap, activate);
     }
 
     public void valueChanged(ListSelectionEvent e) {
@@ -1023,6 +1053,72 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
     public void profileChanged(ProfileChangeEvent e) {
         setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("MainFrame.title") + ((view.getCurrentProfile() != null && view.getCurrentProfile().getName() != null) ? " - " + view.getCurrentProfile().getName() : ""));
+    }
+
+    private void loadRecentProfiles() {
+        javax.swing.JMenuItem miRecentProfile;
+        
+        // get a list of profile items in menu. Also determine the position where
+        // to insert the new items.
+        List<JMenuItem> profileItems = new ArrayList<JMenuItem>();
+        int insertPos = 0;
+        boolean passedSeparator = false;
+        for(int i=0; i< menuFile.getMenuComponentCount(); i++) {
+            if(menuFile.getMenuComponent(i) == sepBeforeRecentProfiles) {
+                passedSeparator = true;
+                insertPos = i+1;
+                continue;
+            }
+            if(menuFile.getMenuComponent(i) == sepAfterRecentProfiles) {
+                break;
+            }
+            if(passedSeparator) {
+                profileItems.add((JMenuItem)menuFile.getMenuComponent(i));
+            }
+        }
+        
+        // remove profile items from menu
+        for(JMenuItem item : profileItems) {
+            menuFile.remove(item);
+        }
+
+        // set insert position to end of menu as fallback solution
+        if(insertPos == 0) {
+            insertPos = menuFile.getMenuComponentCount();
+        }
+
+        // add the profiles
+        for(Profile p : view.getRecentProfiles()) {
+            miRecentProfile = new javax.swing.JMenuItem();
+            miRecentProfile.setText(p.getName());
+            miRecentProfile.setName("miRecentProfile" + p.getName());
+            miRecentProfile.setActionCommand(p.getName());
+            miRecentProfile.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    for(Profile p : view.getRecentProfiles()) {
+                        if(p.getName().equals(evt.getActionCommand())) {
+                            view.loadProfile(p.getPath());
+                            return;
+                        }
+                    }
+                }
+            });
+            menuFile.insert(miRecentProfile, insertPos++);
+        }
+    }
+
+    public void overallReceiverStatisticsUpdated(OverallReceiverStatisticsUpdatedEvent e) {
+        ReceiverManager rm = e.getSource();
+        laReceived.setText(Long.toString(rm.getOverallReceivedPackets()));
+        laReceivingRate.setText(Long.toString(rm.getOverallReceivedPPS()));
+        laLostPackets.setText(Long.toString(rm.getOverallLostPackets()));
+        laFaultyPackets.setText(Long.toString(rm.getOverallFaultyPackets()));
+    }
+
+    public void overallSenderStatisticsUpdated(OverallSenderStatisticsUpdatedEvent e) {
+        SenderManager sm = e.getSource();
+        laSent.setText(Long.toString(sm.getOverallSentPackets()));
+        laSenderRate.setText(Long.toString(sm.getOverallSentPPS()));
     }
 
 

@@ -5,6 +5,7 @@ package com.spam.mctool.view;
 
 import com.spam.mctool.controller.ErrorEvent;
 import com.spam.mctool.controller.ErrorEventListener;
+import com.spam.mctool.intermediates.OverallReceiverStatisticsUpdatedEvent;
 import com.spam.mctool.view.main.MainFrame;
 import com.spam.mctool.controller.Controller;
 import com.spam.mctool.controller.ErrorEventManager;
@@ -12,12 +13,15 @@ import com.spam.mctool.controller.Profile;
 import com.spam.mctool.controller.ProfileChangeListener;
 import com.spam.mctool.controller.ProfileManager;
 import com.spam.mctool.controller.StreamManager;
+import com.spam.mctool.intermediates.OverallSenderStatisticsUpdatedEvent;
 import com.spam.mctool.intermediates.ProfileChangeEvent;
 import com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
 import com.spam.mctool.intermediates.SenderAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.SenderDataChangedEvent;
 import com.spam.mctool.model.MulticastStream;
+import com.spam.mctool.model.OverallReceiverStatisticsUpdatedListener;
+import com.spam.mctool.model.OverallSenderStatisticsUpdatedListener;
 import com.spam.mctool.model.ReceiverAddedOrRemovedListener;
 import com.spam.mctool.model.ReceiverDataChangeListener;
 import com.spam.mctool.model.ReceiverGroup;
@@ -50,7 +54,8 @@ public class GraphicalView implements MctoolView,
 		SenderDataChangeListener, ReceiverDataChangeListener,
 		ProfileChangeListener, SenderAddedOrRemovedListener,
 		ReceiverAddedOrRemovedListener,
-                ErrorEventListener {
+                ErrorEventListener, OverallReceiverStatisticsUpdatedListener,
+                OverallSenderStatisticsUpdatedListener {
 
 	/**
          * Reference to the main frame of the application
@@ -170,18 +175,52 @@ public class GraphicalView implements MctoolView,
     private void attachObservers() {
         streamManager.addSenderAddedOrRemovedListener(this);
         streamManager.addReceiverAddedOrRemovedListener(this);
+        streamManager.addOverallReceiverStatisticsUpdatedListener(this);
+        streamManager.addOverallSenderStatisticsUpdatedListener(this);
         profileManager.addProfileChangeListener(this);
         errorEventManager.addErrorEventListener(this, ErrorEventManager.DEBUG);
     }
 
-    public void addSender(Map<String, String> senderMap, boolean activate) {
+    /**
+     * Adds a sender to this view's controller and optionally activates it
+     * afterwards. Provides feedback, whether the operation was successful or not.
+     * More information about why the creation has failed will be communicated
+     * via ErrorEvents.
+     * @param senderMap Map containing parameters for the sender to be created.
+     * The map's contents are specified in SenderManager.
+     * @param activate Shall the sender be activated after creation?
+     * @return True, if the sender was created successfully. False, if the Sender
+     * could not be created.
+     */
+    public boolean addSender(Map<String, String> senderMap, boolean activate) {
         Sender s = this.streamManager.addSender(senderMap);
-        if(activate) s.activate();
+        if(s != null) {
+            if(activate) s.activate();
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public void addReceiver(Map<String, String> receiverMap, boolean activate) {
+    /**
+     * Adds a receiver group to this view's controller and optionally activates it
+     * afterwards. Provides feedback, whether the operation was successful or not.
+     * More information about why the creation has failed will be communicated
+     * via ErrorEvents.
+     * @param receiverMap Map containing parameters for the receiver group to be created.
+     * The map's contents are specified in ReceiverManager.
+     * @param activate Shall the receiver group be activated after creation?
+     * @return True, if the receiver group was created successfully. False, if
+     * rhe receiver group could not be created.
+     */
+    public boolean addReceiverGroup(Map<String, String> receiverMap, boolean activate) {
         ReceiverGroup r = this.streamManager.addReceiverGroup(receiverMap);
-        if(activate) r.activate();
+        if(r != null) {
+            if(activate) r.activate();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void removeStreams(Set<MulticastStream> streams) {
@@ -213,8 +252,64 @@ public class GraphicalView implements MctoolView,
     }
 
     public void newErrorEvent(ErrorEvent e) {
-        System.out.println("Error");
-        JOptionPane.showMessageDialog(mainFrame, e.getCompleteMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        String title;
+        int messageType;
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle");
+
+        switch(e.getErrorLevel()) {
+            case ErrorEventManager.DEBUG:
+                title = bundle.getString("View.Error.debug.title");
+                messageType = JOptionPane.INFORMATION_MESSAGE;
+                break;
+            case ErrorEventManager.WARNING:
+                title = bundle.getString("View.Error.warning.title");
+                messageType = JOptionPane.WARNING_MESSAGE;
+                break;
+            case ErrorEventManager.SEVERE:
+                title = bundle.getString("View.Error.severe.title");
+                messageType = JOptionPane.WARNING_MESSAGE;
+                break;
+            case ErrorEventManager.ERROR:
+                title = bundle.getString("View.Error.error.title");
+                messageType = JOptionPane.ERROR_MESSAGE;
+                break;
+            case ErrorEventManager.CRITICAL:
+                title = bundle.getString("View.Error.critical.title");
+                messageType = JOptionPane.ERROR_MESSAGE;
+                break;
+            case ErrorEventManager.FATAL:
+                title = bundle.getString("View.Error.fatal.title");
+                messageType = JOptionPane.ERROR_MESSAGE;
+                break;
+            default:
+                title = bundle.getString("View.Error.unknown.title");
+                messageType = JOptionPane.INFORMATION_MESSAGE;
+                break;
+        }
+
+        JOptionPane.showMessageDialog (
+                mainFrame,
+                e.getCompleteMessage(),
+                title,
+                messageType
+        );
+    }
+
+    public Iterable<Profile> getRecentProfiles() {
+        return profileManager.getRecentProfiles();
+    }
+
+    public void kill() {
+        // unregister all listeners
+        mainFrame.dispose();
+    }
+
+    public void overallReceiverStatisticsUpdated(OverallReceiverStatisticsUpdatedEvent e) {
+        mainFrame.overallReceiverStatisticsUpdated(e);
+    }
+
+    public void overallSenderStatisticsUpdated(OverallSenderStatisticsUpdatedEvent e) {
+        mainFrame.overallSenderStatisticsUpdated(e);
     }
 
 }

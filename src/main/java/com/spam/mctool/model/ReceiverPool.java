@@ -8,18 +8,29 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
+import com.spam.mctool.intermediates.OverallReceiverStatisticsUpdatedEvent;
 import com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.ReceiverCreationException;
 
 public class ReceiverPool implements ReceiverManager {
 	
 	// internals
-	private int threadPoolSize = 15;
+	private int threadPoolSize = 5;
 	private int statsInterval = 1000;
 	private ScheduledThreadPoolExecutor stpe;
 	private List<ReceiverGroup> receiverGroups;
 	private List<ReceiverAddedOrRemovedListener> raorListeners;
+	private List<OverallReceiverStatisticsUpdatedListener> statsListeners;
+	// statistics
+	private Runnable analyzer;
+	private long overallStatsIntervall = 1000;
+	private Byte statsLock = new Byte((byte) 0);
+	private long overallReceivedPackets;
+	private long overallReceivedPPS;
+	private long overallLostPackets;
+	private long overallFaultyPackets;
 	
 	/**
 	 * Creates a new receiver pool.
@@ -28,6 +39,9 @@ public class ReceiverPool implements ReceiverManager {
 		stpe = new ScheduledThreadPoolExecutor(threadPoolSize);
 		receiverGroups = new LinkedList<ReceiverGroup>();
 		raorListeners = new LinkedList<ReceiverAddedOrRemovedListener>();
+		analyzer = new ReceiverSummaryAnalyzer();
+                statsListeners = new LinkedList<OverallReceiverStatisticsUpdatedListener>();
+		stpe.scheduleAtFixedRate(analyzer, overallStatsIntervall, overallStatsIntervall, TimeUnit.MILLISECONDS);
 	}
 
 	public ReceiverGroup create(Map<String, String> params) {
@@ -126,6 +140,79 @@ public class ReceiverPool implements ReceiverManager {
 		for(ReceiverAddedOrRemovedListener l : raorListeners) {
 			l.receiverGroupRemoved(e);
 		}
+	}
+	
+	private class ReceiverSummaryAnalyzer implements Runnable {
+		@Override
+		public void run() {
+			synchronized(statsLock) {
+				int groupCount = receiverGroups.size();
+				if(groupCount > 0) {
+					overallReceivedPackets = 0;
+					overallReceivedPPS = 0;
+					overallLostPackets = 0;
+					overallFaultyPackets = 0;
+					for(ReceiverGroup r : receiverGroups) {
+						overallReceivedPackets += r.getReceivedPackets();
+						overallReceivedPPS += r.getAvgPPS();
+						overallLostPackets += r.getLostPackets();
+						overallFaultyPackets += r.getFaultyPackets();
+					}
+				}
+			}
+			OverallReceiverStatisticsUpdatedEvent e = new OverallReceiverStatisticsUpdatedEvent(ReceiverPool.this);
+			for(OverallReceiverStatisticsUpdatedListener l : statsListeners) {
+				l.overallReceiverStatisticsUpdated(e);
+			}
+		}
+	}
+
+	/**
+	 * @return sum of packets received by all active senders
+	 */
+	public long getOverallReceivedPackets() {
+		synchronized(statsLock) {
+			return overallReceivedPackets;
+		}
+	}
+
+	/**
+	 * @return sum of receiving packet rates of all active senders
+	 */
+	public long getOverallReceivedPPS() {
+		synchronized(statsLock) {
+			return overallReceivedPPS;
+		}
+	}
+
+	/**
+	 * @return sum of lost packets of all active senders
+	 */
+	public long getOverallLostPackets() {
+		synchronized(statsLock) {
+			return overallLostPackets;
+		}
+	}
+
+	/**
+	 * @return sum of faulty packets of all active senders
+	 */
+	public long getOverallFaultyPackets() {
+		synchronized(statsLock) {
+			return overallFaultyPackets;
+		}
+	}
+
+	@Override
+	public void addOverallReceiverStatisticsUpdatedListener(
+			OverallReceiverStatisticsUpdatedListener l) {
+		statsListeners.add(l);
+	}
+
+	@Override
+	public void removeOverallReceiverStatisticsUpdatedListener(
+			OverallReceiverStatisticsUpdatedListener l) {
+		statsListeners.remove(l);
 	}
 
 }
