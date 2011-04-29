@@ -15,7 +15,7 @@ import com.spam.mctool.intermediates.ReceiverCreationException;
 public class ReceiverPool implements ReceiverManager {
 	
 	// internals
-	private int threadPoolSize = 15;
+	private int threadPoolSize = 5;
 	private int statsInterval = 1000;
 	private ScheduledThreadPoolExecutor stpe;
 	private List<ReceiverGroup> receiverGroups;

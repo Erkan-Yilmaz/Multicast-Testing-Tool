@@ -17,7 +17,7 @@ public class SenderPool implements SenderManager {
 	private Set<Sender> senders = new HashSet<Sender>();
 	private List<SenderAddedOrRemovedListener> saorl;
 	
-	private int threadPoolSize = 15;
+	private int threadPoolSize = 5;
 	private int statsInterval = 1000;
 	
 	public SenderPool() {
