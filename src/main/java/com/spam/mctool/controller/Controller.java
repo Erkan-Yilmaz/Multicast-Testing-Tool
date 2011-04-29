@@ -582,7 +582,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
             writer.writeToURI(xmlDocument, profilePath.toString());
         }
         catch(LSException e){
-            throw new Exception("The data could not be serialized to XML.");
+            throw new Exception("The data could not be serialized to XML."+e.getMessage());
         }
         catch(Exception e){
             throw new Exception("The file could not be written.");
