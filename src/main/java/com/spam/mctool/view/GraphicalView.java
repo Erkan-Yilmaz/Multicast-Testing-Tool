@@ -5,6 +5,7 @@ package com.spam.mctool.view;
 
 import com.spam.mctool.controller.ErrorEvent;
 import com.spam.mctool.controller.ErrorEventListener;
+import com.spam.mctool.intermediates.OverallReceiverStatisticsUpdatedEvent;
 import com.spam.mctool.view.main.MainFrame;
 import com.spam.mctool.controller.Controller;
 import com.spam.mctool.controller.ErrorEventManager;
@@ -12,12 +13,15 @@ import com.spam.mctool.controller.Profile;
 import com.spam.mctool.controller.ProfileChangeListener;
 import com.spam.mctool.controller.ProfileManager;
 import com.spam.mctool.controller.StreamManager;
+import com.spam.mctool.intermediates.OverallSenderStatisticsUpdatedEvent;
 import com.spam.mctool.intermediates.ProfileChangeEvent;
 import com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
 import com.spam.mctool.intermediates.SenderAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.SenderDataChangedEvent;
 import com.spam.mctool.model.MulticastStream;
+import com.spam.mctool.model.OverallReceiverStatisticsUpdatedListener;
+import com.spam.mctool.model.OverallSenderStatisticsUpdatedListener;
 import com.spam.mctool.model.ReceiverAddedOrRemovedListener;
 import com.spam.mctool.model.ReceiverDataChangeListener;
 import com.spam.mctool.model.ReceiverGroup;
@@ -50,7 +54,8 @@ public class GraphicalView implements MctoolView,
 		SenderDataChangeListener, ReceiverDataChangeListener,
 		ProfileChangeListener, SenderAddedOrRemovedListener,
 		ReceiverAddedOrRemovedListener,
-                ErrorEventListener {
+                ErrorEventListener, OverallReceiverStatisticsUpdatedListener,
+                OverallSenderStatisticsUpdatedListener {
 
 	/**
          * Reference to the main frame of the application
@@ -170,6 +175,8 @@ public class GraphicalView implements MctoolView,
     private void attachObservers() {
         streamManager.addSenderAddedOrRemovedListener(this);
         streamManager.addReceiverAddedOrRemovedListener(this);
+        streamManager.addOverallReceiverStatisticsUpdatedListener(this);
+        streamManager.addOverallSenderStatisticsUpdatedListener(this);
         profileManager.addProfileChangeListener(this);
         errorEventManager.addErrorEventListener(this, ErrorEventManager.DEBUG);
     }
@@ -295,6 +302,14 @@ public class GraphicalView implements MctoolView,
     public void kill() {
         // unregister all listeners
         mainFrame.dispose();
+    }
+
+    public void overallReceiverStatisticsUpdated(OverallReceiverStatisticsUpdatedEvent e) {
+        mainFrame.overallReceiverStatisticsUpdated(e);
+    }
+
+    public void overallSenderStatisticsUpdated(OverallSenderStatisticsUpdatedEvent e) {
+        mainFrame.overallSenderStatisticsUpdated(e);
     }
 
 }

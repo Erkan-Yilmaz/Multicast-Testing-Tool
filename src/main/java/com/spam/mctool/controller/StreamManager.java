@@ -1,4 +1,8 @@
-package com.spam.mctool.controller;;
+package com.spam.mctool.controller;
+
+import com.spam.mctool.view.GraphicalView;
+
+;
 
 /**
  * @author Jeffrey Jedele
@@ -77,5 +81,9 @@ public interface StreamManager {
 	 * @param l listener to be removed
 	 */
 	public void removeReceiverAddedOrRemovedListener(com.spam.mctool.model.ReceiverAddedOrRemovedListener l);
+
+        public void addOverallReceiverStatisticsUpdatedListener(com.spam.mctool.model.OverallReceiverStatisticsUpdatedListener l);
+
+        public void addOverallSenderStatisticsUpdatedListener(com.spam.mctool.model.OverallSenderStatisticsUpdatedListener l);
 
 }

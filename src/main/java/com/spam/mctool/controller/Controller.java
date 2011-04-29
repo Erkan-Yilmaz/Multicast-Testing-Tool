@@ -3,6 +3,8 @@
  */
 package com.spam.mctool.controller;
 
+import com.spam.mctool.model.OverallReceiverStatisticsUpdatedListener;
+import com.spam.mctool.model.OverallSenderStatisticsUpdatedListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -1009,6 +1011,14 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
 		}
 		
 	}
+
+    public void addOverallReceiverStatisticsUpdatedListener(OverallReceiverStatisticsUpdatedListener l) {
+        receiverPool.addOverallReceiverStatisticsUpdatedListener(l);
+    }
+
+    public void addOverallSenderStatisticsUpdatedListener(OverallSenderStatisticsUpdatedListener l) {
+        senderPool.addOverallSenderStatisticsUpdatedListener(l);
+    }
 
 
 }

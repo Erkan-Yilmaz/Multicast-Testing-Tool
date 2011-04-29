@@ -7,6 +7,8 @@
 package com.spam.mctool.view.main;
 
 import com.spam.mctool.controller.Profile;
+import com.spam.mctool.intermediates.OverallReceiverStatisticsUpdatedEvent;
+import com.spam.mctool.intermediates.OverallSenderStatisticsUpdatedEvent;
 import com.spam.mctool.intermediates.ProfileChangeEvent;
 import com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
@@ -15,7 +17,10 @@ import com.spam.mctool.intermediates.SenderDataChangedEvent;
 import com.spam.mctool.model.MulticastStream;
 import com.spam.mctool.model.Receiver;
 import com.spam.mctool.model.ReceiverGroup;
+import com.spam.mctool.model.ReceiverManager;
+import com.spam.mctool.model.ReceiverPool;
 import com.spam.mctool.model.Sender;
+import com.spam.mctool.model.SenderManager;
 import com.spam.mctool.view.GraphicalView;
 import com.spam.mctool.view.dialogs.AboutDialog;
 import com.spam.mctool.view.dialogs.EditReceiverDialog;
@@ -959,28 +964,6 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         // update the receiver table
         receiverTable.dataChanged(e);
-
-        // update the receiver statistics section
-        Collection<ReceiverGroup> groups = view.getReceiverGroups();
-
-        Long received = 0l;
-        Long rate     = 0l;
-        Long lost     = 0l;
-        Long faulty   = 0l;
-
-        for(ReceiverGroup g : groups) {
-            received += g.getReceivedPackets();
-            rate     += g.getAvgPPS();
-            lost     += g.getLostPackets();
-            faulty   += g.getFaultyPackets();
-        }
-
-        if(!groups.isEmpty()) rate /= groups.size();
-
-        laReceived.setText(received.toString());
-        laReceivingRate.setText(rate.toString());
-        laLostPackets.setText(lost.toString());
-        laFaultyPackets.setText(faulty.toString());
     }
 
     /**
@@ -1122,6 +1105,20 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
             });
             menuFile.insert(miRecentProfile, insertPos++);
         }
+    }
+
+    public void overallReceiverStatisticsUpdated(OverallReceiverStatisticsUpdatedEvent e) {
+        ReceiverManager rm = e.getSource();
+        laReceived.setText(Long.toString(rm.getOverallReceivedPackets()));
+        laReceivingRate.setText(Long.toString(rm.getOverallReceivedPPS()));
+        laLostPackets.setText(Long.toString(rm.getOverallLostPackets()));
+        laFaultyPackets.setText(Long.toString(rm.getOverallFaultyPackets()));
+    }
+
+    public void overallSenderStatisticsUpdated(OverallSenderStatisticsUpdatedEvent e) {
+        SenderManager sm = e.getSource();
+        laSent.setText(Long.toString(sm.getOverallSentPackets()));
+        laSenderRate.setText(Long.toString(sm.getOverallSentPPS()));
     }
 
 
