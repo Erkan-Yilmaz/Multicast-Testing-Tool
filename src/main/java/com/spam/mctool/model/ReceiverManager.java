@@ -47,4 +47,16 @@ public interface ReceiverManager {
 	 */
 	public void removeReceiverAddedOrRemovedListener(com.spam.mctool.model.ReceiverAddedOrRemovedListener l);
 	
+	/**
+	 * OverallReceiverStatisticsUpdate Observer
+	 * @param l listener to be added
+	 */
+	public void addOverallReceiverStatisticsUpdateListener(com.spam.mctool.model.OverallReceiverStatisticsUpdatedListener l);
+	
+	/**
+	 * OverallReceiverStatisticsUpdate Observer
+	 * @param l listener to be removed
+	 */
+	public void removeOverallReceiverStatisticsUpdateListener(com.spam.mctool.model.OverallReceiverStatisticsUpdatedListener l);
+	
 }
