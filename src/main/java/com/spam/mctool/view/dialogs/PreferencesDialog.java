@@ -11,9 +11,11 @@
 
 package com.spam.mctool.view.dialogs;
 
+import com.spam.mctool.view.main.MainFrame;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import javax.swing.JFrame;
 
 /**
  *
@@ -21,11 +23,18 @@ import java.util.ResourceBundle;
  */
 public class PreferencesDialog extends javax.swing.JDialog {
 
+    private MainFrame parent;
+
     /** Creates new form PreferencesDialog */
-    public PreferencesDialog(java.awt.Frame parent, boolean modal) {
+    private PreferencesDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         loadData();
+    }
+
+    public PreferencesDialog(MainFrame parent, boolean modal) {
+        this((JFrame)parent, modal);
+        this.parent = parent;
     }
 
     /** This method is called from within the constructor to
