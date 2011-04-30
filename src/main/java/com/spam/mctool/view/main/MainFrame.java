@@ -58,6 +58,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     public MainFrame(GraphicalView view) {
         this.view = view;
         initComponents();
+        initCustomComponents();
     }
 
     /** This method is called from within the constructor to
@@ -555,6 +556,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         menuFile.add(miOpenProfile);
 
         miSaveProfile.setText(bundle.getString("MainFrame.miSaveProfile.text")); // NOI18N
+        miSaveProfile.setEnabled(false);
         miSaveProfile.setName("miSaveProfile"); // NOI18N
         miSaveProfile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -773,10 +775,14 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     }//GEN-LAST:event_jScrollPane1MouseClicked
 
     private void miOpenProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miOpenProfileActionPerformed
-        JFileChooser chooser = new JFileChooser();
         int returnVal = chooser.showOpenDialog(this);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
             view.loadProfile(chooser.getSelectedFile());
+        }
+        if(view.getCurrentProfile() != null) {
+            miSaveProfile.setEnabled(true);
+        } else {
+            miSaveProfile.setEnabled(false);
         }
     }//GEN-LAST:event_miOpenProfileActionPerformed
 
@@ -787,10 +793,20 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
             view.saveProfile(dlg.getProfileName(), dlg.getSelectedFile());
         }
         loadRecentProfiles();
+        if(view.getCurrentProfile() != null) {
+            miSaveProfile.setEnabled(true);
+        } else {
+            miSaveProfile.setEnabled(false);
+        }
     }//GEN-LAST:event_miSaveProfileAsActionPerformed
 
     private void miSaveProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSaveProfileActionPerformed
         view.saveCurrentProfile();
+        if(view.getCurrentProfile() != null) {
+            miSaveProfile.setEnabled(true);
+        } else {
+            miSaveProfile.setEnabled(false);
+        }
     }//GEN-LAST:event_miSaveProfileActionPerformed
 
     private void miExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miExitActionPerformed
@@ -807,7 +823,6 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     }//GEN-LAST:event_miPreferencesActionPerformed
 
     private void menuFileMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_menuFileMenuSelected
-        System.out.println("MenuSelected");
         loadRecentProfiles();
     }//GEN-LAST:event_menuFileMenuSelected
 
@@ -890,6 +905,9 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     private com.spam.mctool.view.main.sendertable.SenderStateRenderer statusRenderer1;
     private com.spam.mctool.view.main.TwoColorRenderer twoColorRenderer1;
     // End of variables declaration//GEN-END:variables
+
+    // Custom variables declaration
+    private JFileChooser chooser;
 
     public MainFrameState getSessionState() {
         MainFrameState state = new MainFrameState();
@@ -1107,6 +1125,10 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         SenderManager sm = e.getSource();
         laSent.setText(Long.toString(sm.getOverallSentPackets()));
         laSenderRate.setText(Long.toString(sm.getOverallSentPPS()));
+    }
+
+    private void initCustomComponents() {
+        chooser = new JFileChooser();
     }
 
 
