@@ -5,14 +5,15 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import com.spam.mctool.controller.Controller;
+import com.spam.mctool.controller.ErrorEvent;
+import com.spam.mctool.controller.ErrorEventManager;
 import com.spam.mctool.intermediates.SenderDataChangedEvent;
 import com.spam.mctool.model.packet.HirschmannPacket;
 import com.spam.mctool.model.packet.Packet;
@@ -34,10 +35,10 @@ public class Sender extends MulticastStream {
 	private long lastSent = 0;
 	private long nowSent = 0;
 	private long lastSentPacketNo = 0;
-	private Map<Long, Exception> exceptions;
+	private ErrorEventManager eMan;
 	// sender specific
 	private long senderId;
-	private byte ttl;
+	private int ttl;
 	private PacketType pType;
 	private byte[] data;
 	private int packetSize;
@@ -55,11 +56,11 @@ public class Sender extends MulticastStream {
 	 * @param stpe thread pool this is executed in
 	 */
 	protected Sender(ScheduledThreadPoolExecutor stpe) {
+		this.eMan = Controller.getController();
 		this.stpe = stpe;
 		this.sentTimes = new LinkedSplitQueue<Integer>();
 		this.senderId = (long) (MAX_SENDER_ID*Math.random());
 		this.analyzer = new AnalyzeSender();
-		this.exceptions = new LinkedHashMap<Long, Exception>();
 	}
 	
 	/**
@@ -84,7 +85,9 @@ public class Sender extends MulticastStream {
 			asf = this.stpe.scheduleWithFixedDelay(analyzer, statsInterval, statsInterval, TimeUnit.MILLISECONDS);
 			state = State.ACTIVE;
 		} catch (IOException e) {
-			exceptions.put(System.currentTimeMillis(), e);
+			eMan.reportErrorEvent(
+				new ErrorEvent(5, "Model.Sender.activate.SocketProblem", "")
+			);
 		}
 	}
 	
@@ -122,7 +125,9 @@ public class Sender extends MulticastStream {
 			lastSent = nowSent;
 			lastSentPacketNo = sentPacketCount;
 		} catch (Exception e) {
-			e.printStackTrace();
+			eMan.reportErrorEvent(
+				new ErrorEvent(5, "Model.Sender.run.PacketCouldNoBeSent", "")
+			);
 		}
 	}
 	
@@ -145,7 +150,9 @@ public class Sender extends MulticastStream {
 			sentPacketCount = (sentPacketCount+1)%(MAX_PACKET_NO+1);
 			p.setSequenceNumber(sentPacketCount);
 		} catch(Exception e) {
-			e.printStackTrace();
+			eMan.reportErrorEvent(
+				new ErrorEvent(5, "Model.Sender.getPacket.PacketCreationError", "")
+			);
 		}
 		return p;
 	}
@@ -259,14 +266,14 @@ public class Sender extends MulticastStream {
 	/**
 	 * @return time to live of sent packets
 	 */
-	public byte getTtl() {
+	public int getTtl() {
 		return ttl;
 	}
 
 	/**
 	 * @param ttl time to live of sent packets
 	 */
-	public void setTtl(byte ttl) {
+	public void setTtl(int ttl) {
 		this.ttl = ttl;
 	}
 
@@ -349,13 +356,6 @@ public class Sender extends MulticastStream {
 	 */
 	public boolean isOverloaded() {
 		return overloaded;
-	}
-
-	/**
-	 * @return caught exceptions
-	 */
-	public Map<Long, Exception> getExceptions() {
-		return Collections.unmodifiableMap(exceptions);
 	}
 	
 	/**

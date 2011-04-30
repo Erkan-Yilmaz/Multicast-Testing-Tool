@@ -118,17 +118,23 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
      * Initiates all members.
      */
     private Controller(){
-        this.currentProfile = null;
+    	this.currentProfile = null;
         this.recentProfiles = new RecentProfiles();
         this.profileChangeObservers = new ArrayList<ProfileChangeListener>();
         this.languageChangeObservers = new ArrayList<LanguageChangeListener>();
         this.newErrorEventObservers = new ArrayList<ErrorEventListener>();
         this.newErrorEventObserversErrorLevel = new HashMap<ErrorEventListener, Integer>();
-        //Init the Sender and Receiver modules
-        this.senderPool = new SenderPool();
-        this.receiverPool = new ReceiverPool();
-        //Create the vies
-        viewers = new ArrayList<MctoolView>();
+    }
+    
+    /**
+     * Controller is a singleton.
+     * @return the application controller
+     */
+    public static Controller getController() {
+    	if(controller == null) {
+    		controller = new Controller();
+    	}
+    	return controller;
     }
 
     /**
@@ -137,7 +143,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
      * @param args The parameters passed to the application
      */
     public static void main(String[] args) {
-        controller = new Controller();
+        controller = getController();
         controller.init(args);
 
     }
@@ -148,6 +154,12 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
      * @param args The arguments passed to the application.
      */
     public void init(String[] args) {
+        //Init the Sender and Receiver modules
+        this.senderPool = new SenderPool();
+        this.receiverPool = new ReceiverPool();
+        //Create the views
+        viewers = new ArrayList<MctoolView>();
+    	
         //try to load recent profiles
         try {
             this.loadRecentProfiles();

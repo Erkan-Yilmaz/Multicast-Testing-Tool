@@ -3,8 +3,16 @@ package com.spam.mctool.model;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.NetworkInterface;
+import java.net.UnknownHostException;
+import java.util.Enumeration;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import com.spam.mctool.controller.Controller;
+import com.spam.mctool.controller.ErrorEvent;
+import com.spam.mctool.controller.ErrorEventManager;
 
 /**
  * Super class of sending and receiving multicast streams
@@ -18,6 +26,7 @@ public abstract class MulticastStream implements Runnable {
 	protected AnalyzingBehaviour analyzingBehaviour;
 	protected ScheduledThreadPoolExecutor stpe;
 	protected ScheduledFuture<? extends Object> sf, asf;
+	protected static ErrorEventManager eMan = Controller.getController();
 	// network
 	protected NetworkInterface networkInterface;
 	protected InetAddress group;
@@ -75,6 +84,7 @@ public abstract class MulticastStream implements Runnable {
 		}
 		
 		public static AnalyzingBehaviour getByIdentifier(String ident) {
+			ident = ident.toLowerCase();
 			if(ident.equals("lazy")) {
 				return LAZY;
 			} else if(ident.equals("default")) {
@@ -82,7 +92,10 @@ public abstract class MulticastStream implements Runnable {
 			} else if(ident.equals("eager")) {
 				return EAGER;
 			} else {
-				throw new IllegalArgumentException();
+				eMan.reportErrorEvent(
+					new ErrorEvent(3, "Model.MulticastStream.getAnalyzingBehaviour.IllegalIdentifier.text", "Fallback: default")
+				);
+				return DEFAULT;
 			}
 		}
 	}
@@ -111,9 +124,135 @@ public abstract class MulticastStream implements Runnable {
 			} else if(ident.equals("spam")) {
 				return PacketType.SPAM;
 			} else {
-				throw new IllegalArgumentException();
+				eMan.reportErrorEvent(
+					new ErrorEvent(3, "Model.MulticastStream.getPacketType.IllegalIdentifier.text", "Fallback: Spam format")
+				);
+				return PacketType.SPAM;
 			}
 		}
+	}
+	
+	/**
+	 * Tries to get a MulticastGroup from a IP Address string.
+	 * IPv6 addresses are only supported in an easy 8x4byte from, no shorthands.
+	 * @param group the address string
+	 * @return InetAddress if correct multicast group is found, null if not
+	 */
+	public static InetAddress getMulticastGroupByName(String group) {
+		if(null == group) {
+			return null;
+		}
+		
+		InetAddress add = null;
+		Matcher ipv4Matcher = Pattern.compile("([\\d]{1,3})\\.([\\d]{1,3})\\.([\\d]{1,3})\\.([\\d]{1,3})").matcher(group);
+		Matcher ipv6Matcher = Pattern.compile("([a-fA-F\\d]{0,4}):([a-fA-F\\d]{0,4}):([a-fA-F\\d]{0,4}):([a-fA-F\\d]{0,4}):([a-fA-F\\d]{0,4}):([a-fA-F\\d]{0,4}):([a-fA-F\\d]{0,4}):([a-fA-F\\d]{0,4})").matcher(group);
+		
+		matching:
+		if(ipv4Matcher.matches()) {
+			int[] address = new int[4];
+			for(int i=0; i<4; i++) {
+				address[i] = Integer.parseInt(ipv4Matcher.group(i+1));
+			}
+			if((address[0]<224) || (address[0]>239) || (address[1]>255) || (address[2]>255) || (address[3]>255)) {
+				break matching;
+			}
+			try {
+				add = InetAddress.getByName(group);
+			} catch(UnknownHostException e) {
+				break matching;
+			}
+		} else if(ipv6Matcher.matches()) {
+			int[] address = new int[8];
+			for(int i=0; i<8; i++) {
+				String part = ipv6Matcher.group(i+1);
+				address[i] = (part.equals("")) ? 0 : Integer.decode("0x"+part);
+			}
+			if((address[0]<0xff00) || (address[0]>0xffff)) {
+				break matching;
+			}
+			try {
+				add = InetAddress.getByName(group);
+			} catch(UnknownHostException e) {
+				break matching;
+			}
+		} else {
+			break matching;
+		}
+		
+		return add;
+	}
+	
+	/**
+	 * Tries to return a port identified by the given string
+	 * @param name the string denoting the port
+	 * @return port if correct, null if not
+	 */
+	public static Integer getPortByName(String name) {
+		if(null == name) {
+			return null;
+		}
+		
+		try {
+			Integer port = Integer.parseInt(name);
+			if((port<0) || (port>65535)) {
+				return null;
+			} else {
+				return port;
+			}
+		} catch(NumberFormatException nfe) {
+			return null;
+		}
+	}
+	
+	/**
+	 * Tries to get the Network Interface defined by the given IP address or 
+	 * falls back to the first found external interface (not loopback and not point to point)
+	 * @param address ip address in string representation
+	 * @return the chosen network interface or null if none is found
+	 */
+	public static NetworkInterface getNetworkInterfaceByAddress(String address) {
+		NetworkInterface ninf = null;
+		try {
+			boolean found = false;
+			Enumeration<NetworkInterface> infs = NetworkInterface.getNetworkInterfaces();
+			// iterate through interfaces
+			outer:while(infs.hasMoreElements()) {
+				ninf = infs.nextElement();
+				Enumeration<InetAddress> adds = ninf.getInetAddresses();
+				// iterate through addresses
+				while(adds.hasMoreElements()) {
+					InetAddress add = adds.nextElement();
+					String addString = add.getHostAddress().replace("/", "");
+					if(addString.equals(address)) {
+						found = true;
+						break outer;
+					}
+				}
+			}
+			// fallback if given ip address is not found
+			if(!found) {
+				infs = NetworkInterface.getNetworkInterfaces();
+				while(infs.hasMoreElements()) {
+					ninf = infs.nextElement();
+					// search for a external interface
+					if(!(ninf.isLoopback() || ninf.isPointToPoint())) {
+						found = true;
+						eMan.reportErrorEvent(
+							new ErrorEvent(3, "Model.MulticastStream.getNetworkInterface.IPNotFound", "Fallback: "+ninf.getDisplayName())
+						);
+						break;
+					}
+				}
+			}
+			if(!found) {
+				ninf = null;
+			}
+		} catch(Exception e) {
+			eMan.reportErrorEvent(
+				new ErrorEvent(5, "Model.MulticastStream.getNetworkInterface.FatalNetworkError", "")
+			);
+		}
+		return ninf;
 	}
 
 	/**

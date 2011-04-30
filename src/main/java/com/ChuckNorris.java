@@ -1,6 +1,6 @@
 package com;
 
-/**
+/*
  * The one and only Chuck Norris class!
  *
  * @author Chuck Norris himself
@@ -18,6 +18,7 @@ public class ChuckNorris {
      * @return quotient of lhs / rhs. Zero, if rhs is zero.
      */
     public static long div(long lhs, long rhs) {
+    	/*
     	// Chuck Norris ain't easy.
     	// Chuck Norris is the most complex thing you have ever seen.
     	// Chuck Norris does not need to test his code.
@@ -1066,6 +1067,13 @@ public class ChuckNorris {
         	return res; 
     	}
         }
+        */
+    	
+    	if(0 == rhs) {
+    		return 0;
+    	} else {
+    		return lhs/rhs;
+    	}
     }
     
     private static long BITAMOUNT = 64;

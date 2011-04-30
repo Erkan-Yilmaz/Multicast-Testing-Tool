@@ -27,6 +27,7 @@ public class Receiver {
 	private long timeout = 2000;
 	private long lastPacketNo = 0;
 	// statistics
+	private Boolean statsLock = new Boolean(false);
 	private int maxDelay = 0;
 	private long receivedPackets = 0;
 	private long lostPackets = 0;
@@ -61,51 +62,52 @@ public class Receiver {
 		if(data.size() < 2) return;
 		data.setIteratorStepSize(statsStepSize);
 		int div = (int) Math.ceil(data.size()/statsStepSize)-1;
-		// initialize the average counters
-		double ppsavg = 0.0;
-		double travavg = 0.0;
-		PacketContainer last = null;
-		for(PacketContainer cur : data) {
-			if(last == null) {
+		synchronized(statsLock) {
+			// initialize the average counters
+			double ppsavg = 0.0;
+			double travavg = 0.0;
+			PacketContainer last = null;
+			for (PacketContainer cur : data) {
+				if (last == null) {
+					last = cur;
+					continue;
+				}
+
+				int delay = (int) Math
+						.round((cur.receivedTime - last.receivedTime) / 1.0E6);
+				if (delay > maxDelay) {
+					maxDelay = delay;
+				}
+				ppsavg += (double) (delay) / (double) statsStepSize;
+				travavg += cur.systemTime - cur.packet.getDispatchTime();
 				last = cur;
-				continue;
 			}
-			
-			int delay = (int)Math.round((cur.receivedTime-last.receivedTime)/1.0E6);
-			if(delay>maxDelay) {
-				maxDelay = delay;
+			ppsavg /= div;
+			// translate receiving time spans in pps
+			ppsavg = 1.0E3 / Math.round(ppsavg);
+			travavg /= div;
+			// handle pps statistics
+			avgPPS = (int) Math.round(ppsavg);
+			maxPPS = Math.max(maxPPS, avgPPS);
+			minPPS = Math.min(minPPS, avgPPS);
+			// handle traversal statistics
+			avgTraversal = (int) Math.round(travavg);
+			maxTraversal = Math.max(maxTraversal, avgTraversal);
+			minTraversal = Math.min(minTraversal, avgTraversal);
+			// handle other statistics and data
+			senderConfiguredPPS = last.packet.getConfiguredPacketsPerSecond();
+			senderMeasuredPPS = last.packet.getSenderMeasuredPacketRate();
+			senderSentPackets = last.packet.getSequenceNumber();
+			lastPayload = last.packet.getPayload();
+			lastPacketSize = last.packet.getSize();
+			if (((com.spam.mctool.model.packet.AutoPacket) last.packet)
+					.getPacketType().equals(HirschmannPacket.class)) {
+				lastPacketType = PacketType.HMANN;
+			} else {
+				lastPacketType = PacketType.SPAM;
 			}
-			ppsavg += (double)(delay)/(double)statsStepSize;
-			travavg += cur.systemTime - cur.packet.getDispatchTime();
-			last = cur;
+			senderAddress = last.address;
 		}
-		ppsavg /= div;
-		// translate receiving time spans in pps
-		ppsavg = 1.0E3 / Math.round(ppsavg);
-		travavg /= div;
-		
-		// handle pps statistics
-		avgPPS = (int) Math.round(ppsavg);
-		maxPPS = Math.max(maxPPS, avgPPS);
-		minPPS = Math.min(minPPS, avgPPS);
-		
-		// handle traversal statistics
-		avgTraversal = (int) Math.round(travavg);
-		maxTraversal = Math.max(maxTraversal, avgTraversal);
-		minTraversal = Math.min(minTraversal, avgTraversal);
-		
-		// handle other statistics and data
-		senderConfiguredPPS = last.packet.getConfiguredPacketsPerSecond();
-		senderMeasuredPPS = last.packet.getSenderMeasuredPacketRate();
-		senderSentPackets = last.packet.getSequenceNumber();
-		lastPayload = last.packet.getPayload();
-		lastPacketSize = last.packet.getSize();
-		if(((com.spam.mctool.model.packet.AutoPacket)last.packet).getPacketType().equals(HirschmannPacket.class)) {
-			lastPacketType = PacketType.HMANN;
-		} else {
-			lastPacketType = PacketType.SPAM;
-		}
-		senderAddress = last.address;
 	}
 	
 	/**
@@ -187,21 +189,27 @@ public class Receiver {
 	 * @return id of the sender this receiver analyzes
 	 */
 	public long getSenderId() {
-		return senderId;
+		synchronized(statsLock) {
+			return senderId;
+		}
 	}
 
 	/**
 	 * @return if receiver has received packets in the given timeout interval
 	 */
 	public boolean isAlive() {
-		return alive;
+		synchronized(statsLock) {
+			return alive;
+		}
 	}
 
 	/**
 	 * @return if alive state of this receiver has changed with this reporting cylce
 	 */
 	public boolean hasChangedAliveState() {
-		return aliveStateChanged;
+		synchronized(statsLock) {
+			return aliveStateChanged;
+		}
 	}
 
 	/**
@@ -229,109 +237,140 @@ public class Receiver {
 	 * @return pps rate that was configured at the sender
 	 */
 	public long getSenderConfiguredPPS() {
-		return senderConfiguredPPS;
+		synchronized (statsLock) {
+			return senderConfiguredPPS;
+		}
 	}
 
 	/**
 	 * @return avg. pps rate measured at the sender
 	 */
 	public long getSenderMeasuredPPS() {
-		return senderMeasuredPPS;
+		synchronized (statsLock) {
+			return senderMeasuredPPS;
+		}
 	}
 
 	/**
 	 * @return overall packet count sent from sender in this group
 	 */
 	public long getSenderSentPackets() {
-		return senderSentPackets;
+		synchronized (statsLock) {
+			return senderSentPackets;
+		}
 	}
 
 	/**
 	 * @return calculated min. packets per second
 	 */
 	public int getMinPPS() {
-		return minPPS==Integer.MAX_VALUE ? 0 : minPPS;
+		synchronized (statsLock) {
+			return minPPS == Integer.MAX_VALUE ? 0 : minPPS;
+		}
 	}
 
 	/**
 	 * @return calculated avg. packets per second
 	 */
 	public int getAvgPPS() {
-		return avgPPS;
+		synchronized (statsLock) {
+			return avgPPS;
+		}
 	}
 
 	/**
 	 * @return calculated max. packets per second
 	 */
 	public int getMaxPPS() {
-		return maxPPS==Integer.MIN_VALUE ? 0 : maxPPS;
+		synchronized (statsLock) {
+			return maxPPS == Integer.MIN_VALUE ? 0 : maxPPS;
+		}
 	}
 
 	/**
 	 * @return max. delay between tow received packets in ms
 	 */
 	public int getMaxDelay() {
-		return maxDelay;
+		synchronized (statsLock) {
+			return maxDelay;
+		}
 	}
 
 	/**
 	 * @return min. traversal time between sender and receiver in ms
 	 */
 	public long getMinTraversal() {
-		return minTraversal==Long.MAX_VALUE ? 0 : minTraversal;
+		synchronized (statsLock) {
+			return minTraversal == Long.MAX_VALUE ? 0 : minTraversal;
+		}
 	}
 
 	/**
 	 * @return avg. traversal time between sender and receiver in ms
 	 */
 	public long getAvgTraversal() {
-		return avgTraversal;
+		synchronized (statsLock) {
+			return avgTraversal;
+		}
 	}
 
 	/**
 	 * @return max traversal time between sender and receiver in ms
 	 */
 	public long getMaxTraversal() {
-		return maxTraversal==Long.MIN_VALUE ? 0 : maxTraversal;
+		synchronized (statsLock) {
+			return maxTraversal == Long.MIN_VALUE ? 0 : maxTraversal;
+		}
 	}
 
 	/**
 	 * @return payload of last received packet as byte array
 	 */
 	public byte[] getPayload() {
-		return lastPayload;
+		synchronized (statsLock) {
+			return lastPayload;
+		}
 	}
 	
 	/**
 	 * @return payload of last received packet as string, or null if parsing is not possible
 	 */
 	public String getPayloadAsString() {
-		String s = null;
-		try {
-			s = new String(lastPayload);
-		} catch(Exception e) {}
-		return s;
+		synchronized (statsLock) {
+			String s = null;
+			try {
+				s = new String(lastPayload);
+			} catch (Exception e) {
+			}
+			return s;
+		}
 	}
 
 	/**
 	 * @return size of the last received packet
 	 */
 	public long getPacketSize() {
-		return lastPacketSize;
+		synchronized (statsLock) {
+			return lastPacketSize;
+		}
 	}
 	
 	/**
 	 * @return the types of packets received on this stream
 	 */
 	public PacketType getPacketType() {
-		return lastPacketType;
+		synchronized (statsLock) {
+			return lastPacketType;
+		}
 	}
 	
 	/**
 	 * @return address of the packet sender
 	 */
 	public InetAddress getSenderAddress() {
-	    return senderAddress;
+	    synchronized (statsLock) {
+			return senderAddress;
+		}
 	}
 	
 	/**
