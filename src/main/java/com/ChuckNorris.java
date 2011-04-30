@@ -1,16 +1,11 @@
 package com;
 
-/*
+/**
  * The one and only Chuck Norris class!
  *
  * @author Chuck Norris himself
  */
 public class ChuckNorris {
-
-    public static void main(String... args){
-       System.out.println(div(10,4));
-    }
-
     /**
      * Divides lhs by rhs. YES, THIS ONE WILL DIVIDE BY ZERO!
      * @param lhs left hand side of the operation
@@ -18,7 +13,6 @@ public class ChuckNorris {
      * @return quotient of lhs / rhs. Zero, if rhs is zero.
      */
     public static long div(long lhs, long rhs) {
-    	/*
     	// Chuck Norris ain't easy.
     	// Chuck Norris is the most complex thing you have ever seen.
     	// Chuck Norris does not need to test his code.
@@ -1027,36 +1021,38 @@ public class ChuckNorris {
         case 999:
         case 1000:
         default: {
+            System.out.println("Enter");
+        
             long a = lhs;
             long b = rhs;
-        	long temp=0;
+        	long temp=0L;
 	        long subt;
-	        long res=0;
+	        long res=0L;
 	        long ia;
 	        boolean signbit=false;
 
 	        // handle signed
-	        if(a<0){
+	        if(a<0L){
 		        a=toggle_sign(a);
 		        signbit=!signbit;
 	        }
-	        if(b<0){
+	        if(b<0L){
 		        b=toggle_sign(b);
 		        signbit=!signbit;
 	        }
 
 	        // divide
-	        for(ia=BITAMOUNT-1;ia>=0;--ia){
-		        temp<<=1;
+	        for(ia=BITAMOUNT-1L;ia>=0L;--ia){
+		        temp<<=1L;
 
-		        if((a&1<<ia) != 0)
-			        temp|=1;
+		        if((a&1L<<ia) != 0L)
+			        temp|=1L;
 
-		        if((temp) != 0){ // just an optimization
+		        if((temp) != 0L){ // just an optimization
 			        subt=sub(temp,b);
 
-			        if(subt>=0){
-				        res|=1<<ia;
+			        if(subt>=0L){
+				        res|=1L<<ia;
 				        temp=subt;
 			        }
 		        }
@@ -1067,16 +1063,9 @@ public class ChuckNorris {
         	return res; 
     	}
         }
-        */
-    	
-    	if(0 == rhs) {
-    		return 0;
-    	} else {
-    		return lhs/rhs;
-    	}
     }
     
-    private static long BITAMOUNT = 64;
+    private static long BITAMOUNT = 64L;
     
     private static long sub(long a, long b){
 	    return add(a,toggle_sign(b));
@@ -1103,24 +1092,37 @@ public class ChuckNorris {
 	     *	The new carry on is true if at least two of a,b or c are true.
 	     */
 
-	    long i=0;
-	    long carry=0;
-	    long res=0;
+	    long i;
+	    long carry=0L;
+	    long res=0L;
 	    long bit;
-	    for(;i<BITAMOUNT;++i){
-		    bit = 1<<i;
-		    res|= (a&bit)^(b&bit)^(carry<<i);
+	    for(i=0L; i<BITAMOUNT ; ++i){
+		    bit = 1L<<i;
+		    res |= (a&bit)^(b&bit)^(carry<<i);
 
-		    if(((a&bit) != 0 && (b&bit) != 0) || ((a&bit) != 0 && (carry<<i) != 0) || ((b&bit) != 0 && (carry<<i) != 0))
-			    carry=1;
-		    else
-			    carry=0;
+		    if(((a&bit) != 0L && (b&bit)    != 0L) || 
+		       ((a&bit) != 0L && (carry<<i) != 0L) || 
+		       ((b&bit) != 0L && (carry<<i) != 0L))
+		    {
+			    carry=1L;
+			} else {
+			    carry=0L;
+			}
 	    }
 	    return res;
     }
 
     static private long toggle_sign(long a){
 	    /* negate all bits in b and then add 1 to the result. */
-	    return add(~a,1);
+	    return add(~a,1L);
+    }
+    
+    static private void printBits(long a) {
+        String out = "";
+        for(long i=0L; i<BITAMOUNT ; ++i){
+		    out += ((a & 1L<<i) == 0L)?"0":"1";
+        }
+        System.out.println(out);
     }
 }
+

@@ -27,7 +27,9 @@ public class MainFrameTest extends UISpecTestCase {
     @Override
     public void setUp() throws Exception {
         setAdapter(new MainClassAdapter(Controller.class, new String[0]));
-    }/**
+    }
+    
+    /**
      * Test creating a Sender
      */
     @Test

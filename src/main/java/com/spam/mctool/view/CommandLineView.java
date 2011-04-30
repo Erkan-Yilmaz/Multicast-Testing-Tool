@@ -4,12 +4,12 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.Writer;
-import java.sql.Time;
 import java.util.Date;
 
 import com.spam.mctool.controller.Controller;
+import com.spam.mctool.controller.ErrorEvent;
+import com.spam.mctool.controller.ErrorEventListener;
+import com.spam.mctool.controller.ErrorEventManager;
 import com.spam.mctool.controller.ProfileChangeListener;
 import com.spam.mctool.intermediates.ProfileChangeEvent;
 import com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent;
@@ -21,12 +21,11 @@ import com.spam.mctool.model.SenderAddedOrRemovedListener;
  *
  * @author ramin
  */
-public class CommandLineView implements MctoolView, ProfileChangeListener, ReceiverAddedOrRemovedListener, SenderAddedOrRemovedListener {
+public class CommandLineView implements MctoolView, ProfileChangeListener, ReceiverAddedOrRemovedListener, SenderAddedOrRemovedListener, ErrorEventListener {
 	private PrintStream out = System.out;
 	private BufferedWriter log;
 	private Controller c;
 	private Date date;
-	private Time now;
 	private java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle");
 	
 	
@@ -39,6 +38,7 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
         c.removeProfileChangeListener(this);
         c.removeReceiverAddedOrRemovedListener(this);
         c.removeSenderAddedOrRemovedListener(this);
+        c.addErrorEventListener(this, ErrorEventManager.ERROR);
         
         
         try {
@@ -112,9 +112,30 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
 		}
 		
 	}
+	
+	@Override
+	public void kill()
+	{
+		try {
+			date = new Date();
+		    log.write(bundle.getString("CommandLine.Kill.text") + date.toString());
+		    log.close();
+		} catch (IOException evt) {
+		}
+	}
 
-    public void kill() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	@Override
+	public void newErrorEvent(ErrorEvent e) {
+		date = new Date();
+		
+		out.println(date.toString() + " - " + bundle.getString("CommandLine.ErrorOccurred.text") + e.getCompleteMessage());
+		try {
+			
+		    log.write(date.toString() + " - " + bundle.getString("CommandLine.ErrorOccurred.text") + e.getCompleteMessage());
+		    log.close();
+		    
+		} catch (IOException evt) {
+		}
+	}
 
 }
