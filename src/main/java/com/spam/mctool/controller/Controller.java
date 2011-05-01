@@ -284,7 +284,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         }
         //enable the cli/logger
         if(enableCli){
-            //viewers.add(new CommandLineView());
+            viewers.add(new CommandLineView());
         }
         //Init all views
         Iterator<MctoolView> it = viewers.iterator();
