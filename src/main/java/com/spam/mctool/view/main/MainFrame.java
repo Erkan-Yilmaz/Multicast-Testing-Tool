@@ -824,7 +824,9 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     }//GEN-LAST:event_miAboutActionPerformed
 
     private void miPreferencesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miPreferencesActionPerformed
-        new PreferencesDialog(this, false).setVisible(true);
+        PreferencesDialog dlg = new PreferencesDialog(this, true);
+        dlg.setVisible(true);
+        view.setLocale(dlg.getSelectedLocale());
     }//GEN-LAST:event_miPreferencesActionPerformed
 
     private void menuFileMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_menuFileMenuSelected

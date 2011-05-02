@@ -9,6 +9,8 @@ import com.spam.mctool.intermediates.OverallReceiverStatisticsUpdatedEvent;
 import com.spam.mctool.view.main.MainFrame;
 import com.spam.mctool.controller.Controller;
 import com.spam.mctool.controller.ErrorEventManager;
+import com.spam.mctool.controller.LanguageChangeListener;
+import com.spam.mctool.controller.LanguageManager;
 import com.spam.mctool.controller.Profile;
 import com.spam.mctool.controller.ProfileChangeListener;
 import com.spam.mctool.controller.ProfileManager;
@@ -30,6 +32,7 @@ import com.spam.mctool.model.SenderAddedOrRemovedListener;
 import com.spam.mctool.model.SenderDataChangeListener;
 import java.io.File;
 import java.util.Collection;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.JOptionPane;
@@ -55,7 +58,8 @@ public class GraphicalView implements MctoolView,
 		ProfileChangeListener, SenderAddedOrRemovedListener,
 		ReceiverAddedOrRemovedListener,
                 ErrorEventListener, OverallReceiverStatisticsUpdatedListener,
-                OverallSenderStatisticsUpdatedListener {
+                OverallSenderStatisticsUpdatedListener,
+                LanguageChangeListener {
 
 	/**
          * Reference to the main frame of the application
@@ -72,6 +76,7 @@ public class GraphicalView implements MctoolView,
          */
         private ProfileManager profileManager;
         private ErrorEventManager errorEventManager;
+        private LanguageManager languageManager;
 
 	public void receiverGroupAdded(final ReceiverAddedOrRemovedEvent e) {
             Runnable groupAddedRunnable = new Runnable() {
@@ -139,6 +144,7 @@ public class GraphicalView implements MctoolView,
             streamManager = c;
             profileManager = c;
             errorEventManager = c;
+            languageManager = c;
 
             // Set System L&F. Will only work, if the application did not
             // yet reference any other swing component!
@@ -178,6 +184,7 @@ public class GraphicalView implements MctoolView,
         streamManager.addOverallReceiverStatisticsUpdatedListener(this);
         streamManager.addOverallSenderStatisticsUpdatedListener(this);
         profileManager.addProfileChangeListener(this);
+        languageManager.addLanguageChangeListener(this);
         errorEventManager.addErrorEventListener(this, ErrorEventManager.DEBUG);
     }
 
@@ -310,6 +317,17 @@ public class GraphicalView implements MctoolView,
 
     public void overallSenderStatisticsUpdated(OverallSenderStatisticsUpdatedEvent e) {
         mainFrame.overallSenderStatisticsUpdated(e);
+    }
+
+    public void languageChanged() {
+        mainFrame.dispose();
+        mainFrame = new MainFrame(this);
+        mainFrame.setVisible(true);
+    }
+
+    public void setLocale(Locale locale) {
+        Locale.setDefault(locale);
+        languageManager.reportLanguageChange();
     }
 
 }
