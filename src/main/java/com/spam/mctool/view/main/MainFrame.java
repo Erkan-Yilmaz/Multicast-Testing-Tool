@@ -546,6 +546,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
             }
         });
 
+        miOpenProfile.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         miOpenProfile.setText(bundle.getString("MainFrame.miOpenProfile.text")); // NOI18N
         miOpenProfile.setName("miOpenProfile"); // NOI18N
         miOpenProfile.addActionListener(new java.awt.event.ActionListener() {
@@ -555,6 +556,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         });
         menuFile.add(miOpenProfile);
 
+        miSaveProfile.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         miSaveProfile.setText(bundle.getString("MainFrame.miSaveProfile.text")); // NOI18N
         miSaveProfile.setEnabled(false);
         miSaveProfile.setName("miSaveProfile"); // NOI18N
@@ -565,6 +567,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         });
         menuFile.add(miSaveProfile);
 
+        miSaveProfileAs.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         miSaveProfileAs.setText(bundle.getString("MainFrame.miSaveProfileAs.text")); // NOI18N
         miSaveProfileAs.setName("miSaveProfileAs"); // NOI18N
         miSaveProfileAs.addActionListener(new java.awt.event.ActionListener() {
@@ -615,6 +618,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         });
         menuHelp.add(miAbout);
 
+        miHelp.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         miHelp.setText(bundle.getString("MainFrame.miHelp.text")); // NOI18N
         miHelp.setName("miHelp"); // NOI18N
         menuHelp.add(miHelp);
