@@ -334,7 +334,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
     /**
      * This method is called by the gui to exit the application.
      */
-    private void exitApplication(){
+    public void exitApplication(){
     	//Stop all senders and remove them
     	if(senderPool != null){
     		senderPool.killAll();
@@ -689,17 +689,12 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
                     	map.put(curData.getNodeName(), curData.getTextContent());
                     }
                 }
-                //Try to add the sender
-                try{
-                    Sender newSender = addSender(map);
-                    //if startMode=none -> Start none
-                    //otherwise test if all should be started or the stream is marked to be started
-                    if(startMode.compareToIgnoreCase("none") != 0 && (startMode.compareToIgnoreCase("all") == 0 || startSender)){
-                    	newSender.activate();
-                    }
-                }
-                catch(Exception e){
-                    this.reportErrorEvent(new ErrorEvent(3,"Controller.failedAddingSender", e.getLocalizedMessage()));
+                //Add the sender
+                Sender newSender = addSender(map);
+                //if startMode=none -> Start none
+                //otherwise test if all should be started or the stream is marked to be started
+                if(newSender != null && startMode.compareToIgnoreCase("none") != 0 && (startMode.compareToIgnoreCase("all") == 0 || startSender)){
+                	newSender.activate();
                 }
             }
         }
@@ -740,17 +735,12 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
                     	map.put(curData.getNodeName(), curData.getTextContent());
                     }
                 }
-                //Try to add the sender
-                try{
-                    ReceiverGroup newReceiver = addReceiverGroup(map);
-                    //if startMode=none -> Start none
-                    //otherwise test if all should be started or the stream is marked to be started
-                    if(startMode.compareToIgnoreCase("none") != 0 && (startMode.compareToIgnoreCase("all") == 0 || startReceiver)){
-                    	newReceiver.activate();
-                    }
-                }
-                catch(Exception e){
-                    this.reportErrorEvent(new ErrorEvent(3,"Controller.failedAdddingReceiverGroup.text", e.getLocalizedMessage()));
+                //Add the sender
+                ReceiverGroup newReceiver = addReceiverGroup(map);
+                //if startMode=nix dasone -> Start none
+                //otherwise test if all should be started or the stream is marked to be started
+                if(newReceiver != null && startMode.compareToIgnoreCase("none") != 0 && (startMode.compareToIgnoreCase("all") == 0 || startReceiver)){
+                	newReceiver.activate();
                 }
             }
         }
