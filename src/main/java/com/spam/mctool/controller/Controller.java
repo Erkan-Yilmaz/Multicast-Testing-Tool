@@ -998,7 +998,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
 	}
 
 	@Override
-	public void removeProfileChangeListener(LanguageChangeListener l) {
+	public void removeLanguageChangeListener(LanguageChangeListener l) {
 		if(l==null){
 			throw new IllegalArgumentException();		
 		}

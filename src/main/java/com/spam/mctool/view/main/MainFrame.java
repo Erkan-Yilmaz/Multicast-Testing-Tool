@@ -1076,6 +1076,11 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
     public void profileChanged(ProfileChangeEvent e) {
         setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("MainFrame.title") + ((view.getCurrentProfile() != null && view.getCurrentProfile().getName() != null) ? " - " + view.getCurrentProfile().getName() : ""));
+        if(view.getCurrentProfile() != null) {
+            miSaveProfile.setEnabled(true);
+        } else {
+            miSaveProfile.setEnabled(false);
+        }
     }
 
     private void loadRecentProfiles() {

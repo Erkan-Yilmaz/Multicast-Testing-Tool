@@ -22,7 +22,7 @@ public interface LanguageManager {
      * Remove a listener from the list of listeners for the languageChange event.
      * @param l listener to be removed
      */
-    public void removeProfileChangeListener(com.spam.mctool.controller.LanguageChangeListener l);
+    public void removeLanguageChangeListener(com.spam.mctool.controller.LanguageChangeListener l);
 
     /**
      * Inform all observers about a language change

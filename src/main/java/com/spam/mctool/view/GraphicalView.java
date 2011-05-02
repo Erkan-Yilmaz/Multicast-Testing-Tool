@@ -140,6 +140,11 @@ public class GraphicalView implements MctoolView,
         languageManager.addLanguageChangeListener(this);
         errorEventManager.addErrorEventListener(this, ErrorEventManager.DEBUG);
 
+        // check if there is already a profile loaded
+        if(profileManager.getCurrentProfile() != null) {
+            this.profileChanged(new ProfileChangeEvent());
+        }
+
         // display the main frame
         mainFrame.setVisible(true);
     }
@@ -352,7 +357,7 @@ public class GraphicalView implements MctoolView,
         //streamManager.removeOverallReceiverStatisticsUpdatedListener(this);
         //streamManager.removeOverallSenderStatisticsUpdatedListener(this);
         profileManager.removeProfileChangeListener(this);
-        //languageManager.removeLanguageChangeListener(this);
+        languageManager.removeLanguageChangeListener(this);
         errorEventManager.removeErrorEventListener(this);
 
         // unregister all model listeners
@@ -376,8 +381,8 @@ public class GraphicalView implements MctoolView,
     }
 
     public void languageChanged() {
-        mainFrame.dispose();
-        mainFrame = new MainFrame(this);
+        kill();
+        init(controller);
         mainFrame.setVisible(true);
     }
 
@@ -387,7 +392,10 @@ public class GraphicalView implements MctoolView,
 
     public void setPreferences(PreferencesDialog dlg) {
         Locale.setDefault(dlg.getSelectedLocale());
+        kill();
         languageManager.reportLanguageChange();
+        init(controller);
+        mainFrame.setVisible(true);
         //persistPreferences(dlg);
         //loadPreferences();
     }
