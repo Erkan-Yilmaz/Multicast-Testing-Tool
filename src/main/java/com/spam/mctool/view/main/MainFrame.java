@@ -790,7 +790,9 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     }//GEN-LAST:event_miOpenProfileActionPerformed
 
     private void miSaveProfileAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSaveProfileAsActionPerformed
-        SaveProfileDialog dlg = new SaveProfileDialog(this, true);
+        Profile currentProfile = view.getCurrentProfile();
+        String  profileName    = currentProfile != null ? currentProfile.getName() : null;
+        SaveProfileDialog dlg = new SaveProfileDialog(this, true, profileName);
         dlg.setVisible(true);
         if(dlg.getSelection().equals(JFileChooser.APPROVE_SELECTION)) {
             view.saveProfile(dlg.getProfileName(), dlg.getSelectedFile());
