@@ -202,7 +202,11 @@ public class PreferencesDialog extends javax.swing.JDialog {
         for(Locale l : Locale.getAvailableLocales()) {
             ResourceBundle bundle = ResourceBundle.getBundle("internationalization/Bundle", l);
             if(bundle.getLocale().equals(l)) {
-                cbLanguage.addItem(new LocaleItem(l));
+                LocaleItem li = new LocaleItem(l);
+                cbLanguage.addItem(li);
+                if(Locale.getDefault().equals(l)) {
+                    cbLanguage.setSelectedItem(li);
+                }
             }
         }
     }
