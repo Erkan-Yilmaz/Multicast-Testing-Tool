@@ -658,7 +658,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
      */
     private void buShowSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buShowSenderActionPerformed
         Sender s = senderTable.getSelectedSenders().get(0);
-        ShowSenderDialog dlg = new ShowSenderDialog(this, true, s);
+        ShowSenderDialog dlg = new ShowSenderDialog(this, false, s);
         s.addSenderDataChangeListener(dlg);
         dlg.setVisible(true);
     }//GEN-LAST:event_buShowSenderActionPerformed
@@ -742,7 +742,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     private void buShowReceiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buShowReceiverActionPerformed
         Receiver r = receiverTable.getSelectedReceivers().get(0);
         ReceiverGroup rg = receiverTable.getParent(r);
-        ShowReceiverDialog dlg = new ShowReceiverDialog(this, true, r, rg);
+        ShowReceiverDialog dlg = new ShowReceiverDialog(this, false, r, rg);
         rg.addReceiverDataChangeListener(dlg);
         dlg.setVisible(true);
     }//GEN-LAST:event_buShowReceiverActionPerformed
