@@ -5,26 +5,28 @@
 
 package com.spam.mctool.view.main.receivertable;
 
+import java.util.ResourceBundle;
+
 /**
  *
  * @author Tobias
  */
 public enum ReceiverTableColumn {
-    STATUS          ("Status"),
-    SENDER_ID       ("Sender ID"),
-    SENDER_IP       ("Sender IP"),
-    SENDER_CONF_PPS ("Conf. Packet Rate"),
-    AVG_PPS         ("Measured Packet Rate"),
-    LOST_PACKETS    ("Lost Packets"),
-    PAYLOAD         ("Payload");
+    STATUS          ("MainFrame.ReceiverTable.status"),
+    SENDER_ID       ("MainFrame.ReceiverTable.sender_id"),
+    SENDER_IP       ("MainFrame.ReceiverTable.sender_ip"),
+    SENDER_CONF_PPS ("MainFrame.ReceiverTable.sender_conf_pps"),
+    AVG_PPS         ("MainFrame.ReceiverTable.measured_pps"),
+    LOST_PACKETS    ("MainFrame.ReceiverTable.lost_packets"),
+    PAYLOAD         ("MainFrame.ReceiverTable.payload");
 
-    private String caption;
+    private String captionIdentifier;
 
-    ReceiverTableColumn(String caption) {
-        this.caption = caption;
+    ReceiverTableColumn(String captionIdentifier) {
+        this.captionIdentifier = captionIdentifier;
     }
 
     String getCaption() {
-        return caption;
+        return ResourceBundle.getBundle("internationalization/Bundle").getString(captionIdentifier);
     }
 }
