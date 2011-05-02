@@ -6,6 +6,7 @@ package com.spam.mctool.view;
 import com.spam.mctool.controller.ErrorEvent;
 import com.spam.mctool.controller.ErrorEventListener;
 import com.spam.mctool.intermediates.OverallReceiverStatisticsUpdatedEvent;
+import com.spam.mctool.view.dialogs.PreferencesDialog;
 import com.spam.mctool.view.main.MainFrame;
 import com.spam.mctool.controller.Controller;
 import com.spam.mctool.controller.ErrorEventManager;
@@ -327,13 +328,15 @@ public class GraphicalView implements MctoolView,
         mainFrame.setVisible(true);
     }
 
-    public void setLocale(Locale locale) {
-        Locale.setDefault(locale);
-        languageManager.reportLanguageChange();
-    }
-
     public void exitApplication() {
         controller.exitApplication();
+    }
+
+    public void setPreferences(PreferencesDialog dlg) {
+        Locale.setDefault(dlg.getSelectedLocale());
+        languageManager.reportLanguageChange();
+        //persistPreferences(dlg);
+        //loadPreferences();
     }
 
 }

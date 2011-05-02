@@ -22,6 +22,11 @@ import javax.swing.JFrame;
  * @author Tobias
  */
 public class PreferencesDialog extends javax.swing.JDialog {
+    private Selection selection;
+
+    public Selection getSelection() {
+        return selection;
+    }
 
     /**
      * wraps a Locale for the combo box
@@ -154,10 +159,12 @@ public class PreferencesDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buOkActionPerformed
+        selection = Selection.APPROVE_SELECTION;
         dispose();
     }//GEN-LAST:event_buOkActionPerformed
 
     private void buCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buCancelActionPerformed
+        selection = Selection.DISCARD_SELECTION;
         dispose();
     }//GEN-LAST:event_buCancelActionPerformed
 

@@ -27,6 +27,7 @@ import com.spam.mctool.view.dialogs.EditReceiverDialog;
 import com.spam.mctool.view.dialogs.EditSenderDialog;
 import com.spam.mctool.view.dialogs.PreferencesDialog;
 import com.spam.mctool.view.dialogs.SaveProfileDialog;
+import com.spam.mctool.view.dialogs.Selection;
 import com.spam.mctool.view.dialogs.ShowReceiverDialog;
 import com.spam.mctool.view.dialogs.ShowSenderDialog;
 import com.spam.mctool.view.main.receivertable.ReceiverTableModel;
@@ -822,7 +823,9 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     private void miPreferencesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miPreferencesActionPerformed
         PreferencesDialog dlg = new PreferencesDialog(this, true);
         dlg.setVisible(true);
-        view.setLocale(dlg.getSelectedLocale());
+        if(dlg.getSelection().equals(Selection.APPROVE_SELECTION)) {
+            view.setPreferences(dlg);
+        }
     }//GEN-LAST:event_miPreferencesActionPerformed
 
     private void menuFileMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_menuFileMenuSelected
