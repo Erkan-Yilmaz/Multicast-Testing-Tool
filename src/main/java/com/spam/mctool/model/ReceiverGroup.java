@@ -16,6 +16,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.DataFormatException;
+
+import com.spam.mctool.controller.ErrorEvent;
 import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
 import com.spam.mctool.model.packet.AutoPacket;
 import com.spam.mctool.model.packet.Packet;
@@ -46,6 +48,7 @@ public final class ReceiverGroup extends MulticastStream {
 	private long minPPS = 0;
 	private long avgPPS = 0;
 	private long maxPPS = 0;
+	private long totalPPS = 0;
 	private long minTraversal = 0;
 	private long avgTraversal = 0;
 	private long maxTraversal = 0;
@@ -82,7 +85,9 @@ public final class ReceiverGroup extends MulticastStream {
 			stpe.execute(this);
 			asf = stpe.scheduleAtFixedRate(analyzer, statsInterval, statsInterval, TimeUnit.MILLISECONDS);
 		} catch(Exception e) {
-			this.exceptions.put(System.currentTimeMillis(), e);
+			eMan.reportErrorEvent(
+				new ErrorEvent(5, "Model.ReceiverGroup.activate.FatalNetworkError.text", "")
+			);
 		}
 	}
 
@@ -134,12 +139,15 @@ public final class ReceiverGroup extends MulticastStream {
 			receivers.get(p.getSenderId()).addPacketContainer(con);
 			// schedule the next fetch
 		} catch (IOException e) {
-			e.printStackTrace();
-			exceptions.put(System.currentTimeMillis(), e);
+			eMan.reportErrorEvent(
+				new ErrorEvent(5, "Model.ReceiverGroup.run.FatalNetworkError.text", "")
+			);
 		} catch (DataFormatException dfe) {
 			faultyPackets++;
 		} catch(Throwable e) {
-			e.printStackTrace();
+			eMan.reportErrorEvent(
+				new ErrorEvent(5, "Model.ReceiverGroup.activate.UnknownSendingError.text", "")
+			);
 		} finally {
 			if(state == State.ACTIVE) {
 				stpe.execute(this);
@@ -177,6 +185,7 @@ public final class ReceiverGroup extends MulticastStream {
 				maxDelay = Long.MIN_VALUE;
 				maxPPS = Long.MIN_VALUE;
 				maxTraversal = Long.MIN_VALUE;
+				totalPPS = 0;
 				int valcnt = 0;
 				// calculate everything
 				for(Receiver r : receivers.values()) {
@@ -191,6 +200,7 @@ public final class ReceiverGroup extends MulticastStream {
 						senderSentPackets += r.getSenderSentPackets();
 						minPPS = Math.min(minPPS, r.getMinPPS());
 						avgPPS += r.getAvgPPS();
+						totalPPS += r.getAvgPPS();
 						maxPPS = Math.max(maxPPS, r.getMaxPPS());
 						minTraversal = Math.min(minTraversal, r.getMinTraversal());
 						avgTraversal += r.getAvgTraversal();
@@ -200,7 +210,7 @@ public final class ReceiverGroup extends MulticastStream {
 				}
 				// do the famous chuck norris possible by zero division
 				avgPPS = ChuckNorris.div(avgPPS, valcnt);
-                avgPPS = ChuckNorris.div(avgTraversal, valcnt);
+                avgTraversal = ChuckNorris.div(avgTraversal, valcnt);
 			}
 			
 			fireReceiverDataChangedEvent(rdce);
@@ -331,7 +341,9 @@ public final class ReceiverGroup extends MulticastStream {
 	 * @return overall measured pps
 	 */
 	public long getAvgPPS() {
-		return avgPPS;
+		synchronized(statsLock) {
+			return avgPPS;
+		}
 	}
 
 	/**
@@ -339,6 +351,13 @@ public final class ReceiverGroup extends MulticastStream {
 	 */
 	public long getAvgTraversal() {
 		return avgTraversal;
+	}
+	
+	/**
+	 * @return overall received pps in this group
+	 */
+	public long getTotalPPS() {
+		return totalPPS;
 	}
 
 	/**

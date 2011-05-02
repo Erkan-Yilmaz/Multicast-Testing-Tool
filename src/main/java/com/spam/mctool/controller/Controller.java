@@ -66,7 +66,7 @@ import com.spam.mctool.view.MctoolView;
 import com.thoughtworks.xstream.XStream;
 
 /**
- * @author davidhildenbrand
+ * @author David Hildenbrand
  *
  */
 public class Controller implements ProfileManager, StreamManager, ErrorEventManager, LanguageManager {
@@ -117,18 +117,24 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
      * The default constructor for the Controller.
      * Initiates all members.
      */
-    private Controller(){
-        this.currentProfile = null;
+    Controller(){
+    	this.currentProfile = null;
         this.recentProfiles = new RecentProfiles();
         this.profileChangeObservers = new ArrayList<ProfileChangeListener>();
         this.languageChangeObservers = new ArrayList<LanguageChangeListener>();
         this.newErrorEventObservers = new ArrayList<ErrorEventListener>();
         this.newErrorEventObserversErrorLevel = new HashMap<ErrorEventListener, Integer>();
-        //Init the Sender and Receiver modules
-        this.senderPool = new SenderPool();
-        this.receiverPool = new ReceiverPool();
-        //Create the vies
-        viewers = new ArrayList<MctoolView>();
+    }
+    
+    /**
+     * Controller is a singleton.
+     * @return the application controller
+     */
+    public static Controller getController() {
+    	if(controller == null) {
+    		controller = new Controller();
+    	}
+    	return controller;
     }
 
     /**
@@ -137,7 +143,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
      * @param args The parameters passed to the application
      */
     public static void main(String[] args) {
-        controller = new Controller();
+        controller = getController();
         controller.init(args);
 
     }
@@ -148,6 +154,12 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
      * @param args The arguments passed to the application.
      */
     public void init(String[] args) {
+        //Init the Sender and Receiver modules
+        this.senderPool = new SenderPool();
+        this.receiverPool = new ReceiverPool();
+        //Create the views
+        viewers = new ArrayList<MctoolView>();
+    	
         //try to load recent profiles
         try {
             this.loadRecentProfiles();
@@ -272,7 +284,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         }
         //enable the cli/logger
         if(enableCli){
-            //viewers.add(new CommandLineView());
+            viewers.add(new CommandLineView());
         }
         //Init all views
         Iterator<MctoolView> it = viewers.iterator();
@@ -351,7 +363,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
      */
     private void saveRecentProfiles() throws IOException{
         //create a new file
-        File recentProfilesPath = new File("RecentProfiles.xml");
+        File recentProfilesPath = new File(System.getProperty("user.home"),"RecentProfiles.xml");
         //create a file output stream
         FileOutputStream fos = null;
         try {
@@ -378,8 +390,8 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
      * @throws IOException if the file could not be found/red/parsed.
      */
     private void loadRecentProfiles() throws IOException{
-        //create a new file
-        File recentProfilesPath = new File("RecentProfiles.xml");
+        //create a new file object
+        File recentProfilesPath = new File(System.getProperty("user.home"),"RecentProfiles.xml");
         //create a file input stream
         FileInputStream fis = new FileInputStream(recentProfilesPath);
         //create a data input stream

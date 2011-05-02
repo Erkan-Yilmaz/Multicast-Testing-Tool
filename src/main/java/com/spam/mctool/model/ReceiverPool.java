@@ -10,15 +10,18 @@ import java.util.Map;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import com.spam.mctool.controller.Controller;
+import com.spam.mctool.controller.ErrorEvent;
+import com.spam.mctool.controller.ErrorEventManager;
 import com.spam.mctool.intermediates.OverallReceiverStatisticsUpdatedEvent;
 import com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent;
-import com.spam.mctool.intermediates.ReceiverCreationException;
 
 public class ReceiverPool implements ReceiverManager {
 	
 	// internals
 	private int threadPoolSize = 5;
 	private int statsInterval = 1000;
+	private ErrorEventManager eMan;
 	private ScheduledThreadPoolExecutor stpe;
 	private List<ReceiverGroup> receiverGroups;
 	private List<ReceiverAddedOrRemovedListener> raorListeners;
@@ -36,59 +39,52 @@ public class ReceiverPool implements ReceiverManager {
 	 * Creates a new receiver pool.
 	 */
 	public ReceiverPool() {
+		eMan = Controller.getController();
 		stpe = new ScheduledThreadPoolExecutor(threadPoolSize);
 		receiverGroups = new LinkedList<ReceiverGroup>();
 		raorListeners = new LinkedList<ReceiverAddedOrRemovedListener>();
 		analyzer = new ReceiverSummaryAnalyzer();
-                statsListeners = new LinkedList<OverallReceiverStatisticsUpdatedListener>();
+		statsListeners = new LinkedList<OverallReceiverStatisticsUpdatedListener>();
 		stpe.scheduleAtFixedRate(analyzer, overallStatsIntervall, overallStatsIntervall, TimeUnit.MILLISECONDS);
 	}
 
 	public ReceiverGroup create(Map<String, String> params) {
-		InetAddress group;
-		int port;
-		NetworkInterface ninf;
-		MulticastStream.AnalyzingBehaviour abeh;
-		ReceiverCreationException.ErrorType errorType = null;
+		InetAddress group = null;
+		Integer port = 0;
+		NetworkInterface ninf = null;
+		MulticastStream.AnalyzingBehaviour abeh = null;
 		
-		try {
-			// try to create a inet adress group
-			errorType = ReceiverCreationException.ErrorType.GROUP;
-			group = InetAddress.getByName(
-				params.get("group")
+		// handle the multicast group
+		group = MulticastStream.getMulticastGroupByName(params.get("group"));
+		if(null == group) {
+			eMan.reportErrorEvent(
+				new ErrorEvent(4, "Model.ReceiverPool.create.InvalidMulticastAddress.text", "")
 			);
-			if(!group.isMulticastAddress()) {
-				// if address is not in multicast range
-				throw new Exception();
-			}
-			// try to parse the port
-			errorType = ReceiverCreationException.ErrorType.PORT;
-			port = new Integer(
-				params.get("port")
-			);
-			if(port<0 && port>65535) {
-				throw new Exception();
-			}
-			// try to parse Network Interface
-			errorType = ReceiverCreationException.ErrorType.NETWORKINTERFACE;
-			ninf = NetworkInterface.getByInetAddress(
-				InetAddress.getByName(
-					params.get("ninf")
-				)
-			);
-			// try to parse analyzing behavior
-			errorType = ReceiverCreationException.ErrorType.ANALYZINGBEHAVIOR;
-			if(params.containsKey("abeh")) {
-				abeh = MulticastStream.AnalyzingBehaviour.getByIdentifier(
-						params.get("abeh").toLowerCase()
-				);
-			} else {
-				abeh = MulticastStream.AnalyzingBehaviour.DEFAULT;
-			}
-		} catch(Exception e) {
-			System.out.println(errorType);
-			throw new ReceiverCreationException(errorType);
+			return null;
 		}
+		
+		// handle the port
+		port = MulticastStream.getPortByName(params.get("port"));
+		if(null == port) {
+			eMan.reportErrorEvent(
+				new ErrorEvent(4, "Model.ReceiverPool.create.InvalidPort.text", "")
+			);
+			return null;
+		}
+		
+		// handle the network interface
+		ninf = MulticastStream.getNetworkInterfaceByAddress(params.get("ninf"));
+		if(null == ninf) {
+			eMan.reportErrorEvent(
+				new ErrorEvent(4, "Model.ReceiverPool.create.InvalidNetworkInterface.text", "")
+			);
+			return null;
+		}
+		
+		// handle analyzing behaviour
+		abeh = MulticastStream.AnalyzingBehaviour.getByIdentifier(
+			params.get("abeh")
+		);
 		
 		ReceiverGroup rec = new ReceiverGroup(stpe);
 		rec.setGroup(group);
@@ -145,19 +141,26 @@ public class ReceiverPool implements ReceiverManager {
 	private class ReceiverSummaryAnalyzer implements Runnable {
 		@Override
 		public void run() {
-			synchronized(statsLock) {
-				int groupCount = receiverGroups.size();
-				if(groupCount > 0) {
+			int groupCount = receiverGroups.size();
+			if(groupCount > 0) {
+				synchronized(statsLock) {
 					overallReceivedPackets = 0;
 					overallReceivedPPS = 0;
 					overallLostPackets = 0;
 					overallFaultyPackets = 0;
 					for(ReceiverGroup r : receiverGroups) {
 						overallReceivedPackets += r.getReceivedPackets();
-						overallReceivedPPS += r.getAvgPPS();
+						overallReceivedPPS += r.getTotalPPS();
 						overallLostPackets += r.getLostPackets();
 						overallFaultyPackets += r.getFaultyPackets();
 					}
+				}
+			} else {
+				synchronized(statsLock) {
+					overallReceivedPackets = 0;
+					overallReceivedPPS = 0;
+					overallLostPackets = 0;
+					overallFaultyPackets = 0;
 				}
 			}
 			OverallReceiverStatisticsUpdatedEvent e = new OverallReceiverStatisticsUpdatedEvent(ReceiverPool.this);

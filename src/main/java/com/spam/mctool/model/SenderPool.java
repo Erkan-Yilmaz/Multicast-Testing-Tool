@@ -10,16 +10,19 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
+import com.spam.mctool.controller.Controller;
+import com.spam.mctool.controller.ErrorEvent;
+import com.spam.mctool.controller.ErrorEventManager;
 import com.spam.mctool.intermediates.OverallSenderStatisticsUpdatedEvent;
 import com.spam.mctool.intermediates.SenderAddedOrRemovedEvent;
 
 public class SenderPool implements SenderManager {
+	// internals
 	private ScheduledThreadPoolExecutor stfe;
 	private Set<Sender> senders = new HashSet<Sender>();
 	private List<SenderAddedOrRemovedListener> saorl;
 	private List<OverallSenderStatisticsUpdatedListener> statsListeners;
-	
+	private ErrorEventManager eMan;
 	private int threadPoolSize = 5;
 	// statistics
 	private Runnable analyzer;
@@ -29,6 +32,7 @@ public class SenderPool implements SenderManager {
 	private long overallSendingPPS;
 	
 	public SenderPool() {
+		this.eMan = Controller.getController();
 		this.saorl = new LinkedList<SenderAddedOrRemovedListener>();
 		this.statsListeners = new LinkedList<OverallSenderStatisticsUpdatedListener>();
 		analyzer = new OverallSenderStatisticAnalyzer();
@@ -39,32 +43,92 @@ public class SenderPool implements SenderManager {
 	public Sender create(Map<String, String> params) throws IllegalArgumentException {
 		Sender sender;
 		InetAddress group;
-		int port;
-		byte ttl;
-		int pps;
-		int psize;
+		Integer port = 0;
+		int ttl = 0;
+		int pps = 0;
+		int psize = 0;
 		String payload;
 		Sender.PacketType ptype;
-		NetworkInterface ninf;
+		NetworkInterface ninf = null;
 		MulticastStream.AnalyzingBehaviour abeh;
 		
-		try {
-			group = InetAddress.getByName(params.get("group"));
-			ninf = NetworkInterface.getByInetAddress(InetAddress.getByName(params.get("ninf")));
-			port = new Integer(params.get("port"));
-			ttl = new Byte(params.get("ttl"));
-			if(ttl<=0 || ttl>255) throw new Exception();
-			pps = new Integer(params.get("pps"));
-			if(pps<=0 || pps>1000) throw new Exception();
-			psize = new Integer(params.get("psize"));
-			if(psize<150 || psize>9000) throw new Exception();
-			payload = params.get("payload");
-			ptype = Sender.PacketType.getByIdentifier(params.get("ptype").toUpperCase());
-			abeh = MulticastStream.AnalyzingBehaviour.getByIdentifier(params.get("abeh"));
-		} catch(Exception e) {
-			e.printStackTrace();
-			throw new IllegalArgumentException();
+		// handle the group
+		group = MulticastStream.getMulticastGroupByName(params.get("group"));
+		if(null == group) {
+			eMan.reportErrorEvent(
+				new ErrorEvent(4, "Model.SenderPool.create.InvalidMulticastGroup.text", "")
+			);
+			return null;
 		}
+		
+		// handle the network interface
+		ninf = MulticastStream.getNetworkInterfaceByAddress(params.get("ninf"));
+		if(null == ninf) {
+			eMan.reportErrorEvent(
+				new ErrorEvent(4, "Model.SenderPool.create.FatalNetworkError.text", "")
+			);
+			return null;
+		}
+		
+		// handle the port
+		port = MulticastStream.getPortByName(params.get("port"));
+		if(null == port) {
+			eMan.reportErrorEvent(
+				new ErrorEvent(4, "Model.SenderPool.create.InvalidPort.text", "")
+			);
+			return null;
+		}
+		
+		// handle time to live
+		try {
+			ttl = new Integer(params.get("ttl"));
+			if((ttl<0) || (ttl>255)) {
+				throw new Exception();
+			}
+		} catch(Exception e) {
+			eMan.reportErrorEvent(
+				new ErrorEvent(4, "Model.SenderPool.create.InvalidTtl.text", "")
+			);
+			return null;
+		}
+		
+		// handle packet rate
+		try {
+			pps = new Integer(params.get("pps"));
+			if((pps<=0) || (pps>1000)) {
+				throw new Exception();
+			}
+		} catch(Exception e) {
+			eMan.reportErrorEvent(
+				new ErrorEvent(4, "Model.SenderPool.create.InvalidPps.text", "")
+			);
+			return null;
+		}
+		
+		// handle packet size
+		try {
+			psize = new Integer(params.get("psize"));
+			if((psize<0) || (psize>9000)) {
+				throw new Exception();
+			}
+		} catch(Exception e) {
+			eMan.reportErrorEvent(
+				new ErrorEvent(4, "Model.SenderPool.create.InvalidPacketSize.text", "Corrected to: "+psize)
+			);
+		}
+		
+		// handle payload
+		payload = params.get("payload");
+		
+		// handle packet type
+		ptype = MulticastStream.PacketType.getByIdentifier(
+			params.get("ptype")
+		);
+		
+		// handle analyzing behaviour
+		abeh = MulticastStream.AnalyzingBehaviour.getByIdentifier(
+			params.get("abeh")
+		);
 		
 		sender = new Sender(this.stfe);
 		sender.setGroup(group);
@@ -142,10 +206,10 @@ public class SenderPool implements SenderManager {
 		@Override
 		public void run() {
 			int senderCount = senders.size();
-			overallSentPackets = 0;
-			overallSendingPPS = 0;
-			synchronized(statsLock) {
-				if(senderCount > 0) {
+			if(senderCount > 0) {
+				synchronized(statsLock) {
+					overallSentPackets = 0;
+					overallSendingPPS = 0;
 					for(Sender s : senders) {
 						overallSentPackets += s.getSentPacketCount();
 						overallSendingPPS += s.getAvgPPS();
