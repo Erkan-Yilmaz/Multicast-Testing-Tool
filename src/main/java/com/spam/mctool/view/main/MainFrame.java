@@ -812,8 +812,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     }//GEN-LAST:event_miSaveProfileActionPerformed
 
     private void miExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miExitActionPerformed
-        // TODO use the controller's exit method!
-        this.dispose();
+        view.exitApplication();
     }//GEN-LAST:event_miExitActionPerformed
 
     private void miAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAboutActionPerformed

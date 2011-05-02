@@ -77,6 +77,7 @@ public class GraphicalView implements MctoolView,
         private ProfileManager profileManager;
         private ErrorEventManager errorEventManager;
         private LanguageManager languageManager;
+        private Controller controller;
 
 	public void receiverGroupAdded(final ReceiverAddedOrRemovedEvent e) {
             Runnable groupAddedRunnable = new Runnable() {
@@ -145,6 +146,7 @@ public class GraphicalView implements MctoolView,
             profileManager = c;
             errorEventManager = c;
             languageManager = c;
+            controller = c;
 
             // Set System L&F. Will only work, if the application did not
             // yet reference any other swing component!
@@ -328,6 +330,10 @@ public class GraphicalView implements MctoolView,
     public void setLocale(Locale locale) {
         Locale.setDefault(locale);
         languageManager.reportLanguageChange();
+    }
+
+    public void exitApplication() {
+        controller.exitApplication();
     }
 
 }
