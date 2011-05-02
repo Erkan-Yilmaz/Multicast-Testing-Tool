@@ -188,11 +188,11 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
                     .addComponent(laSendingStatistics)
                     .addGroup(paSendingStatisticsLayout.createSequentialGroup()
                         .addComponent(laSentCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                         .addComponent(laSent))
                     .addGroup(paSendingStatisticsLayout.createSequentialGroup()
                         .addComponent(laSenderRateCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                         .addComponent(laSenderRate)))
                 .addContainerGap())
         );
@@ -378,19 +378,19 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
                     .addComponent(receivingStatisticsSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
                     .addGroup(paReceivingStatisticsLayout.createSequentialGroup()
                         .addComponent(laReceivedCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                         .addComponent(laReceived))
                     .addGroup(paReceivingStatisticsLayout.createSequentialGroup()
                         .addComponent(laReceivingRateCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                         .addComponent(laReceivingRate))
                     .addGroup(paReceivingStatisticsLayout.createSequentialGroup()
                         .addComponent(laLostPacketsCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                         .addComponent(laLostPackets))
                     .addGroup(paReceivingStatisticsLayout.createSequentialGroup()
                         .addComponent(laFaultyPacketsCaption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                         .addComponent(laFaultyPackets)))
                 .addContainerGap())
         );
@@ -547,8 +547,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         });
 
         miOpenProfile.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
-        miOpenProfile.setText(bundle.getString("MainFrame.miOpenProfile.text")); // NOI18N
-        miOpenProfile.setName("miOpenProfile"); // NOI18N
+        miOpenProfile.setText(bundle.getString("MainFrame.miOpenProfile.text_1")); // NOI18N
         miOpenProfile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 miOpenProfileActionPerformed(evt);
@@ -580,7 +579,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         jSeparator1.setName("jSeparator1"); // NOI18N
         menuFile.add(jSeparator1);
 
-        miPreferences.setText(bundle.getString("MainFrame.miPreferences.text")); // NOI18N
+        miPreferences.setText(bundle.getString("MainFrame.miPreferences.text_2")); // NOI18N
         miPreferences.setName("miPreferences"); // NOI18N
         miPreferences.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -595,8 +594,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         sepAfterRecentProfiles.setName("sepAfterRecentProfiles"); // NOI18N
         menuFile.add(sepAfterRecentProfiles);
 
-        miExit.setText(bundle.getString("MainFrame.miExit.text")); // NOI18N
-        miExit.setName("miExit"); // NOI18N
+        miExit.setText(bundle.getString("MainFrame.miExit.text_1")); // NOI18N
         miExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 miExitActionPerformed(evt);
@@ -620,7 +618,6 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         miHelp.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         miHelp.setText(bundle.getString("MainFrame.miHelp.text")); // NOI18N
-        miHelp.setName("miHelp"); // NOI18N
         menuHelp.add(miHelp);
 
         menuBar.add(menuHelp);
