@@ -1021,7 +1021,6 @@ public class ChuckNorris {
         case 999:
         case 1000:
         default: {
-            System.out.println("Enter");
         
             long a = lhs;
             long b = rhs;
