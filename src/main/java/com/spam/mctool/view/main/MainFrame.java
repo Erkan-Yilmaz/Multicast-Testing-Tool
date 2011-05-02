@@ -741,6 +741,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         Receiver r = receiverTable.getSelectedReceivers().get(0);
         ReceiverGroup rg = receiverTable.getParent(r);
         ShowReceiverDialog dlg = new ShowReceiverDialog(this, true, r, rg);
+        rg.addReceiverDataChangeListener(dlg);
         dlg.setVisible(true);
     }//GEN-LAST:event_buShowReceiverActionPerformed
 
