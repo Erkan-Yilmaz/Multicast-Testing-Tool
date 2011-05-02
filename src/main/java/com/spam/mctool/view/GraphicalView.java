@@ -354,8 +354,8 @@ public class GraphicalView implements MctoolView,
         // unregister all controller listeners
         streamManager.removeSenderAddedOrRemovedListener(this);
         streamManager.removeReceiverAddedOrRemovedListener(this);
-        //streamManager.removeOverallReceiverStatisticsUpdatedListener(this);
-        //streamManager.removeOverallSenderStatisticsUpdatedListener(this);
+        streamManager.removeOverallReceiverStatisticsUpdatedListener(this);
+        streamManager.removeOverallSenderStatisticsUpdatedListener(this);
         profileManager.removeProfileChangeListener(this);
         languageManager.removeLanguageChangeListener(this);
         errorEventManager.removeErrorEventListener(this);

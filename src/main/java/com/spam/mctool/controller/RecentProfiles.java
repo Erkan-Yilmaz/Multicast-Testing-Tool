@@ -29,10 +29,13 @@ public class RecentProfiles {
     }
 
     /**
-     * Set the profile list. This function should not be used.
+     * Set the profile list. Must not be null. This function should not be used.
      * @param profileList The profile list to be set.
      */
     public void setProfileList(List<Profile> profileList) {
+        if(profileList ==null){
+        	throw new IllegalArgumentException();
+        }
         this.profileList = profileList;
     }
 
@@ -84,6 +87,7 @@ public class RecentProfiles {
         //create the xstream object
         XStream xstream = new XStream();
         this.profileList = (ArrayList<Profile>)xstream.fromXML(xml);
+        //remove profiles which don't exist anymore
         removeDeletedProfiles();
     }
 

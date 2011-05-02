@@ -10,6 +10,10 @@ import com.spam.mctool.view.GraphicalView;
  * by the view to work with multicast streams in the controller
  * layer.
  */
+/**
+ * @author davidhildenbrand
+ *
+ */
 public interface StreamManager {
 
 	//TODO change uml to map paramaters
@@ -82,8 +86,28 @@ public interface StreamManager {
 	 */
 	public void removeReceiverAddedOrRemovedListener(com.spam.mctool.model.ReceiverAddedOrRemovedListener l);
 
-        public void addOverallReceiverStatisticsUpdatedListener(com.spam.mctool.model.OverallReceiverStatisticsUpdatedListener l);
+	/**
+	 * OverallReceiverStatisticsUpdated Observer
+     * @param l listener to be added
+     */
+    public void addOverallReceiverStatisticsUpdatedListener(com.spam.mctool.model.OverallReceiverStatisticsUpdatedListener l);
 
-        public void addOverallSenderStatisticsUpdatedListener(com.spam.mctool.model.OverallSenderStatisticsUpdatedListener l);
+    /**
+     * OverallSenderStatisticsUpdated Observer
+     * @param l listener to be added
+     */
+    public void addOverallSenderStatisticsUpdatedListener(com.spam.mctool.model.OverallSenderStatisticsUpdatedListener l);
+
+    /**
+     * OverallReceiverStatisticsUpdated Observer
+     * @param l listener to be removed
+     */
+    public void removeOverallReceiverStatisticsUpdatedListener(com.spam.mctool.model.OverallReceiverStatisticsUpdatedListener l);
+
+    /**
+     * OverallSenderStatisticsUpdated Observer
+     * @param l listener to be removed
+     */
+    public void removeOverallSenderStatisticsUpdatedListener(com.spam.mctool.model.OverallSenderStatisticsUpdatedListener l);
 
 }
