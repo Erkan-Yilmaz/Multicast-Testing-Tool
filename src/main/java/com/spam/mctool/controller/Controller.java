@@ -125,7 +125,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         this.newErrorEventObservers = new ArrayList<ErrorEventListener>();
         this.newErrorEventObserversErrorLevel = new HashMap<ErrorEventListener, Integer>();
     }
-    
+
     /**
      * Controller is a singleton.
      * @return the application controller
@@ -159,7 +159,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         this.receiverPool = new ReceiverPool();
         //Create the views
         viewers = new ArrayList<MctoolView>();
-    	
+
         //try to load recent profiles
         try {
             this.loadRecentProfiles();
@@ -356,7 +356,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
     	//Exit the application
     	System.exit(0);
     }
-    
+
     /**
      * This method tries to save the profile list to the file named "RecentProfiles.xml"
      * @throws IOException If the recent profile list could not be saved.
@@ -991,16 +991,16 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
 	@Override
 	public void addLanguageChangeListener(LanguageChangeListener l) {
 		if(l==null){
-			throw new IllegalArgumentException();		
+			throw new IllegalArgumentException();
 		}
 		//add it to the list
 		languageChangeObservers.add(l);
 	}
 
 	@Override
-	public void removeProfileChangeListener(LanguageChangeListener l) {
+	public void removeLanguageChangeListener(LanguageChangeListener l) {
 		if(l==null){
-			throw new IllegalArgumentException();		
+			throw new IllegalArgumentException();
 		}
 		//remove it from the list
 		languageChangeObservers.remove(l);
@@ -1011,7 +1011,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
 		for(LanguageChangeListener li:languageChangeObservers){
 			li.languageChanged();
 		}
-		
+
 	}
 
     public void addOverallReceiverStatisticsUpdatedListener(OverallReceiverStatisticsUpdatedListener l) {
@@ -1021,6 +1021,25 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
     public void addOverallSenderStatisticsUpdatedListener(OverallSenderStatisticsUpdatedListener l) {
         senderPool.addOverallSenderStatisticsUpdatedListener(l);
     }
+
+
+	@Override
+	public void removeOverallReceiverStatisticsUpdatedListener(
+			OverallReceiverStatisticsUpdatedListener l) {
+		if(l == null){
+			throw new IllegalArgumentException();
+		}
+		receiverPool.removeOverallReceiverStatisticsUpdatedListener(l);
+	}
+
+	@Override
+	public void removeOverallSenderStatisticsUpdatedListener(
+			OverallSenderStatisticsUpdatedListener l) {
+		if(l == null){
+			throw new IllegalArgumentException();
+		}
+		senderPool.removeOverallSenderStatisticsUpdatedListener(l);
+	}
 
 
 }
