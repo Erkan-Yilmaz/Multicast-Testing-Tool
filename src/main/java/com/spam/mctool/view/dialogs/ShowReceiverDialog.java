@@ -13,6 +13,7 @@ package com.spam.mctool.view.dialogs;
 
 import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
 import com.spam.mctool.model.Receiver;
+import com.spam.mctool.model.ReceiverDataChangeListener;
 import com.spam.mctool.model.ReceiverGroup;
 import com.spam.mctool.view.main.MainFrame;
 import java.net.Inet4Address;
@@ -26,7 +27,7 @@ import javax.swing.JFrame;
  *
  * @author Tobias Schoknecht (tobias.schoknecht@gmail.com)
  */
-public class ShowReceiverDialog extends javax.swing.JDialog {
+public class ShowReceiverDialog extends javax.swing.JDialog implements ReceiverDataChangeListener {
 
     private static final long serialVersionUID = 1L;
     private Receiver receiver;

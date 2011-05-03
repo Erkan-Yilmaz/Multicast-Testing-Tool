@@ -30,10 +30,12 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="miOpenProfile">
               <Properties>
-                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.miOpenProfile.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+O"/>
                 </Property>
-                <Property name="name" type="java.lang.String" value="miOpenProfile" noResource="true"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.miOpenProfile.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miOpenProfileActionPerformed"/>
@@ -41,9 +43,13 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="miSaveProfile">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+S"/>
+                </Property>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.miSaveProfile.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
                 <Property name="name" type="java.lang.String" value="miSaveProfile" noResource="true"/>
               </Properties>
               <Events>
@@ -52,6 +58,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="miSaveProfileAs">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Shift+Ctrl+S"/>
+                </Property>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.miSaveProfileAs.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
@@ -69,7 +78,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="miPreferences">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.miPreferences.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.miPreferences.text_2" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
                 <Property name="name" type="java.lang.String" value="miPreferences" noResource="true"/>
               </Properties>
@@ -90,9 +99,8 @@
             <MenuItem class="javax.swing.JMenuItem" name="miExit">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.miExit.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.miExit.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
-                <Property name="name" type="java.lang.String" value="miExit" noResource="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miExitActionPerformed"/>
@@ -121,10 +129,12 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="miHelp">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="F1"/>
+                </Property>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="internationalization/Bundle.properties" key="MainFrame.miHelp.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
-                <Property name="name" type="java.lang.String" value="miHelp" noResource="true"/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -133,7 +143,7 @@
     </Menu>
   </NonVisualComponents>
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="0"/>
     <Property name="title" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
       <Connection code="java.util.ResourceBundle.getBundle(&quot;internationalization/Bundle&quot;).getString(&quot;MainFrame.title&quot;) + ((view.getCurrentProfile() != null &amp;&amp; view.getCurrentProfile().getName() != null) ? &quot; - &quot; + view.getCurrentProfile().getName() : &quot;&quot;)" type="code"/>
     </Property>
@@ -143,6 +153,9 @@
     <SyntheticProperty name="menuBar" type="java.lang.String" value="menuBar"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="1"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="true"/>
@@ -238,7 +251,7 @@
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="laSenderRateCaption" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="48" max="32767" attributes="0"/>
+                                  <EmptySpace pref="33" max="32767" attributes="0"/>
                                   <Component id="laSenderRate" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -558,7 +571,7 @@
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="laReceivingRateCaption" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="48" max="32767" attributes="0"/>
+                                  <EmptySpace pref="33" max="32767" attributes="0"/>
                                   <Component id="laReceivingRate" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
