@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author Tobias Stöckel
  */
-class ReceiverGroupRow extends ReceiverTableRow {
+public class ReceiverGroupRow extends ReceiverTableRow {
     private final ReceiverGroup group;
     private List<ReceiverRow> receiverRows = new ArrayList<ReceiverRow>();
     private boolean expanded = true;

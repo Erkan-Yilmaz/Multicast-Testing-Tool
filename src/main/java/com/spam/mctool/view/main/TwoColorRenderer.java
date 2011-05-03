@@ -17,8 +17,11 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 /**
+ * A <code>TableCellRenderer</code> that renders the rows of a table with
+ * alternating background colors. The renderer will display the according cell's
+ * value's string representation.
  *
- * @author Tobias
+ * @author Tobias Stöckel
  */
 public class TwoColorRenderer extends javax.swing.JPanel implements TableCellRenderer {
 

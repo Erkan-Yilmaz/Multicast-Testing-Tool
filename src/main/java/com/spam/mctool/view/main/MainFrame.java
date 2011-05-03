@@ -926,22 +926,6 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     // Custom variables declaration
     private JFileChooser chooser;
 
-    public MainFrameState getSessionState() {
-        MainFrameState state = new MainFrameState();
-        state.setXPosition(this.getX());
-        state.setYPosition(this.getY());
-        state.setHeight(this.getHeight());
-        state.setWidth(this.getWidth());
-        state.setWindowState(this.getExtendedState());
-        return state;
-    }
-
-    public void setSessionState(MainFrameState state) {
-        this.setLocation(state.getXPosition(), state.getYPosition());
-        this.setSize(state.getWidth(), state.getHeight());
-        this.setExtendedState(state.getWindowState());
-    }
-
     private void test() {
         ReceiverTableModel tableModel = (ReceiverTableModel)receiverTable.getModel();
     }
