@@ -38,12 +38,6 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
 		logger.addAppender(consoleAppender);
 	}
 	
-	public static void main(String... args) {
-		CommandLineView cv = new CommandLineView();
-		cv.logger.error("Rentschler has small nuts!");
-		cv.logger.info("Stuckert auch!");
-	}
-	
     public void init(Controller c) {
         //throw new UnsupportedOperationException("Not supported yet.");
     	this.c = c;
@@ -55,7 +49,10 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
         c.removeSenderAddedOrRemovedListener(this);
         c.addErrorEventListener(this, ErrorEventManager.ERROR);
         
-        
+        // new
+        logger.info(bundle.getString(("CommandLine.LoggerInitialized.text"))+" "+new Date());
+
+        // old
         try {
         	date = new Date();
         	log = new BufferedWriter(new FileWriter("log.txt", true));
@@ -65,7 +62,6 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
         }
         catch(IOException e){
         }
-        
        
     }
 
