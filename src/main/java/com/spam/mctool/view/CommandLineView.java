@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Date;
+import org.apache.log4j.*;
 
 import com.spam.mctool.controller.Controller;
 import com.spam.mctool.controller.ErrorEvent;
@@ -28,6 +29,20 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
 	private Date date;
 	private java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle");
 	
+	private Logger logger;
+	
+	public CommandLineView() {
+		logger = Logger.getRootLogger();
+		SimpleLayout layout = new SimpleLayout();
+		ConsoleAppender consoleAppender = new ConsoleAppender(layout);
+		logger.addAppender(consoleAppender);
+	}
+	
+	public static void main(String... args) {
+		CommandLineView cv = new CommandLineView();
+		cv.logger.error("Rentschler has small nuts!");
+		cv.logger.info("Stuckert auch!");
+	}
 	
     public void init(Controller c) {
         //throw new UnsupportedOperationException("Not supported yet.");
