@@ -45,16 +45,21 @@ public class ReceiverTableModel extends AbstractTableModel implements MouseListe
             Receiver receiver = rcvRow.getReceiver();
             ReceiverTableColumn[] cols = ReceiverTableColumn.values();
             ReceiverTableColumn   col  = cols[columnIndex];
-            switch(col) {
-                case STATUS: return receiver.isAlive();
-                case SENDER_ID: return receiver.getSenderId();
-                case SENDER_IP: return receiver.getSenderAddress().getHostAddress();
-                case SENDER_CONF_PPS: return receiver.getSenderConfiguredPPS();
-                case AVG_PPS: return receiver.getAvgPPS();
-                case LOST_PACKETS: return receiver.getLostPackets();
-                case PAYLOAD: return receiver.getPayloadAsString();
-                default:
-                    throw new RuntimeException("Illegal columnIndex: " + columnIndex);
+            try {
+                switch(col) {
+                    case STATUS: return receiver.isAlive();
+                    case SENDER_ID: return receiver.getSenderId();
+                    case SENDER_IP: return receiver.getSenderAddress().getHostAddress();
+                    case SENDER_CONF_PPS: return receiver.getSenderConfiguredPPS();
+                    case AVG_PPS: return receiver.getAvgPPS();
+                    case LOST_PACKETS: return receiver.getLostPackets();
+                    case PAYLOAD: return receiver.getPayloadAsString();
+                    default:
+                        throw new RuntimeException("Illegal columnIndex: " + columnIndex);
+                }
+            } catch (NullPointerException e) {
+                // place for breakpoint for debugging
+                throw e;
             }
         } else {
             throw new RuntimeException("Illegal Rowtype: " + row.getClass().getName());

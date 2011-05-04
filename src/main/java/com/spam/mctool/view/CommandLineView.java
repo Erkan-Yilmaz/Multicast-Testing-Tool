@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Date;
+import org.apache.log4j.*;
 
 import com.spam.mctool.controller.Controller;
 import com.spam.mctool.controller.ErrorEvent;
@@ -28,6 +29,14 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
 	private Date date;
 	private java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle");
 	
+	private Logger logger;
+	
+	public CommandLineView() {
+		logger = Logger.getRootLogger();
+		SimpleLayout layout = new SimpleLayout();
+		ConsoleAppender consoleAppender = new ConsoleAppender(layout);
+		logger.addAppender(consoleAppender);
+	}
 	
     public void init(Controller c) {
         //throw new UnsupportedOperationException("Not supported yet.");
@@ -40,7 +49,10 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
         c.removeSenderAddedOrRemovedListener(this);
         c.addErrorEventListener(this, ErrorEventManager.ERROR);
         
-        
+        // new
+        logger.info(bundle.getString(("CommandLine.LoggerInitialized.text"))+" "+new Date());
+
+        // old
         try {
         	date = new Date();
         	log = new BufferedWriter(new FileWriter("log.txt", true));
@@ -50,7 +62,6 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
         }
         catch(IOException e){
         }
-        
        
     }
 

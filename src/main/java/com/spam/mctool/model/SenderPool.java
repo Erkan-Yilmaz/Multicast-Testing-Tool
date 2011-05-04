@@ -56,7 +56,7 @@ public class SenderPool implements SenderManager {
 		group = MulticastStream.getMulticastGroupByName(params.get("group"));
 		if(null == group) {
 			eMan.reportErrorEvent(
-				new ErrorEvent(4, "Model.SenderPool.create.InvalidMulticastGroup.text", "")
+				new ErrorEvent(4, "Model.SenderPool.create.InvalidMulticastGroup.text", params.get("group"))
 			);
 			return null;
 		}

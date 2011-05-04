@@ -6,6 +6,7 @@
 
 package com.spam.mctool.view.dialogs;
 
+import com.spam.mctool.view.main.MainFrame;
 import java.io.File;
 
 /**
@@ -44,9 +45,14 @@ public class SaveProfileDialog extends javax.swing.JDialog {
      * @param parent the owner of this dialog
      * @param modal the modality of this dialog
      */
-    public SaveProfileDialog(java.awt.Frame parent, boolean modal) {
+    private SaveProfileDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+    }
+
+    public SaveProfileDialog(java.awt.Frame parent, boolean modal, String profileName) {
+        this(parent, modal);
+        txtProfileName.setText(profileName);
     }
 
     /** This method is called from within the constructor to

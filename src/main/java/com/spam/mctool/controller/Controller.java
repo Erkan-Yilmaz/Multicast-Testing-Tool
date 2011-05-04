@@ -66,7 +66,7 @@ import com.spam.mctool.view.MctoolView;
 import com.thoughtworks.xstream.XStream;
 
 /**
- * @author davidhildenbrand
+ * @author David Hildenbrand
  *
  */
 public class Controller implements ProfileManager, StreamManager, ErrorEventManager, LanguageManager {
@@ -117,7 +117,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
      * The default constructor for the Controller.
      * Initiates all members.
      */
-    private Controller(){
+    Controller(){
     	this.currentProfile = null;
         this.recentProfiles = new RecentProfiles();
         this.profileChangeObservers = new ArrayList<ProfileChangeListener>();
@@ -125,7 +125,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         this.newErrorEventObservers = new ArrayList<ErrorEventListener>();
         this.newErrorEventObserversErrorLevel = new HashMap<ErrorEventListener, Integer>();
     }
-    
+
     /**
      * Controller is a singleton.
      * @return the application controller
@@ -159,7 +159,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         this.receiverPool = new ReceiverPool();
         //Create the views
         viewers = new ArrayList<MctoolView>();
-    	
+
         //try to load recent profiles
         try {
             this.loadRecentProfiles();
@@ -284,7 +284,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         }
         //enable the cli/logger
         if(enableCli){
-            //viewers.add(new CommandLineView());
+            viewers.add(new CommandLineView());
         }
         //Init all views
         Iterator<MctoolView> it = viewers.iterator();
@@ -334,7 +334,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
     /**
      * This method is called by the gui to exit the application.
      */
-    private void exitApplication(){
+    public void exitApplication(){
     	//Stop all senders and remove them
     	if(senderPool != null){
     		senderPool.killAll();
@@ -356,14 +356,14 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
     	//Exit the application
     	System.exit(0);
     }
-    
+
     /**
      * This method tries to save the profile list to the file named "RecentProfiles.xml"
      * @throws IOException If the recent profile list could not be saved.
      */
     private void saveRecentProfiles() throws IOException{
         //create a new file
-        File recentProfilesPath = new File("RecentProfiles.xml");
+        File recentProfilesPath = new File(System.getProperty("user.home"),"RecentProfiles.xml");
         //create a file output stream
         FileOutputStream fos = null;
         try {
@@ -390,8 +390,8 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
      * @throws IOException if the file could not be found/red/parsed.
      */
     private void loadRecentProfiles() throws IOException{
-        //create a new file
-        File recentProfilesPath = new File("RecentProfiles.xml");
+        //create a new file object
+        File recentProfilesPath = new File(System.getProperty("user.home"),"RecentProfiles.xml");
         //create a file input stream
         FileInputStream fis = new FileInputStream(recentProfilesPath);
         //create a data input stream
@@ -689,17 +689,12 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
                     	map.put(curData.getNodeName(), curData.getTextContent());
                     }
                 }
-                //Try to add the sender
-                try{
-                    Sender newSender = addSender(map);
-                    //if startMode=none -> Start none
-                    //otherwise test if all should be started or the stream is marked to be started
-                    if(startMode.compareToIgnoreCase("none") != 0 && (startMode.compareToIgnoreCase("all") == 0 || startSender)){
-                    	newSender.activate();
-                    }
-                }
-                catch(Exception e){
-                    this.reportErrorEvent(new ErrorEvent(3,"Controller.failedAddingSender", e.getLocalizedMessage()));
+                //Add the sender
+                Sender newSender = addSender(map);
+                //if startMode=none -> Start none
+                //otherwise test if all should be started or the stream is marked to be started
+                if(newSender != null && startMode.compareToIgnoreCase("none") != 0 && (startMode.compareToIgnoreCase("all") == 0 || startSender)){
+                	newSender.activate();
                 }
             }
         }
@@ -740,17 +735,12 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
                     	map.put(curData.getNodeName(), curData.getTextContent());
                     }
                 }
-                //Try to add the sender
-                try{
-                    ReceiverGroup newReceiver = addReceiverGroup(map);
-                    //if startMode=none -> Start none
-                    //otherwise test if all should be started or the stream is marked to be started
-                    if(startMode.compareToIgnoreCase("none") != 0 && (startMode.compareToIgnoreCase("all") == 0 || startReceiver)){
-                    	newReceiver.activate();
-                    }
-                }
-                catch(Exception e){
-                    this.reportErrorEvent(new ErrorEvent(3,"Controller.failedAdddingReceiverGroup.text", e.getLocalizedMessage()));
+                //Add the sender
+                ReceiverGroup newReceiver = addReceiverGroup(map);
+                //if startMode=nix dasone -> Start none
+                //otherwise test if all should be started or the stream is marked to be started
+                if(newReceiver != null && startMode.compareToIgnoreCase("none") != 0 && (startMode.compareToIgnoreCase("all") == 0 || startReceiver)){
+                	newReceiver.activate();
                 }
             }
         }
@@ -1001,16 +991,16 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
 	@Override
 	public void addLanguageChangeListener(LanguageChangeListener l) {
 		if(l==null){
-			throw new IllegalArgumentException();		
+			throw new IllegalArgumentException();
 		}
 		//add it to the list
 		languageChangeObservers.add(l);
 	}
 
 	@Override
-	public void removeProfileChangeListener(LanguageChangeListener l) {
+	public void removeLanguageChangeListener(LanguageChangeListener l) {
 		if(l==null){
-			throw new IllegalArgumentException();		
+			throw new IllegalArgumentException();
 		}
 		//remove it from the list
 		languageChangeObservers.remove(l);
@@ -1021,7 +1011,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
 		for(LanguageChangeListener li:languageChangeObservers){
 			li.languageChanged();
 		}
-		
+
 	}
 
     public void addOverallReceiverStatisticsUpdatedListener(OverallReceiverStatisticsUpdatedListener l) {
@@ -1031,6 +1021,25 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
     public void addOverallSenderStatisticsUpdatedListener(OverallSenderStatisticsUpdatedListener l) {
         senderPool.addOverallSenderStatisticsUpdatedListener(l);
     }
+
+
+	@Override
+	public void removeOverallReceiverStatisticsUpdatedListener(
+			OverallReceiverStatisticsUpdatedListener l) {
+		if(l == null){
+			throw new IllegalArgumentException();
+		}
+		receiverPool.removeOverallReceiverStatisticsUpdatedListener(l);
+	}
+
+	@Override
+	public void removeOverallSenderStatisticsUpdatedListener(
+			OverallSenderStatisticsUpdatedListener l) {
+		if(l == null){
+			throw new IllegalArgumentException();
+		}
+		senderPool.removeOverallSenderStatisticsUpdatedListener(l);
+	}
 
 
 }

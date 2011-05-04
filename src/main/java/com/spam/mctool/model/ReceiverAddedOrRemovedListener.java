@@ -8,11 +8,15 @@ package com.spam.mctool.model;
 public interface ReceiverAddedOrRemovedListener {
 	
 	/**
+         * Notifies observers that a new receiver group was added to the model
+         *
 	 * @param e event containing the added receiver
 	 */
 	public void receiverGroupAdded(com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent e);
 	
 	/**
+         * Notifies observers that a receiver group was removed from the model
+         *
 	 * @param e event containing the removed receiver
 	 */
 	public void receiverGroupRemoved(com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent e);

@@ -79,13 +79,18 @@ public class Profile {
 	 * @param testObject The profile to compare with.
 	 * @return true if both share the same path. false if not.
 	 */
-	public boolean equals(Profile testObject) {
+	public boolean equals(Object testObject) {
 		//Test for correct input
 		if(testObject == null){
 			throw new IllegalArgumentException();
 		}
-		//Compare the Path
-		return this.path.equals(testObject.getPath());
-
+		//Test for Profile object
+		if(testObject instanceof Profile){
+			//Compare the Path
+			return this.path.equals(((Profile)testObject).getPath());
+		}
+		else{
+			return false;
+		}
 	}
 }

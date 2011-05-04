@@ -1,6 +1,7 @@
 package com.spam.mctool.controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -28,10 +29,13 @@ public class RecentProfiles {
     }
 
     /**
-     * Set the profile list. This function should not be used.
+     * Set the profile list. Must not be null. This function should not be used.
      * @param profileList The profile list to be set.
      */
     public void setProfileList(List<Profile> profileList) {
+        if(profileList ==null){
+        	throw new IllegalArgumentException();
+        }
         this.profileList = profileList;
     }
 
@@ -46,7 +50,9 @@ public class RecentProfiles {
         if(profile == null){
             throw new IllegalArgumentException();
         }
-        //Search for existing entries with equal path and delete them
+        //make a local copy of the list
+		ArrayList<Profile> profileListCopy = new ArrayList<Profile>(profileList);
+		//Check in each loaded recent profile
         profileList.remove(profile);
         //Add the new profile to the top
         this.profileList.add(0, profile);
@@ -81,6 +87,8 @@ public class RecentProfiles {
         //create the xstream object
         XStream xstream = new XStream();
         this.profileList = (ArrayList<Profile>)xstream.fromXML(xml);
+        //remove profiles which don't exist anymore
+        removeDeletedProfiles();
     }
 
     /**
@@ -105,4 +113,21 @@ public class RecentProfiles {
         }
         return foundProfile;
     }
+
+	/**
+	 * This function will scan through the recent profile list, removing all profiles which can't be found.
+	 */
+	private void removeDeletedProfiles(){
+		if(profileList != null){
+			//make a local copy of the list
+			ArrayList<Profile> profileListCopy = new ArrayList<Profile>(profileList);
+			//Check in each loaded recent profile
+			for(Profile p:profileListCopy){
+				//Remove the file if it doesn't exist
+				if(!p.getPath().exists()){
+					profileList.remove(p);
+				}
+			}
+		}
+	}
 }
