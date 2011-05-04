@@ -355,7 +355,10 @@ public class EditSenderDialog extends javax.swing.JDialog {
             senderMap.put("ptype", this.packageMap.get(this.packetStyleCombo.getSelectedItem().toString()));
             senderMap.put("ninf",this.interfaceMap.get(this.interfaceCombo.getSelectedItem().toString()));
             senderMap.put("abeh",this.analyzingBehaviourMap.get(this.analyzingBehaviourCombo.getSelectedItem().toString()));
-            parent.addSender(senderMap, this.activateBox.isSelected());
+            
+            if(parent.addSender(senderMap, this.activateBox.isSelected())){
+                this.dispose();
+            }
         }
         else{
             //if sender reference exists, change the values
@@ -367,9 +370,9 @@ public class EditSenderDialog extends javax.swing.JDialog {
             if(this.activateBox.isSelected()){
                 this.sender.activate();
             }
-        }
 
-        this.dispose();
+            this.dispose();
+        }       
 }//GEN-LAST:event_okButtonActionPerformed
 
     /**
