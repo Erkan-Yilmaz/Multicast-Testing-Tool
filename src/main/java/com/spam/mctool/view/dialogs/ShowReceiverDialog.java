@@ -249,7 +249,7 @@ public class ShowReceiverDialog extends javax.swing.JDialog implements ReceiverD
                             .addComponent(lostPacketsLabel)
                             .addComponent(maxDelayLabel)
                             .addComponent(avgTraversalLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(maxDelayData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lostPacketsData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -274,9 +274,7 @@ public class ShowReceiverDialog extends javax.swing.JDialog implements ReceiverD
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(portLabel)
                                     .addComponent(portData, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(interfaceLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(interfaceLabel, javax.swing.GroupLayout.Alignment.LEADING))
                         .addContainerGap(115, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
