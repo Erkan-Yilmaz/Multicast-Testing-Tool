@@ -457,7 +457,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
      * @param p The profile containing the path and
      * @throws Exception if an Error occured serializing the profile.
      */
-    public void saveProfileToFile(Profile p) throws Exception {
+    private void saveProfileToFile(Profile p) throws Exception {
         //Register the xerces DOM-Implementation
         DOMImplementationRegistry registry = null;
         try {
@@ -631,8 +631,12 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         DOMImplementationLS impl =
             (DOMImplementationLS)registry.getDOMImplementation("LS");
 
+        //Create a parser object
         LSParser builder = impl.createLSParser(
             DOMImplementationLS.MODE_SYNCHRONOUS, null);
+
+    	//Diasble the printing of the error message to the log
+        builder.getDomConfig().setParameter( "error-handler", null );
 
         //Fetch the profile path
         File xmlPath = p.getPath();
@@ -953,22 +957,27 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         //Load the profile, streams are reverted to the saved activity state
     	try{
     		this.loadProfileWithoutCleanup(p,"default");
+            //Add it to the list of recent profiles
+            recentProfiles.addOrUpdateProfileInList(p);
+            //Make it the new profile and signalize it to the observers
+            this.setCurrentProfile(p);
     	}
     	catch(org.w3c.dom.ls.LSException e){
         	this.reportErrorEvent(new ErrorEvent(3,"Controller.profileLoadingError.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
+        	//On error the profile will be set to 0
+        	this.setCurrentProfile(null);
     	}
     	catch(IOException e){
         	this.reportErrorEvent(new ErrorEvent(3,"Controller.profileLoadingError2.text", p.getPath().toString()));
+        	//On error the profile will be set to 0
+        	this.setCurrentProfile(null);
     	}
     	catch(Exception e){
-        	this.reportErrorEvent(new ErrorEvent(4,"Controller.profileLoadingError3.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
+    		this.reportErrorEvent(new ErrorEvent(4,"Controller.profileLoadingError3.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
+    		//On error the profile will be set to 0
+        	this.setCurrentProfile(null);
     	}
 
-        //Add it to the list of recent profiles
-        recentProfiles.addOrUpdateProfileInList(p);
-
-        //Make it the new profile and signalize it to the observers
-        this.setCurrentProfile(p);
     }
 
     /* (non-Javadoc)

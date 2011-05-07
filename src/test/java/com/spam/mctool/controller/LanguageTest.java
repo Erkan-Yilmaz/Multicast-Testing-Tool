@@ -28,6 +28,7 @@ public class LanguageTest implements LanguageChangeListener{
 		//try to add null
 		try{
 			c.addLanguageChangeListener(this);
+			fail("Exception not thrown");
 		}
 		catch (Exception e) {
 			assertTrue(e instanceof IllegalArgumentException);
@@ -59,6 +60,7 @@ public class LanguageTest implements LanguageChangeListener{
 		//try to remove null
 		try{
 			c.removeLanguageChangeListener(this);
+			fail("Exception not thrown");
 		}
 		catch (Exception e) {
 			assertTrue(e instanceof IllegalArgumentException);
