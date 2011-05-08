@@ -4,7 +4,10 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+
 import org.apache.log4j.*;
 
 import com.spam.mctool.controller.Controller;
@@ -12,9 +15,13 @@ import com.spam.mctool.controller.ErrorEvent;
 import com.spam.mctool.controller.ErrorEventListener;
 import com.spam.mctool.controller.ErrorEventManager;
 import com.spam.mctool.controller.ProfileChangeListener;
+import com.spam.mctool.intermediates.OverallReceiverStatisticsUpdatedEvent;
+import com.spam.mctool.intermediates.OverallSenderStatisticsUpdatedEvent;
 import com.spam.mctool.intermediates.ProfileChangeEvent;
 import com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent;
 import com.spam.mctool.intermediates.SenderAddedOrRemovedEvent;
+import com.spam.mctool.model.OverallReceiverStatisticsUpdatedListener;
+import com.spam.mctool.model.OverallSenderStatisticsUpdatedListener;
 import com.spam.mctool.model.ReceiverAddedOrRemovedListener;
 import com.spam.mctool.model.SenderAddedOrRemovedListener;
 
@@ -22,11 +29,12 @@ import com.spam.mctool.model.SenderAddedOrRemovedListener;
  *
  * @author ramin
  */
-public class CommandLineView implements MctoolView, ProfileChangeListener, ReceiverAddedOrRemovedListener, SenderAddedOrRemovedListener, ErrorEventListener {
+public class CommandLineView implements MctoolView, ProfileChangeListener, ReceiverAddedOrRemovedListener, SenderAddedOrRemovedListener, ErrorEventListener, OverallReceiverStatisticsUpdatedListener, OverallSenderStatisticsUpdatedListener {
 	private PrintStream out = System.out;
 	private BufferedWriter log;
 	private Controller c;
 	private Date date;
+	private Date lastUpdate = null;
 	private java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle");
 	
 	private Logger logger;
@@ -44,94 +52,70 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
         c.addProfileChangeListener(this);
         c.addReceiverAddedOrRemovedListener(this);
         c.addSenderAddedOrRemovedListener(this);
-        c.removeProfileChangeListener(this);
-        c.removeReceiverAddedOrRemovedListener(this);
-        c.removeSenderAddedOrRemovedListener(this);
-        c.addErrorEventListener(this, ErrorEventManager.ERROR);
+        c.addErrorEventListener(this, ErrorEventManager.WARNING);
+        c.addOverallReceiverStatisticsUpdatedListener(this);
+        c.addOverallSenderStatisticsUpdatedListener(this);
         
-        // new
-        logger.info(bundle.getString(("CommandLine.LoggerInitialized.text"))+" "+new Date());
-
-        // old
         try {
-        	date = new Date();
-        	log = new BufferedWriter(new FileWriter("log.txt", true));
-        	log.write(bundle.getString(("CommandLine.LoggerInitialized.text")) + " " + date.toString());
-		    log.close();
-        	
-        }
-        catch(IOException e){
-        }
-       
+			log = new BufferedWriter(new FileWriter("log.txt", true));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        logger.info(bundle.getString(("CommandLine.LoggerInitialized.text"))+" "+new Date());
     }
 
 	public void profileChanged(ProfileChangeEvent e) {
 		out.println(bundle.getString("CommandLine.ProfileChanged.text"));
 		
-		try {
-		    log.write(bundle.getString("CommandLine.ProfileChanged.text"));
-		    log.close();
-		} catch (IOException evt) {
-		}
+		logger.info(bundle.getString(("CommandLine.ProfileChanged.text")));
 			
 	}
 
 	public void receiverGroupAdded(ReceiverAddedOrRemovedEvent e) {
-		out.println(bundle.getString("CommandLine.ReceiverGroupAdded.text"));
-		
-		try {
-		    
-		    log.write(bundle.getString("CommandLine.ReceiverGroupAdded.text"));
-		    log.close();
-		} catch (IOException evt) {
-		}
+		out.println(bundle.getString("CommandLine.ReceiverGroupAdded.text") + e.getSource().getGroup().toString());
+		logger.info(bundle.getString(("CommandLine.ReceiverGroupAdded.text") + e.getSource().getGroup().toString()));
 	
 	}
 
 	public void receiverGroupRemoved(ReceiverAddedOrRemovedEvent e) {
-		out.println(bundle.getString("CommandLine.ReceiverGroupRemoved.text"));
+		out.println(bundle.getString("CommandLine.ReceiverGroupRemoved.text") + e.getSource().getGroup().toString());
 		
-		try {
-		    
-		    log.write(bundle.getString("CommandLine.ReceiverGroupRemoved.text"));
-		    log.close();
-		} catch (IOException evt) {
-		}
+		logger.info(bundle.getString(("CommandLine.ReceiverGroupRemoved.text") + e.getSource().getGroup().toString()));
 			
 	}
 
 	public void senderAdded(SenderAddedOrRemovedEvent e) {
-		out.println(bundle.getString("CommandLine.SenderAdded.text"));
+		out.println(bundle.getString("CommandLine.SenderAdded.text") + "ID:" + e.getSource().getSenderId());
 		
-		try {
-		    
-		    log.write(bundle.getString("CommandLine.SenderAdded.text"));
-		    log.close();
-		} catch (IOException evt) {
-		}
+		logger.info(bundle.getString(("CommandLine.SenderAdded.text") + "ID:" + e.getSource().getSenderId()));
 		
 	}
 
 	public void senderRemoved(SenderAddedOrRemovedEvent e) {
-		out.println(bundle.getString("CommandLine.SenderRemoved.text"));
+		out.println(bundle.getString("CommandLine.SenderRemoved.text")  + "ID:" + e.getSource().getSenderId());
 		
-		try {
-		    
-		    log.write(bundle.getString("CommandLine.SenderRemoved.text"));
-		    log.close();
-		} catch (IOException evt) {
-		}
+		logger.info(bundle.getString(("CommandLine.SenderRemoved.text")  + "ID:" + e.getSource().getSenderId()));
 		
 	}
 	
 	@Override
 	public void kill()
 	{
-		try {
-			date = new Date();
-		    log.write(bundle.getString("CommandLine.Kill.text") + date.toString());
-		    log.close();
-		} catch (IOException evt) {
+		c.removeProfileChangeListener(this);
+        c.removeReceiverAddedOrRemovedListener(this);
+        c.removeSenderAddedOrRemovedListener(this);
+        c.removeOverallReceiverStatisticsUpdatedListener(this);
+        c.removeOverallSenderStatisticsUpdatedListener(this);
+		
+        logger.info(bundle.getString(("CommandLine.Kill.text")) + new Date());
+        
+        try {
+			log.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -139,14 +123,55 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
 	public void newErrorEvent(ErrorEvent e) {
 		date = new Date();
 		
-		out.println(date.toString() + " - " + bundle.getString("CommandLine.ErrorOccurred.text") + e.getCompleteMessage());
-		try {
+		if(e.getErrorLevel() == ErrorEventManager.WARNING)
+			logger.info(date.toString() + " - " + bundle.getString("CommandLine.Warning.text") + e.getCompleteMessage());
+		else
 			
-		    log.write(date.toString() + " - " + bundle.getString("CommandLine.ErrorOccurred.text") + e.getCompleteMessage());
-		    log.close();
-		    
-		} catch (IOException evt) {
+		out.println(date.toString() + " - " + bundle.getString("CommandLine.Error.text") + e.getCompleteMessage());
+	}
+
+	@Override
+	public void overallSenderStatisticsUpdated(
+			OverallSenderStatisticsUpdatedEvent e) {
+		if(lastUpdate == null){
+			lastUpdate = new Date();
 		}
+		
+		if(lastUpdate.getTime() > 5.*60.*1000){
+			out.println(bundle.getString("CommandLine.SenderStatistics.text") + date.toString() + ":\n" );
+			out.println(bundle.getString("CommandLine.SentPackets.text") + e.getSource().getOverallSentPackets() + "\n");
+			out.println(bundle.getString("CommandLine.SentPacketsPerSec.text") + e.getSource().getOverallSentPPS() + "\n");
+			
+			logger.info(bundle.getString("CommandLine.SenderStatistics.text") + date.toString() + ":\n");
+			logger.info(bundle.getString("CommandLine.SentPackets.text") + e.getSource().getOverallSentPackets() + "\n");
+			logger.info(bundle.getString("CommandLine.SentPacketsPerSec.text") + e.getSource().getOverallSentPPS() + "\n");
+			
+		}
+		
+		
+	}
+
+	@Override
+	public void overallReceiverStatisticsUpdated(
+			OverallReceiverStatisticsUpdatedEvent e) {
+		if(lastUpdate == null){
+			lastUpdate = new Date();
+		}
+		
+		if(lastUpdate.getTime() > 5.*60.*1000){
+			out.println(bundle.getString("CommandLine.ReceiverStatistics.text") + date.toString() + ":\n" );
+			out.println(bundle.getString("CommandLine.ReceivedPackages.text") + e.getSource().getOverallReceivedPackets() + "\n");
+			out.println(bundle.getString("CommandLine.FaultyPackets.text") + e.getSource().getOverallFaultyPackets() + "\n");
+			out.println(bundle.getString("CommandLine.LostPackages.text") + e.getSource().getOverallLostPackets() + "\n");
+			out.println(bundle.getString("CommandLine.ReceivedPaketsPerSec.text") + e.getSource().getOverallReceivedPPS() + "\n");
+			
+			logger.info(bundle.getString("CommandLine.ReceiverStatistics.text") + date.toString() + ":\n" );
+			logger.info(bundle.getString("CommandLine.ReceivedPackages.text") + e.getSource().getOverallReceivedPackets() + "\n");
+			logger.info(bundle.getString("CommandLine.FaultyPackets.text") + e.getSource().getOverallFaultyPackets() + "\n");
+			logger.info(bundle.getString("CommandLine.LostPackages.text") + e.getSource().getOverallLostPackets() + "\n");
+			logger.info(bundle.getString("CommandLine.ReceivedPaketsPerSec.text") + e.getSource().getOverallReceivedPPS() + "\n");
+		}
+		
 	}
 
 }
