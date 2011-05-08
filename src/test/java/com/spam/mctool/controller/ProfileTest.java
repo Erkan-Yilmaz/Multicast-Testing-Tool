@@ -91,7 +91,7 @@ public class ProfileTest {
 		//2 and 3 should not be equal
 		assertFalse(testProfile2.equals(testProfile3));
 		//assert with any other object should return false
-		assertFalse(testProfile1.equals(new String("JUnit Tests finde ich blöd!")));
+		assertFalse(testProfile1.equals(new String("JUnit Tests finde ich bl√∂d!")));
 		assertFalse(testProfile1.equals(new File("HalloooDatei")));
 		//assert with null will throw an exception
 		try{
