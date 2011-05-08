@@ -11,7 +11,7 @@ import com.spam.mctool.model.Receiver;
  *
  * @author Tobias Stöckel
  */
-class ReceiverRow extends ReceiverTableRow {
+public class ReceiverRow extends ReceiverTableRow {
 
     private final ReceiverGroupRow parent;
     private final Receiver receiver;
