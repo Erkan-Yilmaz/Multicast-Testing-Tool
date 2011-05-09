@@ -306,19 +306,4 @@ public class SenderTableModelTest {
         fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of isCellEditable method, of class SenderTableModel.
-     */
-    @Test
-    public void testIsCellEditable() {
-        int row = 0;
-        int column = 0;
-        SenderTableModel instance = new SenderTableModel();
-        boolean expResult = false;
-        boolean result = instance.isCellEditable(row, column);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
 }

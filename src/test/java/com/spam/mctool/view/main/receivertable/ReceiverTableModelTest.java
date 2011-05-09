@@ -156,54 +156,6 @@ public class ReceiverTableModelTest {
     }
 
     /**
-     * Test of mousePressed method, of class ReceiverTableModel.
-     */
-    @Test
-    public void testMousePressed() {
-        MouseEvent e = null;
-        ReceiverTableModel instance = new ReceiverTableModel();
-        instance.mousePressed(e);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of mouseReleased method, of class ReceiverTableModel.
-     */
-    @Test
-    public void testMouseReleased() {
-        MouseEvent e = null;
-        ReceiverTableModel instance = new ReceiverTableModel();
-        instance.mouseReleased(e);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of mouseEntered method, of class ReceiverTableModel.
-     */
-    @Test
-    public void testMouseEntered() {
-        MouseEvent e = null;
-        ReceiverTableModel instance = new ReceiverTableModel();
-        instance.mouseEntered(e);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of mouseExited method, of class ReceiverTableModel.
-     */
-    @Test
-    public void testMouseExited() {
-        MouseEvent e = null;
-        ReceiverTableModel instance = new ReceiverTableModel();
-        instance.mouseExited(e);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of getReceiverGroupAt method, of class ReceiverTableModel.
      */
     @Test
