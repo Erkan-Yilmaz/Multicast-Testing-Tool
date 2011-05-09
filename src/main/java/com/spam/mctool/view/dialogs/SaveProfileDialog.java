@@ -6,6 +6,7 @@
 
 package com.spam.mctool.view.dialogs;
 
+import com.spam.mctool.controller.Profile;
 import com.spam.mctool.view.main.MainFrame;
 import java.io.File;
 
@@ -50,9 +51,12 @@ public class SaveProfileDialog extends javax.swing.JDialog {
         initComponents();
     }
 
-    public SaveProfileDialog(java.awt.Frame parent, boolean modal, String profileName) {
+    public SaveProfileDialog(java.awt.Frame parent, boolean modal, Profile currentProfile) {
         this(parent, modal);
-        txtProfileName.setText(profileName);
+        if(currentProfile != null) {
+            txtProfileName.setText(currentProfile.getName());
+            jFileChooser.setSelectedFile(currentProfile.getPath());
+        }
     }
 
     /** This method is called from within the constructor to
@@ -69,9 +73,12 @@ public class SaveProfileDialog extends javax.swing.JDialog {
         laProfileName = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
+        setTitle(bundle.getString("SaveProfileDialog.title")); // NOI18N
         setName("Form"); // NOI18N
 
         jFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+        jFileChooser.setSelectedFile(new File(jFileChooser.getCurrentDirectory(), "profil.xml"));
         jFileChooser.setName("jFileChooser"); // NOI18N
         jFileChooser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -79,7 +86,6 @@ public class SaveProfileDialog extends javax.swing.JDialog {
             }
         });
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
         txtProfileName.setText(bundle.getString("SaveProfileDialog.txtProfileName.text_1")); // NOI18N
         txtProfileName.setName("txtProfileName"); // NOI18N
 
