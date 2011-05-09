@@ -140,19 +140,11 @@ public final class ReceiverGroup extends MulticastStream {
 			// add the packet container
 			receivers.get(p.getSenderId()).addPacketContainer(con);
 			// schedule the next fetch
-		} catch (SocketException e) {
-                    if(e.getMessage().equals("socket closed")) {
-                        // do nothing. Probably somebody just closed the socket
-                        // while we were waiting for a packet :P
-                    } else {
-                        eMan.reportErrorEvent(
-                                new ErrorEvent(ErrorEventManager.FATAL, "Model.ReceiverGroup.run.FatalNetworkError.text", "")
-                        );
-                    }
-                } catch (IOException e) {
-                        eMan.reportErrorEvent(
-				new ErrorEvent(5, "Model.ReceiverGroup.run.FatalNetworkError.text", "")
-			);
+		} catch (IOException e) {
+                        e.printStackTrace();
+                        //eMan.reportErrorEvent(
+			//	new ErrorEvent(5, "Model.ReceiverGroup.run.FatalNetworkError.text", "")
+			//);
 		} catch (DataFormatException dfe) {
 			faultyPackets++;
 		} catch(Throwable e) {

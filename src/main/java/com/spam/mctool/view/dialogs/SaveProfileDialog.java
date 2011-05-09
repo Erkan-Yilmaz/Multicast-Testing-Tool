@@ -79,9 +79,10 @@ public class SaveProfileDialog extends javax.swing.JDialog {
             }
         });
 
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
+        txtProfileName.setText(bundle.getString("SaveProfileDialog.txtProfileName.text_1")); // NOI18N
         txtProfileName.setName("txtProfileName"); // NOI18N
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
         laProfileName.setText(bundle.getString("SaveProfileDialog.laProfileName.text_1")); // NOI18N
         laProfileName.setName("laProfileName"); // NOI18N
 
