@@ -6,6 +6,9 @@
 
 package com.spam.mctool.view.main;
 
+import javax.swing.AbstractAction;
+import java.awt.event.KeyEvent;
+import javax.swing.KeyStroke;
 import com.spam.mctool.controller.Profile;
 import com.spam.mctool.intermediates.OverallReceiverStatisticsUpdatedEvent;
 import com.spam.mctool.intermediates.OverallSenderStatisticsUpdatedEvent;
@@ -39,9 +42,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.swing.Action;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.event.ListSelectionEvent;
+import static javax.swing.JComponent.*;
 
 /**
  *
@@ -50,6 +55,30 @@ import javax.swing.event.ListSelectionEvent;
 public class MainFrame extends javax.swing.JFrame implements javax.swing.event.ListSelectionListener {
 
     private static final long serialVersionUID = 1L;
+
+    private class DeleteReceiverAction extends AbstractAction {
+
+        public DeleteReceiverAction() {
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            if(buDeleteReceiver.isEnabled()) {
+                buDeleteReceiverActionPerformed(e);
+            }
+        }
+    }
+
+    private class DeleteSenderAction extends AbstractAction {
+
+        public DeleteSenderAction() {
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            if(buDeleteSender.isEnabled()) {
+                buDeleteSenderActionPerformed(e);
+            }
+        }
+    }
     private GraphicalView view;
 
     /** Creates new form MainFrame */
@@ -105,7 +134,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         buEditSender = new javax.swing.JButton();
         buDeleteSender = new javax.swing.JButton();
         paSenderTableInner = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        senderTableScrollPane = new javax.swing.JScrollPane();
         senderTable = new com.spam.mctool.view.main.sendertable.JSenderTable();
         paSenderTableCaption = new javax.swing.JPanel();
         laSenderTableCaption = new javax.swing.JLabel();
@@ -131,7 +160,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         buEditReceiver = new javax.swing.JButton();
         buDeleteReceiver = new javax.swing.JButton();
         paReceiverTableInner = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        receiverTableScrollPane = new javax.swing.JScrollPane();
         receiverTable = new com.spam.mctool.view.main.receivertable.JReceiverTable();
         paReceiverTableCaption = new javax.swing.JPanel();
         laReceiverTableCaption = new javax.swing.JLabel();
@@ -447,10 +476,10 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         paSenderTableInner.setName("paSenderTableInner"); // NOI18N
         paSenderTableInner.setLayout(new java.awt.BorderLayout());
 
-        jScrollPane2.setName("jScrollPane2"); // NOI18N
-        jScrollPane2.addMouseListener(new java.awt.event.MouseAdapter() {
+        senderTableScrollPane.setName("senderTableScrollPane"); // NOI18N
+        senderTableScrollPane.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jScrollPane2MouseClicked(evt);
+                senderTableScrollPaneMouseClicked(evt);
             }
         });
 
@@ -462,9 +491,9 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
             }
         });
         senderTable.getSelectionModel().addListSelectionListener(this);
-        jScrollPane2.setViewportView(senderTable);
+        senderTableScrollPane.setViewportView(senderTable);
 
-        paSenderTableInner.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+        paSenderTableInner.add(senderTableScrollPane, java.awt.BorderLayout.CENTER);
 
         paSenderTableOuter.add(paSenderTableInner, java.awt.BorderLayout.CENTER);
 
@@ -654,10 +683,10 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         paReceiverTableInner.setName("paReceiverTableInner"); // NOI18N
         paReceiverTableInner.setLayout(new java.awt.BorderLayout());
 
-        jScrollPane1.setName("jScrollPane1"); // NOI18N
-        jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+        receiverTableScrollPane.setName("receiverTableScrollPane"); // NOI18N
+        receiverTableScrollPane.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jScrollPane1MouseClicked(evt);
+                receiverTableScrollPaneMouseClicked(evt);
             }
         });
 
@@ -666,9 +695,9 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         receiverTable.setIntercellSpacing(new java.awt.Dimension(0, 1));
         receiverTable.setName("receiverTable"); // NOI18N
         receiverTable.getSelectionModel().addListSelectionListener(this);
-        jScrollPane1.setViewportView(receiverTable);
+        receiverTableScrollPane.setViewportView(receiverTable);
 
-        paReceiverTableInner.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        paReceiverTableInner.add(receiverTableScrollPane, java.awt.BorderLayout.CENTER);
 
         paReceiverTableOuter.add(paReceiverTableInner, java.awt.BorderLayout.CENTER);
 
@@ -925,13 +954,13 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         view.removeStreams(groups);
     }//GEN-LAST:event_buDeleteReceiverActionPerformed
 
-    private void jScrollPane2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane2MouseClicked
+    private void senderTableScrollPaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_senderTableScrollPaneMouseClicked
         senderTable.clearSelection();
-    }//GEN-LAST:event_jScrollPane2MouseClicked
+    }//GEN-LAST:event_senderTableScrollPaneMouseClicked
 
-    private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
+    private void receiverTableScrollPaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_receiverTableScrollPaneMouseClicked
         receiverTable.clearSelection();
-    }//GEN-LAST:event_jScrollPane1MouseClicked
+    }//GEN-LAST:event_receiverTableScrollPaneMouseClicked
 
     private void miOpenProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miOpenProfileActionPerformed
         int returnVal = chooser.showOpenDialog(this);
@@ -1068,8 +1097,6 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     private javax.swing.JButton buEditSender;
     private javax.swing.JButton buShowReceiver;
     private javax.swing.JButton buShowSender;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JLabel laFaultyPackets;
     private javax.swing.JLabel laFaultyPacketsCaption;
@@ -1124,11 +1151,13 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     private javax.swing.JPopupMenu receiverPopupMenu;
     private javax.swing.JSplitPane receiverSplitPane;
     private com.spam.mctool.view.main.receivertable.JReceiverTable receiverTable;
+    private javax.swing.JScrollPane receiverTableScrollPane;
     private javax.swing.JSeparator receivingStatisticsSeparator;
     private javax.swing.JPopupMenu senderPopupMenu;
     private javax.swing.JSplitPane senderSplitPane;
     private com.spam.mctool.view.main.sendertable.JSenderTable senderTable;
     private javax.swing.JLabel senderTableIcon;
+    private javax.swing.JScrollPane senderTableScrollPane;
     private javax.swing.JSeparator sendingStatisticsSeparator;
     private javax.swing.JPopupMenu.Separator sepAfterRecentProfiles;
     private javax.swing.JPopupMenu.Separator sepBeforeRecentProfiles;
@@ -1138,6 +1167,8 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
     // Custom variables declaration
     private JFileChooser chooser;
+    Action  deleteSenderAction;
+    Action  deleteReceiverAction;
 
     private void test() {
         ReceiverTableModel tableModel = (ReceiverTableModel)receiverTable.getModel();
@@ -1388,6 +1419,12 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
     private void initCustomComponents() {
         chooser = new JFileChooser();
+        deleteReceiverAction = new DeleteReceiverAction();
+        deleteSenderAction   = new DeleteSenderAction();
+        senderTable.  getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "deleteSender");
+        senderTable.  getActionMap().put("deleteSender", deleteSenderAction);
+        receiverTable.getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "deleteReceiver");
+        receiverTable.getActionMap().put("deleteReceiver", deleteReceiverAction);
     }
 
 
