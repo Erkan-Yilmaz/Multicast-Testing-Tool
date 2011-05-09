@@ -1205,8 +1205,14 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     public void valueChanged(ListSelectionEvent e) {
         if(e.getSource() == senderTable.getSelectionModel()) {
             refreshSenderControls();
+            if(senderTable.getSelectedRowCount() > 0 && receiverTable.getSelectedRowCount() > 0) {
+                receiverTable.clearSelection();
+            }
         } else if (e.getSource() == receiverTable.getSelectionModel()) {
             refreshReceiverControls();
+            if(receiverTable.getSelectedRowCount() > 0 && senderTable.getSelectedRowCount() > 0) {
+                senderTable.clearSelection();
+            }
         }
     }
 
