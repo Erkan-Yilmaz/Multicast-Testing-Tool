@@ -47,7 +47,6 @@ public class ReceiverTableModelTest {
      */
     @Test
     public void testGetRowCount() {
-        System.out.println("getRowCount");
         ReceiverTableModel instance = new ReceiverTableModel();
         int expResult = 0;
         int result = instance.getRowCount();
@@ -61,7 +60,6 @@ public class ReceiverTableModelTest {
      */
     @Test
     public void testGetColumnCount() {
-        System.out.println("getColumnCount");
         ReceiverTableModel instance = new ReceiverTableModel();
         int expResult = 0;
         int result = instance.getColumnCount();
@@ -75,7 +73,6 @@ public class ReceiverTableModelTest {
      */
     @Test
     public void testGetValueAt() {
-        System.out.println("getValueAt");
         int rowIndex = 0;
         int columnIndex = 0;
         ReceiverTableModel instance = new ReceiverTableModel();
@@ -91,7 +88,6 @@ public class ReceiverTableModelTest {
      */
     @Test
     public void testReceiverGroupAdded() {
-        System.out.println("receiverGroupAdded");
         ReceiverAddedOrRemovedEvent e = null;
         ReceiverTableModel instance = new ReceiverTableModel();
         instance.receiverGroupAdded(e);
@@ -104,7 +100,6 @@ public class ReceiverTableModelTest {
      */
     @Test
     public void testReceiverGroupRemoved() {
-        System.out.println("receiverGroupRemoved");
         ReceiverAddedOrRemovedEvent e = null;
         ReceiverTableModel instance = new ReceiverTableModel();
         instance.receiverGroupRemoved(e);
@@ -117,7 +112,6 @@ public class ReceiverTableModelTest {
      */
     @Test
     public void testDataChanged() {
-        System.out.println("dataChanged");
         ReceiverDataChangedEvent e = null;
         ReceiverTableModel instance = new ReceiverTableModel();
         instance.dataChanged(e);
@@ -130,7 +124,6 @@ public class ReceiverTableModelTest {
      */
     @Test
     public void testExpand() {
-        System.out.println("expand");
         int visGroupRowIndex = 0;
         ReceiverTableModel instance = new ReceiverTableModel();
         instance.expand(visGroupRowIndex);
@@ -143,7 +136,6 @@ public class ReceiverTableModelTest {
      */
     @Test
     public void testCollapse() {
-        System.out.println("collapse");
         int visGroupRowIndex = 0;
         ReceiverTableModel instance = new ReceiverTableModel();
         instance.collapse(visGroupRowIndex);
@@ -156,7 +148,6 @@ public class ReceiverTableModelTest {
      */
     @Test
     public void testMouseClicked() {
-        System.out.println("mouseClicked");
         MouseEvent e = null;
         ReceiverTableModel instance = new ReceiverTableModel();
         instance.mouseClicked(e);
@@ -169,7 +160,6 @@ public class ReceiverTableModelTest {
      */
     @Test
     public void testMousePressed() {
-        System.out.println("mousePressed");
         MouseEvent e = null;
         ReceiverTableModel instance = new ReceiverTableModel();
         instance.mousePressed(e);
@@ -182,7 +172,6 @@ public class ReceiverTableModelTest {
      */
     @Test
     public void testMouseReleased() {
-        System.out.println("mouseReleased");
         MouseEvent e = null;
         ReceiverTableModel instance = new ReceiverTableModel();
         instance.mouseReleased(e);
@@ -195,7 +184,6 @@ public class ReceiverTableModelTest {
      */
     @Test
     public void testMouseEntered() {
-        System.out.println("mouseEntered");
         MouseEvent e = null;
         ReceiverTableModel instance = new ReceiverTableModel();
         instance.mouseEntered(e);
@@ -208,7 +196,6 @@ public class ReceiverTableModelTest {
      */
     @Test
     public void testMouseExited() {
-        System.out.println("mouseExited");
         MouseEvent e = null;
         ReceiverTableModel instance = new ReceiverTableModel();
         instance.mouseExited(e);
@@ -221,7 +208,6 @@ public class ReceiverTableModelTest {
      */
     @Test
     public void testGetReceiverGroupAt() {
-        System.out.println("getReceiverGroupAt");
         int rowIndex = 0;
         ReceiverTableModel instance = new ReceiverTableModel();
         ReceiverGroup expResult = null;
@@ -236,7 +222,6 @@ public class ReceiverTableModelTest {
      */
     @Test
     public void testGetReceiverAt() {
-        System.out.println("getReceiverAt");
         int rowIndex = 0;
         ReceiverTableModel instance = new ReceiverTableModel();
         Receiver expResult = null;
@@ -251,7 +236,6 @@ public class ReceiverTableModelTest {
      */
     @Test
     public void testGetParent() {
-        System.out.println("getParent");
         Receiver r = null;
         ReceiverTableModel instance = new ReceiverTableModel();
         ReceiverGroup expResult = null;
@@ -266,7 +250,6 @@ public class ReceiverTableModelTest {
      */
     @Test
     public void testReceiverRemoved() {
-        System.out.println("receiverRemoved");
         Receiver r = null;
         ReceiverTableModel instance = new ReceiverTableModel();
         instance.receiverRemoved(r);
