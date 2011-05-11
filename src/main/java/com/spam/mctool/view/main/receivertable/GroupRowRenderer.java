@@ -1,9 +1,4 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * GroupRowRenderer.java
  *
  * Created on 21.03.2011, 10:16:06
@@ -20,15 +15,24 @@ import javax.swing.JTable;
 import javax.swing.UIManager;
 
 /**
+ * A <code>TableCellRenderer</code> implementation for displaying a receiver
+ * group in a <code>JReceiverTable</code>. Displays some general group
+ * information. Designed to serve as a header row for folding a set of receiver
+ * rows. Note that the folding mechanism itself has to be handled by
+ * <code>JReceiverTable</code> and the underlying <code>ReceiverTableModel</code>.
  *
- * @author Tobias
+ * @author Tobias Stöckel
  */
 public class GroupRowRenderer extends javax.swing.JPanel implements javax.swing.table.TableCellRenderer {
 
-    /** Creates new form GroupRowRenderer */
+
+
+    /** Creates a new GroupRowRenderer */
     public GroupRowRenderer() {
         initComponents();
     }
+
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -85,24 +89,53 @@ public class GroupRowRenderer extends javax.swing.JPanel implements javax.swing.
     private javax.swing.JLabel laPortCaption;
     private javax.swing.JLabel laStateIcon;
     // End of variables declaration//GEN-END:variables
+
+    // Custom variables declaration
+
+
+
+    /**
+     * The table reference is necessary for the logic that creates the impression
+     * of the row spanning multiple columns. Intuitively each cell will display
+     * <em>its</em> part of one cell renderer stretched over multiple columns.
+     * For this, each cell renderer has to know the dimensions of the table when
+     * it is to be painted.
+     */
     private javax.swing.JTable table;
     private int column;
+
+
+
+    /**
+     * Basic set of icons to be displayed by the renderer
+     */
     private final ImageIcon collapsed    = new ImageIcon(getClass().getResource("/images/fold_closed.png"));
     private final ImageIcon expanded     = new ImageIcon(getClass().getResource("/images/fold_opened.png"));
     private final ImageIcon activated    = new ImageIcon(getClass().getResource("/images/play_green.png"));
     private final ImageIcon deactivated  = new ImageIcon(getClass().getResource("/images/stop_red.png"));
-    private final Color     deselectedBg   = UIManager.getDefaults().getColor("Button.light");
-    private final Color     selectedBg     = UIManager.getDefaults().getColor("Button.shadow");
+
+
+
+    /**
+     * Some default colors that are used by the renderer
+     */
+    private final Color     deselectedBg = UIManager.getDefaults().getColor("Button.light");
+    private final Color     selectedBg   = UIManager.getDefaults().getColor("Button.shadow");
     private final Color     deselectedFg = Color.BLACK;
     private final Color     selectedFg   = Color.WHITE;
+
+
 
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         this.table = table;
         this.column = column;
 
+        // query the table for additional information to decide if the expanded
+        // or collapsed version of the renderer is to be returned
         ReceiverGroupRow groupRow = (ReceiverGroupRow)value;
         ReceiverGroup    group    = (ReceiverGroup)groupRow.getReceiverGroup();
         
+        // set the renderer's layout
         laExpandIcon.setIcon(       groupRow.isExpanded()? expanded  : collapsed   );
         laStateIcon. setIcon(       group.   isActive()?   activated : deactivated );
         laGroup.     setText(       group.getGroup().getHostAddress()              );
@@ -124,17 +157,39 @@ public class GroupRowRenderer extends javax.swing.JPanel implements javax.swing.
         return this;
     }
 
+
+
+    /**
+     * {@inheritDoc}
+     *
+     * This implementation makes the renderer believe, it stretches over all
+     * columns.
+     */
     @Override
     public void setBounds(int x, int y, int w, int h) {
         super.setBounds(0, y, table.getWidth(), h);
     }
 
+
+
+    /**
+     * {@inheritDoc}
+     *
+     * This implementation makes sure, the starting point for painting a cell
+     * renderer is reset to the beginning of the first column for each renderer.
+     * This corresponds to the <code>setBounds</code> method that told the
+     * renderer, it really had that amount of space available.
+     */
     @Override
     public void paint(Graphics g) {
         int columnWidths = 0;
+
+        // find out how much space lies before this cell renderer's column
         for(int i=0; i<column; i++) {
             columnWidths += table.getColumnModel().getColumn(i).getWidth();
         }
+        
+        // move the paint method's reference point to the beginning of the table
         g.translate(-columnWidths, 0);
         super.paint(g);
     }
