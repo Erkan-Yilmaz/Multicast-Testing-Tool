@@ -3,6 +3,7 @@ package com.spam.mctool.controller;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class RecentProfilesTest {
 		//try to set the list to null
 		try{
 			recentProfiles.setProfileList(null);
+			fail("Exception not thrown");
 		}
 		catch (Exception e) {
 			//must be an IllegalArgumentEception
@@ -130,16 +132,27 @@ public class RecentProfilesTest {
 		//the loaded list should have the size 0
 		assertEquals(recentProfiles.getProfileList().size(),0);
 		//load another list from xml
-		recentProfiles.fromXML("<list><com.spam.mctool.controller.Profile><name>Test2</name><path>Pfad 2</path></com.spam.mctool.controller.Profile><com.spam.mctool.controller.Profile><name>Test1</name><path>Pfad 1</path></com.spam.mctool.controller.Profile></list>");
+		//NOTE: This refereneced PROFILE MUST EXIST!!!
+		//Create the empty profile file
+		File testprofile = new File("testprofile");
+		try {
+			testprofile.createNewFile();
+		} catch (IOException e1) {
+			fail("testprofile could not be created");
+		}
+		recentProfiles.fromXML("<list><com.spam.mctool.controller.Profile><name>Test</name><path>testprofile</path></com.spam.mctool.controller.Profile></list>");
 		//create the tempList to compare with
 		tempList = new ArrayList<Profile>();
-		tempList.add(new Profile("Test2",new File("Pfad 2")));
-		tempList.add(new Profile("Test1",new File("Pfad 1")));
-		//Both lists should be equal
+		tempList.add(new Profile("Test",new File("testprofile")));
+		//load a list with a profile WHICH DOES NOT EXIST -> Deleted after checking the path!
+		recentProfiles.fromXML("<list><com.spam.mctool.controller.Profile><name>Test2</name><path>nonsense</path></com.spam.mctool.controller.Profile></list>");
+		//The list will be empty as the profile file does not exist!
+		tempList = new ArrayList<Profile>();
 		assertEquals(tempList, recentProfiles.getProfileList());
 		//try to load null
-		/*try{
+		try{
 			recentProfiles.fromXML(null);
+			fail("Exception not thrown");
 		}
 		catch(Exception e){
 			assertTrue(e instanceof IllegalArgumentException);
@@ -147,15 +160,41 @@ public class RecentProfilesTest {
 		//try to load nonsense
 		try{
 			recentProfiles.fromXML("holla die waldfee");
+			fail("Exception not thrown");
 		}
 		catch(Exception e){
-			assertTrue(e instanceof IllegalArgumentException);
-		}*/
+			//Parsing exception
+			assertTrue(e instanceof com.thoughtworks.xstream.io.StreamException);
+		}
 	}
 
 	@Test
 	public void testFindProfileByName() {
-		fail("Not yet implemented");
+		//Create a new RecentProfiles object
+		RecentProfiles recentProfiles = new RecentProfiles();
+		//Create some profiles
+		Profile profile1 = new Profile("Test1",new File("Pfad 1"));
+		Profile profile2 = new Profile("Test2",new File("Pfad 2"));
+		Profile profile3 = new Profile("Test3",new File("Pfad 3"));
+		//Add the profiles
+		recentProfiles.addOrUpdateProfileInList(profile1);
+		recentProfiles.addOrUpdateProfileInList(profile2);
+		recentProfiles.addOrUpdateProfileInList(profile3);
+		//Look up null which will return null
+		Profile lookup = recentProfiles.findProfileByName(null);
+		assertNull(lookup);
+		//Look up profile1
+		lookup = recentProfiles.findProfileByName("Test1");
+		assertEquals(lookup, profile1);
+		//Look up profile2
+		lookup = recentProfiles.findProfileByName("Test2");
+		assertEquals(lookup, profile2);
+		//Look up profile3
+		lookup = recentProfiles.findProfileByName("Test3");
+		assertEquals(lookup, profile3);
+		//Look up nonsense which will return null
+		lookup = recentProfiles.findProfileByName("Banane");
+		assertEquals(lookup, null);
 	}
 
 }

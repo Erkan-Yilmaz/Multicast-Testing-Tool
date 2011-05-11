@@ -18,9 +18,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.zip.DataFormatException;
 
 import com.spam.mctool.controller.ErrorEvent;
+import com.spam.mctool.controller.ErrorEventManager;
 import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
 import com.spam.mctool.model.packet.AutoPacket;
 import com.spam.mctool.model.packet.Packet;
+import java.net.SocketException;
 
 /**
  * ReceiverGroup represents a subscriped multicast group on this machine.
@@ -139,9 +141,10 @@ public final class ReceiverGroup extends MulticastStream {
 			receivers.get(p.getSenderId()).addPacketContainer(con);
 			// schedule the next fetch
 		} catch (IOException e) {
-			eMan.reportErrorEvent(
-				new ErrorEvent(5, "Model.ReceiverGroup.run.FatalNetworkError.text", "")
-			);
+                        e.printStackTrace();
+                        //eMan.reportErrorEvent(
+			//	new ErrorEvent(5, "Model.ReceiverGroup.run.FatalNetworkError.text", "")
+			//);
 		} catch (DataFormatException dfe) {
 			faultyPackets++;
 		} catch(Throwable e) {

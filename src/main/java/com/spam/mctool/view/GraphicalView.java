@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.spam.mctool.view;
 
 import com.spam.mctool.controller.ErrorEvent;
@@ -32,7 +29,6 @@ import com.spam.mctool.model.Sender;
 import com.spam.mctool.model.SenderAddedOrRemovedListener;
 import com.spam.mctool.model.SenderDataChangeListener;
 import java.io.File;
-import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -42,24 +38,24 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 /**
- * @author Tobias Schoknecht, Tobias Stöckel
- * 
  * Represents the graphical user interface of the MCTool.
- * 
+ *
  * This class serves as the entry point for the controller to the view. All
  * incoming events are queued to the EventDispatcherThread here and thus
  * distributed safely to the remaining Swing components.
  *
- * In order to fully initialize and show the view, the init()-method has to
+ * In order to fully initialize and show the view, the <code>init</code>-method has to
  * be invoked.
+ *
+ * @author Tobias Stöckel
  *
  */
 public class GraphicalView implements MctoolView,
-		                      SenderDataChangeListener,
+                                      SenderDataChangeListener,
                                       ReceiverDataChangeListener,
-		                      ProfileChangeListener,
+                                      ProfileChangeListener,
                                       SenderAddedOrRemovedListener,
-		                      ReceiverAddedOrRemovedListener,
+                                      ReceiverAddedOrRemovedListener,
                                       ErrorEventListener,
                                       OverallReceiverStatisticsUpdatedListener,
                                       OverallSenderStatisticsUpdatedListener,
@@ -390,14 +386,23 @@ public class GraphicalView implements MctoolView,
         controller.exitApplication();
     }
 
+    /**
+     * Applies the preferences chosen by the user to the application.
+     * At the moment user preferences will not be persisted to disk.
+     * @param dlg
+     */
     public void setPreferences(PreferencesDialog dlg) {
         Locale.setDefault(dlg.getSelectedLocale());
+
+        // unregister from the controller before reporting the language change
+        // in order to avoid concurrent modification of the listener list
         kill();
+        
         languageManager.reportLanguageChange();
+
+        // reinitialize the gui
         init(controller);
         mainFrame.setVisible(true);
-        //persistPreferences(dlg);
-        //loadPreferences();
     }
 
 }

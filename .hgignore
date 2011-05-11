@@ -17,3 +17,4 @@ private.xml
 ^\.project$
 ^\.settings(/.*)?$
 RecentProfiles.xml
+testprofile

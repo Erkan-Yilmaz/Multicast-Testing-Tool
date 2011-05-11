@@ -76,8 +76,6 @@ public class PreferencesDialog extends javax.swing.JDialog {
         cbLanguage = new javax.swing.JComboBox();
         buCancel = new javax.swing.JButton();
         buOk = new javax.swing.JButton();
-        txtThreadPoolSize = new javax.swing.JTextField();
-        laThreadPoolSize = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle"); // NOI18N
@@ -110,12 +108,6 @@ public class PreferencesDialog extends javax.swing.JDialog {
             }
         });
 
-        txtThreadPoolSize.setText(bundle.getString("PreferencesDialog.txtThreadPoolSize.text")); // NOI18N
-        txtThreadPoolSize.setName("txtThreadPoolSize"); // NOI18N
-
-        laThreadPoolSize.setText(bundle.getString("PreferencesDialog.laThreadPoolSize.text")); // NOI18N
-        laThreadPoolSize.setName("laThreadPoolSize"); // NOI18N
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -128,13 +120,9 @@ public class PreferencesDialog extends javax.swing.JDialog {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(laLanguage)
-                    .addComponent(laThreadPoolSize))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtThreadPoolSize)
-                    .addComponent(cbLanguage, 0, 122, Short.MAX_VALUE))
+                .addComponent(laLanguage)
+                .addGap(36, 36, 36)
+                .addComponent(cbLanguage, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -144,11 +132,7 @@ public class PreferencesDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(laLanguage)
                     .addComponent(cbLanguage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtThreadPoolSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(laThreadPoolSize))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 204, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buCancel)
                     .addComponent(buOk))
@@ -194,8 +178,6 @@ public class PreferencesDialog extends javax.swing.JDialog {
     private javax.swing.JButton buOk;
     private javax.swing.JComboBox cbLanguage;
     private javax.swing.JLabel laLanguage;
-    private javax.swing.JLabel laThreadPoolSize;
-    private javax.swing.JTextField txtThreadPoolSize;
     // End of variables declaration//GEN-END:variables
 
     private void loadData() {

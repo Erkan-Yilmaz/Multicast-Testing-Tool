@@ -9,7 +9,7 @@ package com.spam.mctool.view.main.receivertable;
  *
  * @author Tobias Stöckel
  */
-abstract class ReceiverTableRow {
+public abstract class ReceiverTableRow {
     private boolean visible = false;
 
     public boolean isVisible() {

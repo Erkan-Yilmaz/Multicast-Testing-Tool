@@ -17,7 +17,7 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author Tobias Stöckel
  */
-class ReceiverStateRenderer extends JPanel implements TableCellRenderer {
+public class ReceiverStateRenderer extends JPanel implements TableCellRenderer {
 
     private JLabel laIcon = new JLabel();
     private ImageIcon alive = new ImageIcon(getClass().getResource("/images/play_green.png"));

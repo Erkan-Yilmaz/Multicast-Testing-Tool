@@ -36,15 +36,9 @@
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="laLanguage" min="-2" max="-2" attributes="0"/>
-                  <Component id="laThreadPoolSize" alignment="0" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="txtThreadPoolSize" max="32767" attributes="1"/>
-                  <Component id="cbLanguage" alignment="0" pref="122" max="32767" attributes="1"/>
-              </Group>
+              <Component id="laLanguage" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+              <Component id="cbLanguage" min="-2" pref="122" max="-2" attributes="1"/>
               <EmptySpace pref="17" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -57,12 +51,7 @@
                   <Component id="laLanguage" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cbLanguage" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txtThreadPoolSize" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="laThreadPoolSize" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace pref="204" max="32767" attributes="0"/>
+              <EmptySpace pref="22" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="buCancel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="buOk" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -113,22 +102,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buOkActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtThreadPoolSize">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="PreferencesDialog.txtThreadPoolSize.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
-        <Property name="name" type="java.lang.String" value="txtThreadPoolSize" noResource="true"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="laThreadPoolSize">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="internationalization/Bundle.properties" key="PreferencesDialog.laThreadPoolSize.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-        </Property>
-        <Property name="name" type="java.lang.String" value="laThreadPoolSize" noResource="true"/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>
