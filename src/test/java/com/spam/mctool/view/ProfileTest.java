@@ -33,6 +33,72 @@ import com.spam.mctool.controller.Controller;
  */
 public class ProfileTest extends UISpecTestCase {
     /**
+     * Test valid configurations
+     */
+    public void testValidConfigurations() throws Exception {
+        setAdapter(new MainClassAdapter(Controller.class, new String[0]));
+
+        // Retrieve the components
+        Window window = getMainWindow();
+
+        Table stable = window.getTable("senderTable");
+        assertTrue(stable.isEmpty());
+
+        Table rtable = window.getTable("receiverTable");
+        assertTrue(rtable.isEmpty());
+        
+        final File file = new File(
+        		System.getProperty("java.io.tmpdir")+
+        		File.separator + "mc_test_profile");
+
+        // Load Profile
+        WindowInterceptor
+        .init(
+        		window.getMenuBar().getMenu("File")
+        		.getSubMenu("Open Profile...").triggerClick()
+        )
+        .process(FileChooserHandler.init()
+		       		 .assertIsOpenDialog()
+		             .assertAcceptsFilesOnly()
+		             .select(file.toString())
+        )
+        .run();
+    }
+
+    /**
+     * Test invalid configurations
+     */
+    public void testInvalidConfigurations() throws Exception {
+        setAdapter(new MainClassAdapter(Controller.class, new String[0]));
+
+        // Retrieve the components
+        Window window = getMainWindow();
+
+        Table stable = window.getTable("senderTable");
+        assertTrue(stable.isEmpty());
+
+        Table rtable = window.getTable("receiverTable");
+        assertTrue(rtable.isEmpty());
+        
+        final File file = new File(
+        		System.getProperty("java.io.tmpdir")+
+        		File.separator + "mc_test_profile");
+
+        // Load Profile
+        WindowInterceptor
+        .init(
+        		window.getMenuBar().getMenu("File")
+        		.getSubMenu("Open Profile...").triggerClick()
+        )
+        .process(FileChooserHandler.init()
+		       		 .assertIsOpenDialog()
+		             .assertAcceptsFilesOnly()
+		             .select(file.toString())
+        )
+        .run();
+    }
+
+    /**
      * Test creating a Sender
      */
     @Test
