@@ -16,9 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.DataFormatException;
-
 import com.spam.mctool.controller.ErrorEvent;
-import com.spam.mctool.controller.ErrorEventManager;
 import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
 import com.spam.mctool.model.packet.AutoPacket;
 import com.spam.mctool.model.packet.Packet;
@@ -88,7 +86,7 @@ public final class ReceiverGroup extends MulticastStream {
 			asf = stpe.scheduleAtFixedRate(analyzer, statsInterval, statsInterval, TimeUnit.MILLISECONDS);
 		} catch(Exception e) {
 			eMan.reportErrorEvent(
-				new ErrorEvent(5, "Model.ReceiverGroup.activate.FatalNetworkError.text", "")
+				new ErrorEvent(5, "Model.Receiver.NetworkProblem.text", "Error Code: ReceiverGroup.activate.Socket")
 			);
 		}
 	}
@@ -144,21 +142,21 @@ public final class ReceiverGroup extends MulticastStream {
 			// What makes this socket here...
 			if(e.getMessage().equalsIgnoreCase("socket closed")) {
 				// Sis is mie totallie egal!
+				// happens when the socket closes and receiving thread is still listening
 			} else {
 				eMan.reportErrorEvent(
-						new ErrorEvent(5, "Model.ReceiverGroup.run.SocketException.text", "")
+						new ErrorEvent(5, "Model.Receiver.NetworkProblem.text", "Error Code: ReceiverGroup.run.Socket")
 				);
 			}
 		} catch (IOException e) {
-                        e.printStackTrace();
-                        //eMan.reportErrorEvent(
-			//	new ErrorEvent(5, "Model.ReceiverGroup.run.FatalNetworkError.text", "")
-			//);
+            eMan.reportErrorEvent(
+            		new ErrorEvent(5, "Model.Receiver.NetworkProblem.text", "Error Code: ReceiverGroup.run.IO")
+			);
 		} catch (DataFormatException dfe) {
 			faultyPackets++;
 		} catch(Throwable e) {
 			eMan.reportErrorEvent(
-				new ErrorEvent(5, "Model.ReceiverGroup.activate.UnknownSendingError.text", "")
+				new ErrorEvent(5, "Model.Receiver.NetworkProblem.text", "ErrorCode: ReceiverGroup.run.Unknown")
 			);
 		} finally {
 			if(state == State.ACTIVE) {
@@ -248,7 +246,11 @@ public final class ReceiverGroup extends MulticastStream {
 	// used to fire an event to all listeners
 	private void fireReceiverDataChangedEvent(ReceiverDataChangedEvent e) {
 		for(ReceiverDataChangeListener l : rdclListeners) {
-			l.dataChanged(e);
+			try {
+				l.dataChanged(e);
+			} catch (Throwable t) {
+				// Ramin handling
+			}
 		}
 	}
 	

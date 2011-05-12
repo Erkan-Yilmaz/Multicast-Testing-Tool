@@ -1,7 +1,5 @@
 package com.spam.mctool.model;
 
-import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -10,11 +8,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import com.spam.mctool.controller.Controller;
-import com.spam.mctool.controller.ErrorEvent;
-import com.spam.mctool.controller.ErrorEventManager;
 import com.spam.mctool.intermediates.OverallSenderStatisticsUpdatedEvent;
 import com.spam.mctool.intermediates.SenderAddedOrRemovedEvent;
+import com.spam.mctool.model.MulticastStream.AnalyzingBehaviour;
+import com.spam.mctool.model.MulticastStream.PacketType;
 
 public class SenderPool implements SenderManager {
 	// internals
@@ -22,7 +19,6 @@ public class SenderPool implements SenderManager {
 	private Set<Sender> senders = new HashSet<Sender>();
 	private List<SenderAddedOrRemovedListener> saorl;
 	private List<OverallSenderStatisticsUpdatedListener> statsListeners;
-	private ErrorEventManager eMan;
 	private int threadPoolSize = 5;
 	// statistics
 	private Runnable analyzer;
@@ -32,7 +28,6 @@ public class SenderPool implements SenderManager {
 	private long overallSendingPPS;
 	
 	public SenderPool() {
-		this.eMan = Controller.getController();
 		this.saorl = new LinkedList<SenderAddedOrRemovedListener>();
 		this.statsListeners = new LinkedList<OverallSenderStatisticsUpdatedListener>();
 		analyzer = new OverallSenderStatisticAnalyzer();
@@ -41,110 +36,53 @@ public class SenderPool implements SenderManager {
 	}
 
 	public Sender create(Map<String, String> params) throws IllegalArgumentException {
-		Sender sender;
-		InetAddress group;
-		Integer port = 0;
-		int ttl = 0;
-		int pps = 0;
-		int psize = 0;
-		String payload;
-		Sender.PacketType ptype;
-		NetworkInterface ninf = null;
-		MulticastStream.AnalyzingBehaviour abeh;
+		boolean checksOk = true;
+		Sender sender = new Sender(this.stfe);
 		
-		// handle the group
-		group = MulticastStream.getMulticastGroupByName(params.get("group"));
-		if(null == group) {
-			eMan.reportErrorEvent(
-				new ErrorEvent(4, "Model.SenderPool.create.InvalidMulticastGroup.text", params.get("group"))
-			);
-			return null;
-		}
-		
-		// handle the network interface
-		ninf = MulticastStream.getNetworkInterfaceByAddress(params.get("ninf"));
-		if(null == ninf) {
-			eMan.reportErrorEvent(
-				new ErrorEvent(4, "Model.SenderPool.create.FatalNetworkError.text", "")
-			);
-			return null;
-		}
-		
-		// handle the port
-		port = MulticastStream.getPortByName(params.get("port"));
-		if(null == port) {
-			eMan.reportErrorEvent(
-				new ErrorEvent(4, "Model.SenderPool.create.InvalidPort.text", "")
-			);
-			return null;
-		}
-		
-		// handle time to live
-		try {
-			ttl = new Integer(params.get("ttl"));
-			if((ttl<0) || (ttl>255)) {
-				throw new Exception();
-			}
-		} catch(Exception e) {
-			eMan.reportErrorEvent(
-				new ErrorEvent(4, "Model.SenderPool.create.InvalidTtl.text", "")
-			);
-			return null;
-		}
-		
-		// handle packet rate
-		try {
-			pps = new Integer(params.get("pps"));
-			if((pps<=0) || (pps>1000)) {
-				throw new Exception();
-			}
-		} catch(Exception e) {
-			eMan.reportErrorEvent(
-				new ErrorEvent(4, "Model.SenderPool.create.InvalidPps.text", "")
-			);
-			return null;
-		}
-		
-		// handle packet size
-		try {
-			psize = new Integer(params.get("psize"));
-			if((psize<0) || (psize>9000)) {
-				throw new Exception();
-			}
-		} catch(Exception e) {
-			eMan.reportErrorEvent(
-				new ErrorEvent(4, "Model.SenderPool.create.InvalidPacketSize.text", "Corrected to: "+psize)
-			);
-		}
-		
-		// handle payload
-		payload = params.get("payload");
-		
-		// handle packet type
-		ptype = MulticastStream.PacketType.getByIdentifier(
-			params.get("ptype")
+		checksOk &= sender.setGroup(
+			params.get("group")
+		);
+		checksOk &= sender.setPort(
+			params.get("port")
+		);
+		checksOk &= sender.setNetworkInterface(
+			params.get("ninf")
+		);		
+		checksOk &= sender.setSenderConfiguredPacketRate(
+			params.get("pps")
+		);
+		checksOk &= sender.setTtl(
+			params.get("ttl")
+		);
+		checksOk &= sender.setPacketSize(
+			params.get("psize")
 		);
 		
-		// handle analyzing behaviour
-		abeh = MulticastStream.AnalyzingBehaviour.getByIdentifier(
-			params.get("abeh")
+		sender.setAnalyzingBehaviour(
+			AnalyzingBehaviour.getByIdentifier(
+				params.get("abeh")
+			)
 		);
 		
-		sender = new Sender(this.stfe);
-		sender.setGroup(group);
-		sender.setPort(port);
-		sender.setTtl(ttl);
-		sender.setSenderConfiguredPacketRate(pps);
-		sender.setPacketSize(psize);
-		sender.setPayloadFromString(payload);
-		sender.setpType(ptype);
-		sender.setNetworkInterface(ninf);
-		sender.setAnalyzingBehaviour(abeh);
+		sender.setpType(
+			PacketType.getByIdentifier(
+				params.get("ptype")
+			)
+		);
+		
+		sender.setPayloadFromString(
+			params.get("payload")
+		);
+		
 		sender.setStatsInterval(statsInterval);
 		
-		this.senders.add(sender);
-		this.fireSenderAddedEvent(sender);
-		return sender;
+		if(checksOk) {
+			this.senders.add(sender);
+			this.fireSenderAddedEvent(sender);
+			return sender;
+		} else {
+			return null;
+		}
 	}
 
 	public void remove(Sender sender) {
