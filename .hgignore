@@ -18,3 +18,4 @@ private.xml
 ^\.settings(/.*)?$
 RecentProfiles.xml
 testprofile
+log.txt

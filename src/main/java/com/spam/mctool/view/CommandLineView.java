@@ -33,7 +33,6 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
 	private PrintStream out = System.out;
 	private BufferedWriter log;
 	private Controller c;
-	private Date date;
 	private Date lastUpdate = null;
 	private java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle");
 	
@@ -63,40 +62,40 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
 			e.printStackTrace();
 		}
         
-        logger.info(bundle.getString(("CommandLine.LoggerInitialized.text"))+" "+new Date());
+        logger.info(bundle.getString("CommandLine.LoggerInitialized.text")+" "+new Date());
     }
 
 	public void profileChanged(ProfileChangeEvent e) {
 		out.println(bundle.getString("CommandLine.ProfileChanged.text"));
 		
-		logger.info(bundle.getString(("CommandLine.ProfileChanged.text")));
+		logger.info(bundle.getString("CommandLine.ProfileChanged.text"));
 			
 	}
 
 	public void receiverGroupAdded(ReceiverAddedOrRemovedEvent e) {
 		out.println(bundle.getString("CommandLine.ReceiverGroupAdded.text") + e.getSource().getGroup().toString());
-		logger.info(bundle.getString(("CommandLine.ReceiverGroupAdded.text") + e.getSource().getGroup().toString()));
+		logger.info(bundle.getString("CommandLine.ReceiverGroupAdded.text") + e.getSource().getGroup().toString());
 	
 	}
 
 	public void receiverGroupRemoved(ReceiverAddedOrRemovedEvent e) {
 		out.println(bundle.getString("CommandLine.ReceiverGroupRemoved.text") + e.getSource().getGroup().toString());
 		
-		logger.info(bundle.getString(("CommandLine.ReceiverGroupRemoved.text") + e.getSource().getGroup().toString()));
+		logger.info(bundle.getString("CommandLine.ReceiverGroupRemoved.text") + e.getSource().getGroup().toString());
 			
 	}
 
 	public void senderAdded(SenderAddedOrRemovedEvent e) {
 		out.println(bundle.getString("CommandLine.SenderAdded.text") + "ID:" + e.getSource().getSenderId());
 		
-		logger.info(bundle.getString(("CommandLine.SenderAdded.text") + "ID:" + e.getSource().getSenderId()));
+		logger.info(bundle.getString("CommandLine.SenderAdded.text") + "ID:" + e.getSource().getSenderId());
 		
 	}
 
 	public void senderRemoved(SenderAddedOrRemovedEvent e) {
 		out.println(bundle.getString("CommandLine.SenderRemoved.text")  + "ID:" + e.getSource().getSenderId());
 		
-		logger.info(bundle.getString(("CommandLine.SenderRemoved.text")  + "ID:" + e.getSource().getSenderId()));
+		logger.info(bundle.getString("CommandLine.SenderRemoved.text")  + "ID:" + e.getSource().getSenderId());
 		
 	}
 	
@@ -109,7 +108,7 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
         c.removeOverallReceiverStatisticsUpdatedListener(this);
         c.removeOverallSenderStatisticsUpdatedListener(this);
 		
-        logger.info(bundle.getString(("CommandLine.Kill.text")) + new Date());
+        logger.info(bundle.getString("CommandLine.Kill.text") + new Date());
         
         try {
 			log.close();
@@ -121,7 +120,7 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
 
 	@Override
 	public void newErrorEvent(ErrorEvent e) {
-		date = new Date();
+		Date date = new Date();
 		
 		if(e.getErrorLevel() == ErrorEventManager.WARNING)
 			logger.info(date.toString() + " - " + bundle.getString("CommandLine.Warning.text") + e.getCompleteMessage());
@@ -130,14 +129,25 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
 		out.println(date.toString() + " - " + bundle.getString("CommandLine.Error.text") + e.getCompleteMessage());
 	}
 
+        /**
+         * {@inheritDoc }
+         *
+         * <p>This implementation will print all internal exceptions' stack traces.
+         *    This is because this method will be called by the model's threading
+         *    framework which conveniently "swallows" all exceptions.</p>
+         *
+         * @param e
+         */
 	@Override
 	public void overallSenderStatisticsUpdated(
 			OverallSenderStatisticsUpdatedEvent e) {
+            try {
 		if(lastUpdate == null){
 			lastUpdate = new Date();
 		}
 		
 		if(lastUpdate.getTime() > 5.*60.*1000){
+                        Date date = new Date();
 			out.println(bundle.getString("CommandLine.SenderStatistics.text") + date.toString() + ":\n" );
 			out.println(bundle.getString("CommandLine.SentPackets.text") + e.getSource().getOverallSentPackets() + "\n");
 			out.println(bundle.getString("CommandLine.SentPacketsPerSec.text") + e.getSource().getOverallSentPPS() + "\n");
@@ -147,18 +157,31 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
 			logger.info(bundle.getString("CommandLine.SentPacketsPerSec.text") + e.getSource().getOverallSentPPS() + "\n");
 			
 		}
-		
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
 		
 	}
 
+        /**
+         * {@inheritDoc }
+         *
+         * <p>This implementation will print all internal exceptions' stack traces.
+         *    This is because this method will be called by the model's threading
+         *    framework which conveniently "swallows" all exceptions.</p>
+         *
+         * @param e
+         */
 	@Override
 	public void overallReceiverStatisticsUpdated(
 			OverallReceiverStatisticsUpdatedEvent e) {
+            try {
 		if(lastUpdate == null){
 			lastUpdate = new Date();
 		}
 		
 		if(lastUpdate.getTime() > 5.*60.*1000){
+                        Date date = new Date();
 			out.println(bundle.getString("CommandLine.ReceiverStatistics.text") + date.toString() + ":\n" );
 			out.println(bundle.getString("CommandLine.ReceivedPackages.text") + e.getSource().getOverallReceivedPackets() + "\n");
 			out.println(bundle.getString("CommandLine.FaultyPackets.text") + e.getSource().getOverallFaultyPackets() + "\n");
@@ -171,7 +194,9 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
 			logger.info(bundle.getString("CommandLine.LostPackages.text") + e.getSource().getOverallLostPackets() + "\n");
 			logger.info(bundle.getString("CommandLine.ReceivedPaketsPerSec.text") + e.getSource().getOverallReceivedPPS() + "\n");
 		}
-		
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
 	}
 
 }
