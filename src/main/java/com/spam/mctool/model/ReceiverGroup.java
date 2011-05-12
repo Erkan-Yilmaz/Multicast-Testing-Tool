@@ -140,6 +140,15 @@ public final class ReceiverGroup extends MulticastStream {
 			// add the packet container
 			receivers.get(p.getSenderId()).addPacketContainer(con);
 			// schedule the next fetch
+		} catch(SocketException e) {
+			// What makes this socket here...
+			if(e.getMessage().equalsIgnoreCase("socket closed")) {
+				// Sis is mie totallie egal!
+			} else {
+				eMan.reportErrorEvent(
+						new ErrorEvent(5, "Model.ReceiverGroup.run.SocketException.text", "")
+				);
+			}
 		} catch (IOException e) {
                         e.printStackTrace();
                         //eMan.reportErrorEvent(

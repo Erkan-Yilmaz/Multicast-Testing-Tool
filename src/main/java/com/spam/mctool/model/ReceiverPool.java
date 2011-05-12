@@ -55,6 +55,7 @@ public class ReceiverPool implements ReceiverManager {
 		MulticastStream.AnalyzingBehaviour abeh = null;
 		
 		// handle the multicast group
+		/*
 		group = MulticastStream.getMulticastGroupByName(params.get("group"));
 		if(null == group) {
 			eMan.reportErrorEvent(
@@ -80,22 +81,32 @@ public class ReceiverPool implements ReceiverManager {
 			);
 			return null;
 		}
+		*/
 		
 		// handle analyzing behaviour
-		abeh = MulticastStream.AnalyzingBehaviour.getByIdentifier(
+		boolean checks = true;
+		ReceiverGroup rec = new ReceiverGroup(stpe);
+		checks &= rec.setGroup(
+			params.get("group")
+		);
+		checks &= rec.setPort(
+			params.get("port")
+		);
+		checks &= rec.setNetworkInterface(
+			params.get("ninf")
+		);
+		checks &= rec.setAnalyzingBehaviour(
 			params.get("abeh")
 		);
-		
-		ReceiverGroup rec = new ReceiverGroup(stpe);
-		rec.setGroup(group);
-		rec.setPort(port);
-		rec.setNetworkInterface(ninf);
-		rec.setAnalyzingBehaviour(abeh);
 		rec.setStatsInterval(statsInterval);
 		receiverGroups.add(rec);
 		fireReceiverAddedEvent(rec);
 	
-		return rec;
+		if(checks) {
+			return rec;
+		} else {
+			return null;
+		}
 	}
 
 	public Collection<ReceiverGroup> getReceiverGroups() {
