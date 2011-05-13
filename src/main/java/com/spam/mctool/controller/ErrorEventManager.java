@@ -8,14 +8,14 @@ public interface ErrorEventManager {
      * @param errorLevel If <0 it is set to 0, if >5 it is set to 5.
      * @throws IllegalArgumentException() if the listener l is null.
      */
-    public void addErrorEventListener(com.spam.mctool.controller.ErrorEventListener l, int errorLevel);
+    void addErrorEventListener(com.spam.mctool.controller.ErrorEventListener l, int errorLevel);
 
     /**
      * This method removes a listener from the ErrorEventManager observers list.
      * @param l The listener to be removed. Must not be null
      * @throws IllegalArgumentException() if the listener l is null.
      */
-    public void removeErrorEventListener(com.spam.mctool.controller.ErrorEventListener l);
+    void removeErrorEventListener(com.spam.mctool.controller.ErrorEventListener l);
 
     /**
      * This method is used to report an ErrorEvent to the ErrorEventManager
@@ -24,15 +24,15 @@ public interface ErrorEventManager {
      * @param e The ErrorEvent to be reported. Must not be null.
      * @throws IllegalArgumentException() if the ErrorEvent e is null.
      */
-    public void reportErrorEvent(ErrorEvent e);
+    void reportErrorEvent(ErrorEvent e);
 
     /**
      * A mapping of the valid error levels to constants.
      */
-    public static final int DEBUG = 0;
-    public static final int WARNING = 1;
-    public static final int SEVERE = 2;
-    public static final int ERROR = 3;
-    public static final int CRITICAL = 4;
-    public static final int FATAL = 5;
+    static final int DEBUG = 0;
+    static final int WARNING = 1;
+    static final int SEVERE = 2;
+    static final int ERROR = 3;
+    static final int CRITICAL = 4;
+    static final int FATAL = 5;
 }

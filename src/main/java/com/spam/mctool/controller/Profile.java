@@ -2,7 +2,7 @@ package com.spam.mctool.controller;
 
 import java.io.File;
 
-final public class Profile {
+public final class Profile {
 	/**
 	 * The profile name.
 	 */

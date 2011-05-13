@@ -1,13 +1,13 @@
 package com.spam.mctool.controller;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import com.thoughtworks.xstream.XStream;
 
-public class RecentProfiles {
+public final class RecentProfiles {
+
+    private int maxProfiles = 10;
     /**
      * The list storing recent profiles.
      */
@@ -34,7 +34,7 @@ public class RecentProfiles {
      */
     public void setProfileList(List<Profile> profileList) {
         if(profileList ==null){
-        	throw new IllegalArgumentException();
+            throw new IllegalArgumentException();
         }
         this.profileList = profileList;
     }
@@ -51,16 +51,16 @@ public class RecentProfiles {
             throw new IllegalArgumentException();
         }
         //make a local copy of the list
-		ArrayList<Profile> profileListCopy = new ArrayList<Profile>(profileList);
-		//Check in each loaded recent profile
+        //ArrayList<Profile> profileListCopy = new ArrayList<Profile>(profileList);
+        //Check in each loaded recent profile
         profileList.remove(profile);
         //Add the new profile to the top
         this.profileList.add(0, profile);
         //Test if there are more then 10 elements in the list
-        if(this.profileList.size() > 10){
+        if(this.profileList.size() > maxProfiles){
             //delete the 11. entry until the size equals 10
-            while(this.profileList.size() > 10){
-                this.profileList.remove(10);
+            while(this.profileList.size() > maxProfiles){
+                this.profileList.remove(maxProfiles);
             }
         }
     }
@@ -114,20 +114,20 @@ public class RecentProfiles {
         return foundProfile;
     }
 
-	/**
-	 * This function will scan through the recent profile list, removing all profiles which can't be found.
-	 */
-	private void removeDeletedProfiles(){
-		if(profileList != null){
-			//make a local copy of the list
-			ArrayList<Profile> profileListCopy = new ArrayList<Profile>(profileList);
-			//Check in each loaded recent profile
-			for(Profile p:profileListCopy){
-				//Remove the file if it doesn't exist
-				if(!p.getPath().exists()){
-					profileList.remove(p);
-				}
-			}
-		}
-	}
+    /**
+     * This function will scan through the recent profile list, removing all profiles which can't be found.
+     */
+    private void removeDeletedProfiles(){
+        if(profileList != null){
+            //make a local copy of the list
+            ArrayList<Profile> profileListCopy = new ArrayList<Profile>(profileList);
+            //Check in each loaded recent profile
+            for(Profile p:profileListCopy){
+                //Remove the file if it doesn't exist
+                if(!p.getPath().exists()){
+                    profileList.remove(p);
+                }
+            }
+        }
+    }
 }

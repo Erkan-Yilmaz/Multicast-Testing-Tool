@@ -22,7 +22,7 @@ public interface StreamManager {
 	 * @param params Properties for the new created sender. Look in moddocs for possible values
 	 * @return the newly created sender.
 	 */
-	public com.spam.mctool.model.Sender addSender(java.util.Map<String, String> params);
+	com.spam.mctool.model.Sender addSender(java.util.Map<String, String> params);
 
 	//TODO change uml to map paramaters
 	/**
@@ -30,26 +30,26 @@ public interface StreamManager {
 	 * @param params Properties for the new created receiver. Look in moddocs for possible values
 	 * @return the newly created receiver.
 	 */
-	public com.spam.mctool.model.ReceiverGroup addReceiverGroup(java.util.Map<String, String> params);
+	com.spam.mctool.model.ReceiverGroup addReceiverGroup(java.util.Map<String, String> params);
 
 	//TODO are individual remove methods for senders and receivers really necessary
 	/**
 	 * Remove a set of streams from the model layer.
 	 * @param streams streams to be removed from the model layer.
 	 */
-	public void removeStreams(java.util.Collection <? extends com.spam.mctool.model.MulticastStream> streams);
+	void removeStreams(java.util.Collection <? extends com.spam.mctool.model.MulticastStream> streams);
 
 	/**
 	 * Start a collection of streams.
 	 * @param streams streams to be started.
 	 */
-	public void startStreams(java.util.Collection<? extends com.spam.mctool.model.MulticastStream> streams);
+	void startStreams(java.util.Collection<? extends com.spam.mctool.model.MulticastStream> streams);
 
 	/**
 	 * Stop a collection of streams.
 	 * @param streams streams to be stopped.
 	 */
-	public void stopStreams(java.util.Collection<? extends com.spam.mctool.model.MulticastStream> streams);
+	void stopStreams(java.util.Collection<? extends com.spam.mctool.model.MulticastStream> streams);
 
 	/**
 	 * @return collection of all senders in the pool
