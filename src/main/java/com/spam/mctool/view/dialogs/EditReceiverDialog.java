@@ -11,6 +11,7 @@
 
 package com.spam.mctool.view.dialogs;
 
+import com.spam.mctool.model.MulticastStream.AnalyzingBehaviour;
 import com.spam.mctool.model.ReceiverGroup;
 import com.spam.mctool.view.main.MainFrame;
 import java.net.Inet4Address;
@@ -250,6 +251,7 @@ public class EditReceiverDialog extends javax.swing.JDialog {
             }
         }
         else{
+            this.receiverGroup.setAnalyzingBehaviour(AnalyzingBehaviour.getByIdentifier(this.analyzingBehaviourMap.get(this.analyzingBehaviourCombo.getSelectedItem().toString())));
             //activate/deactivate
             this.receiverGroup.deactivate();
             if(this.activateBox.isSelected()){
