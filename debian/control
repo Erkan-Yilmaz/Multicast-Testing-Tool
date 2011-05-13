@@ -1,0 +1,10 @@
+Package: mctool
+Version: 1.0
+Section: java
+Priority: optional
+Architecture: all
+Essential: no
+Depends: 
+Maintainer: Konstantin Weitz [konnew@gmx.de]
+Installed-Size: 3277
+Description: A tool to test the multicast functionality of your network
