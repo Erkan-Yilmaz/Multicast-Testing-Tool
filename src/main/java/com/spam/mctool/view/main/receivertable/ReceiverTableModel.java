@@ -11,8 +11,11 @@ import com.spam.mctool.model.Receiver;
 import com.spam.mctool.model.ReceiverGroup;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
@@ -45,14 +48,25 @@ public class ReceiverTableModel extends AbstractTableModel implements MouseListe
             Receiver receiver = rcvRow.getReceiver();
             ReceiverTableColumn[] cols = ReceiverTableColumn.values();
             ReceiverTableColumn   col  = cols[columnIndex];
+            InetAddress senderAddress;
+            String      hostAddress;
             try {
                 switch(col) {
                     case STATUS: return receiver.isAlive();
                     case SENDER_ID: return receiver.getSenderId();
-                    case SENDER_IP: return receiver.getSenderAddress().getHostAddress();
+                    case SENDER_IP:
+                        // I'm a Banana, also dreh den Swag auf!
+                        while((senderAddress = receiver.getSenderAddress()) == null) {
+                            try {
+                                Thread.sleep(5);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(ReceiverTableModel.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                        return senderAddress.getHostAddress();
                     case SENDER_CONF_PPS: return receiver.getSenderConfiguredPPS();
                     case AVG_PPS: return receiver.getAvgPPS();
-                    case LOST_PACKETS: return receiver.getLostPackets();
+                    case LOST_PACKETS: return receiver.getLostPackets() + " ‰";
                     case PAYLOAD: return receiver.getPayloadAsString();
                     default:
                         throw new RuntimeException("Illegal columnIndex: " + columnIndex);

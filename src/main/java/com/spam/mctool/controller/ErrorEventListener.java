@@ -8,6 +8,6 @@ public interface ErrorEventListener {
      * ErrorEvents with an errorLevel of 0 should only be reported as debug messages.
      * @param e The error event that has bee reported to the manager.
      */
-    public void newErrorEvent(ErrorEvent e);
+    void newErrorEvent(ErrorEvent e);
 
 }
