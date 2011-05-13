@@ -75,4 +75,9 @@ public interface SenderManager {
 	 */
 	public long getOverallSentPPS();
 	
+	/**
+	 * 
+	 */
+	public void setThreadPoolSize(int size);
+	
 }

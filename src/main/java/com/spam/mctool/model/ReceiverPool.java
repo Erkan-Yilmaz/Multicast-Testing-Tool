@@ -167,6 +167,15 @@ public class ReceiverPool implements ReceiverManager {
 			return overallLostPackets;
 		}
 	}
+	
+	/**
+	 * @return percentual packet losing rate
+	 */
+	public double getLostPacketsPermille() {
+		synchronized(statsLock) {
+			return (double)overallLostPackets/(double)overallReceivedPackets*1000.0;
+		}
+	}
 
 	/**
 	 * @return sum of faulty packets of all active senders
@@ -187,6 +196,12 @@ public class ReceiverPool implements ReceiverManager {
 	public void removeOverallReceiverStatisticsUpdatedListener(
 			OverallReceiverStatisticsUpdatedListener l) {
 		statsListeners.remove(l);
+	}
+	
+	@Override
+	public void setThreadPoolSize(int size) {
+		threadPoolSize = size;
+		stpe.setCorePoolSize(threadPoolSize);
 	}
 
 }

@@ -187,4 +187,10 @@ public class SenderPool implements SenderManager {
 		statsListeners.remove(l);
 	}
 
+	@Override
+	public void setThreadPoolSize(int size) {
+		threadPoolSize = size;
+		stfe.setCorePoolSize(threadPoolSize);
+	}
+
 }
