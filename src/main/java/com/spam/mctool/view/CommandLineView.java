@@ -26,7 +26,8 @@ import com.spam.mctool.model.SenderAddedOrRemovedListener;
 public class CommandLineView implements MctoolView, ProfileChangeListener, ReceiverAddedOrRemovedListener, SenderAddedOrRemovedListener, ErrorEventListener, OverallReceiverStatisticsUpdatedListener, OverallSenderStatisticsUpdatedListener {
 	private int offset = 10*1000;
 	private Controller c;
-	private Date lastUpdate = null;
+	private Date lastUpdateSnd = null;
+	private Date lastUpdateRcv = null;
 	private java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle");
 	
 	private Logger logger;
@@ -77,7 +78,7 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
         c.addOverallSenderStatisticsUpdatedListener(this);
         
         //inform that tool was started
-        logger.info(bundle.getString("CommandLine.LoggerInitialized.text")+" "+new Date());
+        logger.info(new Date() + ": " + bundle.getString("CommandLine.LoggerInitialized.text"));
     }
 
     /**
@@ -138,7 +139,7 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
         c.removeOverallSenderStatisticsUpdatedListener(this);
 		
         //inform that tool stopped
-        logger.info(bundle.getString("CommandLine.Kill.text") + new Date());
+        logger.info(new Date() + ":" + bundle.getString("CommandLine.Kill.text"));
         
 	}
 
@@ -163,19 +164,22 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
 	public void overallSenderStatisticsUpdated(
 			OverallSenderStatisticsUpdatedEvent e) {
             
-		if(lastUpdate == null){
-			lastUpdate = new Date();
+		if(lastUpdateSnd == null){
+			lastUpdateSnd = new Date();
 		}
 		
-		if(new Date().getTime() - lastUpdate.getTime() > offset){
-            Date date = new Date();
+		if(new Date().getTime() - lastUpdateSnd.getTime() > offset){
+            
+			if(e.getSource().getOverallSentPackets() != 0)
+			{
+				Date date = new Date();
 			
-			logger.info(
-					bundle.getString("CommandLine.SenderStatistics.text") + date.toString() + "\n\n" + 
-					bundle.getString("CommandLine.SentPackets.text") + e.getSource().getOverallSentPackets() + "\n" +
-					bundle.getString("CommandLine.SentPacketsPerSec.text") + e.getSource().getOverallSentPPS() + "\n");
-			lastUpdate = new Date();
-			
+				logger.info(
+						bundle.getString("CommandLine.SenderStatistics.text") + date.toString() + "\r\n\r\n" + 
+						bundle.getString("CommandLine.SentPackets.text") + e.getSource().getOverallSentPackets() + "\r\n" +
+						bundle.getString("CommandLine.SentPacketsPerSec.text") + e.getSource().getOverallSentPPS() + "\r\n");
+				lastUpdateSnd = new Date();
+			}
 		}
             
 		
@@ -188,21 +192,24 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
 	public void overallReceiverStatisticsUpdated(
 			OverallReceiverStatisticsUpdatedEvent e) {
             
-		if(lastUpdate == null){
-			lastUpdate = new Date();
+		if(lastUpdateRcv == null){
+			lastUpdateRcv = new Date();
 		}
 		
-		if(new Date().getTime() - lastUpdate.getTime() > offset){
+		if(new Date().getTime() - lastUpdateRcv.getTime() > offset){
             
-			Date date = new Date();
+			if(e.getSource().getOverallReceivedPackets() != 0)
+			{
+				Date date = new Date();
 
-			logger.info(
-					bundle.getString("CommandLine.ReceiverStatistics.text") + date.toString() + ":\n\n" +
-					bundle.getString("CommandLine.ReceivedPackages.text") + e.getSource().getOverallReceivedPackets() + "\n" +
-					bundle.getString("CommandLine.FaultyPackets.text") + e.getSource().getOverallFaultyPackets() + "\n" +
-					bundle.getString("CommandLine.LostPackages.text") + e.getSource().getOverallLostPackets() + "\n" +
-					bundle.getString("CommandLine.ReceivedPaketsPerSec.text") + e.getSource().getOverallReceivedPPS());
-			lastUpdate = new Date();
+				logger.info(
+						bundle.getString("CommandLine.ReceiverStatistics.text") + date.toString() + ":\r\n\r\n" +
+						bundle.getString("CommandLine.ReceivedPackages.text") + e.getSource().getOverallReceivedPackets() + "\r\n" +
+						bundle.getString("CommandLine.FaultyPackets.text") + e.getSource().getOverallFaultyPackets() + "\r\n" +
+						bundle.getString("CommandLine.LostPackages.text") + e.getSource().getOverallLostPackets() + "\r\n" +
+						bundle.getString("CommandLine.ReceivedPaketsPerSec.text") + e.getSource().getOverallReceivedPPS());
+				lastUpdateRcv = new Date();
+			}
 		}
 
 	}
