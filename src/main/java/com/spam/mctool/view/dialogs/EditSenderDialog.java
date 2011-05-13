@@ -11,6 +11,7 @@
 
 package com.spam.mctool.view.dialogs;
 
+import com.spam.mctool.model.MulticastStream.AnalyzingBehaviour;
 import com.spam.mctool.model.Sender;
 import com.spam.mctool.view.main.MainFrame;
 import java.net.InetAddress;
@@ -113,9 +114,9 @@ public class EditSenderDialog extends javax.swing.JDialog {
         packetStyleLabel = new javax.swing.JLabel();
         packetStyleCombo = new javax.swing.JComboBox();
         groupField = new javax.swing.JFormattedTextField();
-        packetRateField = new javax.swing.JSpinner();
-        packetSizeField = new javax.swing.JSpinner();
-        ttlField = new javax.swing.JSpinner();
+        packetRateField = new javax.swing.JTextField();
+        packetSizeField = new javax.swing.JTextField();
+        ttlField = new javax.swing.JTextField();
         analyzingBehaviourLabel = new javax.swing.JLabel();
         analyzingBehaviourCombo = new javax.swing.JComboBox();
         jSeparator1 = new javax.swing.JSeparator();
@@ -340,7 +341,7 @@ public class EditSenderDialog extends javax.swing.JDialog {
      *
      * @param evt Click-Event
      */
-    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {                                         
         Map<String,String> senderMap = new HashMap<String, String>();
 
         if(this.sender == null){
@@ -348,9 +349,9 @@ public class EditSenderDialog extends javax.swing.JDialog {
             // create map and pass it to parent
             senderMap.put("group", this.groupField.getText());
             senderMap.put("port", this.portField.getValue().toString());
-            senderMap.put("pps", this.packetRateField.getValue().toString());
-            senderMap.put("psize", this.packetSizeField.getValue().toString());
-            senderMap.put("ttl", this.ttlField.getValue().toString());
+            senderMap.put("pps", this.packetRateField.getText());
+            senderMap.put("psize", this.packetSizeField.getText());
+            senderMap.put("ttl", this.ttlField.getText());
             senderMap.put("payload", this.dataField.getText());
             senderMap.put("ptype", this.packageMap.get(this.packetStyleCombo.getSelectedItem().toString()));
             senderMap.put("ninf",this.interfaceMap.get(this.interfaceCombo.getSelectedItem().toString()));
@@ -361,19 +362,32 @@ public class EditSenderDialog extends javax.swing.JDialog {
             }
         }
         else{
+
+      
+
             //if sender reference exists, change the values
-            this.sender.setSenderConfiguredPacketRate(Integer.parseInt(this.packetRateField.getValue().toString()));
-            this.sender.setPacketSize(Integer.parseInt(this.packetSizeField.getValue().toString()));
-            this.sender.setTtl(Byte.parseByte(this.ttlField.getValue().toString()));
-            //deactivate sender and according to the settings reactivate it to change values on running stream
-            this.sender.deactivate();
-            if(this.activateBox.isSelected()){
-                this.sender.activate();
+            try{
+                if(this.sender.setSenderConfiguredPacketRate(Integer.parseInt(this.packetRateField.getText())) &&
+                   this.sender.setPacketSize(Integer.parseInt(this.packetSizeField.getText())) &&
+                   this.sender.setTtl(Integer.parseInt(this.ttlField.getText()))){
+
+                    this.sender.setAnalyzingBehaviour(AnalyzingBehaviour.getByIdentifier(this.analyzingBehaviourMap.get(this.analyzingBehaviourCombo.getSelectedItem().toString())));
+                    //deactivate sender and according to the settings reactivate it to change values on running stream
+                    this.sender.deactivate();
+                    if(this.activateBox.isSelected()){
+                        this.sender.activate();
+                    }
+
+                    this.dispose();
+
+                }
+            }
+            catch(NumberFormatException e){
+                //In case of an invalid value for TTL, PacketRate and PacketSize, keep the editdialog running
             }
 
-            this.dispose();
         }       
-}//GEN-LAST:event_okButtonActionPerformed
+}                                        
 
     /**
      * Closes the dialog
@@ -395,9 +409,9 @@ public class EditSenderDialog extends javax.swing.JDialog {
         this.groupField.setText(this.sender.getGroup().getHostAddress());
         this.portField.setValue(this.sender.getPort());
         this.dataField.setText(this.sender.getPayloadAsString());
-        this.packetRateField.setValue(this.sender.getSenderConfiguredPacketRate());
-        this.packetSizeField.setValue(this.sender.getPacketSize());
-        this.ttlField.setValue(this.sender.getTtl());
+        this.packetRateField.setText(Integer.toString(this.sender.getSenderConfiguredPacketRate()));
+        this.packetSizeField.setText(Integer.toString(this.sender.getPacketSize()));
+        this.ttlField.setText(Integer.toString(this.sender.getTtl()));
         this.packetStyleCombo.setSelectedItem(this.sender.getpType().getDisplayName());
 
         //iterate over all networkinterface addresses to set the value from the sender
@@ -485,11 +499,11 @@ public class EditSenderDialog extends javax.swing.JDialog {
         //default text
         this.dataField.setText("Default");
         //default packetRate
-        this.packetRateField.setValue(10);
+        this.packetRateField.setText("10");
         //default packetSize
-        this.packetSizeField.setValue(200);
+        this.packetSizeField.setText("200");
         //default timeToLive
-        this.ttlField.setValue(32);
+        this.ttlField.setText("32");
         //default packetStyle
         this.packetStyleCombo.setSelectedItem("Spam Packet Format");
     }
@@ -535,15 +549,15 @@ public class EditSenderDialog extends javax.swing.JDialog {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JButton okButton;
-    private javax.swing.JSpinner packetRateField;
+    private javax.swing.JTextField packetRateField;
     private javax.swing.JLabel packetRateLabel;
-    private javax.swing.JSpinner packetSizeField;
+    private javax.swing.JTextField packetSizeField;
     private javax.swing.JLabel packetSizeLabel;
     private javax.swing.JComboBox packetStyleCombo;
     private javax.swing.JLabel packetStyleLabel;
     private javax.swing.JSpinner portField;
     private javax.swing.JLabel portLabel;
-    private javax.swing.JSpinner ttlField;
+    private javax.swing.JTextField ttlField;
     private javax.swing.JLabel ttlLabel;
     // End of variables declaration//GEN-END:variables
 

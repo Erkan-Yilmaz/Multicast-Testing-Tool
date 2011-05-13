@@ -246,6 +246,11 @@ public final class ReceiverGroup extends MulticastStream {
 	// used to fire an event to all listeners
 	private void fireReceiverDataChangedEvent(ReceiverDataChangedEvent e) {
 		for(ReceiverDataChangeListener l : rdclListeners) {
+			if(!this.isActive()) {
+				for(Receiver r : receivers.values()) {
+					r.setAlive(false);
+				}
+			}
 			try {
 				l.dataChanged(e);
 			} catch (Throwable t) {
