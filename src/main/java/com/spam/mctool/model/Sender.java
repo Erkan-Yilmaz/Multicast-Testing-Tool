@@ -86,7 +86,7 @@ public class Sender extends MulticastStream {
 			state = State.ACTIVE;
 		} catch (IOException e) {
 			eMan.reportErrorEvent(
-				new ErrorEvent(5, "Model.Sender.activate.SocketProblem", "")
+				new ErrorEvent(5, "Model.Multicast.FatalNetworkError.text", e.getMessage())
 			);
 		}
 	}

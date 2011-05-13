@@ -27,7 +27,7 @@ public class Receiver {
 	private long lastPacketNo = 0;
 	// statistics
 	private Boolean statsLock = new Boolean(false);
-	private int maxDelay = 0;
+	private int maxDelay = Integer.MIN_VALUE;
 	private long receivedPackets = 0;
 	private long lostPackets = 0;
 	private long senderConfiguredPPS = 0;
@@ -298,7 +298,7 @@ public class Receiver {
 	 */
 	public int getMaxDelay() {
 		synchronized (statsLock) {
-			return maxDelay;
+			return (maxDelay>=0) ? maxDelay : 0;
 		}
 	}
 
