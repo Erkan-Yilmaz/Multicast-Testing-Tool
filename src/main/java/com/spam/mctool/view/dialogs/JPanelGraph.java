@@ -3,6 +3,7 @@ package com.spam.mctool.view.dialogs;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * UI Component for drawing a graph
@@ -11,8 +12,9 @@ import java.util.ArrayList;
  */
 public class JPanelGraph extends javax.swing.JPanel {
 
-    ArrayList<Integer> list = new ArrayList<Integer>();
-    int maxPacketRate = 10;
+    private List<Integer> list = new ArrayList<Integer>();
+    private int maxPacketRate = 1;
+    public static final int units = 11;
 
     /** 
      * Creates new form JPanelGraph and initialises the dataList
@@ -34,7 +36,7 @@ public class JPanelGraph extends javax.swing.JPanel {
     * Initializes the list for drawing the graph with 0-values
     */
     private void initArrayList(){
-        for(int i = 0; i < 11; i++){
+        for(int i = 0; i < units; i++){
             list.add(0);
         }
     }
@@ -71,7 +73,7 @@ public class JPanelGraph extends javax.swing.JPanel {
 
         //draw help lines
         g.setColor(Color.GRAY);
-        for(int i = 1; i < 10; i++){
+        for(int i = 1; i < units-1; i++){
             g.drawLine(i*width/10, 0, i*width/10, height);
         }
         for(int i = 1; i < 5; i++){
@@ -80,9 +82,9 @@ public class JPanelGraph extends javax.swing.JPanel {
 
         //draw the graph
         g.setColor(Color.GREEN);
-        for(int i = 0; i < 10; i++){
+        for(int i = 0; i < units-1; i++){
 
-            g.drawLine(i*width/10, Math.round((float)height-(float)list.get(i)/(float)maxPacketRate*((float)height*4/5)), (i+1)*width/10, Math.round((float)height-(float)list.get(i+1)/(float)maxPacketRate*((float)height*4/5)));
+            g.drawLine(i*width/(units-1), Math.round((float)height-(float)list.get(i)/(float)maxPacketRate*((float)height*4/5)), (i+1)*width/(units-1), Math.round((float)height-(float)list.get(i+1)/(float)maxPacketRate*((float)height*4/5)));
 
         }
 
