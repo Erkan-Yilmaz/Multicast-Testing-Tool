@@ -847,6 +847,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
             s.activate();
         }
         refreshSenderControls();
+        senderTable.repaint();
     }//GEN-LAST:event_buActivateSenderActionPerformed
 
     /**
@@ -874,6 +875,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
             s.deactivate();
         }
         refreshSenderControls();
+        senderTable.repaint();
     }//GEN-LAST:event_buDeactivateSenderActionPerformed
 
     private void buAddReceiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buAddReceiverActionPerformed
@@ -919,6 +921,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
             r.activate();
         }
         refreshReceiverControls();
+        receiverTable.repaint();
     }//GEN-LAST:event_buActivateReceiverActionPerformed
 
     /**
@@ -930,6 +933,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
             r.deactivate();
         }
         refreshReceiverControls();
+        receiverTable.repaint();
     }//GEN-LAST:event_buDeactivateReceiverActionPerformed
 
     /**
