@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class JPanelGraph extends javax.swing.JPanel {
 
     ArrayList<Integer> list = new ArrayList<Integer>();
-    int maxPacketRate = 1;
+    int maxPacketRate = 10;
 
     /** 
      * Creates new form JPanelGraph and initialises the dataList
@@ -82,7 +82,7 @@ public class JPanelGraph extends javax.swing.JPanel {
         g.setColor(Color.GREEN);
         for(int i = 0; i < 10; i++){
 
-            g.drawLine(i*width/10, height-list.get(i)/maxPacketRate*(height*4/5), (i+1)*width/10, height-list.get(i+1)/maxPacketRate*(height*4/5));
+            g.drawLine(i*width/10, Math.round((float)height-(float)list.get(i)/(float)maxPacketRate*((float)height*4/5)), (i+1)*width/10, Math.round((float)height-(float)list.get(i+1)/(float)maxPacketRate*((float)height*4/5)));
 
         }
 

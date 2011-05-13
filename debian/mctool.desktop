@@ -1,0 +1,11 @@
+
+[Desktop Entry]
+Encoding=UTF-8
+Exec=mctool
+Terminal=false
+Type=Application
+Categories=Application;Network;Java
+Name=MC Tool
+GenericName=Multicast Testing Tool
+Icon=mctool_icon
+Name[en_US]=mctool.desktop

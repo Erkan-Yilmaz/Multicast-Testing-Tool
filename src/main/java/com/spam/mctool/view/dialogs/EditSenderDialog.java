@@ -362,14 +362,11 @@ public class EditSenderDialog extends javax.swing.JDialog {
             }
         }
         else{
-
-      
-
             //if sender reference exists, change the values
             try{
-                if(this.sender.setSenderConfiguredPacketRate(Integer.parseInt(this.packetRateField.getText())) &&
-                   this.sender.setPacketSize(Integer.parseInt(this.packetSizeField.getText())) &&
-                   this.sender.setTtl(Integer.parseInt(this.ttlField.getText()))){
+                if(this.sender.setSenderConfiguredPacketRate(this.packetRateField.getText()) &&
+                   this.sender.setPacketSize(this.packetSizeField.getText()) &&
+                   this.sender.setTtl(this.ttlField.getText())){
 
                     this.sender.setAnalyzingBehaviour(AnalyzingBehaviour.getByIdentifier(this.analyzingBehaviourMap.get(this.analyzingBehaviourCombo.getSelectedItem().toString())));
                     //deactivate sender and according to the settings reactivate it to change values on running stream
@@ -454,6 +451,7 @@ public class EditSenderDialog extends javax.swing.JDialog {
             this.portField.setEnabled(false);
             this.dataField.setEnabled(false);
             this.interfaceCombo.setEnabled(false);
+            this.packetStyleCombo.setEnabled(false);
         }
     }
 

@@ -116,7 +116,7 @@
         <sender>
             <port>12354</port>
             <abeh>default</abeh>
-            <ninf>0:0:0:0:0:0:0:1%1</ninf>
+            <ninf>0:0:0:0:0:0:0:1</ninf>
             <psize>200</psize>
             <payload>Default</payload>
             <pps>10</pps>
@@ -128,7 +128,7 @@
         <sender>
             <port>12355</port>
             <abeh>default</abeh>
-            <ninf>0:0:0:0:0:0:0:1%1</ninf>
+            <ninf>0:0:0:0:0:0:0:1</ninf>
             <psize>200</psize>
             <payload>Default</payload>
             <pps>10</pps>
@@ -140,7 +140,7 @@
         <sender>
             <port>12356</port>
             <abeh>default</abeh>
-            <ninf>0:0:0:0:0:0:0:1%1</ninf>
+            <ninf>0:0:0:0:0:0:0:1</ninf>
             <psize>200</psize>
             <payload>Default</payload>
             <pps>10</pps>
@@ -152,7 +152,7 @@
         <sender>
             <port>12357</port>
             <abeh>default</abeh>
-            <ninf>0:0:0:0:0:0:0:1%1</ninf>
+            <ninf>0:0:0:0:0:0:0:1</ninf>
             <psize>200</psize>
             <payload>Default</payload>
             <pps>10</pps>
@@ -164,7 +164,7 @@
         <sender>
             <port>12358</port>
             <abeh>default</abeh>
-            <ninf>0:0:0:0:0:0:0:1%1</ninf>
+            <ninf>0:0:0:0:0:0:0:1</ninf>
             <psize>200</psize>
             <payload>Default</payload>
             <pps>10</pps>
@@ -176,7 +176,7 @@
         <sender>
             <port>12359</port>
             <abeh>default</abeh>
-            <ninf>0:0:0:0:0:0:0:1%1</ninf>
+            <ninf>0:0:0:0:0:0:0:1</ninf>
             <psize>200</psize>
             <payload>Default</payload>
             <pps>10</pps>
@@ -313,42 +313,42 @@
         <receiver>
             <port>12354</port>
             <abeh>default</abeh>
-            <ninf>0:0:0:0:0:0:0:1%1</ninf>
+            <ninf>0:0:0:0:0:0:0:1</ninf>
             <group>ff00:::::::1</group>
             <active>true</active>
         </receiver>
         <receiver>
             <port>12355</port>
             <abeh>default</abeh>
-            <ninf>0:0:0:0:0:0:0:1%1</ninf>
+            <ninf>0:0:0:0:0:0:0:1</ninf>
             <group>feff:::::::1</group>
             <active>true</active>
         </receiver>
         <receiver>
             <port>12356</port>
             <abeh>default</abeh>
-            <ninf>0:0:0:0:0:0:0:1%1</ninf>
+            <ninf>0:0:0:0:0:0:0:1</ninf>
             <group>feff:::::::1</group>
             <active>true</active>
         </receiver>
         <receiver>
             <port>12357</port>
             <abeh>default</abeh>
-            <ninf>0:0:0:0:0:0:0:1%1</ninf>
+            <ninf>0:0:0:0:0:0:0:1</ninf>
             <group>ffff:ffff:ffff:ffff:ffff:ffff:ffff:fffe</group>
             <active>true</active>
         </receiver>
         <receiver>
             <port>12358</port>
             <abeh>default</abeh>
-            <ninf>0:0:0:0:0:0:0:1%1</ninf>
+            <ninf>0:0:0:0:0:0:0:1</ninf>
             <group>ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff</group>
             <active>true</active>
         </receiver>
         <receiver>
             <port>12359</port>
             <abeh>default</abeh>
-            <ninf>0:0:0:0:0:0:0:1%1</ninf>
+            <ninf>0:0:0:0:0:0:0:1</ninf>
             <group>:::::::</group>
             <active>true</active>
         </receiver>

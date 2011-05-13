@@ -87,7 +87,7 @@ public class JSenderTable extends JTable {
 
     public List<Sender> getSelectedSenders() {
         List<Sender> selectedSenders = new ArrayList<Sender>();
-        for(int i=getSelectedRow(); i<getSelectedRow() + getSelectedRowCount(); i++) {
+        for(int i : getSelectedRows()) {
             try {
                 selectedSenders.add(((SenderTableModel)getModel()).getSenderAt(i));
             } catch (ClassCastException e) {
