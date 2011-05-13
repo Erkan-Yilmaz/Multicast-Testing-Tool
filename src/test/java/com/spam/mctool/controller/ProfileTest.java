@@ -102,4 +102,19 @@ public class ProfileTest {
 			assertTrue(e instanceof IllegalArgumentException);
 		}
 	}
+	
+	@Test
+	public void testHashCode() {
+		//Create three profiles
+		Profile testProfile1 = new Profile("Testname",new File("Testfile1"));
+		Profile testProfile2 = new Profile("Testname2",new File("Testfile2"));
+		//testprofile3 shares the name with testProfile1
+		Profile testProfile3 = new Profile("Testname3",new File("Testfile1"));
+		//1 and 3 should be equal
+		assertEquals(testProfile1.hashCode(),testProfile3.hashCode());
+		//1 and 2 should not be equal
+		assertFalse(testProfile1.hashCode() == testProfile2.hashCode());
+		//2 and 3 should not be equal
+		assertFalse(testProfile2.hashCode() == testProfile3.hashCode());
+	}
 }
