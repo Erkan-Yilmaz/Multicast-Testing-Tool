@@ -1,7 +1,5 @@
 package com.spam.mctool.controller;
 
-import org.omg.CORBA.LocalObject;
-
 public class ErrorEvent {
 
     /**
