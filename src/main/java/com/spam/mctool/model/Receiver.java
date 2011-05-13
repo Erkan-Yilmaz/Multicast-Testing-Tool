@@ -274,7 +274,7 @@ public class Receiver {
 	 */
 	public int getAvgPPS() {
 		synchronized (statsLock) {
-			return avgPPS;
+			return alive ? avgPPS : 0;
 		}
 	}
 

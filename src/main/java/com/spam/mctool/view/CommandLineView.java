@@ -1,13 +1,7 @@
 package com.spam.mctool.view;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintStream;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-
 import org.apache.log4j.*;
 
 import com.spam.mctool.controller.Controller;
@@ -26,12 +20,11 @@ import com.spam.mctool.model.ReceiverAddedOrRemovedListener;
 import com.spam.mctool.model.SenderAddedOrRemovedListener;
 
 /**
- *
+ *This class creates the output for the command line and logs it.
  * @author ramin
  */
 public class CommandLineView implements MctoolView, ProfileChangeListener, ReceiverAddedOrRemovedListener, SenderAddedOrRemovedListener, ErrorEventListener, OverallReceiverStatisticsUpdatedListener, OverallSenderStatisticsUpdatedListener {
-	private PrintStream out = System.out;
-	private BufferedWriter log;
+	private int offset = 10*1000;
 	private Controller c;
 	private Date lastUpdate = null;
 	private java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle");
@@ -39,15 +32,43 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
 	private Logger logger;
 	
 	public CommandLineView() {
+		
+		//get logger object
 		logger = Logger.getRootLogger();
-		SimpleLayout layout = new SimpleLayout();
+		
+		//logger prints just the message 
+		PatternLayout layout = new PatternLayout("%m%n");
+		
+		
+		//logger writes to file
+		try {
+			FileAppender fa = new FileAppender(layout, "log.txt");
+			logger.addAppender(fa);
+		} catch (IOException e) {
+			
+			ErrorEvent err = new ErrorEvent();
+			err.setAdditionalErrorMessage("Couldn't open log file");
+			
+			c.reportErrorEvent(err);
+		}
+		
+		//logger prints to console
 		ConsoleAppender consoleAppender = new ConsoleAppender(layout);
 		logger.addAppender(consoleAppender);
+		
 	}
 	
+	/**
+	 * This method initializes the CommandLineView which means that it registers
+	 * as Listener for relevant Events
+	 * 
+	 * @param c Controller that informs about the Events 
+	 */
     public void init(Controller c) {
-        //throw new UnsupportedOperationException("Not supported yet.");
+       
     	this.c = c;
+    	
+    	//register as listener
         c.addProfileChangeListener(this);
         c.addReceiverAddedOrRemovedListener(this);
         c.addSenderAddedOrRemovedListener(this);
@@ -55,69 +76,75 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
         c.addOverallReceiverStatisticsUpdatedListener(this);
         c.addOverallSenderStatisticsUpdatedListener(this);
         
-        try {
-			log = new BufferedWriter(new FileWriter("log.txt", true));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
+        //inform that tool was started
         logger.info(bundle.getString("CommandLine.LoggerInitialized.text")+" "+new Date());
     }
 
+    /**
+     * called when the user changes the profile
+     */
 	public void profileChanged(ProfileChangeEvent e) {
-		out.println(bundle.getString("CommandLine.ProfileChanged.text"));
 		
 		logger.info(bundle.getString("CommandLine.ProfileChanged.text"));
 			
 	}
 
+	/**
+	 * called when a receiver has been added
+	 */
 	public void receiverGroupAdded(ReceiverAddedOrRemovedEvent e) {
-		out.println(bundle.getString("CommandLine.ReceiverGroupAdded.text") + e.getSource().getGroup().toString());
 		logger.info(bundle.getString("CommandLine.ReceiverGroupAdded.text") + e.getSource().getGroup().toString());
 	
 	}
 
+	/**
+	 * called when a receiver has been removed
+	 */
 	public void receiverGroupRemoved(ReceiverAddedOrRemovedEvent e) {
-		out.println(bundle.getString("CommandLine.ReceiverGroupRemoved.text") + e.getSource().getGroup().toString());
 		
 		logger.info(bundle.getString("CommandLine.ReceiverGroupRemoved.text") + e.getSource().getGroup().toString());
 			
 	}
 
+	/**
+	 * called when a sender has been added
+	 */
 	public void senderAdded(SenderAddedOrRemovedEvent e) {
-		out.println(bundle.getString("CommandLine.SenderAdded.text") + "ID:" + e.getSource().getSenderId());
 		
 		logger.info(bundle.getString("CommandLine.SenderAdded.text") + "ID:" + e.getSource().getSenderId());
 		
 	}
 
+	/**
+	 * called when a sender has been removed
+	 */
 	public void senderRemoved(SenderAddedOrRemovedEvent e) {
-		out.println(bundle.getString("CommandLine.SenderRemoved.text")  + "ID:" + e.getSource().getSenderId());
 		
 		logger.info(bundle.getString("CommandLine.SenderRemoved.text")  + "ID:" + e.getSource().getSenderId());
 		
 	}
 	
+	/**
+	 * This method is used to unregister as listener from all registered events
+	 */
 	@Override
 	public void kill()
 	{
+		//unregister from events
 		c.removeProfileChangeListener(this);
         c.removeReceiverAddedOrRemovedListener(this);
         c.removeSenderAddedOrRemovedListener(this);
         c.removeOverallReceiverStatisticsUpdatedListener(this);
         c.removeOverallSenderStatisticsUpdatedListener(this);
 		
+        //inform that tool stopped
         logger.info(bundle.getString("CommandLine.Kill.text") + new Date());
         
-        try {
-			log.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
+	/**
+	 * called when an error occurred
+	 */
 	@Override
 	public void newErrorEvent(ErrorEvent e) {
 		Date date = new Date();
@@ -126,77 +153,57 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
 			logger.info(date.toString() + " - " + bundle.getString("CommandLine.Warning.text") + e.getCompleteMessage());
 		else
 			
-		out.println(date.toString() + " - " + bundle.getString("CommandLine.Error.text") + e.getCompleteMessage());
+		logger.info(date.toString() + " - " + bundle.getString("CommandLine.Error.text") + e.getCompleteMessage());
 	}
 
-        /**
-         * {@inheritDoc }
-         *
-         * <p>This implementation will print all internal exceptions' stack traces.
-         *    This is because this method will be called by the model's threading
-         *    framework which conveniently "swallows" all exceptions.</p>
-         *
-         * @param e
-         */
+    /**
+     * called when new sender statistics are available
+     */
 	@Override
 	public void overallSenderStatisticsUpdated(
 			OverallSenderStatisticsUpdatedEvent e) {
-            try {
+            
 		if(lastUpdate == null){
 			lastUpdate = new Date();
 		}
 		
-		if(lastUpdate.getTime() > 5.*60.*1000){
-                        Date date = new Date();
-			out.println(bundle.getString("CommandLine.SenderStatistics.text") + date.toString() + ":\n" );
-			out.println(bundle.getString("CommandLine.SentPackets.text") + e.getSource().getOverallSentPackets() + "\n");
-			out.println(bundle.getString("CommandLine.SentPacketsPerSec.text") + e.getSource().getOverallSentPPS() + "\n");
+		if(new Date().getTime() - lastUpdate.getTime() > offset){
+            Date date = new Date();
 			
-			logger.info(bundle.getString("CommandLine.SenderStatistics.text") + date.toString() + ":\n");
-			logger.info(bundle.getString("CommandLine.SentPackets.text") + e.getSource().getOverallSentPackets() + "\n");
-			logger.info(bundle.getString("CommandLine.SentPacketsPerSec.text") + e.getSource().getOverallSentPPS() + "\n");
+			logger.info(
+					bundle.getString("CommandLine.SenderStatistics.text") + date.toString() + "\n\n" + 
+					bundle.getString("CommandLine.SentPackets.text") + e.getSource().getOverallSentPackets() + "\n" +
+					bundle.getString("CommandLine.SentPacketsPerSec.text") + e.getSource().getOverallSentPPS() + "\n");
+			lastUpdate = new Date();
 			
 		}
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            
 		
 	}
 
-        /**
-         * {@inheritDoc }
-         *
-         * <p>This implementation will print all internal exceptions' stack traces.
-         *    This is because this method will be called by the model's threading
-         *    framework which conveniently "swallows" all exceptions.</p>
-         *
-         * @param e
-         */
+    /**
+     * called when new receiver statistics are available
+     */
 	@Override
 	public void overallReceiverStatisticsUpdated(
 			OverallReceiverStatisticsUpdatedEvent e) {
-            try {
+            
 		if(lastUpdate == null){
 			lastUpdate = new Date();
 		}
 		
-		if(lastUpdate.getTime() > 5.*60.*1000){
-                        Date date = new Date();
-			out.println(bundle.getString("CommandLine.ReceiverStatistics.text") + date.toString() + ":\n" );
-			out.println(bundle.getString("CommandLine.ReceivedPackages.text") + e.getSource().getOverallReceivedPackets() + "\n");
-			out.println(bundle.getString("CommandLine.FaultyPackets.text") + e.getSource().getOverallFaultyPackets() + "\n");
-			out.println(bundle.getString("CommandLine.LostPackages.text") + e.getSource().getOverallLostPackets() + "\n");
-			out.println(bundle.getString("CommandLine.ReceivedPaketsPerSec.text") + e.getSource().getOverallReceivedPPS() + "\n");
-			
-			logger.info(bundle.getString("CommandLine.ReceiverStatistics.text") + date.toString() + ":\n" );
-			logger.info(bundle.getString("CommandLine.ReceivedPackages.text") + e.getSource().getOverallReceivedPackets() + "\n");
-			logger.info(bundle.getString("CommandLine.FaultyPackets.text") + e.getSource().getOverallFaultyPackets() + "\n");
-			logger.info(bundle.getString("CommandLine.LostPackages.text") + e.getSource().getOverallLostPackets() + "\n");
-			logger.info(bundle.getString("CommandLine.ReceivedPaketsPerSec.text") + e.getSource().getOverallReceivedPPS() + "\n");
-		}
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-	}
+		if(new Date().getTime() - lastUpdate.getTime() > offset){
+            
+			Date date = new Date();
 
+			logger.info(
+					bundle.getString("CommandLine.ReceiverStatistics.text") + date.toString() + ":\n\n" +
+					bundle.getString("CommandLine.ReceivedPackages.text") + e.getSource().getOverallReceivedPackets() + "\n" +
+					bundle.getString("CommandLine.FaultyPackets.text") + e.getSource().getOverallFaultyPackets() + "\n" +
+					bundle.getString("CommandLine.LostPackages.text") + e.getSource().getOverallLostPackets() + "\n" +
+					bundle.getString("CommandLine.ReceivedPaketsPerSec.text") + e.getSource().getOverallReceivedPPS());
+			lastUpdate = new Date();
+		}
+
+	}
 }
