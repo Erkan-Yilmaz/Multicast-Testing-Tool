@@ -363,7 +363,7 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
         this.groupData.setText(this.sender.getGroup().getHostAddress());
         this.portData.setText(String.valueOf(this.sender.getPort()));
         this.packetStyleData.setText(this.sender.getpType().getDisplayName());
-        this.packetSizeData.setText(String.valueOf(this.sender.getPacketSize()));
+        this.packetSizeData.setText(String.valueOf(this.sender.getPacketSize())+ " Byte");
         this.dataData.setText(this.sender.getPayloadAsString());
         this.confPPSData.setText(String.valueOf(this.sender.getSenderConfiguredPacketRate()));
         this.sentPPSData.setText(String.valueOf(this.sender.getAvgPPS()));
