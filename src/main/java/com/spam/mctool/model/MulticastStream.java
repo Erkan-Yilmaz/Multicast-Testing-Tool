@@ -173,17 +173,21 @@ public abstract class MulticastStream implements Runnable {
 					String part = ipv6Matcher.group(i+1);
 					address[i] = (part.equals("")) ? 0 : Integer.decode("0x"+part);
 				}
-				if((address[0]<0xff00) || (address[0]>0xffff) || (address[7]>=0xfffe)) {
+				if((address[0]<0xff00) || (address[0]>0xffff) || (address[7]>0xfffe)) {
 					break matching;
 					// no valid multicast address
 				}
 				try {
+					// crazy to-way zero replace
+					group = ((String) group).replaceAll("::", ":0:");
+					group = ((String) group).replaceAll("::", ":0:");
 					this.group = InetAddress.getByName((String) group);
 				} catch(UnknownHostException e) {
 					break matching;
 				}
 				return true;
 			} else {
+				// no ip format
 				break matching;
 			}
 			// only reached if something in ip matching block goes wrong
@@ -192,6 +196,7 @@ public abstract class MulticastStream implements Runnable {
 			);
 			return false;
 		} else {
+			// illegal argument
 			eMan.reportErrorEvent(
 				new ErrorEvent(5, "Model.Multicast.Fatal.text", "Error Code: MulticastStream.setGroup.WrongArgument")
 			);
