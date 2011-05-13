@@ -454,6 +454,7 @@ public class EditSenderDialog extends javax.swing.JDialog {
             this.portField.setEnabled(false);
             this.dataField.setEnabled(false);
             this.interfaceCombo.setEnabled(false);
+            this.packetStyleCombo.setEnabled(false);
         }
     }
 
