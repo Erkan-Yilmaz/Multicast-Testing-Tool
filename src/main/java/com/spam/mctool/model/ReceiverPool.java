@@ -120,10 +120,12 @@ public class ReceiverPool implements ReceiverManager {
 					overallLostPackets = 0;
 					overallFaultyPackets = 0;
 					for(ReceiverGroup r : receiverGroups) {
-						overallReceivedPackets += r.getReceivedPackets();
-						overallReceivedPPS += r.getTotalPPS();
-						overallLostPackets += r.getLostPackets();
-						overallFaultyPackets += r.getFaultyPackets();
+						if (r.isActive()) {
+							overallReceivedPackets += r.getReceivedPackets();
+							overallReceivedPPS += r.getTotalPPS();
+							overallLostPackets += r.getLostPackets();
+							overallFaultyPackets += r.getFaultyPackets();
+						}
 					}
 				}
 			} else {
