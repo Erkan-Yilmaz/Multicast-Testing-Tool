@@ -236,21 +236,13 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
                                     .addComponent(dataLabel)
                                     .addComponent(packetStyleLabel)
                                     .addComponent(sentPPSLabel))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(packetStyleData, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(packetSizeData))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(dataData, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(confPPSData, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(sentPPSData, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(packetSizeData)
+                                    .addComponent(dataData, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(confPPSData, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(sentPPSData, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(packetStyleData, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(interfaceData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,9 +311,7 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
                         .addComponent(packetSizeData)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(60, 60, 60)
-                                .addComponent(sentPPSData))
+                            .addComponent(sentPPSData)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(dataData)
                                 .addGap(18, 18, 18)
@@ -372,7 +362,7 @@ public class ShowSenderDialog extends javax.swing.JDialog implements SenderDataC
         this.senderIDData.setText(String.valueOf(this.sender.getSenderId()));
         this.groupData.setText(this.sender.getGroup().getHostAddress());
         this.portData.setText(String.valueOf(this.sender.getPort()));
-        this.packetStyleData.setText(this.sender.getpType().toString());
+        this.packetStyleData.setText(this.sender.getpType().getDisplayName());
         this.packetSizeData.setText(String.valueOf(this.sender.getPacketSize()));
         this.dataData.setText(this.sender.getPayloadAsString());
         this.confPPSData.setText(String.valueOf(this.sender.getSenderConfiguredPacketRate()));
