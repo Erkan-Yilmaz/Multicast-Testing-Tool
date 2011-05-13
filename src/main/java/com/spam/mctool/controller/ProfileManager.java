@@ -1,8 +1,6 @@
 package com.spam.mctool.controller;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -16,13 +14,13 @@ public interface ProfileManager {
      * Add an listener for the profileChange events.
      * @param l listener to be added
      */
-    public void addProfileChangeListener(com.spam.mctool.controller.ProfileChangeListener l);
+    void addProfileChangeListener(com.spam.mctool.controller.ProfileChangeListener l);
 
     /**
      * Remove a listener from the list of listeners for the profileChange event.
      * @param l listener to be removed
      */
-    public void removeProfileChangeListener(com.spam.mctool.controller.ProfileChangeListener l);
+    void removeProfileChangeListener(com.spam.mctool.controller.ProfileChangeListener l);
 
     /**
      * Get the current profile.

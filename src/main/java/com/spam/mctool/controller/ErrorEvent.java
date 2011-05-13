@@ -1,6 +1,6 @@
 package com.spam.mctool.controller;
 
-public class ErrorEvent {
+public final class ErrorEvent {
 
     /**
      * The error message. Constructor and setter, denied to set this to null.
@@ -24,7 +24,7 @@ public class ErrorEvent {
     public ErrorEvent(){
         this.localizedMessageIdentifier = "Controller.unknownError.text";
         this.additionalErrorMessage = "";
-        this.errorLevel = 5;
+        this.errorLevel = ErrorEventManager.FATAL;
     }
 
     /**
@@ -57,7 +57,7 @@ public class ErrorEvent {
             this.additionalErrorMessage = "";
         }
         else{
-        	this.additionalErrorMessage = additionalErrorMessage;
+            this.additionalErrorMessage = additionalErrorMessage;
         }
     }
 
@@ -75,69 +75,69 @@ public class ErrorEvent {
      */
     public void setErrorLevel(int errorLevel) {
         //Don't allow negative numbers
-        if(errorLevel < 0){
-            this.errorLevel = 0;
+        if(errorLevel < ErrorEventManager.DEBUG){
+            this.errorLevel = ErrorEventManager.DEBUG;
         }
         //Don't allow numbers bigger than 5
-        else if(errorLevel >5){
-            this.errorLevel = 5;
+        else if(errorLevel >ErrorEventManager.FATAL){
+            this.errorLevel = ErrorEventManager.FATAL;
         }
         else{
             this.errorLevel = errorLevel;
         }
     }
 
-	/**
-	 * Get the localized message identifier.
-	 * @return the localized message identifier.
-	 */
-	public String getLocalizedMessageIdentifier() {
-		return localizedMessageIdentifier;
-	}
+    /**
+     * Get the localized message identifier.
+     * @return the localized message identifier.
+     */
+    public String getLocalizedMessageIdentifier() {
+        return localizedMessageIdentifier;
+    }
 
-	/**
-	 * Get the localized message. The set identifier is used to retrieve the localized version of the message.
-	 * @return "" if localization not found, otherwise the localized version of the message.
-	 */
-	public String getLocalizedMessage(){
-		String localizedMessage;
-		try{
-	        localizedMessage = java.util.ResourceBundle.getBundle("internationalization/Bundle").getString(localizedMessageIdentifier);
-		}
-		catch(Exception e){
-			localizedMessage = "";
-		}
-		return localizedMessage;
-	}
+    /**
+     * Get the localized message. The set identifier is used to retrieve the localized version of the message.
+     * @return "" if localization not found, otherwise the localized version of the message.
+     */
+    public String getLocalizedMessage(){
+        String localizedMessage;
+        try{
+            localizedMessage = java.util.ResourceBundle.getBundle("internationalization/Bundle").getString(localizedMessageIdentifier);
+        }
+        catch(Exception e){
+            localizedMessage = "";
+        }
+        return localizedMessage;
+    }
 
-	/**
-	 * Set the localized message identifier.
-	 * @param localizedMessageIdentifier The localized message identifier.
-	 */
-	public void setLocalizedMessageIdentifier(String localizedMessageIdentifier) {
-		if(localizedMessageIdentifier == null){
-			throw new IllegalArgumentException();
-		}
-		this.localizedMessageIdentifier = localizedMessageIdentifier;
-	}
+    /**
+     * Set the localized message identifier.
+     * @param localizedMessageIdentifier The localized message identifier.
+     */
+    public void setLocalizedMessageIdentifier(String localizedMessageIdentifier) {
+        if(localizedMessageIdentifier == null){
+            throw new IllegalArgumentException();
+        }
+        this.localizedMessageIdentifier = localizedMessageIdentifier;
+    }
 
-	/**
-	 * Get the complete message. This will combine the localized version of the message with the additional error message using a ": ".
-	 * @return The complete error message.
-	 */
-	public String getCompleteMessage() {
-		String localizedErrorMessage = this.getLocalizedMessage();
-		//if we have no identifier, print the additional message
-		if(localizedErrorMessage.compareTo("") == 0 || localizedErrorMessage == null){
-			return this.localizedMessageIdentifier + ": " + getAdditionalErrorMessage();
-		}
-		//if the additional message is empty, print the localized version only
-		if(additionalErrorMessage.compareTo("") == 0){
-			return localizedErrorMessage;
-		}
-		//otherwise combine both
-		return localizedErrorMessage + ": " + additionalErrorMessage;
-	}
+    /**
+     * Get the complete message. This will combine the localized version of the message with the additional error message using a ": ".
+     * @return The complete error message.
+     */
+    public String getCompleteMessage() {
+        String localizedErrorMessage = this.getLocalizedMessage();
+        //if we have no identifier, print the additional message
+        if(localizedErrorMessage.compareTo("") == 0 || localizedErrorMessage == null){
+            return this.localizedMessageIdentifier + ": " + getAdditionalErrorMessage();
+        }
+        //if the additional message is empty, print the localized version only
+        if(additionalErrorMessage.compareTo("") == 0){
+            return localizedErrorMessage;
+        }
+        //otherwise combine both
+        return localizedErrorMessage + ": " + additionalErrorMessage;
+    }
 
 
 }
