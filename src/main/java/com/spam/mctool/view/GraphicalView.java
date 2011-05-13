@@ -28,6 +28,7 @@ import com.spam.mctool.model.ReceiverGroup;
 import com.spam.mctool.model.Sender;
 import com.spam.mctool.model.SenderAddedOrRemovedListener;
 import com.spam.mctool.model.SenderDataChangeListener;
+import com.spam.mctool.view.dialogs.ErrorDialog;
 import java.io.File;
 import java.util.Locale;
 import java.util.Map;
@@ -86,7 +87,13 @@ public class GraphicalView implements MctoolView,
      * Reference to the controller. This reference is only needed for
      * invoking the exitApplication()-method.
      */
-    private Controller controller;// </editor-fold>
+    private Controller controller;
+    /**
+     * The Error Dialog that is reused for displaying error events
+     */
+    private ErrorDialog errorDialog;
+
+    // </editor-fold>
 
 
     // <editor-fold desc="public methods">
@@ -112,8 +119,9 @@ public class GraphicalView implements MctoolView,
             System.out.println("Failed to set system Look and Feel. Defaulting to Java Look and Feel.");
         }
 
-        // create the main frame
+        // create the main frame and error dialog
         mainFrame = new MainFrame(this);
+        errorDialog = new ErrorDialog(mainFrame, false);
 
         // bulk load existing receivers and senders to the view by simulating
         // sender and receiver addition events. This will also automatically
@@ -297,48 +305,15 @@ public class GraphicalView implements MctoolView,
         profileManager.saveCurrentProfile();
     }
 
-    public void newErrorEvent(ErrorEvent e) {
-        String title;
-        int messageType;
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle");
-
-        switch(e.getErrorLevel()) {
-            case ErrorEventManager.DEBUG:
-                title = bundle.getString("View.Error.debug.title");
-                messageType = JOptionPane.INFORMATION_MESSAGE;
-                break;
-            case ErrorEventManager.WARNING:
-                title = bundle.getString("View.Error.warning.title");
-                messageType = JOptionPane.WARNING_MESSAGE;
-                break;
-            case ErrorEventManager.SEVERE:
-                title = bundle.getString("View.Error.severe.title");
-                messageType = JOptionPane.WARNING_MESSAGE;
-                break;
-            case ErrorEventManager.ERROR:
-                title = bundle.getString("View.Error.error.title");
-                messageType = JOptionPane.ERROR_MESSAGE;
-                break;
-            case ErrorEventManager.CRITICAL:
-                title = bundle.getString("View.Error.critical.title");
-                messageType = JOptionPane.ERROR_MESSAGE;
-                break;
-            case ErrorEventManager.FATAL:
-                title = bundle.getString("View.Error.fatal.title");
-                messageType = JOptionPane.ERROR_MESSAGE;
-                break;
-            default:
-                title = bundle.getString("View.Error.unknown.title");
-                messageType = JOptionPane.INFORMATION_MESSAGE;
-                break;
+    public void newErrorEvent(final ErrorEvent e) {
+        if(!errorDialog.isVisible()) {
+            errorDialog.setVisible(true);
         }
-
-        JOptionPane.showMessageDialog (
-                mainFrame,
-                e.getCompleteMessage(),
-                title,
-                messageType
-        );
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                errorDialog.dataChanged(e);
+            }
+        });
     }
 
     public Iterable<Profile> getRecentProfiles() {
