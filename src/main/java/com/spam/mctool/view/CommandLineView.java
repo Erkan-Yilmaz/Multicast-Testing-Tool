@@ -38,7 +38,7 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
 		logger = Logger.getRootLogger();
 		
 		//logger prints just the message 
-		PatternLayout layout = new PatternLayout("%m%n");
+		PatternLayout layout = new PatternLayout("[%d{dd.MM.yyyy HH:mm:ss}] - %m%n");
 		
 		
 		//logger writes to file
@@ -78,7 +78,7 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
         c.addOverallSenderStatisticsUpdatedListener(this);
         
         //inform that tool was started
-        logger.info(new Date() + ": " + bundle.getString("CommandLine.LoggerInitialized.text"));
+        logger.info(bundle.getString("CommandLine.LoggerInitialized.text"));
     }
 
     /**
@@ -139,7 +139,7 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
         c.removeOverallSenderStatisticsUpdatedListener(this);
 		
         //inform that tool stopped
-        logger.info(new Date() + ":" + bundle.getString("CommandLine.Kill.text"));
+        logger.info(bundle.getString("CommandLine.Kill.text"));
         
 	}
 
@@ -151,10 +151,10 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
 		Date date = new Date();
 		
 		if(e.getErrorLevel() == ErrorEventManager.WARNING)
-			logger.info(date.toString() + " - " + bundle.getString("CommandLine.Warning.text") + e.getCompleteMessage());
+			logger.info(bundle.getString("CommandLine.Warning.text") + e.getCompleteMessage());
 		else
 			
-		logger.info(date.toString() + " - " + bundle.getString("CommandLine.Error.text") + e.getCompleteMessage());
+		logger.info(bundle.getString("CommandLine.Error.text") + e.getCompleteMessage());
 	}
 
     /**
