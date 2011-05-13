@@ -112,7 +112,7 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
 	 */
 	public void senderAdded(SenderAddedOrRemovedEvent e) {
 		
-		logger.info(bundle.getString("CommandLine.SenderAdded.text") + "ID:" + e.getSource().getSenderId());
+		logger.info(bundle.getString("CommandLine.SenderAdded.text") + " ID:" + e.getSource().getSenderId());
 		
 	}
 
@@ -121,7 +121,7 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
 	 */
 	public void senderRemoved(SenderAddedOrRemovedEvent e) {
 		
-		logger.info(bundle.getString("CommandLine.SenderRemoved.text")  + "ID:" + e.getSource().getSenderId());
+		logger.info(bundle.getString("CommandLine.SenderRemoved.text")  + " ID:" + e.getSource().getSenderId());
 		
 	}
 	
