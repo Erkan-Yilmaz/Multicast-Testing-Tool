@@ -400,7 +400,7 @@ public class ShowReceiverDialog extends javax.swing.JDialog implements ReceiverD
         //load all data from corresponding receiver/receivergroup and insert them to UI dialog
         this.senderIDData.setText(String.valueOf(this.receiver.getSenderId()));
         this.packetStyleData.setText(this.receiver.getPacketType().getDisplayName());
-        this.packetSizeData.setText(String.valueOf(this.receiver.getPacketSize()));
+        this.packetSizeData.setText(String.valueOf(this.receiver.getPacketSize()) + " Byte");
         this.dataData.setText(this.receiver.getPayloadAsString());
         this.confPPSData.setText(String.valueOf(this.receiver.getSenderConfiguredPPS()));
         this.senderPPSData.setText(String.valueOf(this.receiver.getSenderMeasuredPPS()));
