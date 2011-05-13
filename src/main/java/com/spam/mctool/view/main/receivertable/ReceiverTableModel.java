@@ -63,10 +63,10 @@ public class ReceiverTableModel extends AbstractTableModel implements MouseListe
                                 Logger.getLogger(ReceiverTableModel.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
-                        return senderAddress;
+                        return senderAddress.getHostAddress();
                     case SENDER_CONF_PPS: return receiver.getSenderConfiguredPPS();
                     case AVG_PPS: return receiver.getAvgPPS();
-                    case LOST_PACKETS: return receiver.getLostPackets();
+                    case LOST_PACKETS: return receiver.getLostPackets() + " ‰";
                     case PAYLOAD: return receiver.getPayloadAsString();
                     default:
                         throw new RuntimeException("Illegal columnIndex: " + columnIndex);
