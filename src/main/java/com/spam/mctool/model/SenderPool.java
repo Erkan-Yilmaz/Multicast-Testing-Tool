@@ -149,8 +149,10 @@ public class SenderPool implements SenderManager {
 					overallSentPackets = 0;
 					overallSendingPPS = 0;
 					for(Sender s : senders) {
-						overallSentPackets += s.getSentPacketCount();
-						overallSendingPPS += s.getAvgPPS();
+						if (s.isActive()) {
+							overallSentPackets += s.getSentPacketCount();
+							overallSendingPPS += s.getAvgPPS();
+						}
 					}
 				}
 			}
