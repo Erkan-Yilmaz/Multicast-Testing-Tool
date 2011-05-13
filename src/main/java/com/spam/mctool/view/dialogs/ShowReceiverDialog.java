@@ -406,8 +406,13 @@ public class ShowReceiverDialog extends javax.swing.JDialog implements ReceiverD
         this.senderPPSData.setText(String.valueOf(this.receiver.getSenderMeasuredPPS()));
         this.receiverPPSData.setText(String.valueOf(this.receiver.getAvgPPS()));
         this.lostPacketsData.setText(String.valueOf(this.receiver.getLostPackets()));
-        this.maxDelayData.setText(String.valueOf(this.receiver.getMaxDelay()));
-        this.avgTraversalData.setText(String.valueOf(this.receiver.getAvgTraversal()));
+        this.maxDelayData.setText(String.valueOf(this.receiver.getMaxDelay()) + " ms");
+        if(this.receiver.getPacketType().toString().equals("SPAM")){
+            this.avgTraversalData.setText(String.valueOf(this.receiver.getAvgTraversal()) + " ms");
+        }
+        else{
+            this.avgTraversalData.setText("-");
+        }
         this.groupData.setText(this.receivergroup.getGroup().getHostAddress());
         this.portData.setText(String.valueOf(this.receivergroup.getPort()));
         this.diagramMaxVal.setText(String.valueOf(this.receiver.getSenderConfiguredPPS()));

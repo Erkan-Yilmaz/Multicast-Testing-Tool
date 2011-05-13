@@ -29,89 +29,69 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                                          <Component id="diagramNullLabel" min="-2" pref="19" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Component id="diagramMaxVal" alignment="0" min="-2" pref="83" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+                                      <Component id="diagramNullLabel" min="-2" pref="19" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jGraph" min="-2" max="-2" attributes="0"/>
+                                  <Component id="diagramMaxVal" alignment="0" min="-2" pref="83" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="senderIDLabel" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="senderIDData" min="-2" pref="103" max="-2" attributes="1"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jGraph" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="senderIDLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="senderIDData" min="-2" pref="103" max="-2" attributes="1"/>
+                          </Group>
+                          <Component id="interfaceData" alignment="0" pref="436" max="32767" attributes="1"/>
+                          <Component id="jSeparator1" alignment="1" pref="436" max="32767" attributes="1"/>
+                          <Component id="jSeparator2" alignment="0" pref="436" max="32767" attributes="1"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="packetSizeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="dataLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="confPPSLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="senderPPSLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="receiverPPSLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lostPacketsLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="maxDelayLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="avgTraversalLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="packetSizeData" alignment="1" pref="175" max="32767" attributes="1"/>
+                                  <Component id="dataData" alignment="1" pref="175" max="32767" attributes="1"/>
+                                  <Component id="confPPSData" alignment="1" pref="175" max="32767" attributes="1"/>
+                                  <Component id="senderPPSData" alignment="1" pref="175" max="32767" attributes="1"/>
+                                  <Component id="receiverPPSData" alignment="1" pref="175" max="32767" attributes="1"/>
+                                  <Component id="lostPacketsData" alignment="1" pref="175" max="32767" attributes="1"/>
+                                  <Component id="maxDelayData" alignment="1" pref="175" max="32767" attributes="1"/>
+                                  <Component id="avgTraversalData" alignment="1" min="-2" pref="105" max="-2" attributes="1"/>
                               </Group>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="interfaceData" alignment="0" pref="436" max="32767" attributes="1"/>
-                              <Component id="jSeparator1" alignment="1" pref="436" max="32767" attributes="1"/>
+                          <Group type="102" attributes="0">
+                              <Component id="packetStyleLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="packetStyleData" pref="329" max="32767" attributes="1"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jSeparator2" pref="436" max="32767" attributes="1"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="packetSizeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="dataLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="confPPSLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="senderPPSLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="receiverPPSLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lostPacketsLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="maxDelayLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="avgTraversalLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="packetSizeData" alignment="1" pref="175" max="32767" attributes="1"/>
-                                      <Component id="dataData" alignment="1" pref="175" max="32767" attributes="1"/>
-                                      <Component id="confPPSData" alignment="1" pref="175" max="32767" attributes="1"/>
-                                      <Component id="senderPPSData" alignment="1" pref="175" max="32767" attributes="1"/>
-                                      <Component id="receiverPPSData" alignment="1" pref="175" max="32767" attributes="1"/>
-                                      <Component id="lostPacketsData" alignment="1" pref="175" max="32767" attributes="1"/>
-                                      <Component id="maxDelayData" alignment="1" pref="175" max="32767" attributes="1"/>
-                                      <Component id="avgTraversalData" alignment="1" min="-2" pref="105" max="-2" attributes="1"/>
-                                  </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="groupLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="groupData" alignment="0" min="-2" pref="189" max="-2" attributes="1"/>
                               </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="packetStyleLabel" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="packetStyleData" pref="329" max="32767" attributes="1"/>
+                              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="portLabel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="portData" min="-2" pref="102" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="interfaceLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="groupLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="groupData" alignment="0" min="-2" pref="189" max="-2" attributes="1"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="portLabel" min="-2" max="-2" attributes="0"/>
-                                      <Component id="portData" min="-2" pref="102" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Component id="interfaceLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace pref="115" max="32767" attributes="0"/>
-                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="closeButton" min="-2" max="-2" attributes="0"/>
