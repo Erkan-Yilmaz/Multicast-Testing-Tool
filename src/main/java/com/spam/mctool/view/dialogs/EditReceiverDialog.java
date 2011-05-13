@@ -81,7 +81,7 @@ public class EditReceiverDialog extends javax.swing.JDialog {
         this(parent, modal);
         this.receiverGroup = receiverGroup;
         loadData(create);
-
+ 
         this.setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("EditReceiverDialog.editTitle"));
 
         if(create){
