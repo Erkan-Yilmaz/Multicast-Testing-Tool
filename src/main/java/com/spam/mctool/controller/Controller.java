@@ -12,7 +12,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,24 +26,14 @@ import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.FactoryConfigurationError;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 
-import org.xml.sax.SAXException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 import org.w3c.dom.bootstrap.DOMImplementationRegistry;
-import org.w3c.dom.Document;
 import org.w3c.dom.ls.DOMImplementationLS;
 import org.w3c.dom.ls.LSException;
 import org.w3c.dom.ls.LSParser;
@@ -63,13 +52,12 @@ import com.spam.mctool.model.SenderPool;
 import com.spam.mctool.view.CommandLineView;
 import com.spam.mctool.view.GraphicalView;
 import com.spam.mctool.view.MctoolView;
-import com.thoughtworks.xstream.XStream;
 
 /**
  * @author David Hildenbrand
  *
  */
-public class Controller implements ProfileManager, StreamManager, ErrorEventManager, LanguageManager {
+final public class Controller implements ProfileManager, StreamManager, ErrorEventManager, LanguageManager {
 
     /**
      *
@@ -90,7 +78,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
     /**
     *
     */
-   private List<LanguageChangeListener> languageChangeObservers;
+    private List<LanguageChangeListener> languageChangeObservers;
     /**
      *
      */
@@ -112,6 +100,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
      */
     private List<MctoolView> viewers;
 
+    private static String defaultActivationMode = "default";
 
     /**
      * The default constructor for the Controller.
@@ -173,7 +162,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         //Cli disabled by default
         boolean enableCli = false;
         //The desired start mode for senders and receivers
-        String startMode = "default";
+        String startMode = defaultActivationMode;
         //The profiles to be loaded
         List<Profile> desiredProfiles = new ArrayList<Profile>();
         //iterate over all args
@@ -238,8 +227,8 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
             }
             //start all receivers and sender
             else if(args[i].compareToIgnoreCase("-startall") == 0){
-            	//startmode has already been set
-            	if(startMode.compareTo("default") != 0){
+            	//start mode has already been set
+            	if(startMode.compareTo(defaultActivationMode) != 0){
                     //report the error
                 	this.reportErrorEvent(new ErrorEvent(5, "Controller.falseStartmode.text", args[i]));
                     //exit the program
@@ -250,7 +239,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
             //start none of the receivers and sender
             else if(args[i].compareToIgnoreCase("-startnone") == 0){
             	//startmode has already been set
-            	if(startMode.compareTo("default") != 0){
+            	if(startMode.compareTo(defaultActivationMode) != 0){
                     //report the error
                 	this.reportErrorEvent(new ErrorEvent(5, "Controller.falseStartmode.text", args[i]));
                     //exit the program
@@ -261,7 +250,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
             //restore the state of receivers and sender
             else if(args[i].compareToIgnoreCase("-restore") == 0){
             	//startmode has already been set
-            	if(startMode.compareTo("default") != 0){
+            	if(startMode.compareTo(defaultActivationMode) != 0){
                     //report the error
                 	this.reportErrorEvent(new ErrorEvent(5, "Controller.falseStartmode.text", args[i]));
                     //exit the program
@@ -618,7 +607,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
     		throw new IllegalArgumentException();
     	}
     	if(startMode == null || startMode.compareToIgnoreCase("restore") == 0){
-    		startMode = "default";
+    		startMode = defaultActivationMode;
     	}
 
         DOMImplementationRegistry registry=null;
@@ -956,7 +945,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
 
         //Load the profile, streams are reverted to the saved activity state
     	try{
-    		this.loadProfileWithoutCleanup(p,"default");
+    		this.loadProfileWithoutCleanup(p,defaultActivationMode);
             //Add it to the list of recent profiles
             recentProfiles.addOrUpdateProfileInList(p);
             //Make it the new profile and signalize it to the observers
