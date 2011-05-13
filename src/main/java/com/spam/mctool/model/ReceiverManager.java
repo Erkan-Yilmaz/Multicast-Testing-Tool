@@ -79,4 +79,9 @@ public interface ReceiverManager {
 	 */
 	public long getOverallFaultyPackets();
 	
+	/**
+	 * 
+	 */
+	public void setThreadPoolSize(int size);
+	
 }

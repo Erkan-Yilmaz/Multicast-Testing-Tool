@@ -156,8 +156,11 @@ public abstract class MulticastStream implements Runnable {
 				int[] address = new int[4];
 				for(int i=0; i<4; i++) {
 					address[i] = Integer.parseInt(ipv4Matcher.group(i+1));
+					if(address[i]<0) {
+						break matching;
+					}
 				}
-				if((address[0]<224) || (address[0]>239) || (address[1]>255) || (address[2]>255) || (address[3]>=255)) {
+				if((address[0]<224) || (address[0]>239) || (address[1]>255) || (address[2]>255) || (address[3])==0 || (address[3]>=255)) {
 					break matching;
 					// no valid multicast address
 				}
@@ -173,7 +176,7 @@ public abstract class MulticastStream implements Runnable {
 					String part = ipv6Matcher.group(i+1);
 					address[i] = (part.equals("")) ? 0 : Integer.decode("0x"+part);
 				}
-				if((address[0]<0xff00) || (address[0]>0xffff) || (address[7]>0xfffe)) {
+				if((address[0]<0xff00) || (address[0]>0xffff) || (address[7]>0xfffe) || (address[7]==0x0000)) {
 					break matching;
 					// no valid multicast address
 				}
