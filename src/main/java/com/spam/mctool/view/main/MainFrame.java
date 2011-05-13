@@ -995,7 +995,11 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         SaveProfileDialog dlg = new SaveProfileDialog(this, true, currentProfile);
         dlg.setVisible(true);
         if(dlg.getSelection().equals(JFileChooser.APPROVE_SELECTION)) {
-            view.saveProfile(dlg.getProfileName(), dlg.getSelectedFile());
+            try {
+                view.saveProfile(dlg.getProfileName(), dlg.getSelectedFile());
+            } catch (NullPointerException ex) {
+                // jo, kann man nix machen
+            }
         }
         loadRecentProfiles();
         if(view.getCurrentProfile() != null) {
