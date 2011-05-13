@@ -12,7 +12,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,24 +26,14 @@ import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.FactoryConfigurationError;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 
-import org.xml.sax.SAXException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 import org.w3c.dom.bootstrap.DOMImplementationRegistry;
-import org.w3c.dom.Document;
 import org.w3c.dom.ls.DOMImplementationLS;
 import org.w3c.dom.ls.LSException;
 import org.w3c.dom.ls.LSParser;
@@ -63,13 +52,12 @@ import com.spam.mctool.model.SenderPool;
 import com.spam.mctool.view.CommandLineView;
 import com.spam.mctool.view.GraphicalView;
 import com.spam.mctool.view.MctoolView;
-import com.thoughtworks.xstream.XStream;
 
 /**
  * @author David Hildenbrand
  *
  */
-public class Controller implements ProfileManager, StreamManager, ErrorEventManager, LanguageManager {
+final public class Controller implements ProfileManager, StreamManager, ErrorEventManager, LanguageManager {
 
     /**
      *
@@ -90,7 +78,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
     /**
     *
     */
-   private List<LanguageChangeListener> languageChangeObservers;
+    private List<LanguageChangeListener> languageChangeObservers;
     /**
      *
      */
@@ -112,6 +100,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
      */
     private List<MctoolView> viewers;
 
+    private static String defaultActivationMode = "default";
 
     /**
      * The default constructor for the Controller.
@@ -164,16 +153,16 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         try {
             this.loadRecentProfiles();
         } catch (FileNotFoundException e) {
-            this.reportErrorEvent(new ErrorEvent(1,"Controller.failedLoadingRecentProfiles.text",""));
+            this.reportErrorEvent(new ErrorEvent(ErrorEventManager.DEBUG,"Controller.failedLoadingRecentProfiles.text",""));
         } catch (IOException e) {
-            this.reportErrorEvent(new ErrorEvent(1,"Controller.failedLoadingRecentProfiles2.text",""));
+            this.reportErrorEvent(new ErrorEvent(ErrorEventManager.DEBUG,"Controller.failedLoadingRecentProfiles2.text",""));
         }
         //Gui enabled by default
         boolean enableGui = true;
         //Cli disabled by default
         boolean enableCli = false;
         //The desired start mode for senders and receivers
-        String startMode = "default";
+        String startMode = defaultActivationMode;
         //The profiles to be loaded
         List<Profile> desiredProfiles = new ArrayList<Profile>();
         //iterate over all args
@@ -193,7 +182,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
                 //read the next argument if available
                 if(i >= args.length || args[i].startsWith("-")){
                     //report the error
-                	this.reportErrorEvent(new ErrorEvent(5,"Controller.missingArgumentProfileName.text",""));
+                	this.reportErrorEvent(new ErrorEvent(ErrorEventManager.FATAL,"Controller.missingArgumentProfileName.text",""));
                     //exit the program
                 	return;
                 }
@@ -207,7 +196,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
                 	}
                 	else{
                 		//report the error
-                    	this.reportErrorEvent(new ErrorEvent(2,"Controller.nameNotFoundInRecentProfiles.text", args[i]));
+                    	this.reportErrorEvent(new ErrorEvent(ErrorEventManager.SEVERE,"Controller.nameNotFoundInRecentProfiles.text", args[i]));
                 	}
                 	//iterate to next potential profile name
                 	++i;
@@ -221,7 +210,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
                 //read the next argument if available
                 if(i >= args.length || args[i].startsWith("-")){
                     //report the error
-                	this.reportErrorEvent(new ErrorEvent(5,"Controller.missingArgumentProfilePath.text", ""));
+                	this.reportErrorEvent(new ErrorEvent(ErrorEventManager.FATAL,"Controller.missingArgumentProfilePath.text", ""));
                     //exit the program
                 	return;
                 }
@@ -238,10 +227,10 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
             }
             //start all receivers and sender
             else if(args[i].compareToIgnoreCase("-startall") == 0){
-            	//startmode has already been set
-            	if(startMode.compareTo("default") != 0){
+            	//start mode has already been set
+            	if(startMode.compareTo(defaultActivationMode) != 0){
                     //report the error
-                	this.reportErrorEvent(new ErrorEvent(5, "Controller.falseStartmode.text", args[i]));
+                	this.reportErrorEvent(new ErrorEvent(ErrorEventManager.FATAL, "Controller.falseStartmode.text", args[i]));
                     //exit the program
                 	return;
             	}
@@ -250,9 +239,9 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
             //start none of the receivers and sender
             else if(args[i].compareToIgnoreCase("-startnone") == 0){
             	//startmode has already been set
-            	if(startMode.compareTo("default") != 0){
+            	if(startMode.compareTo(defaultActivationMode) != 0){
                     //report the error
-                	this.reportErrorEvent(new ErrorEvent(5, "Controller.falseStartmode.text", args[i]));
+                	this.reportErrorEvent(new ErrorEvent(ErrorEventManager.FATAL, "Controller.falseStartmode.text", args[i]));
                     //exit the program
                 	return;
             	}
@@ -261,9 +250,9 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
             //restore the state of receivers and sender
             else if(args[i].compareToIgnoreCase("-restore") == 0){
             	//startmode has already been set
-            	if(startMode.compareTo("default") != 0){
+            	if(startMode.compareTo(defaultActivationMode) != 0){
                     //report the error
-                	this.reportErrorEvent(new ErrorEvent(5, "Controller.falseStartmode.text", args[i]));
+                	this.reportErrorEvent(new ErrorEvent(ErrorEventManager.FATAL, "Controller.falseStartmode.text", args[i]));
                     //exit the program
                 	return;
             	}
@@ -271,7 +260,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
             }
             else{
                 //report the error
-            	this.reportErrorEvent(new ErrorEvent(5, "Controller.unknownArgument.text", args[i]));
+            	this.reportErrorEvent(new ErrorEvent(ErrorEventManager.FATAL, "Controller.unknownArgument.text", args[i]));
                 //exit the program
             	return;
             }
@@ -287,7 +276,6 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
             viewers.add(new CommandLineView());
         }
         //Init all views
-        Iterator<MctoolView> it = viewers.iterator();
         for(MctoolView v:viewers){
         	v.init(this);
         }
@@ -305,23 +293,23 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
             		loadedProfile = p;
             	}
             	catch(org.w3c.dom.ls.LSException e){
-                	this.reportErrorEvent(new ErrorEvent(3,"Controller.profileLoadingError.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
+                	this.reportErrorEvent(new ErrorEvent(ErrorEventManager.ERROR,"Controller.profileLoadingError.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
             	}
             	catch(IOException e){
-                	this.reportErrorEvent(new ErrorEvent(3,"Controller.profileLoadingError2.text", p.getPath().toString()));
+                	this.reportErrorEvent(new ErrorEvent(ErrorEventManager.ERROR,"Controller.profileLoadingError2.text", p.getPath().toString()));
             	}
             	catch(Exception e){
-                	this.reportErrorEvent(new ErrorEvent(4,"Controller.profileLoadingError3.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
+                	this.reportErrorEvent(new ErrorEvent(ErrorEventManager.CRITICAL,"Controller.profileLoadingError3.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
             	}
             }
         	//save the recent profiles list
         	try {
 				saveRecentProfiles();
 			} catch (IOException e) {
-				this.reportErrorEvent(new ErrorEvent(3,"Controller.failedSavingRecentProfiles.text",e.getLocalizedMessage()));
+				this.reportErrorEvent(new ErrorEvent(ErrorEventManager.ERROR,"Controller.failedSavingRecentProfiles.text",e.getLocalizedMessage()));
 			}
         	//No current profile for multiple profiles
-        	if(loadCount > 1){
+        	if(loadCount > ErrorEventManager.DEBUG){
         		this.setCurrentProfile(null);
         	}
         	//Only one profile loaded? make it the active one
@@ -347,7 +335,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         try {
             saveRecentProfiles();
         } catch (IOException e) {
-            this.reportErrorEvent(new ErrorEvent(3,"Controller.failedSavingRecentProfiles.text",e.getLocalizedMessage()));
+            this.reportErrorEvent(new ErrorEvent(ErrorEventManager.ERROR,"Controller.failedSavingRecentProfiles.text",e.getLocalizedMessage()));
         }
     	//Kill all views
     	for(MctoolView v:viewers){
@@ -460,11 +448,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
     private void saveProfileToFile(Profile p) throws Exception {
         //Register the xerces DOM-Implementation
         DOMImplementationRegistry registry = null;
-        try {
-            registry = DOMImplementationRegistry.newInstance();
-        } catch (Exception e){
-            throw new Exception("DOM implementation could not be registered!");
-        }
+        registry = DOMImplementationRegistry.newInstance();
 
         //Load the xerces DOM implementation
         DOMImplementationLS impl =
@@ -473,11 +457,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         //Lets build a new factory for our XMLDocument
         DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = null;
-        try {
-            docBuilder = dbfac.newDocumentBuilder();
-        } catch (ParserConfigurationException e1) {
-        	throw new Exception("The dom document could not be created.");
-        }
+        docBuilder = dbfac.newDocumentBuilder();
         //Create a XML DOM document
         Document xmlDocument = docBuilder.newDocument();
 
@@ -592,16 +572,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         //Beautiful formatted output
         writer.getDomConfig().setParameter("format-pretty-print", Boolean.TRUE);
         //Try to write it to the file
-        try{
-            writer.writeToURI(xmlDocument, profilePath.toURI().toString());
-        }
-        catch(LSException e){
-            throw new Exception("The data could not be serialized to XML."+e.getMessage());
-        }
-        catch(Exception e){
-            throw new Exception("The file could not be written.");
-
-        }
+        writer.writeToURI(xmlDocument, profilePath.toURI().toString());
     }
 
 
@@ -618,15 +589,11 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
     		throw new IllegalArgumentException();
     	}
     	if(startMode == null || startMode.compareToIgnoreCase("restore") == 0){
-    		startMode = "default";
+    		startMode = defaultActivationMode;
     	}
 
         DOMImplementationRegistry registry=null;
-        try {
-            registry = DOMImplementationRegistry.newInstance();
-        } catch (Exception e){
-        	throw new Exception("DOM could not be initialized.");
-        }
+        registry = DOMImplementationRegistry.newInstance();
 
         DOMImplementationLS impl =
             (DOMImplementationLS)registry.getDOMImplementation("LS");
@@ -685,7 +652,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
                     	//unknown definition
                     	else{
                     		startSender = false;
-                            this.reportErrorEvent(new ErrorEvent(1,"Controller.profileActiveModeError.text", null));
+                            this.reportErrorEvent(new ErrorEvent(ErrorEventManager.DEBUG,"Controller.profileActiveModeError.text", null));
                     	}
                     }
                     else{
@@ -731,7 +698,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
                     	//unknown definition
                     	else{
                     		startReceiver = false;
-                            this.reportErrorEvent(new ErrorEvent(1,"Controller.profileActiveModeError.text", null));
+                            this.reportErrorEvent(new ErrorEvent(ErrorEventManager.DEBUG,"Controller.profileActiveModeError.text", null));
                     	}
                     }
                     else{
@@ -819,7 +786,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
     	try {
             saveProfileToFile(p);
         } catch (Exception e) {
-            this.reportErrorEvent(new ErrorEvent(3,"Controller.profileSavingError.text",p.getPath() + ": " + e.getLocalizedMessage()));
+            this.reportErrorEvent(new ErrorEvent(ErrorEventManager.ERROR,"Controller.profileSavingError.text",p.getPath() + ": " + e.getLocalizedMessage()));
             return;
         }
         //refresh the profile name and path
@@ -831,7 +798,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         try {
             saveRecentProfiles();
         } catch (IOException e) {
-            this.reportErrorEvent(new ErrorEvent(3,"Controller.failedSavingRecentProfiles.text",e.getLocalizedMessage()));
+            this.reportErrorEvent(new ErrorEvent(ErrorEventManager.ERROR,"Controller.failedSavingRecentProfiles.text",e.getLocalizedMessage()));
         }
     }
 
@@ -841,7 +808,7 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
     public void saveCurrentProfile(){
     	//if we have no current profile, report an error
     	if(this.currentProfile == null){
-            this.reportErrorEvent(new ErrorEvent(3,"Controller.noCurrentProfile.text",null));
+            this.reportErrorEvent(new ErrorEvent(ErrorEventManager.ERROR,"Controller.noCurrentProfile.text",null));
     	}
     	else{
     		saveProfile(this.currentProfile);
@@ -861,8 +828,8 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
         if(errorLevel < 0){
             errorLevel = 0;
         }
-        else if(errorLevel > 5){
-            errorLevel = 5;
+        else if(errorLevel > ErrorEventManager.FATAL){
+            errorLevel = ErrorEventManager.FATAL;
         }
         //if it is already contained in the list, remove the mapping and remap
         else if(this.newErrorEventObservers.contains(l)){
@@ -956,24 +923,24 @@ public class Controller implements ProfileManager, StreamManager, ErrorEventMana
 
         //Load the profile, streams are reverted to the saved activity state
     	try{
-    		this.loadProfileWithoutCleanup(p,"default");
+    		this.loadProfileWithoutCleanup(p,defaultActivationMode);
             //Add it to the list of recent profiles
             recentProfiles.addOrUpdateProfileInList(p);
             //Make it the new profile and signalize it to the observers
             this.setCurrentProfile(p);
     	}
     	catch(org.w3c.dom.ls.LSException e){
-        	this.reportErrorEvent(new ErrorEvent(3,"Controller.profileLoadingError.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
+        	this.reportErrorEvent(new ErrorEvent(ErrorEventManager.ERROR,"Controller.profileLoadingError.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
         	//On error the profile will be set to 0
         	this.setCurrentProfile(null);
     	}
     	catch(IOException e){
-        	this.reportErrorEvent(new ErrorEvent(3,"Controller.profileLoadingError2.text", p.getPath().toString()));
+        	this.reportErrorEvent(new ErrorEvent(ErrorEventManager.ERROR,"Controller.profileLoadingError2.text", p.getPath().toString()));
         	//On error the profile will be set to 0
         	this.setCurrentProfile(null);
     	}
     	catch(Exception e){
-    		this.reportErrorEvent(new ErrorEvent(4,"Controller.profileLoadingError3.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
+    		this.reportErrorEvent(new ErrorEvent(ErrorEventManager.CRITICAL,"Controller.profileLoadingError3.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
     		//On error the profile will be set to 0
         	this.setCurrentProfile(null);
     	}

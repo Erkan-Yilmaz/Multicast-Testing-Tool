@@ -78,7 +78,7 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
         c.addOverallSenderStatisticsUpdatedListener(this);
         
         //inform that tool was started
-        logger.info(bundle.getString("CommandLine.LoggerInitialized.text")+" "+new Date());
+        logger.info(new Date() + ": " + bundle.getString("CommandLine.LoggerInitialized.text"));
     }
 
     /**
@@ -112,7 +112,7 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
 	 */
 	public void senderAdded(SenderAddedOrRemovedEvent e) {
 		
-		logger.info(bundle.getString("CommandLine.SenderAdded.text") + "ID:" + e.getSource().getSenderId());
+		logger.info(bundle.getString("CommandLine.SenderAdded.text") + " ID:" + e.getSource().getSenderId());
 		
 	}
 
@@ -121,7 +121,7 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
 	 */
 	public void senderRemoved(SenderAddedOrRemovedEvent e) {
 		
-		logger.info(bundle.getString("CommandLine.SenderRemoved.text")  + "ID:" + e.getSource().getSenderId());
+		logger.info(bundle.getString("CommandLine.SenderRemoved.text")  + " ID:" + e.getSource().getSenderId());
 		
 	}
 	
@@ -139,7 +139,7 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
         c.removeOverallSenderStatisticsUpdatedListener(this);
 		
         //inform that tool stopped
-        logger.info(bundle.getString("CommandLine.Kill.text") + new Date());
+        logger.info(new Date() + ":" + bundle.getString("CommandLine.Kill.text"));
         
 	}
 

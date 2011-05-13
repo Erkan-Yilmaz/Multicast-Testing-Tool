@@ -27,7 +27,7 @@ public class LanguageTest implements LanguageChangeListener{
 		assertEquals(x, 1);
 		//try to add null
 		try{
-			c.addLanguageChangeListener(this);
+			c.addLanguageChangeListener(null);
 			fail("Exception not thrown");
 		}
 		catch (Exception e) {
@@ -59,7 +59,7 @@ public class LanguageTest implements LanguageChangeListener{
 		assertEquals(x, 0);
 		//try to remove null
 		try{
-			c.removeLanguageChangeListener(this);
+			c.removeLanguageChangeListener(null);
 			fail("Exception not thrown");
 		}
 		catch (Exception e) {
