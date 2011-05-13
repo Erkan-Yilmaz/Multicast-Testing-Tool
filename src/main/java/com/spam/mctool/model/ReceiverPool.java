@@ -1,7 +1,5 @@
 package com.spam.mctool.model;
 
-import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -9,19 +7,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
-import com.spam.mctool.controller.Controller;
-import com.spam.mctool.controller.ErrorEvent;
-import com.spam.mctool.controller.ErrorEventManager;
 import com.spam.mctool.intermediates.OverallReceiverStatisticsUpdatedEvent;
 import com.spam.mctool.intermediates.ReceiverAddedOrRemovedEvent;
+import com.spam.mctool.model.MulticastStream.AnalyzingBehaviour;
 
 public class ReceiverPool implements ReceiverManager {
 	
 	// internals
 	private int threadPoolSize = 5;
 	private int statsInterval = 1000;
-	private ErrorEventManager eMan;
 	private ScheduledThreadPoolExecutor stpe;
 	private List<ReceiverGroup> receiverGroups;
 	private List<ReceiverAddedOrRemovedListener> raorListeners;
@@ -39,7 +33,6 @@ public class ReceiverPool implements ReceiverManager {
 	 * Creates a new receiver pool.
 	 */
 	public ReceiverPool() {
-		eMan = Controller.getController();
 		stpe = new ScheduledThreadPoolExecutor(threadPoolSize);
 		receiverGroups = new LinkedList<ReceiverGroup>();
 		raorListeners = new LinkedList<ReceiverAddedOrRemovedListener>();
@@ -49,53 +42,31 @@ public class ReceiverPool implements ReceiverManager {
 	}
 
 	public ReceiverGroup create(Map<String, String> params) {
-		InetAddress group = null;
-		Integer port = 0;
-		NetworkInterface ninf = null;
-		MulticastStream.AnalyzingBehaviour abeh = null;
-		
-		// handle the multicast group
-		group = MulticastStream.getMulticastGroupByName(params.get("group"));
-		if(null == group) {
-			eMan.reportErrorEvent(
-				new ErrorEvent(4, "Model.ReceiverPool.create.InvalidMulticastAddress.text", "")
-			);
-			return null;
-		}
-		
-		// handle the port
-		port = MulticastStream.getPortByName(params.get("port"));
-		if(null == port) {
-			eMan.reportErrorEvent(
-				new ErrorEvent(4, "Model.ReceiverPool.create.InvalidPort.text", "")
-			);
-			return null;
-		}
-		
-		// handle the network interface
-		ninf = MulticastStream.getNetworkInterfaceByAddress(params.get("ninf"));
-		if(null == ninf) {
-			eMan.reportErrorEvent(
-				new ErrorEvent(4, "Model.ReceiverPool.create.InvalidNetworkInterface.text", "")
-			);
-			return null;
-		}
-		
-		// handle analyzing behaviour
-		abeh = MulticastStream.AnalyzingBehaviour.getByIdentifier(
-			params.get("abeh")
-		);
-		
+		boolean checksOk = true;
 		ReceiverGroup rec = new ReceiverGroup(stpe);
-		rec.setGroup(group);
-		rec.setPort(port);
-		rec.setNetworkInterface(ninf);
-		rec.setAnalyzingBehaviour(abeh);
+		checksOk &= rec.setGroup(
+			params.get("group")
+		);
+		checksOk &= rec.setPort(
+			params.get("port")
+		);
+		checksOk &= rec.setNetworkInterface(
+			params.get("ninf")
+		);
+		rec.setAnalyzingBehaviour(
+			AnalyzingBehaviour.getByIdentifier(
+				params.get("abeh")
+			)
+		);
 		rec.setStatsInterval(statsInterval);
-		receiverGroups.add(rec);
-		fireReceiverAddedEvent(rec);
 	
-		return rec;
+		if(checksOk) {
+			receiverGroups.add(rec);
+			fireReceiverAddedEvent(rec);
+			return rec;
+		} else {
+			return null;
+		}
 	}
 
 	public Collection<ReceiverGroup> getReceiverGroups() {

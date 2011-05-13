@@ -203,15 +203,53 @@ public class Sender extends MulticastStream {
 	private void fireSenderDataChangedEvent() {
 		SenderDataChangedEvent e = new SenderDataChangedEvent(this);
 		for(SenderDataChangeListener l : senderDataChangeListeners) {
-			l.dataChanged(e);
+			try {
+				l.dataChanged(e);
+			} catch(Throwable t) {
+				// Ramin handling
+			}
 		}
 	}
 	
 	/**
 	 * @param pps to send
 	 */
-	public void setSenderConfiguredPacketRate(int pps) {
-		this.senderConfiguredPacketRate = pps;
+	public boolean setSenderConfiguredPacketRate(Object pps) {
+		int pps2 = -1;
+		if(pps instanceof Integer) {
+			// number is given directly
+			pps2 = (Integer) pps;
+			return true;
+		} else if (pps instanceof String) {
+			// try to parse string argument
+			try {
+				pps2 = Integer.parseInt((String) pps);
+			} catch(NumberFormatException e) { // wrong argument was given
+				eMan.reportErrorEvent(
+					new ErrorEvent(4, "Model.Sender.PPS.Wrong.text", pps.toString())
+				);
+				return false;
+			}
+		} else {
+			eMan.reportErrorEvent(
+				new ErrorEvent(5, "Model.Sender.Fatal.text", "Error Code: Sender.setSenderConfiguredPPS.WrongArgument")
+			);
+			return false;
+		}
+		if(pps2 < 1) { // lower bound check
+			pps2 = 1;
+			eMan.reportErrorEvent(
+				new ErrorEvent(3, "Model.Sender.PPS.Wrong.text", "Corrected to 1")
+			);
+		}
+		if(pps2 > 1000) { // upper bound check
+			pps2 = 1000;
+			eMan.reportErrorEvent(
+				new ErrorEvent(3, "Model.Sender.PPS.Wrong.text", "Corrected to 1000")
+			);
+		}
+		this.senderConfiguredPacketRate = pps2;
+		return true;
 	}
 	
 	/**
@@ -273,8 +311,42 @@ public class Sender extends MulticastStream {
 	/**
 	 * @param ttl time to live of sent packets
 	 */
-	public void setTtl(int ttl) {
-		this.ttl = ttl;
+	public boolean setTtl(Object ttl) {
+		int ttl2 = -1;
+		if(ttl instanceof Integer) {
+			// number is given directly
+			ttl2 = (Integer) ttl;
+		} else if(ttl instanceof String) {
+			// try to parse string argument
+			try {
+				ttl2 = Integer.parseInt((String) ttl);
+			} catch (NumberFormatException e) {
+				eMan.reportErrorEvent(
+					new ErrorEvent(4, "Model.Sender.Ttl.Wrong.text", ttl.toString())
+				);
+				return false;
+			}
+		} else {
+			// developer error
+			eMan.reportErrorEvent(
+				new ErrorEvent(5, "Model.Sender.Fatal.text", "Error Code: Sender.setttl.WrongArgument")
+			);
+			return false;
+		}
+		if(ttl2 < 1) { // lower bound check
+			ttl2 = 1;
+			eMan.reportErrorEvent(
+				new ErrorEvent(3, "Model.Sender.Ttl.Wrong.text", "Corrected to 1")
+			);
+		}
+		if(ttl2 > 255) { // upper bound check
+			ttl2 = 255;
+			eMan.reportErrorEvent(
+				new ErrorEvent(3, "Model.Sender.Ttl.Wrong.text", "Corrected to 255")
+			);
+		}
+		this.ttl = ttl2;
+		return true;
 	}
 
 	/**
@@ -287,8 +359,42 @@ public class Sender extends MulticastStream {
 	/**
 	 * @param packetSize size of sent packets in byte
 	 */
-	public void setPacketSize(int packetSize) {
-		this.packetSize = packetSize;
+	public boolean setPacketSize(Object packetSize) {
+		int ps2 = -1;
+		if(packetSize instanceof Integer) {
+			// number is given directly
+			ps2 = (Integer) ttl;
+		} else if(packetSize instanceof String) {
+			// try to parse string argument
+			try {
+				ps2 = Integer.parseInt((String) packetSize);
+			} catch (NumberFormatException e) {
+				eMan.reportErrorEvent(
+					new ErrorEvent(4, "Model.Sender.PacketSize.Wrong.text", packetSize.toString())
+				);
+				return false;
+			}
+		} else {
+			// developer error
+			eMan.reportErrorEvent(
+				new ErrorEvent(5, "Model.Sender.Fatal.text", "Error Code: Sender.setPacketSize.WrongArgument")
+			);
+			return false;
+		}
+		if(ps2 < 1) { // lower bound check
+			ps2 = 1;
+			eMan.reportErrorEvent(
+				new ErrorEvent(3, "Model.Sender.PacketSize.Wrong.text", "Corrected to 1")
+			);
+		}
+		if(ps2 > 9000) { // upper bound check
+			ps2 = 9000;
+			eMan.reportErrorEvent(
+				new ErrorEvent(3, "Model.Sender.PacketSize.Wrong.text", "Corrected to 9000")
+			);
+		}
+		this.packetSize = ps2;
+		return true;
 	}
 
 	/**
