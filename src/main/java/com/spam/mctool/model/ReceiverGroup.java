@@ -6,6 +6,7 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.nio.ByteBuffer;
+import java.text.DecimalFormat;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -305,6 +306,13 @@ public final class ReceiverGroup extends MulticastStream {
 	 */
 	public long getLostPackets() {
 		return lostPackets;
+	}
+	
+	/**
+	 * @return percentual packet losing rate
+	 */
+	public double getLostPacketsPermille() {
+		return (double)lostPackets/(double)receivedPackets*1000.0;
 	}
 
 	/**

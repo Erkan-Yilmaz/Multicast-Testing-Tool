@@ -2,7 +2,6 @@ package com.spam.mctool.model;
 
 import java.net.InetAddress;
 import java.util.Date;
-
 import com.spam.mctool.model.MulticastStream.PacketType;
 import com.spam.mctool.model.ReceiverGroup.PacketContainer;
 import com.spam.mctool.model.packet.HirschmannPacket;
@@ -224,6 +223,13 @@ public class Receiver {
 	 */
 	public long getLostPackets() {
 		return lostPackets;
+	}
+	
+	/**
+	 * @return percentual packet losing rate
+	 */
+	public double getLostPacketsPermille() {
+		return (double)lostPackets/(double)receivedPackets*1000.0;
 	}
 
 	/**

@@ -125,9 +125,9 @@ public class Sender extends MulticastStream {
 			lastSent = nowSent;
 			lastSentPacketNo = sentPacketCount;
 		} catch (Exception e) {
-			eMan.reportErrorEvent(
-				new ErrorEvent(5, "Model.Sender.run.PacketCouldNoBeSent", "")
-			);
+			//eMan.reportErrorEvent(
+			//	new ErrorEvent(5, "Model.Sender.run.PacketCouldNoBeSent", "")
+			//);
 		}
 	}
 	
@@ -219,7 +219,6 @@ public class Sender extends MulticastStream {
 		if(pps instanceof Integer) {
 			// number is given directly
 			pps2 = (Integer) pps;
-			return true;
 		} else if (pps instanceof String) {
 			// try to parse string argument
 			try {
