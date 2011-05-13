@@ -184,12 +184,102 @@ public class SenderTableModelTest {
      * Test of dataChanged method, of class SenderTableModel.
      */
     @Test
-    public void testDataChanged() {
-        SenderDataChangedEvent e        = null;
-        SenderTableModel       instance = new SenderTableModel();
-        instance.dataChanged(e);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testDataChanged() throws Exception {
+        
+        SenderTableModel instance = new SenderTableModel();
+
+        // Generate a few mocked senders and according sender removal events
+        List<Sender> mockedSenders = new ArrayList<Sender>();
+        List<SenderAddedOrRemovedEvent> events = new ArrayList<SenderAddedOrRemovedEvent>();
+        Sender mockedSender;
+        for(int i=0; i<SENDER_COUNT; i++) {
+            mockedSender = mock(Sender.class);
+            when(mockedSender.getSenderId()) .thenReturn(667788 + i);
+            when(mockedSender.getPort())     .thenReturn(12345 + i);
+            when(mockedSender.getGroup())    .thenReturn(InetAddress.getByName("225.1.1." + (i)));
+            when(mockedSender.getSenderConfiguredPacketRate()).thenReturn(100*i);
+            when(mockedSender.getAvgPPS())   .thenReturn(89l*i);
+            when(mockedSender.getMinPPS())   .thenReturn(10l*i);
+            when(mockedSender.getMaxPPS())   .thenReturn(105l*i);
+            mockedSenders.add(mockedSender);
+            events.add(new SenderAddedOrRemovedEvent(mockedSender));
+        }
+
+        //----------------------- Remove a single Sender -----------------------
+
+        // Add a single sender to the table model
+        instance.senderAdded(events.get(0));
+
+        // Remove it again
+        instance.senderRemoved(events.get(0));
+
+        // Check removal
+        Vector expected = new Vector();
+        Vector actual   = instance.getDataVector();
+        assertEquals(expected, actual);
+        assertEquals(0l, instance.getRowCount());
+
+        //----------------------- Remove the last sender -----------------------
+
+        // Add a few senders to the table model
+        instance.senderAdded(events.get(0));
+        instance.senderAdded(events.get(1));
+        instance.senderAdded(events.get(2));
+        instance.senderAdded(events.get(3));
+
+        // Remove the last one from the model
+        instance.senderRemoved(events.get(3));
+
+        // Construct the expected data vector
+        expected = new Vector();
+        Vector expectedRow;
+        for(int i=0; i<3; i++) {
+            expectedRow = new Vector();
+            expectedRow.add(mockedSenders.get(i));
+            expectedRow.add(667788+i);
+            expectedRow.add(12345+i);
+            expectedRow.add("225.1.1." + (i));
+            expectedRow.add(100*i);
+            expectedRow.add(89l*i);
+            expectedRow.add(10l*i);
+            expectedRow.add(105l*i);
+            expected.add(expectedRow);
+        }
+        actual = instance.getDataVector();
+        assertEquals(expected, actual);
+
+        //---------------------- Remove the first sender -----------------------
+
+        // remove the first sender from the above model
+        instance.senderRemoved(events.get(0));
+
+        // construct the expected data vector
+        expected = new Vector();
+        for(int i=1; i<3; i++) {
+            expectedRow = new Vector();
+            expectedRow.add(mockedSenders.get(i));
+            expectedRow.add(667788+i);
+            expectedRow.add(12345+i);
+            expectedRow.add("225.1.1." + (i));
+            expectedRow.add(100*i);
+            expectedRow.add(89l*i);
+            expectedRow.add(10l*i);
+            expectedRow.add(105l*i);
+            expected.add(expectedRow);
+        }
+        actual = instance.getDataVector();
+        assertEquals(expected, actual);
+
+        //------------------- Remove a sender not in the list ------------------
+
+        // this case should throw an exception
+        try {
+            instance.senderRemoved(events.get(4));
+        } catch (Exception ex) {
+            assertTrue(ex instanceof RuntimeException);
+        }
+
+
     }
 
     /**

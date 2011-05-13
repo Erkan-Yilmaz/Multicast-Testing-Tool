@@ -408,6 +408,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         buActivateSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/play_green.png"))); // NOI18N
         buActivateSender.setText(bundle.getString("MainFrame.buActivateSender.text")); // NOI18N
+        buActivateSender.setToolTipText(bundle.getString("MainFrame.buActivateSender.toolTipText")); // NOI18N
         buActivateSender.setEnabled(false);
         buActivateSender.setName("buActivateSender"); // NOI18N
         buActivateSender.addActionListener(new java.awt.event.ActionListener() {
@@ -419,6 +420,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         buDeactivateSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/stop_red.png"))); // NOI18N
         buDeactivateSender.setText(bundle.getString("MainFrame.buDeactivateSender.text")); // NOI18N
+        buDeactivateSender.setToolTipText(bundle.getString("MainFrame.buDeactivateSender.toolTipText")); // NOI18N
         buDeactivateSender.setEnabled(false);
         buDeactivateSender.setName("buDeactivateSender"); // NOI18N
         buDeactivateSender.addActionListener(new java.awt.event.ActionListener() {
@@ -430,6 +432,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         buAddSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add_green.png"))); // NOI18N
         buAddSender.setText(bundle.getString("MainFrame.buAddSender.text")); // NOI18N
+        buAddSender.setToolTipText(bundle.getString("MainFrame.buAddSender.toolTipText")); // NOI18N
         buAddSender.setName("buAddSender"); // NOI18N
         buAddSender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -440,6 +443,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         buShowSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/preview.png"))); // NOI18N
         buShowSender.setText(bundle.getString("MainFrame.buShowSender.text")); // NOI18N
+        buShowSender.setToolTipText(bundle.getString("MainFrame.buShowSender.toolTipText")); // NOI18N
         buShowSender.setEnabled(false);
         buShowSender.setName("buShowSender"); // NOI18N
         buShowSender.addActionListener(new java.awt.event.ActionListener() {
@@ -451,6 +455,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         buEditSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
         buEditSender.setText(bundle.getString("MainFrame.buEditSender.text")); // NOI18N
+        buEditSender.setToolTipText(bundle.getString("MainFrame.buEditSender.toolTipText")); // NOI18N
         buEditSender.setEnabled(false);
         buEditSender.setName("buEditSender"); // NOI18N
         buEditSender.addActionListener(new java.awt.event.ActionListener() {
@@ -462,6 +467,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         buDeleteSender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
         buDeleteSender.setText(bundle.getString("MainFrame.buDeleteSender.text")); // NOI18N
+        buDeleteSender.setToolTipText(bundle.getString("MainFrame.buDeleteSender.toolTipText")); // NOI18N
         buDeleteSender.setEnabled(false);
         buDeleteSender.setName("buDeleteSender"); // NOI18N
         buDeleteSender.addActionListener(new java.awt.event.ActionListener() {
@@ -615,6 +621,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         buActivateReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/play_green.png"))); // NOI18N
         buActivateReceiver.setText(bundle.getString("MainFrame.buActivateReceiver.text")); // NOI18N
+        buActivateReceiver.setToolTipText(bundle.getString("MainFrame.buActivateReceiver.toolTipText")); // NOI18N
         buActivateReceiver.setEnabled(false);
         buActivateReceiver.setName("buActivateReceiver"); // NOI18N
         buActivateReceiver.addActionListener(new java.awt.event.ActionListener() {
@@ -626,6 +633,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         buDeactivateReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/stop_red.png"))); // NOI18N
         buDeactivateReceiver.setText(bundle.getString("MainFrame.buDeactivateReceiver.text")); // NOI18N
+        buDeactivateReceiver.setToolTipText(bundle.getString("MainFrame.buDeactivateReceiver.toolTipText")); // NOI18N
         buDeactivateReceiver.setEnabled(false);
         buDeactivateReceiver.setName("buDeactivateReceiver"); // NOI18N
         buDeactivateReceiver.addActionListener(new java.awt.event.ActionListener() {
@@ -637,6 +645,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         buAddReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add_green.png"))); // NOI18N
         buAddReceiver.setText(bundle.getString("MainFrame.buAddReceiver.text")); // NOI18N
+        buAddReceiver.setToolTipText(bundle.getString("MainFrame.buAddReceiver.toolTipText")); // NOI18N
         buAddReceiver.setName("buAddReceiver"); // NOI18N
         buAddReceiver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -647,6 +656,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         buShowReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/preview.png"))); // NOI18N
         buShowReceiver.setText(bundle.getString("MainFrame.buShowReceiver.text")); // NOI18N
+        buShowReceiver.setToolTipText(bundle.getString("MainFrame.buShowReceiver.toolTipText")); // NOI18N
         buShowReceiver.setEnabled(false);
         buShowReceiver.setName("buShowReceiver"); // NOI18N
         buShowReceiver.addActionListener(new java.awt.event.ActionListener() {
@@ -658,6 +668,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         buEditReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit.png"))); // NOI18N
         buEditReceiver.setText(bundle.getString("MainFrame.buEditReceiver.text")); // NOI18N
+        buEditReceiver.setToolTipText(bundle.getString("MainFrame.buEditReceiver.toolTipText")); // NOI18N
         buEditReceiver.setEnabled(false);
         buEditReceiver.setName("buEditReceiver"); // NOI18N
         buEditReceiver.addActionListener(new java.awt.event.ActionListener() {
@@ -669,6 +680,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         buDeleteReceiver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
         buDeleteReceiver.setText(bundle.getString("MainFrame.buDeleteReceiver.text")); // NOI18N
+        buDeleteReceiver.setToolTipText(bundle.getString("MainFrame.buDeleteReceiver.toolTipText")); // NOI18N
         buDeleteReceiver.setEnabled(false);
         buDeleteReceiver.setName("buDeleteReceiver"); // NOI18N
         buDeleteReceiver.addActionListener(new java.awt.event.ActionListener() {

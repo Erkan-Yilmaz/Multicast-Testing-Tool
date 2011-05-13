@@ -6,11 +6,13 @@ import com.spam.mctool.intermediates.ReceiverDataChangedEvent;
 import com.spam.mctool.model.Receiver;
 import com.spam.mctool.model.ReceiverGroup;
 import com.spam.mctool.view.main.TwoColorRenderer;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.swing.JTable;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
@@ -247,6 +249,19 @@ public class JReceiverTable extends JTable {
         } else {
             throw new IllegalArgumentException("Illegal data model type: " + dataModel.getClass().getCanonicalName() + ". Must be of type ReceiverTableModel.");
         }
+    }
+
+    @Override
+    protected JTableHeader createDefaultTableHeader() {
+        return new JTableHeader(columnModel) {
+            public String getToolTipText(MouseEvent e) {
+                String tip = null;
+                java.awt.Point p = e.getPoint();
+                int index = columnModel.getColumnIndexAtX(p.x);
+                int realIndex = columnModel.getColumn(index).getModelIndex();
+                return ReceiverTableColumn.values()[realIndex].getToolTip();
+            }
+        };
     }
 
 }
