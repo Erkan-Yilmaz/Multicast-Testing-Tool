@@ -129,7 +129,7 @@ public class ErrorEvent {
 		String localizedErrorMessage = this.getLocalizedMessage();
 		//if we have no identifier, print the additional message
 		if(localizedErrorMessage.compareTo("") == 0 || localizedErrorMessage == null){
-			return getAdditionalErrorMessage();
+			return this.localizedMessageIdentifier + ": " + getAdditionalErrorMessage();
 		}
 		//if the additional message is empty, print the localized version only
 		if(additionalErrorMessage.compareTo("") == 0){

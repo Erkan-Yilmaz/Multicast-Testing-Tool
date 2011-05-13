@@ -2,7 +2,7 @@ package com.spam.mctool.controller;
 
 import java.io.File;
 
-public class Profile {
+final public class Profile {
 	/**
 	 * The profile name.
 	 */
@@ -92,5 +92,14 @@ public class Profile {
 		else{
 			return false;
 		}
+	}
+	
+	/**
+	 * This function creates the hashCode by using the hashCode of the path.
+	 * @return hashCode for the object
+	 */
+	public int hashCode() {
+		//Create the hash value
+		return this.path.hashCode();
 	}
 }
