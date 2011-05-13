@@ -121,7 +121,7 @@ public class GraphicalView implements MctoolView,
 
         // create the main frame and error dialog
         mainFrame = new MainFrame(this);
-        errorDialog = new ErrorDialog(mainFrame, false);
+        errorDialog = new ErrorDialog(mainFrame, true);
 
         // bulk load existing receivers and senders to the view by simulating
         // sender and receiver addition events. This will also automatically
@@ -306,9 +306,11 @@ public class GraphicalView implements MctoolView,
     }
 
     public void newErrorEvent(final ErrorEvent e) {
-        if(!errorDialog.isVisible()) {
-            errorDialog.setVisible(true);
-        }
+        new Thread(new Runnable() { public void run() {
+            if(!errorDialog.isVisible()) {
+                errorDialog.setVisible(true);
+            }
+        }}).start();
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 errorDialog.dataChanged(e);
