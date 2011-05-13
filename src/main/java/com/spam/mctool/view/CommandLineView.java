@@ -1,5 +1,6 @@
 package com.spam.mctool.view;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import org.apache.log4j.*;
@@ -43,7 +44,7 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
 		
 		//logger writes to file
 		try {
-			FileAppender fa = new FileAppender(layout, "log.txt");
+			FileAppender fa = new FileAppender(layout, new File(System.getProperty("java.io.tmpdir"), "log.txt").getAbsolutePath());
 			logger.addAppender(fa);
 		} catch (IOException e) {
 			
