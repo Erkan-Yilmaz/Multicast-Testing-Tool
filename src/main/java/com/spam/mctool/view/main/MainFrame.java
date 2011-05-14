@@ -6,6 +6,9 @@
 
 package com.spam.mctool.view.main;
 
+import java.util.ResourceBundle;
+import javax.swing.JOptionPane;
+import java.awt.Component;
 import javax.swing.AbstractAction;
 import java.awt.event.KeyEvent;
 import javax.swing.KeyStroke;
@@ -816,6 +819,11 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         miHelp.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         miHelp.setText(bundle.getString("MainFrame.miHelp.text")); // NOI18N
+        miHelp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miHelpActionPerformed(evt);
+            }
+        });
         menuHelp.add(miHelp);
 
         menuBar.add(menuHelp);
@@ -1089,6 +1097,17 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     private void miDeleteReceiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miDeleteReceiverActionPerformed
         buDeleteReceiverActionPerformed(evt);
     }//GEN-LAST:event_miDeleteReceiverActionPerformed
+
+    private void miHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miHelpActionPerformed
+        ResourceBundle bundle = ResourceBundle.getBundle("internationalization/Bundle");
+
+        Component parent      = this;
+        String    message     = bundle.getString("MainFrame.help.message");
+        String    title       = bundle.getString("MainFrame.help.title");
+        int       messageType = JOptionPane.PLAIN_MESSAGE;
+
+        JOptionPane.showMessageDialog(parent, message, title, messageType);
+    }//GEN-LAST:event_miHelpActionPerformed
 
     /**
     * @param args the command line arguments
