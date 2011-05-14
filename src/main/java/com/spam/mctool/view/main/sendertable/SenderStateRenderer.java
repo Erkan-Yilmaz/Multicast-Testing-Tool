@@ -16,7 +16,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 /**
- *
+ * Renderer that displays icons representing the sender's state.
  * @author Tobias
  */
 public class SenderStateRenderer extends javax.swing.JPanel implements TableCellRenderer {
