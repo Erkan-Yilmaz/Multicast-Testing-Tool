@@ -54,7 +54,7 @@ public class JReceiverTable extends JTable {
     /**
      * Creates and initializes a new JReceiverTable based on the passed
      * ReceiverTableModel.
-     * @param model
+     * @param model the table's model
      */
     public JReceiverTable(ReceiverTableModel model) {
         super(model);
@@ -90,9 +90,6 @@ public class JReceiverTable extends JTable {
      * <p>For table rows representing receivers, the default renders defined during
      * initialization will be returned. For table rows representing receiver groups,
      * a special renderer with folding capabilities will be returned.</p>
-     * @param row
-     * @param column
-     * @return
      */
     @Override
     public TableCellRenderer getCellRenderer(int row, int column) {
@@ -240,7 +237,7 @@ public class JReceiverTable extends JTable {
      * Proxy method to minimize the chances, that the table will be fed a
      * non-ReceiverTableModel as data model. Unfortunately won't prevent this
      * during compile time but only at runtime.
-     * @param dataModel
+     * @param dataModel the table's model
      */
     @Override
     public void setModel(TableModel dataModel) {
@@ -251,6 +248,12 @@ public class JReceiverTable extends JTable {
         }
     }
 
+
+
+    /**
+     * This method addds custom tooltips to the table header.
+     * @return the modified table header
+     */
     @Override
     protected JTableHeader createDefaultTableHeader() {
         return new JTableHeader(columnModel) {
