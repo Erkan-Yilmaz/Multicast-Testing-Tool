@@ -51,49 +51,49 @@ import javax.swing.JMenuItem;
 import javax.swing.event.ListSelectionEvent;
 import static javax.swing.JComponent.*;
 
+
+
 /**
+ * The main frame of the application. This class encapsulates all of the main frames
+ * components and actions.
  *
- * @author Tobias Stöckel (Tobias.Stoeckel@de.ibm.com)
+ * Note that this class has been created with heavy use of the netbeans gui builder.
+ *
+ * @author Tobias Stöckel
  */
 public class MainFrame extends javax.swing.JFrame implements javax.swing.event.ListSelectionListener {
 
     private static final long serialVersionUID = 1L;
 
-    private class DeleteReceiverAction extends AbstractAction {
-
-        public DeleteReceiverAction() {
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            if(buDeleteReceiver.isEnabled()) {
-                buDeleteReceiverActionPerformed(e);
-            }
-        }
-    }
-
-    private class DeleteSenderAction extends AbstractAction {
-
-        public DeleteSenderAction() {
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            if(buDeleteSender.isEnabled()) {
-                buDeleteSenderActionPerformed(e);
-            }
-        }
-    }
+    /**
+     * backward reference to the view controller
+     */
     private GraphicalView view;
 
-    /** Creates new form MainFrame */
+
+
+    /**
+     * Create and initialize the main frame. Parameterless constructor for
+     * netbeans gui builder support. You shouldn't use this constructor
+     * normally. You should use <code>MainFrame(GraphicalView view)</code> instead.
+     */
     public MainFrame() {
         this(null);
     }
 
+
+
+    /**
+     * Creates and initializes the main frame with the specified view controller.
+     * @param view
+     */
     public MainFrame(GraphicalView view) {
         this.view = view;
         initComponents();
         initCustomComponents();
     }
+
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -859,7 +859,8 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     }//GEN-LAST:event_buActivateSenderActionPerformed
 
     /**
-     * assumption: there is only one row selected!
+     * assumption: there is only one row selected! This should be assured by
+     * enabling/disabling controls beforehand.
      * @param evt
      */
     private void buShowSenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buShowSenderActionPerformed
@@ -1117,7 +1118,6 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
             public void run() {
                 MainFrame frame = new MainFrame();
                 frame.setVisible(true);
-                frame.test();
             }
         });
     }
@@ -1203,14 +1203,24 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
     private com.spam.mctool.view.main.TwoColorRenderer twoColorRenderer1;
     // End of variables declaration//GEN-END:variables
 
-    // Custom variables declaration
+
+
+    /**
+     * the file chooser used for opening profiles
+     */
     private JFileChooser chooser;
+
+    /**
+     * action for deleting senders via del key
+     */
     Action  deleteSenderAction;
+
+    /**
+     * action for deleting receivers via del key
+     */
     Action  deleteReceiverAction;
 
-    private void test() {
-        ReceiverTableModel tableModel = (ReceiverTableModel)receiverTable.getModel();
-    }
+
 
     /**
      * Tells the GUI controller to create a new sender and optionally activate it
@@ -1227,33 +1237,66 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         return this.view.addSender(senderMap, activate);
     }
 
+
+
+    /**
+     * Forwards a sender addition event to the sender table.
+     */
     public void senderAdded(SenderAddedOrRemovedEvent e) {
         senderTable.senderAdded(e);
     }
 
+
+
+    /**
+     * Forwards a sender removal event to the sender table.
+     */
     public void senderRemoved(SenderAddedOrRemovedEvent e) {
         senderTable.senderRemoved(e);
     }
 
+
+
+    /**
+     * Forwards a change in sender data to the sender table.
+     */
     public void dataChanged(SenderDataChangedEvent e) {
 
         // update the sender table
         senderTable.dataChanged(e);
     }
 
+
+
+    /**
+     * Forwards a receiver addition event to the receiver table.
+     */
     public void receiverGroupAdded(ReceiverAddedOrRemovedEvent e) {
         receiverTable.receiverGroupAdded(e);
     }
 
+
+
+    /**
+     * Forwards a receiver removal event to the receiver table.
+     * @param e
+     */
     public void receiverGroupRemoved(ReceiverAddedOrRemovedEvent e) {
         receiverTable.receiverGroupRemoved(e);
     }
 
+
+
+    /**
+     * Forwards a change in receiver data to the receiver table
+     */
     public void dataChanged(ReceiverDataChangedEvent e) {
 
         // update the receiver table
         receiverTable.dataChanged(e);
     }
+
+
 
     /**
      * Tells the GUI controller to add a receiver group to this view's
@@ -1271,6 +1314,15 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         return this.view.addReceiverGroup(receiverMap, activate);
     }
 
+
+
+    /**
+     * This method is called by the tables if their selection changes eg. because
+     * of user interaction. It makes sure that the correct buttons and menu
+     * items are enabled for that selection. Also makes sure that there are only
+     * rows in one of the table selected.
+     * @param e
+     */
     public void valueChanged(ListSelectionEvent e) {
         if(e.getSource() == senderTable.getSelectionModel()) {
             refreshSenderControls();
@@ -1285,6 +1337,12 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         }
     }
 
+
+
+    /**
+     * refresh all the buttons and menu items related to sender modification. State
+     * is determined by the current selection in the sender table.
+     */
     private void refreshSenderControls() {
         int rc = senderTable.getSelectedRowCount();
         if(rc == 0) {
@@ -1332,6 +1390,12 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         }
     }
 
+
+
+    /**
+     * refresh all the buttons and menu items related to receiver modification. State
+     * is determined by the current selection in the receiver table.
+     */
     private void refreshReceiverControls() {
         int rowCount = receiverTable.getSelectedRowCount();
 
@@ -1380,6 +1444,12 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         }
     }
 
+
+
+    /**
+     * Notify the frame that the current profile has changed. Adjust the frame
+     * title accordingly and enable or disable the "Save Profile" menu item
+     */
     public void profileChanged(ProfileChangeEvent e) {
         setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("MainFrame.title") + ((view.getCurrentProfile() != null && view.getCurrentProfile().getName() != null) ? " - " + view.getCurrentProfile().getName() : ""));
         if(view.getCurrentProfile() != null) {
@@ -1389,6 +1459,11 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         }
     }
 
+
+
+    /**
+     * Refresh the list of recent profiles in the File menu
+     */
     private void loadRecentProfiles() {
         javax.swing.JMenuItem miRecentProfile;
         
@@ -1441,6 +1516,11 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         }
     }
 
+
+
+    /**
+     * Notify the frame that overall receiver statistics have updated.
+     */
     public void overallReceiverStatisticsUpdated(OverallReceiverStatisticsUpdatedEvent e) {
         ReceiverManager rm = e.getSource();
         laReceived.setText(Long.toString(rm.getOverallReceivedPackets()));
@@ -1449,20 +1529,71 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
         laFaultyPackets.setText(Long.toString(rm.getOverallFaultyPackets()));
     }
 
+
+
+    /**
+     * Notify the frame that overall sender statistics have updated.
+     */
     public void overallSenderStatisticsUpdated(OverallSenderStatisticsUpdatedEvent e) {
         SenderManager sm = e.getSource();
         laSent.setText(Long.toString(sm.getOverallSentPackets()));
         laSenderRate.setText(Long.toString(sm.getOverallSentPPS()));
     }
 
+
+
+    /**
+     * Initialize all components not included in the <code>initComponents</code>
+     * method. Those initializations are done here because <code>initComponents</code>
+     * is auto-generated by netbeans and may not be edited.
+     */
     private void initCustomComponents() {
+
+        // create a central instance of file chooser to speed up its display
         chooser = new JFileChooser();
+
+        // register the delete sender and receiver actions with the del key
         deleteReceiverAction = new DeleteReceiverAction();
         deleteSenderAction   = new DeleteSenderAction();
         senderTable.  getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "deleteSender");
         senderTable.  getActionMap().put("deleteSender", deleteSenderAction);
         receiverTable.getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "deleteReceiver");
         receiverTable.getActionMap().put("deleteReceiver", deleteReceiverAction);
+    }
+
+
+
+    /**
+     * Action for deleting receivers. Needed for being able to do so via the
+     * delete key.
+     */
+    private class DeleteReceiverAction extends AbstractAction {
+
+        public DeleteReceiverAction() {
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            if(buDeleteReceiver.isEnabled()) {
+                buDeleteReceiverActionPerformed(e);
+            }
+        }
+    }
+
+
+
+    /**
+     * Action for deleting senders. Needed for being able to do so via the delete key.
+     */
+    private class DeleteSenderAction extends AbstractAction {
+
+        public DeleteSenderAction() {
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            if(buDeleteSender.isEnabled()) {
+                buDeleteSenderActionPerformed(e);
+            }
+        }
     }
 
 
