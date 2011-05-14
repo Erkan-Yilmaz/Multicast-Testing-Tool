@@ -1,28 +1,36 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * AboutDialog.java
  *
  * Created on 20.04.2011, 15:04:58
  */
 
+
+
 package com.spam.mctool.view.dialogs;
 
+
+
 /**
- *
- * @author Tobias
+ * This dialog displays general information (version, ...) about the application.
+ * @author Tobias Stöckel
  */
 public class AboutDialog extends javax.swing.JDialog {
 
-    /** Creates new form AboutDialog */
+
+
+    /** Creates the AboutDialog */
     public AboutDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
 
+
+
+    /**
+     * Overrides JDialog's <code>setVisible</code> method in order to center the
+     * dialog relative to its parent (usually the main frame).
+     * @param visible true: show and center the dialog. false: hide the dialog
+     */
     @Override
     public void setVisible(boolean visible) {
         com.spam.mctool.view.main.MainFrame parent = (com.spam.mctool.view.main.MainFrame)getParent();
@@ -53,6 +61,8 @@ public class AboutDialog extends javax.swing.JDialog {
         setBounds(loc.x, loc.y, size.width, size.height);
         super.setVisible(visible);
     }
+
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -119,26 +129,17 @@ public class AboutDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
+
+    /**
+     * Hide the dialog.
+     * @param evt the event causing this action
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AboutDialog dialog = new AboutDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;

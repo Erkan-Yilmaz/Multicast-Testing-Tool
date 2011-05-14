@@ -90,6 +90,13 @@ public class EditReceiverDialog extends javax.swing.JDialog {
         }
     }
 
+
+
+    /**
+     * Overrides JDialog's <code>setVisible</code> method in order to center the
+     * dialog relative to its parent (usually the main frame).
+     * @param visible true: show and center the dialog. false: hide the dialog
+     */
     @Override
     public void setVisible(boolean visible) {
         com.spam.mctool.view.main.MainFrame parent = (com.spam.mctool.view.main.MainFrame)getParent();

@@ -10,6 +10,8 @@ import com.spam.mctool.controller.Profile;
 import com.spam.mctool.view.main.MainFrame;
 import java.io.File;
 
+
+
 /**
  * A dialog window for saving a multicast streaming profile. This class displays
  * a dialog containing standard file choosing elements, as well as an additional
@@ -41,6 +43,8 @@ public class SaveProfileDialog extends javax.swing.JDialog {
      */
     private File   selectedFile;
 
+
+
     /**
      * Creates a SaveProfileDialog with the specified parent frame and modality.
      * @param parent the owner of this dialog
@@ -51,6 +55,18 @@ public class SaveProfileDialog extends javax.swing.JDialog {
         initComponents();
     }
 
+
+
+    /**
+     * Create and initialize the save dialog. If a profile is passed, its name
+     * and will be entered as default value in the dialog. If no profile is passed
+     * sensible default values will be entered to the dialog. The default values
+     * may be changed using the Netbeans gui builder.
+     * @param parent the parent of the dialog
+     * @param modal whether to make it modal
+     * @param currentProfile the profile whose properties are to be inserted as
+     * default values
+     */
     public SaveProfileDialog(java.awt.Frame parent, boolean modal, Profile currentProfile) {
         this(parent, modal);
         if(currentProfile != null) {
@@ -59,6 +75,13 @@ public class SaveProfileDialog extends javax.swing.JDialog {
         }
     }
 
+
+
+    /**
+     * Overrides JDialog's <code>setVisible</code> method in order to center the
+     * dialog relative to its parent (usually the main frame).
+     * @param visible true: show and center the dialog. false: hide the dialog
+     */
     @Override
     public void setVisible(boolean visible) {
         com.spam.mctool.view.main.MainFrame parent = (com.spam.mctool.view.main.MainFrame)getParent();
@@ -89,6 +112,8 @@ public class SaveProfileDialog extends javax.swing.JDialog {
         setBounds(loc.x, loc.y, size.width, size.height);
         super.setVisible(visible);
     }
+
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -149,6 +174,8 @@ public class SaveProfileDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
+
     /**
      * This method will be invoked if the user either confirms (by pressing
      * Enter or the OK-button) or cancels the file selection. It stores the
@@ -165,24 +192,7 @@ public class SaveProfileDialog extends javax.swing.JDialog {
 
     }//GEN-LAST:event_jFileChooserActionPerformed
 
-    /**
-     * Main method for testing purposes.
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                SaveProfileDialog dialog = new SaveProfileDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFileChooser jFileChooser;
@@ -190,8 +200,10 @@ public class SaveProfileDialog extends javax.swing.JDialog {
     private javax.swing.JTextField txtProfileName;
     // End of variables declaration//GEN-END:variables
 
+
+
     /**
-     * Returns the way the user ended the dialog selection. This could either
+     * Returns the way the user ended the dialog selection. This could either be
      * an approval of the selected file and profile name or a cancellation of
      * the process. The returned constant will be one of
      * JFileChooser.APPROVE_SELECTION and JFileChooser.CANCEL_SELECTION.
@@ -202,6 +214,8 @@ public class SaveProfileDialog extends javax.swing.JDialog {
         return selection;
     }
 
+
+
     /**
      * Returns the profile name specified by the user in the dialog.
      * @return The specified profile name.
@@ -209,6 +223,8 @@ public class SaveProfileDialog extends javax.swing.JDialog {
     public String getProfileName() {
         return profileName;
     }
+
+
 
     /**
      * Returns the file path as selected by the user. The file path is wrapped

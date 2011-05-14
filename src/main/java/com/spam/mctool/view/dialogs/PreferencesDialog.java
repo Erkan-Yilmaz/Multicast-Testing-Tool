@@ -1,9 +1,4 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * PreferencesDialog.java
  *
  * Created on 20.04.2011, 15:39:26
@@ -17,19 +12,35 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import javax.swing.JFrame;
 
+
+
 /**
- *
- * @author Tobias
+ * Dialog for setting the application's settings. At the moment this only
+ * includes the language.
+ * @author Tobias Stöckel
  */
 public class PreferencesDialog extends javax.swing.JDialog {
+    
+    /**
+     * Store the user's selection whether to apply or discard the changes made in
+     * the dialog.
+     */
     private Selection selection;
 
-    public Selection getSelection() {
-        return selection;
-    }
+    /**
+     * Store the dialog's parent
+     */
+    private MainFrame parent;
+    
+    /**
+     * Store whether the language was changed by the user
+     */
+    private boolean languageChanged = false;
+
+
 
     /**
-     * wraps a Locale for the combo box
+     * wraps a Locale to be an item for the combo box
      */
     private static class LocaleItem {
         private final Locale locale;
@@ -48,21 +59,36 @@ public class PreferencesDialog extends javax.swing.JDialog {
         }
     }
 
-    private MainFrame parent;
-    private boolean languageChanged = false;
 
-    /** Creates new form PreferencesDialog */
+
+    /**
+     * Chained constructor to create a new preferences dialog
+     */
     private PreferencesDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         loadData();
     }
 
+
+
+    /**
+     * Create and initialize the preferences dialog.
+     * @param parent the dialog's parent
+     * @param modal whether to make the dialog modal
+     */
     public PreferencesDialog(MainFrame parent, boolean modal) {
         this((JFrame)parent, modal);
         this.parent = parent;
     }
 
+
+
+    /**
+     * Overrides JDialog's <code>setVisible</code> method in order to center the
+     * dialog relative to its parent (usually the main frame).
+     * @param visible true: show and center the dialog. false: hide the dialog
+     */
     @Override
     public void setVisible(boolean visible) {
         com.spam.mctool.view.main.MainFrame parent = (com.spam.mctool.view.main.MainFrame)getParent();
@@ -93,6 +119,8 @@ public class PreferencesDialog extends javax.swing.JDialog {
         setBounds(loc.x, loc.y, size.width, size.height);
         super.setVisible(visible);
     }
+
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -173,36 +201,37 @@ public class PreferencesDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
+
+    /**
+     * Mark the dialog as approved and close it
+     */
     private void buOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buOkActionPerformed
         selection = Selection.APPROVE_SELECTION;
         dispose();
     }//GEN-LAST:event_buOkActionPerformed
 
+
+
+    /**
+     * Mark the dialog as disapproved and close it.
+     */
     private void buCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buCancelActionPerformed
         selection = Selection.DISCARD_SELECTION;
         dispose();
     }//GEN-LAST:event_buCancelActionPerformed
 
-    private void cbLanguageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbLanguageActionPerformed
-        
-    }//GEN-LAST:event_cbLanguageActionPerformed
+
 
     /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                PreferencesDialog dialog = new PreferencesDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
+     * Remember that the user performed an action on the combo box, so the
+     * language may have changed.
+     */
+    private void cbLanguageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbLanguageActionPerformed
+        languageChanged = true;
+    }//GEN-LAST:event_cbLanguageActionPerformed
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buCancel;
@@ -211,6 +240,12 @@ public class PreferencesDialog extends javax.swing.JDialog {
     private javax.swing.JLabel laLanguage;
     // End of variables declaration//GEN-END:variables
 
+
+
+    /**
+     * Load the dialog's initial data. At the moment this means determining
+     * for which locales there exist translations and list those in the combobox.
+     */
     private void loadData() {
         for(Locale l : Locale.getAvailableLocales()) {
             ResourceBundle bundle = ResourceBundle.getBundle("internationalization/Bundle", l);
@@ -224,12 +259,33 @@ public class PreferencesDialog extends javax.swing.JDialog {
         }
     }
 
+
+
     /**
-     * returns the localized name of the language selected in the combo box
-     * @return
+     * Returns the locale selected in the combo box
      */
     public Locale getSelectedLocale() {
         return ((LocaleItem)cbLanguage.getSelectedItem()).getLocale();
+    }
+
+
+
+    /**
+     * Returns the user's selection whether to apply or discard the changes made in
+     * the dialog.
+     */
+    public Selection getSelection() {
+        return selection;
+    }
+
+
+
+    /**
+     * Returns whether the language might have changed during user interaction
+     * @return
+     */
+    public boolean isLanguageChanged() {
+        return languageChanged;
     }
 
 }
