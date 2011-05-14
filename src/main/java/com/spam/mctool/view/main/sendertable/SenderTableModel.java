@@ -6,6 +6,8 @@ import com.spam.mctool.model.Sender;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 
+
+
 /**
  * An extension to the DefaultTableModel for use with a JTable. The
  * SenderTableModel encapsulates the configuration of a DefaultTableModel
@@ -16,6 +18,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class SenderTableModel extends DefaultTableModel {
 
+
+
     /**
      * Constructs an empty SenderTableModel and initializes it with a default
      * set of columns specific to Sender representation.
@@ -24,6 +28,8 @@ public class SenderTableModel extends DefaultTableModel {
         super();
         init();
     }
+
+
 
     /**
      * Initializes this SenderTableModel with a set of columns specific to
@@ -34,6 +40,8 @@ public class SenderTableModel extends DefaultTableModel {
             this.addColumn(col.getCaption());
         }
     }
+
+
 
     /**
      * Adds a Sender to this table model. The JTable connected to this model
@@ -63,6 +71,8 @@ public class SenderTableModel extends DefaultTableModel {
         }
     }
 
+
+
     /**
      * Updates the table with the specified Sender's data. This will generate a
      * TableRowsUpdated event to update the JTable.
@@ -87,6 +97,8 @@ public class SenderTableModel extends DefaultTableModel {
         }
     }
     
+
+
     /**
      * Removes a Sender's representation from this table model. Throws a
      * RuntimeException, if the sender e is not found in the table model.
@@ -102,6 +114,8 @@ public class SenderTableModel extends DefaultTableModel {
             throw new RuntimeException("Sender " + s + " not in list.");
         }
     }
+
+
 
     /**
      * Searches the representation of a given Sender in this table model. Scans
@@ -124,6 +138,8 @@ public class SenderTableModel extends DefaultTableModel {
         return -1;
     }
 
+
+
     /**
      * Determines, if the given Sender is currently represented by a row of this
      * model. This method calls findSenderRow which returns -1 if no matching
@@ -138,6 +154,8 @@ public class SenderTableModel extends DefaultTableModel {
         else
             return false;
     }
+
+
 
     /**
      * Returns the Sender that is represented by the given row in the model.
@@ -155,11 +173,10 @@ public class SenderTableModel extends DefaultTableModel {
         }
     }
 
+
+
     /**
      * Marks all cells in the table as not editable by default.
-     * @param row
-     * @param column
-     * @return
      */
     @Override
     public boolean isCellEditable(int row, int column) {

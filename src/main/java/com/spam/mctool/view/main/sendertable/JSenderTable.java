@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
+
+
 
 /**
  * Specializes a JTable on representation of Senders in the view. By default
@@ -28,6 +29,8 @@ public class JSenderTable extends JTable {
         
     }
 
+
+
     /**
      * Sets default SenderTableModel and configures the visual representation
      */
@@ -37,8 +40,9 @@ public class JSenderTable extends JTable {
         setShowHorizontalLines(false);
         getColumn("Status").setCellRenderer(new SenderStateRenderer());
         this.setDefaultRenderer(Object.class, new TwoColorRenderer());
-        // TODO ...
     }
+
+
 
     /**
      * Forwards the addition of a new Sender to the table model. Throws an
@@ -55,6 +59,8 @@ public class JSenderTable extends JTable {
         }
     }
 
+
+
     /**
      * Forwards the removal of a sender from the table to the model. Throws an
      * IllegalStateException if this JSenderTable's model is no subtype of
@@ -69,6 +75,8 @@ public class JSenderTable extends JTable {
             throw new IllegalStateException("JSenderTable was initialized with " + getModel().getClass() + " as model.");
         }
     }
+
+
 
     /**
      * Forwards an update of the specified Sender to the JSenderTable's model.
@@ -85,6 +93,11 @@ public class JSenderTable extends JTable {
         }
     }
 
+
+
+    /**
+     * Return a list of all selected senders.
+     */
     public List<Sender> getSelectedSenders() {
         List<Sender> selectedSenders = new ArrayList<Sender>();
         for(int i : getSelectedRows()) {
@@ -97,11 +110,17 @@ public class JSenderTable extends JTable {
         return selectedSenders;
     }
 
+
+
+    /**
+     * Creates a custom table haeader that displays tooltips for individual columns
+     * Tooltips are directly taken from the <code>SenderTableColumn</code> enum.
+     */
     @Override
     protected JTableHeader createDefaultTableHeader() {
         return new JTableHeader(columnModel) {
+            @Override
             public String getToolTipText(MouseEvent e) {
-                String tip = null;
                 java.awt.Point p = e.getPoint();
                 int index = columnModel.getColumnIndexAtX(p.x);
                 int realIndex = columnModel.getColumn(index).getModelIndex();

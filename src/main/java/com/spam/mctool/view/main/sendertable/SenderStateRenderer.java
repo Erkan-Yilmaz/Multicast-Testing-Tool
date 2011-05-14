@@ -1,10 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * NewJPanel.java
+ * SenderStateRenderer.java
  *
  * Created on 07.03.2011, 22:24:24
  */
@@ -26,10 +21,16 @@ import javax.swing.table.TableCellRenderer;
  */
 public class SenderStateRenderer extends javax.swing.JPanel implements TableCellRenderer {
 
-    /** Creates new form NewJPanel */
+    
+    
+    /**
+     * Create and initialize the state renderer
+     */
     public SenderStateRenderer() {
         initComponents();
     }
+
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -51,6 +52,11 @@ public class SenderStateRenderer extends javax.swing.JPanel implements TableCell
         add(laErrorIcon);
     }// </editor-fold>//GEN-END:initComponents
 
+
+
+    /**
+     * Configure the renderer for the selected cell and return it.
+     */
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         if (isSelected) {
             this.setBackground(table.getSelectionBackground());
@@ -89,6 +95,11 @@ public class SenderStateRenderer extends javax.swing.JPanel implements TableCell
     private ImageIcon error       = new ImageIcon(getClass().getResource("/images/error.png"));
     private ImageIcon negative    = new ImageIcon(getClass().getResource("/images/negative.png"));
 
+
+
+    /**
+     * Graphical representation of this renderers configuration
+     */
     @Override
     public String toString() {
         String s = laActiveIcon.getIcon() == activated ? "> " : "II ";
