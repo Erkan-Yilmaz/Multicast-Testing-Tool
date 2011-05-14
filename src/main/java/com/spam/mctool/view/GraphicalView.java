@@ -153,6 +153,8 @@ public class GraphicalView implements MctoolView,
         mainFrame.setVisible(true);
     }
 
+
+
     public void receiverGroupAdded(final ReceiverAddedOrRemovedEvent e) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -166,6 +168,8 @@ public class GraphicalView implements MctoolView,
         e.getSource().addReceiverDataChangeListener(this);
     }
 
+
+
     public void receiverGroupRemoved(final ReceiverAddedOrRemovedEvent e) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -173,6 +177,8 @@ public class GraphicalView implements MctoolView,
             }
         });
     }
+
+
 
     public void senderAdded(final SenderAddedOrRemovedEvent e) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -187,6 +193,8 @@ public class GraphicalView implements MctoolView,
         e.getSource().addSenderDataChangeListener(this);
     }
 
+
+
     public void senderRemoved(final SenderAddedOrRemovedEvent e) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -194,6 +202,8 @@ public class GraphicalView implements MctoolView,
             }
         });
     }
+
+
 
     public void profileChanged(final ProfileChangeEvent e) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -203,6 +213,8 @@ public class GraphicalView implements MctoolView,
         });
     }
 
+
+
     public void dataChanged(final ReceiverDataChangedEvent e) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -210,6 +222,8 @@ public class GraphicalView implements MctoolView,
             }
         });
     }
+
+
 
     public void dataChanged(final SenderDataChangedEvent e) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -243,6 +257,8 @@ public class GraphicalView implements MctoolView,
         }
     }
 
+
+
     /**
      * Adds a receiver group to this view's controller and optionally activates it
      * afterwards. Provides feedback, whether the operation was successful or not.
@@ -264,6 +280,8 @@ public class GraphicalView implements MctoolView,
         }
     }
 
+
+
     /**
      * Forwards a request for stream removal to the controller.
      * @param streams the streams to be removed from the model
@@ -271,6 +289,8 @@ public class GraphicalView implements MctoolView,
     public void removeStreams(Set<MulticastStream> streams) {
         this.streamManager.removeStreams(streams);
     }
+
+
 
     /**
      * Allows the main frame to ask for the currently loaded profile.
@@ -280,6 +300,8 @@ public class GraphicalView implements MctoolView,
         return profileManager.getCurrentProfile();
     }
 
+
+
     /**
      * Forwards a request to load a specific profile to the controller
      * @param selectedFile the file to load the profile from
@@ -287,6 +309,8 @@ public class GraphicalView implements MctoolView,
     public void loadProfile(File selectedFile) {
         profileManager.loadProfile(selectedFile);
     }
+
+
 
     /**
      * Forwards a request to save a profile with a specific name to the controller.
@@ -297,6 +321,8 @@ public class GraphicalView implements MctoolView,
         profileManager.saveProfile(new Profile(profileName, path));
     }
 
+
+
     /**
      * Forwards a request to the controller to update an existing profile on
      * disk with the current stream configuration.
@@ -304,6 +330,8 @@ public class GraphicalView implements MctoolView,
     public void saveCurrentProfile() {
         profileManager.saveCurrentProfile();
     }
+
+
 
     public void newErrorEvent(final ErrorEvent e) {
         new Thread(new Runnable() { public void run() {
@@ -318,9 +346,17 @@ public class GraphicalView implements MctoolView,
         });
     }
 
+
+
+    /**
+     * Provides the list of recent profiles to the main frame.
+     * @return
+     */
     public Iterable<Profile> getRecentProfiles() {
         return profileManager.getRecentProfiles();
     }
+
+
 
     public void kill() {
 
@@ -345,13 +381,19 @@ public class GraphicalView implements MctoolView,
         mainFrame.dispose();
     }
 
+
+
     public void overallReceiverStatisticsUpdated(OverallReceiverStatisticsUpdatedEvent e) {
         mainFrame.overallReceiverStatisticsUpdated(e);
     }
 
+
+
     public void overallSenderStatisticsUpdated(OverallSenderStatisticsUpdatedEvent e) {
         mainFrame.overallSenderStatisticsUpdated(e);
     }
+
+
 
     public void languageChanged() {
         kill();
@@ -359,9 +401,13 @@ public class GraphicalView implements MctoolView,
         mainFrame.setVisible(true);
     }
 
+
+
     public void exitApplication() {
         controller.exitApplication();
     }
+
+
 
     /**
      * Applies the preferences chosen by the user to the application.
