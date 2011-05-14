@@ -142,7 +142,7 @@ public class GraphicalView implements MctoolView,
         streamManager.addOverallSenderStatisticsUpdatedListener(this);
         profileManager.addProfileChangeListener(this);
         languageManager.addLanguageChangeListener(this);
-        errorEventManager.addErrorEventListener(this, ErrorEventManager.DEBUG);
+        errorEventManager.addErrorEventListener(this, ErrorEventManager.WARNING);
 
         // check if there is already a profile loaded
         if(profileManager.getCurrentProfile() != null) {
