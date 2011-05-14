@@ -1,9 +1,4 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * ErrorDialog.java
  *
  * Created on 13.05.2011, 09:20:39
@@ -14,18 +9,30 @@ package com.spam.mctool.view.dialogs;
 import com.spam.mctool.controller.ErrorEvent;
 import com.spam.mctool.controller.ErrorEventManager;
 
+
+
 /**
- *
+ * Dialog displaying one or multiple error messages. Once made visible new messages
+ * can be appended to the list via the <code>dataChanged</code> method.
  * @author Tobias
  */
 public class ErrorDialog extends javax.swing.JDialog {
 
-    /** Creates new form ErrorDialog */
+    
+    
+    /** Create and initialize the dialog */
     public ErrorDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
 
+
+
+    /**
+     * Overrides JDialog's <code>setVisible</code> method in order to center the
+     * dialog relative to its parent (usually the main frame).
+     * @param visible true: show and center the dialog. false: hide the dialog
+     */
     @Override
     public void setVisible(boolean visible) {
         com.spam.mctool.view.main.MainFrame parent = (com.spam.mctool.view.main.MainFrame)getParent();
@@ -57,6 +64,8 @@ public class ErrorDialog extends javax.swing.JDialog {
         super.setVisible(visible);
     }
 
+
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -87,6 +96,7 @@ public class ErrorDialog extends javax.swing.JDialog {
 
         textArea.setColumns(20);
         textArea.setEditable(false);
+        textArea.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         textArea.setRows(5);
         textArea.setName("textArea"); // NOI18N
         jScrollPane1.setViewportView(textArea);
@@ -112,27 +122,17 @@ public class ErrorDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
+
+    /**
+     * Hide the dialog and clear its message area for the next use.
+     * @param evt
+     */
     private void buOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buOKActionPerformed
         this.setVisible(false);
         textArea.setText(null);
     }//GEN-LAST:event_buOKActionPerformed
 
-    /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                ErrorDialog dialog = new ErrorDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buOK;
@@ -142,6 +142,13 @@ public class ErrorDialog extends javax.swing.JDialog {
     private javax.swing.JTextArea textArea;
     // End of variables declaration//GEN-END:variables
 
+
+
+    /**
+     * Inform about a new error event. The new error's message will be appended
+     * to the dialog's log.
+     * @param e The error event that has bee reported to the manager.
+     */
     public void dataChanged(ErrorEvent e) {
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("internationalization/Bundle");
 

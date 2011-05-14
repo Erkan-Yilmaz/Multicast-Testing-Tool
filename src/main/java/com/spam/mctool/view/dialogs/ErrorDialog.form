@@ -71,6 +71,9 @@
               <Properties>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="editable" type="boolean" value="false"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="11" style="0"/>
+                </Property>
                 <Property name="rows" type="int" value="5"/>
                 <Property name="name" type="java.lang.String" value="textArea" noResource="true"/>
               </Properties>
