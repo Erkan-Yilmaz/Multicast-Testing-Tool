@@ -291,12 +291,30 @@ public final class Controller implements ProfileManager, StreamManager, ErrorEve
                 }
                 catch(org.w3c.dom.ls.LSException e){
                     this.reportErrorEvent(new ErrorEvent(ErrorEventManager.ERROR,"Controller.profileLoadingError.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
+                    //On error the profile will be set to 0
+                    this.setCurrentProfile(null);
+                }
+                catch(FileNotFoundException e){
+                    this.reportErrorEvent(new ErrorEvent(ErrorEventManager.ERROR,"Controller.profileFileNotFound.text", p.getPath().toString()));
+                    //On error the profile will be set to 0
+                    this.setCurrentProfile(null);
                 }
                 catch(IOException e){
                     this.reportErrorEvent(new ErrorEvent(ErrorEventManager.ERROR,"Controller.profileLoadingError2.text", p.getPath().toString()));
+                    //On error the profile will be set to 0
+                    this.setCurrentProfile(null);
                 }
                 catch(Exception e){
-                    this.reportErrorEvent(new ErrorEvent(ErrorEventManager.CRITICAL,"Controller.profileLoadingError3.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
+                    this.reportErrorEvent(new ErrorEvent(ErrorEventManager.CRITICAL,"Controller.profileLoadingError3.text",p.getPath().toString()));
+                    //Identifier are given my the getMessage() function
+                    if(e != null && e.getMessage()!= null && e.getMessage().startsWith("Controller.")){
+                        this.reportErrorEvent(new ErrorEvent(ErrorEventManager.CRITICAL,e.getMessage(),null));
+                    }
+                    else{
+                        this.reportErrorEvent(new ErrorEvent(ErrorEventManager.CRITICAL,"",e.getLocalizedMessage()));
+                    }
+                    //On error the profile will be set to 0
+                    this.setCurrentProfile(null);
                 }
             }
             //save the recent profiles list
@@ -610,116 +628,172 @@ public final class Controller implements ProfileManager, StreamManager, ErrorEve
         //Parse the file
         Document xmlDocument = builder.parseURI(xmlPath.toString());
         //Find the profile section
-        Node profile = xmlDocument.getElementsByTagName("profile").item(0);
-        //fetch the child nodes
-        NodeList profileChilds = profile.getChildNodes();
-        for(int i = 0;i<profileChilds.getLength(); ++i){
-            Node curNode = profileChilds.item(i);
-            if(curNode.getNodeName().compareToIgnoreCase("name") == 0){
-                String name = curNode.getTextContent();
-                if(name == null){
-                    name = "";
+        if(xmlDocument.getElementsByTagName("profile").getLength() == 1){
+            Node profile = xmlDocument.getElementsByTagName("profile").item(0);
+            //fetch the child nodes
+            NodeList profileChilds = profile.getChildNodes();
+            for(int i = 0;i<profileChilds.getLength(); ++i){
+                Node curNode = profileChilds.item(i);
+                if(curNode.getNodeName().compareToIgnoreCase("name") == 0){
+                    String name = curNode.getTextContent();
+                    if(name == null){
+                        name = "";
+                    }
+                    //set the name of the profile
+                    p.setName(name);
                 }
-                //set the name of the profile
-                p.setName(name);
             }
         }
+        //No profile section
+        else if(xmlDocument.getElementsByTagName("profile").getLength() == 0){
+            throw new Exception("Controller.missingProfileSections.text");
+        }
+        //Multiple sections
+        else{
+            throw new Exception("Controller.multipleProfileSections.text");
+        }
+
         //Find the senders section
-        Node senders = xmlDocument.getElementsByTagName("senders").item(0);
-        //fetch the child nodes
-        NodeList sendersChilds = senders.getChildNodes();
-        for(int i = 0;i<sendersChilds.getLength(); ++i){
-            Node curSender = sendersChilds.item(i);
-            //check if it is really a sender
-            if(curSender.getNodeName().compareToIgnoreCase("sender") == 0){
-                //start the sender
-                Boolean startSender = false;
-                //fetch all nodes
-                NodeList senderData = curSender.getChildNodes();
-                //create a map
-                Map<String,String> map = new HashMap<String, String>();
-                for(int j = 0;j<senderData.getLength();++j){
-                    Node curData = senderData.item(j);
-                    if(curData.getNodeName().compareToIgnoreCase("active") == 0){
-                        //marked to be activated
-                        if(curData.getTextContent().compareToIgnoreCase("true") == 0){
-                            startSender = true;
+        if(xmlDocument.getElementsByTagName("senders").getLength() == 1){
+            Node senders = xmlDocument.getElementsByTagName("senders").item(0);
+            //fetch the child nodes
+            NodeList sendersChilds = senders.getChildNodes();
+            for(int i = 0;i<sendersChilds.getLength(); ++i){
+                Node curSender = sendersChilds.item(i);
+                //check if it is really a sender
+                if(curSender.getNodeName().compareToIgnoreCase("sender") == 0){
+                    //start the sender
+                    Boolean startSender = false;
+                    //fetch all nodes
+                    NodeList senderData = curSender.getChildNodes();
+                    //create a map
+                    Map<String,String> map = new HashMap<String, String>();
+                    for(int j = 0;j<senderData.getLength();++j){
+                        Node curData = senderData.item(j);
+                        if(curData.getNodeName().compareToIgnoreCase("active") == 0){
+                            //marked to be activated
+                            if(curData.getTextContent().compareToIgnoreCase("true") == 0){
+                                startSender = true;
+                            }
+                            //marked to not be activated
+                            else if(curData.getTextContent().compareToIgnoreCase("false") == 0){
+                                startSender = false;
+                            }
+                            //unknown definition
+                            else{
+                                startSender = false;
+                                this.reportErrorEvent(new ErrorEvent(ErrorEventManager.DEBUG,"Controller.profileActiveModeError.text", null));
+                            }
                         }
-                        //marked to not be activated
-                        else if(curData.getTextContent().compareToIgnoreCase("false") == 0){
-                            startSender = false;
-                        }
-                        //unknown definition
                         else{
-                            startSender = false;
-                            this.reportErrorEvent(new ErrorEvent(ErrorEventManager.DEBUG,"Controller.profileActiveModeError.text", null));
+                            //put the pair to the map
+                            map.put(curData.getNodeName(), curData.getTextContent());
+                        }
+                    }
+                    //The key attributes
+                    String[] keys = {"psize","port","pps","ninf","abeh","ptype","ttl","payload","group"};
+                    boolean addSender = true;
+                    //check for all attributes
+                    for(String s:keys){
+                        //if a key is missing report the error and don't add the sender
+                        if(map.get(s) == null){
+                            addSender = false;
+                            reportErrorEvent(new ErrorEvent(3,"Controller.missingArgumentInSender.text",s));
+                        }
+                    }
+                    //Add the sender
+                    if(addSender){
+                        Sender newSender = addSender(map);
+                        if(newSender == null){
+                            reportErrorEvent(new ErrorEvent(3,"Controller.failedAddingSender",p.getPath().toString()));
+                        }
+                        //if startMode=none -> Start none
+                        //otherwise test if all should be started or the stream is marked to be started
+                        if(newSender != null && startMode.compareToIgnoreCase("none") != 0 && (startMode.compareToIgnoreCase("all") == 0 || startSender)){
+                            newSender.activate();
                         }
                     }
                     else{
-                        //put the pair to the map
-                        map.put(curData.getNodeName(), curData.getTextContent());
+                        reportErrorEvent(new ErrorEvent(3,"Controller.senderNotAdded.text",p.getPath().toString()));
                     }
                 }
-                //Add the sender
-                Sender newSender = addSender(map);
-                if(newSender == null){
-                    reportErrorEvent(new ErrorEvent(3,"Controller.failedAddingSender",p.getPath().toString()));
-                }
-                //if startMode=none -> Start none
-                //otherwise test if all should be started or the stream is marked to be started
-                if(newSender != null && startMode.compareToIgnoreCase("none") != 0 && (startMode.compareToIgnoreCase("all") == 0 || startSender)){
-                    newSender.activate();
-                }
             }
+        }
+        //check if there are multiple sections
+        else if(xmlDocument.getElementsByTagName("senders").getLength() > 1){
+            throw new Exception("Controller.multipleSendersSections.text");
         }
 
         //Find the receiver section
-        Node receivers = xmlDocument.getElementsByTagName("receivers").item(0);
-        //fetch the child nodes
-        NodeList receiversChilds = receivers.getChildNodes();
-        for(int i = 0;i<receiversChilds.getLength(); ++i){
-            Node curReceiver = receiversChilds.item(i);
-            //check if it is really a sender
-            if(curReceiver.getNodeName().compareToIgnoreCase("receiver") == 0){
-                //start the receiver
-                Boolean startReceiver = false;
-                //fetch all nodes
-                NodeList receiverData = curReceiver.getChildNodes();
-                //create a map
-                Map<String,String> map = new HashMap<String, String>();
-                for(int j = 0;j<receiverData.getLength();++j){
-                    Node curData = receiverData.item(j);
-                    if(curData.getNodeName().compareToIgnoreCase("active") == 0){
-                        //marked to be activated
-                        if(curData.getTextContent().compareToIgnoreCase("true") == 0){
-                            startReceiver = true;
+        if(xmlDocument.getElementsByTagName("receivers").getLength() == 1){
+            Node receivers = xmlDocument.getElementsByTagName("receivers").item(0);
+            //fetch the child nodes
+            NodeList receiversChilds = receivers.getChildNodes();
+            for(int i = 0;i<receiversChilds.getLength(); ++i){
+                Node curReceiver = receiversChilds.item(i);
+                //check if it is really a sender
+                if(curReceiver.getNodeName().compareToIgnoreCase("receiver") == 0){
+                    //start the receiver
+                    Boolean startReceiver = false;
+                    //fetch all nodes
+                    NodeList receiverData = curReceiver.getChildNodes();
+                    //create a map
+                    Map<String,String> map = new HashMap<String, String>();
+                    for(int j = 0;j<receiverData.getLength();++j){
+                        Node curData = receiverData.item(j);
+                        if(curData.getNodeName().compareToIgnoreCase("active") == 0){
+                            //marked to be activated
+                            if(curData.getTextContent().compareToIgnoreCase("true") == 0){
+                                startReceiver = true;
+                            }
+                            //marked to not be activated
+                            else if(curData.getTextContent().compareToIgnoreCase("false") == 0){
+                                startReceiver = false;
+                            }
+                            //unknown definition
+                            else{
+                                startReceiver = false;
+                                this.reportErrorEvent(new ErrorEvent(ErrorEventManager.DEBUG,"Controller.profileActiveModeError.text", null));
+                            }
                         }
-                        //marked to not be activated
-                        else if(curData.getTextContent().compareToIgnoreCase("false") == 0){
-                            startReceiver = false;
-                        }
-                        //unknown definition
                         else{
-                            startReceiver = false;
-                            this.reportErrorEvent(new ErrorEvent(ErrorEventManager.DEBUG,"Controller.profileActiveModeError.text", null));
+                            //put the pair to the map
+                            map.put(curData.getNodeName(), curData.getTextContent());
+                        }
+                    }
+                    //The key attributes
+                    String[] keys = {"port","ninf","abeh","group"};
+                    boolean addReceiver = true;
+                    //check for all attributes
+                    for(String s:keys){
+                        //if a key is missing report the error and don't add the receiver
+                        if(map.get(s) == null){
+                            addReceiver = false;
+                            reportErrorEvent(new ErrorEvent(3,"Controller.missingArgumentInReceiver.text",s));
+                        }
+                    }
+                    //Add the sender
+                    if(addReceiver){
+                        //Add the sender
+                        ReceiverGroup newReceiver = addReceiverGroup(map);
+                        if(newReceiver == null){
+                            reportErrorEvent(new ErrorEvent(3,"Controller.failedAddingReceiver",p.getPath().toString()));
+                        }
+                        //if startMode=nix dasone -> Start none
+                        //otherwise test if all should be started or the stream is marked to be started
+                        if(newReceiver != null && startMode.compareToIgnoreCase("none") != 0 && (startMode.compareToIgnoreCase("all") == 0 || startReceiver)){
+                            newReceiver.activate();
                         }
                     }
                     else{
-                        //put the pair to the map
-                        map.put(curData.getNodeName(), curData.getTextContent());
+                        reportErrorEvent(new ErrorEvent(3,"Controller.receiverNotAdded.text",p.getPath().toString()));
                     }
                 }
-                //Add the sender
-                ReceiverGroup newReceiver = addReceiverGroup(map);
-                if(newReceiver == null){
-                    reportErrorEvent(new ErrorEvent(3,"Controller.failedAddingReceiver",p.getPath().toString()));
-                }
-                //if startMode=nix dasone -> Start none
-                //otherwise test if all should be started or the stream is marked to be started
-                if(newReceiver != null && startMode.compareToIgnoreCase("none") != 0 && (startMode.compareToIgnoreCase("all") == 0 || startReceiver)){
-                    newReceiver.activate();
-                }
             }
+        }
+        //check if there are multiple sections
+        else if(xmlDocument.getElementsByTagName("receivers").getLength() > 1){
+            throw new Exception("Controller.multipleReceiversSections.text");
         }
     }
 
@@ -952,6 +1026,13 @@ public final class Controller implements ProfileManager, StreamManager, ErrorEve
         }
         catch(Exception e){
             this.reportErrorEvent(new ErrorEvent(ErrorEventManager.CRITICAL,"Controller.profileLoadingError3.text",p.getPath().toString()));
+            //Identifier are given my the getMessage() function
+            if(e != null && e.getMessage()!= null && e.getMessage().startsWith("Controller.")){
+                this.reportErrorEvent(new ErrorEvent(ErrorEventManager.CRITICAL,e.getMessage(),null));
+            }
+            else{
+                this.reportErrorEvent(new ErrorEvent(ErrorEventManager.CRITICAL,"",e.getLocalizedMessage()));
+            }
             //On error the profile will be set to 0
             this.setCurrentProfile(null);
         }
