@@ -11,6 +11,6 @@ public interface ProfileChangeListener {
 	 * This method is called when the profile of the controller changes.
 	 * @param e change event which contains the profile
 	 */
-	public void profileChanged(com.spam.mctool.intermediates.ProfileChangeEvent e);
+	void profileChanged(com.spam.mctool.intermediates.ProfileChangeEvent e);
 	
 }

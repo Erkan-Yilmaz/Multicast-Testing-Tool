@@ -8,7 +8,8 @@ package com.spam.mctool.view.main.receivertable;
 import java.util.ResourceBundle;
 
 /**
- * Defines the columns and its' captions as displayed in the <code>JReceiverTable</code>.
+ * Defines the columns, their captions and their tooltips,
+ * as displayed in the <code>JReceiverTable</code>.
  * @author Tobias Stöckel
  */
 public enum ReceiverTableColumn {

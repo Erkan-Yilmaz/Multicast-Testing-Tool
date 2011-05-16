@@ -16,6 +16,8 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
+
+
 /**
  * A <code>TableCellRenderer</code> that renders the rows of a table with
  * alternating background colors. The renderer will display the according cell's
@@ -25,10 +27,16 @@ import javax.swing.table.TableCellRenderer;
  */
 public class TwoColorRenderer extends javax.swing.JPanel implements TableCellRenderer {
 
-    /** Creates new form TwoColorRenderer */
+
+
+    /**
+     * Create a new TwoColorRenderer
+     */
     public TwoColorRenderer() {
         initComponents();
     }
+
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -47,6 +55,11 @@ public class TwoColorRenderer extends javax.swing.JPanel implements TableCellRen
         add(jLabel1, java.awt.BorderLayout.LINE_START);
     }// </editor-fold>//GEN-END:initComponents
 
+
+
+    /**
+     * Configure the renderer for the selected cell and return it.
+     */
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         if (isSelected) {
             this.setBackground(table.getSelectionBackground());

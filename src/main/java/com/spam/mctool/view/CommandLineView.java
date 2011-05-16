@@ -1,5 +1,6 @@
 package com.spam.mctool.view;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import org.apache.log4j.*;
@@ -38,12 +39,12 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
 		logger = Logger.getRootLogger();
 		
 		//logger prints just the message 
-		PatternLayout layout = new PatternLayout("%m%n");
+		PatternLayout layout = new PatternLayout("[%d{dd.MM.yyyy HH:mm:ss}] - %m%n");
 		
 		
 		//logger writes to file
 		try {
-			FileAppender fa = new FileAppender(layout, "log.txt");
+			FileAppender fa = new FileAppender(layout, new File(System.getProperty("java.io.tmpdir"), "log.txt").getAbsolutePath());
 			logger.addAppender(fa);
 		} catch (IOException e) {
 			
@@ -78,7 +79,7 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
         c.addOverallSenderStatisticsUpdatedListener(this);
         
         //inform that tool was started
-        logger.info(new Date() + ": " + bundle.getString("CommandLine.LoggerInitialized.text"));
+        logger.info(bundle.getString("CommandLine.LoggerInitialized.text"));
     }
 
     /**
@@ -139,7 +140,7 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
         c.removeOverallSenderStatisticsUpdatedListener(this);
 		
         //inform that tool stopped
-        logger.info(new Date() + ":" + bundle.getString("CommandLine.Kill.text"));
+        logger.info(bundle.getString("CommandLine.Kill.text"));
         
 	}
 
@@ -151,10 +152,10 @@ public class CommandLineView implements MctoolView, ProfileChangeListener, Recei
 		Date date = new Date();
 		
 		if(e.getErrorLevel() == ErrorEventManager.WARNING)
-			logger.info(date.toString() + " - " + bundle.getString("CommandLine.Warning.text") + e.getCompleteMessage());
+			logger.info(bundle.getString("CommandLine.Warning.text") + e.getCompleteMessage());
 		else
 			
-		logger.info(date.toString() + " - " + bundle.getString("CommandLine.Error.text") + e.getCompleteMessage());
+		logger.info(bundle.getString("CommandLine.Error.text") + e.getCompleteMessage());
 	}
 
     /**

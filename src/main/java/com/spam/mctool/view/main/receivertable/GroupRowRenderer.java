@@ -14,6 +14,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 
+
+
 /**
  * A <code>TableCellRenderer</code> implementation for displaying a receiver
  * group in a <code>JReceiverTable</code>. Displays some general group
@@ -160,8 +162,6 @@ public class GroupRowRenderer extends javax.swing.JPanel implements javax.swing.
 
 
     /**
-     * {@inheritDoc}
-     *
      * This implementation makes the renderer believe, it stretches over all
      * columns.
      */
@@ -173,8 +173,6 @@ public class GroupRowRenderer extends javax.swing.JPanel implements javax.swing.
 
 
     /**
-     * {@inheritDoc}
-     *
      * This implementation makes sure, the starting point for painting a cell
      * renderer is reset to the beginning of the first column for each renderer.
      * This corresponds to the <code>setBounds</code> method that told the
