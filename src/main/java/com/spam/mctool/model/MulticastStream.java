@@ -63,26 +63,47 @@ public abstract class MulticastStream implements Runnable {
 		private String ident;
 		private double inc;
 		private double init;
-	
-		AnalyzingBehaviour(int div, String ident, double inc, double init) {
+
+		private AnalyzingBehaviour(int div, String ident, double inc, double init) {
 			this.div = div;
 			this.ident = ident;
 			this.inc = inc;
 			this.init = init;
 		}
-	
+
+		/**
+		 * If this returns i, statistics are calculated new every ith second.
+		 * @return i
+		 */
 		public int getDiv() {
 			return div;
 		}
 		
+		/**
+		 * Returns a string value identifier of the AnalyzingBehaviour.
+		 * @return identifier, may be "lazy", "default" or "eager"
+		 */
 		public String getIdentifier() {
 			return ident;
 		}
 		
+		/**
+		 * If this return i, only every ith value of the collected values will
+		 * be regarded in statistics calculation. The current measured packet rate
+		 * will be regarded to make the value sample big enough.
+		 * @param pps current measured packet rate.
+		 * @return i
+		 */
 		public int getDynamicStatsStepWidth(long pps) {
 			return (int)Math.ceil(pps*inc+init);
 		}
 		
+		/**
+		 * Tries to get a AnalyzingBehaviour by the identifier or falls back to
+		 * DEFAULT.
+		 * @param identifier
+		 * @return parsed A.B.
+		 */
 		public static AnalyzingBehaviour getByIdentifier(String ident) {
 			ident = ident.toLowerCase();
 			if(ident.equals("lazy")) {
@@ -113,10 +134,20 @@ public abstract class MulticastStream implements Runnable {
 			this.dispName = dispName;
 		}
 		
+		/**
+		 * Returns a human readable name of the Packet Type.
+		 * @return name
+		 */
 		public String getDisplayName() {
 			return this.dispName;
 		}
 		
+		/**
+		 * Tries to parse a PacketType by a passed identifier or falls back
+		 * to SPAM
+		 * @param identifier
+		 * @return parsed P.T.
+		 */
 		public static PacketType getByIdentifier(String ident) {
 			ident = ident.toLowerCase();
 			if(ident.equals("hmann")) {
@@ -140,7 +171,10 @@ public abstract class MulticastStream implements Runnable {
 	}
 
 	/**
-	 * @param group IP multicast group to set
+	 * Sets multicast group without checks if parameter is an InetAddress.
+	 * Tries to parse an InetAddress with range checks if parameter is string.
+	 * Refer to IP multicast description for valid IP ranges.
+	 * @param InetAddress or string representation
 	 */
 	public boolean setGroup(Object group) {
 		if(group instanceof InetAddress) {
@@ -215,7 +249,10 @@ public abstract class MulticastStream implements Runnable {
 	}
 
 	/**
-	 * @param port the socket is opened on
+	 * Sets the port.
+	 * No checks if parameter is Integer.
+	 * Tries to parse a port with range checks if parameter is string.
+	 * @param port
 	 */
 	public boolean setPort(Object port) {
 		if(port instanceof Integer) {
@@ -256,9 +293,12 @@ public abstract class MulticastStream implements Runnable {
 	}
 
 	/**
-	 * @param networkInterface may be IP address string or network interface object
+	 * Sets a network interface for the datastream.
+	 * No checks if parameter is a NetworkInterface.
+	 * Tries to parse from IP address if parameter is a string.
 	 * Falls back to first network interface which is not loopback nor point2point if
 	 * interface with given IP address can not be found.
+	 * @param networkInterface
 	 */
 	public boolean setNetworkInterface(Object networkInterface) {
 		if(networkInterface instanceof NetworkInterface) {

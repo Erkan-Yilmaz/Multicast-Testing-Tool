@@ -9,10 +9,69 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
+import org.junit.Before;
 import org.junit.Test;
 
-
+/**
+ * TC: M02
+ * Ensures correct function of getters and setters in MulticastStream.
+ * @author Jeffrey Jedele
+ */
 public class MulticastStreamTest {
+	
+	private Object[] ipmcvalid;
+	private Object[] ipmcinvalid;
+	private Object[] validports;
+	private Object[] invalidports;
+	private MulticastStream ms;
+	
+	@Before
+	public void setup() throws UnknownHostException {
+		ms = new MulticastStream() {
+			@Override
+			public void run() {
+			}
+			@Override
+			public void activate() {
+			}
+			@Override
+			public void deactivate() {
+			}
+		};
+		 
+		ipmcvalid = new Object[]{
+			"224.0.0.1",
+			"239.255.255.254",
+			"ff00:::::::1",
+			"ffff:ffff:ffff:ffff:ffff:ffff:ffff:fffe",
+			InetAddress.getByName("224.0.0.1"),
+			InetAddress.getByName("239.255.255.254")
+		};
+		
+		ipmcinvalid = new Object[] {
+			"223.255.255.254",
+			"224.0.0.0",
+			"239.255.255.255",
+			"240.0.0.1",
+			"feff:::::::1",
+			"ff00:::::::0",
+			"ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+			":::::::",
+			"0.0.0",
+			"totallywrong"
+		};
+		
+		validports = new Object[] {
+			"0",
+			"1025",
+			"65535"
+		};
+		
+		invalidports = new Object[] {
+			"-1",
+			"totallywrong"
+		};
+	}
 	
 	@Test
 	public void testIfAnalyzingBehaviourEnumerationWorks() {
@@ -33,16 +92,6 @@ public class MulticastStreamTest {
 		assertEquals("maximum stepwidth for eager not ok", 20, abeh.getDynamicStatsStepWidth(1000));
 		assertEquals("divisor for eager not ok", 1, abeh.getDiv());
 		assertEquals("identifier for eager not ok", "eager", abeh.getIdentifier());
-		
-		exceptest:{
-			try{
-				MulticastStream.AnalyzingBehaviour.getByIdentifier("not existent");
-			} catch(IllegalArgumentException e) {
-				break exceptest;
-			}
-			// should not be reached
-			fail("exception not thrown although illegal argument was given as identifier for analyzing behaviour");
-		}
 	}
 	
 	 @Test
@@ -55,31 +104,34 @@ public class MulticastStreamTest {
 		 assertEquals("returned packet format was not correct", MulticastStream.PacketType.HMANN, ptype);
 		 assertEquals("hmann packet format did not return correct display name", "Hirschmann Packet Format", ptype.getDisplayName());
 		 
-		 exceptiontest:{
-			 try {
-				 MulticastStream.PacketType.getByIdentifier("notexistent");
-			 } catch(IllegalArgumentException e) {
-				 break exceptiontest;
-			 }
-			 // should not be reached
-			 fail("exception not thrown although illegal was given as identifier for analyzing behaviour");
-		 }
 	 }
 	 
 	 @Test
 	 public void testIfGettersAndSettersWorkCorrectly() throws UnknownHostException, SocketException {
-		 MulticastStream ms = new MulticastStream() {
-			@Override
-			public void run() {
-			}
-			@Override
-			public void activate() {
-			}
-			@Override
-			public void deactivate() {
-			}
-		 };
 		 
+		 // valid ip group values
+		 for(Object o : ipmcvalid) {
+			 assertTrue("group not accepted: "+o.toString(), ms.setGroup(o));
+		 }
+		 
+		 // invalid ip group values
+		 for(Object o : ipmcinvalid) {
+			 assertFalse("false group accepted: "+o.toString(), ms.setGroup(o));
+		 }
+		 
+		 // valid ports
+		 for(Object o : validports) {
+			 assertTrue("port not accepted: "+o.toString(), ms.setPort(o));
+		 }
+		 
+		// invalid ports
+		 for(Object o : invalidports) {
+			 assertFalse("port accepted: "+o.toString(), ms.setPort(o));
+		 }
+		 
+		 // no test of 
+		 
+		 // is ip mode remembered correctly
 		 InetAddress group = InetAddress.getByName("224.0.0.1");
 		 ms.setGroup(group);
 		 assertEquals("inet address not correctly returned", group, ms.getGroup());
@@ -90,14 +142,12 @@ public class MulticastStreamTest {
 		 assertEquals("inet address not correctly returned", group, ms.getGroup());
 		 assertEquals("ip mode not correctly set", Inet6Address.class, ms.ipMode);
 		 
-		 int port = 1234;
-		 ms.setPort(port);
-		 assertEquals("port not correctly returned", port, ms.getPort());
-		 
+		 // network interface setter
 		 NetworkInterface ninf = NetworkInterface.getByInetAddress(InetAddress.getByName("127.0.0.1"));
 		 ms.setNetworkInterface(ninf);
 		 assertEquals("network interface not correctly returned", ninf, ms.getNetworkInterface());
 		 
+		 // is active 
 		 MulticastStream.State state = MulticastStream.State.ACTIVE;
 		 ms.state = state;
 		 assertEquals("activity state not returned correctly", state, ms.getState());
@@ -107,10 +157,12 @@ public class MulticastStreamTest {
 		 assertEquals("activity state not returned correctly", state, ms.getState());
 		 assertFalse("activity state not returned correctly", ms.isActive());
 		 
+		 // analyzing behaviour
 		 MulticastStream.AnalyzingBehaviour abeh = MulticastStream.AnalyzingBehaviour.DEFAULT;
 		 ms.setAnalyzingBehaviour(abeh);
 		 assertEquals("analyzing behaviour not returned correctly", abeh, ms.getAnalyzingBehaviour());
 		 
+		 // status calculation interval
 		 int si = 1000;
 		 ms.setStatsInterval(si);
 		 assertEquals("stats interval not returned correctly", si, ms.getStatsInterval());

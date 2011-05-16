@@ -289,6 +289,18 @@
               <version>${powermock.version}</version>
               <scope>test</scope>
        </dependency>
+       <dependency>
+       	<groupId>com.agilejava.docbkx</groupId>
+       	<artifactId>docbkx</artifactId>
+       	<version>2.0.12</version>
+       	<type>pom</type>
+       </dependency>
+       <dependency>
+       	<groupId>net.sf.docbook</groupId>
+       	<artifactId>docbook-xml</artifactId>
+       	<version>5.0-all</version>
+       	<type>pom</type>
+       </dependency>
 	</dependencies>
 	<ciManagement>
 		<system>sonar</system>

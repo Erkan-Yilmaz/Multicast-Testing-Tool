@@ -6,7 +6,6 @@ package com.spam.mctool.model;
  */
 public interface ReceiverManager {
 
-	//TODO change parameter type to map in uml, change return type to receiver
 	/**
 	 * Create a new receiver. Possible values:
 	 * @param params See moddoc for possible values
@@ -24,7 +23,6 @@ public interface ReceiverManager {
 	 */
 	public void remove(com.spam.mctool.model.ReceiverGroup receiver);
 	
-	//TODO change return to type to collection in uml
 	/**
 	 * @return collection of all receivers in the pool
 	 */
@@ -80,7 +78,7 @@ public interface ReceiverManager {
 	public long getOverallFaultyPackets();
 	
 	/**
-	 * 
+	 * Sets the thread pool size for all receiving tasks in the system.
 	 */
 	public void setThreadPoolSize(int size);
 	

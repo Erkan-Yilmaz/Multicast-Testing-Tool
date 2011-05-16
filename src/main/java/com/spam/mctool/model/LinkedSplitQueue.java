@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
  * A implementation of a queue based on a linked list.
  * Optimized for fast splitting (for concurrent statistics analysis) and sequential access.
  * @author Jeffrey Jedele
- * @param <E> Object to store in the queue
+ * @param Object to store in the queue
  */
 public class LinkedSplitQueue<E> implements Iterable<E> {
 	

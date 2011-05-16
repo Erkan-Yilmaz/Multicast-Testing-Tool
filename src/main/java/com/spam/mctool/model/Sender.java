@@ -63,9 +63,6 @@ public class Sender extends MulticastStream {
 		this.analyzer = new AnalyzeSender();
 	}
 	
-	/**
-	 * Activates the stream and analyzing behaviour.
-	 */
 	@Override
 	public void activate() {
 	    if(state == State.ACTIVE) {
@@ -91,9 +88,6 @@ public class Sender extends MulticastStream {
 		}
 	}
 	
-	/**
-	 * Deactivates the stream and analyzing behaviour.
-	 */
 	@Override
 	public void deactivate() {
 	    if(state == State.INACTIVE) {
@@ -150,9 +144,7 @@ public class Sender extends MulticastStream {
 			sentPacketCount = (sentPacketCount+1)%(MAX_PACKET_NO+1);
 			p.setSequenceNumber(sentPacketCount);
 		} catch(Exception e) {
-			eMan.reportErrorEvent(
-				new ErrorEvent(5, "Model.Sender.getPacket.PacketCreationError", "")
-			);
+			e.printStackTrace();
 		}
 		return p;
 	}

@@ -41,6 +41,7 @@ public class ReceiverPool implements ReceiverManager {
 		stpe.scheduleAtFixedRate(analyzer, overallStatsIntervall, overallStatsIntervall, TimeUnit.MILLISECONDS);
 	}
 
+	@Override
 	public ReceiverGroup create(Map<String, String> params) {
 		boolean checksOk = true;
 		ReceiverGroup rec = new ReceiverGroup(stpe);
@@ -69,25 +70,30 @@ public class ReceiverPool implements ReceiverManager {
 		}
 	}
 
+	@Override
 	public Collection<ReceiverGroup> getReceiverGroups() {
 		return new HashSet<ReceiverGroup>(receiverGroups);
 	}
 
+	@Override
 	public void killAll() {
 		stpe.shutdown();
 	}
 
+	@Override
 	public void remove(ReceiverGroup receiver) {
 		receiver.deactivate();
 		receiverGroups.remove(receiver);
 		fireReceiverRemovedEvent(receiver);
 	}
 	
+	@Override
 	public void addReceiverAddedOrRemovedListener(
 			ReceiverAddedOrRemovedListener l) {
 		raorListeners.add(l);
 	}
 
+	@Override
 	public void removeReceiverAddedOrRemovedListener(
 			ReceiverAddedOrRemovedListener l) {
 		raorListeners.remove(l);
@@ -109,6 +115,9 @@ public class ReceiverPool implements ReceiverManager {
 		}
 	}
 	
+	/**
+	 * Creates the overall receiver statistics.
+	 */
 	private class ReceiverSummaryAnalyzer implements Runnable {
 		@Override
 		public void run() {
@@ -171,7 +180,7 @@ public class ReceiverPool implements ReceiverManager {
 	}
 	
 	/**
-	 * @return percentual packet losing rate
+	 * @return packet losing rate in permille
 	 */
 	public double getLostPacketsPermille() {
 		synchronized(statsLock) {

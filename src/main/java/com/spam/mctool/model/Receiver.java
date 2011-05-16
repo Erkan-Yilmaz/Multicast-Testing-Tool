@@ -8,14 +8,14 @@ import com.spam.mctool.model.packet.HirschmannPacket;
 
 /**
  * This class represents the datastream of single sender in a multicast
- * group on receiver side
+ * group on receiver side.
  * @author Jeffrey Jedele
  */
 public class Receiver {
 	
 	// head data
 	private long senderId;
-	private long lastReceivedTime = 0;
+	protected long lastReceivedTime = 0;
 	private boolean alive;
 	private boolean aliveStateChanged;
 	// internals
@@ -44,7 +44,9 @@ public class Receiver {
 	private PacketType lastPacketType;
 	private InetAddress senderAddress;
 	
-	// is automatically created by ReceiverGroup when new sender id is discovered
+	/**
+	 * Default Constructor. Only called by the ReceiverGroup.
+	 */
 	Receiver(long senderId, MulticastStream.AnalyzingBehaviour abeh) {
 		this.senderId = senderId;
 		this.packetQueue = new LinkedSplitQueue<ReceiverGroup.PacketContainer>();
@@ -54,7 +56,10 @@ public class Receiver {
 		this.statsCounter = abeh.getDiv()-1;
 	}
 	
-	// calculated a new statistic object
+	/**
+	 * Calculates new statistics for this receiver. Only called by
+	 * ReceiverGroup.
+	 */
 	protected void calcNewStatistics() {
 		// split queue
 		LinkedSplitQueue<ReceiverGroup.PacketContainer> data = packetQueue.split();
@@ -226,7 +231,7 @@ public class Receiver {
 	}
 	
 	/**
-	 * @return percentual packet losing rate
+	 * @return packet losing rate in permille
 	 */
 	public double getLostPacketsPermille() {
 		return (double)lostPackets/(double)receivedPackets*1000.0;

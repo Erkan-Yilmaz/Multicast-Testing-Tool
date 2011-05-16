@@ -8,6 +8,11 @@ import java.util.NoSuchElementException;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * TC: M01
+ * Ensures the correct function of the LinkedSplitQueue data structure
+ * @author Jeffrey Jedele
+ */
 public class LinkedSplitQueueTest {
 	LinkedSplitQueue<Integer> lsq;
 

@@ -91,9 +91,6 @@ public final class ReceiverGroup extends MulticastStream {
 		}
 	}
 
-	/**
-	 * Deactivate this ReceiverGroup
-	 */
 	@Override
 	public void deactivate() {
 		if(state == State.INACTIVE) {

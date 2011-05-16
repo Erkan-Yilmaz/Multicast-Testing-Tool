@@ -9,11 +9,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * TC: M03
- * Ensures correct function of ReceiverPool
+ * TC: M04
+ * Ensures correct function of SenderPool
  * @author Jeffrey Jedele
  */
-public class ReceiverPoolTest {
+public class SenderPoolTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -21,7 +21,7 @@ public class ReceiverPoolTest {
 	
 	@Test
 	public void testKeyPoints() {
-		ReceiverPool rp = new ReceiverPool();
+		SenderPool sp = new SenderPool();
 		HashMap<String, String> correctParams = new HashMap<String, String>();
 		HashMap<String, String> falseParams = new HashMap<String, String>();
 		
@@ -33,10 +33,15 @@ public class ReceiverPoolTest {
 		correctParams.put("group", "224.0.0.1");
 		correctParams.put("abeh", "default");
 		correctParams.put("port", "65000");
+		correctParams.put("psize", "1000");
+		correctParams.put("ptype", "spam");
+		correctParams.put("pps", "1000");
+		correctParams.put("ttl", "34");
+		correctParams.put("payload", "Bla");
 		
-		ReceiverGroup r = rp.create(correctParams);
-		if(r == null) {
-			fail("ReceiverPool returned null although correct values");
+		Sender s = sp.create(correctParams);
+		if(s == null) {
+			fail("SenderPool returned null although correct values");
 		}
 		
 		// invalid
@@ -44,21 +49,26 @@ public class ReceiverPoolTest {
 		falseParams.put("group", "224.0.0.1");
 		falseParams.put("abeh", "default");
 		falseParams.put("port", "-1"); // error
+		falseParams.put("psize", "1000");
+		falseParams.put("ptype", "spam");
+		falseParams.put("pps", "1000");
+		falseParams.put("ttl", "34");
+		falseParams.put("payload", "Bla");
 		
-		ReceiverGroup fr = rp.create(falseParams);
-		if(fr != null) {
-			fail("ReceiverPool did create Receiver with invalid values");
+		Sender fs = sp.create(falseParams);
+		if(fs != null) {
+			fail("SenderPool did create Sender with invalid values");
 		}
 		
 		// is receiver group stored by pool?
-		if(!rp.getReceiverGroups().contains(r)) {
-			fail("Created Receiver not stored in Pool");
+		if(!sp.getSenders().contains(s)) {
+			fail("Created Sender not stored in Pool");
 		}
 		
 		// test deletion
-		rp.remove(r);
-		if(rp.getReceiverGroups().contains(r)) {
-			fail("Created Receiver not deleted from Pool");
+		sp.remove(s);
+		if(sp.getSenders().contains(s)) {
+			fail("Created Sender not deleted from Pool");
 		}
 	}
 
