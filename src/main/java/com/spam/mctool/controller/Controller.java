@@ -603,6 +603,10 @@ public final class Controller implements ProfileManager, StreamManager, ErrorEve
 
         //Fetch the profile path
         File xmlPath = p.getPath();
+        //Check for file existance
+        if(!xmlPath.exists()){
+            throw new FileNotFoundException();
+        }
         //Parse the file
         Document xmlDocument = builder.parseURI(xmlPath.toString());
         //Find the profile section
@@ -658,6 +662,9 @@ public final class Controller implements ProfileManager, StreamManager, ErrorEve
                 }
                 //Add the sender
                 Sender newSender = addSender(map);
+                if(newSender == null){
+                    reportErrorEvent(new ErrorEvent(3,"Controller.failedAddingSender",p.getPath().toString()));
+                }
                 //if startMode=none -> Start none
                 //otherwise test if all should be started or the stream is marked to be started
                 if(newSender != null && startMode.compareToIgnoreCase("none") != 0 && (startMode.compareToIgnoreCase("all") == 0 || startSender)){
@@ -704,6 +711,9 @@ public final class Controller implements ProfileManager, StreamManager, ErrorEve
                 }
                 //Add the sender
                 ReceiverGroup newReceiver = addReceiverGroup(map);
+                if(newReceiver == null){
+                    reportErrorEvent(new ErrorEvent(3,"Controller.failedAddingReceiver",p.getPath().toString()));
+                }
                 //if startMode=nix dasone -> Start none
                 //otherwise test if all should be started or the stream is marked to be started
                 if(newReceiver != null && startMode.compareToIgnoreCase("none") != 0 && (startMode.compareToIgnoreCase("all") == 0 || startReceiver)){
@@ -930,13 +940,18 @@ public final class Controller implements ProfileManager, StreamManager, ErrorEve
             //On error the profile will be set to 0
             this.setCurrentProfile(null);
         }
+        catch(FileNotFoundException e){
+            this.reportErrorEvent(new ErrorEvent(ErrorEventManager.ERROR,"Controller.profileFileNotFound.text", p.getPath().toString()));
+            //On error the profile will be set to 0
+            this.setCurrentProfile(null);
+        }
         catch(IOException e){
             this.reportErrorEvent(new ErrorEvent(ErrorEventManager.ERROR,"Controller.profileLoadingError2.text", p.getPath().toString()));
             //On error the profile will be set to 0
             this.setCurrentProfile(null);
         }
         catch(Exception e){
-            this.reportErrorEvent(new ErrorEvent(ErrorEventManager.CRITICAL,"Controller.profileLoadingError3.text",p.getPath().toString() + ": " + e.getLocalizedMessage()));
+            this.reportErrorEvent(new ErrorEvent(ErrorEventManager.CRITICAL,"Controller.profileLoadingError3.text",p.getPath().toString()));
             //On error the profile will be set to 0
             this.setCurrentProfile(null);
         }

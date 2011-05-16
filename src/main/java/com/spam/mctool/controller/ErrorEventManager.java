@@ -29,10 +29,10 @@ public interface ErrorEventManager {
     /**
      * A mapping of the valid error levels to constants.
      */
-    static final int DEBUG = 0;
-    static final int WARNING = 1;
-    static final int SEVERE = 2;
-    static final int ERROR = 3;
-    static final int CRITICAL = 4;
-    static final int FATAL = 5;
+    final int DEBUG = 0;
+    final int WARNING = 1;
+    final int SEVERE = 2;
+    final int ERROR = 3;
+    final int CRITICAL = 4;
+    final int FATAL = 5;
 }
