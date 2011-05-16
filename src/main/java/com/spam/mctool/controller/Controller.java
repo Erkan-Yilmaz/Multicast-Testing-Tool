@@ -181,7 +181,7 @@ public final class Controller implements ProfileManager, StreamManager, ErrorEve
                     //report the error
                     this.reportErrorEvent(new ErrorEvent(ErrorEventManager.FATAL,"Controller.missingArgumentProfileName.text",""));
                     //exit the program
-                    return;
+                    System.exit(1);
                 }
                 //read profile names until one name starts with "-" or there is nothing left
                 do{
@@ -209,7 +209,7 @@ public final class Controller implements ProfileManager, StreamManager, ErrorEve
                     //report the error
                     this.reportErrorEvent(new ErrorEvent(ErrorEventManager.FATAL,"Controller.missingArgumentProfilePath.text", ""));
                     //exit the program
-                    return;
+                    System.exit(1);;
                 }
                 //read profile names until one name starts with "-" or there is nothing left
                 do{
@@ -229,7 +229,7 @@ public final class Controller implements ProfileManager, StreamManager, ErrorEve
                     //report the error
                     this.reportErrorEvent(new ErrorEvent(ErrorEventManager.FATAL, "Controller.falseStartmode.text", args[i]));
                     //exit the program
-                    return;
+                    System.exit(1);
                 }
                 startMode = "all";
             }
@@ -240,7 +240,7 @@ public final class Controller implements ProfileManager, StreamManager, ErrorEve
                     //report the error
                     this.reportErrorEvent(new ErrorEvent(ErrorEventManager.FATAL, "Controller.falseStartmode.text", args[i]));
                     //exit the program
-                    return;
+                    System.exit(1);
                 }
                 startMode = "none";
             }
@@ -251,7 +251,7 @@ public final class Controller implements ProfileManager, StreamManager, ErrorEve
                     //report the error
                     this.reportErrorEvent(new ErrorEvent(ErrorEventManager.FATAL, "Controller.falseStartmode.text", args[i]));
                     //exit the program
-                    return;
+                    System.exit(1);
                 }
                 startMode = "restore";
             }
@@ -259,7 +259,7 @@ public final class Controller implements ProfileManager, StreamManager, ErrorEve
                 //report the error
                 this.reportErrorEvent(new ErrorEvent(ErrorEventManager.FATAL, "Controller.unknownArgument.text", args[i]));
                 //exit the program
-                return;
+                System.exit(1);
             }
 
         }
