@@ -2,6 +2,10 @@ package com.spam.mctool.controller;
 
 import java.io.File;
 
+/**
+ * @author David Hildenbrand
+ * This class represents a profile having a name and a path to the real profile on disk.
+ */
 public final class Profile {
 	/**
 	 * The profile name.
@@ -93,7 +97,7 @@ public final class Profile {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * This function creates the hashCode by using the hashCode of the path.
 	 * @return hashCode for the object

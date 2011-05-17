@@ -5,6 +5,10 @@ import java.util.List;
 
 import com.thoughtworks.xstream.XStream;
 
+/**
+ * @author David Hildenbrand
+ * This class manages the recent profiles list for the controller.
+ */
 public final class RecentProfiles {
 
     private int maxProfiles = 10;

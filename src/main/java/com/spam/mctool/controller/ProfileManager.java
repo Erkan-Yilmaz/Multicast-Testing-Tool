@@ -4,9 +4,9 @@ import java.io.File;
 import java.util.List;
 
 /**
+ * @author David Hildenbrand
  * This interface is implemented by the controller and provides the functionality to work
  * with the configuration profiles.
- * @author Jeffrey Jedele
  */
 public interface ProfileManager {
 

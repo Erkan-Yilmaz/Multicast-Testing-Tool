@@ -52,7 +52,8 @@ import com.spam.mctool.view.MctoolView;
 
 /**
  * @author David Hildenbrand
- *
+ * This Class is the Controller for the MCTOOL. It is implemented as a Singleton.
+ * The entry point for the program(main function) is places in this class.
  */
 public final class Controller implements ProfileManager, StreamManager, ErrorEventManager, LanguageManager {
 
@@ -103,7 +104,7 @@ public final class Controller implements ProfileManager, StreamManager, ErrorEve
      * The default constructor for the Controller.
      * Initiates all members.
      */
-    Controller(){
+    private Controller(){
         this.currentProfile = null;
         this.recentProfiles = new RecentProfiles();
         this.profileChangeObservers = new ArrayList<ProfileChangeListener>();
