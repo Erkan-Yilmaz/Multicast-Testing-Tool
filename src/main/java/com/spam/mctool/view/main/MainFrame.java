@@ -323,6 +323,7 @@ public class MainFrame extends javax.swing.JFrame implements javax.swing.event.L
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(java.util.ResourceBundle.getBundle("internationalization/Bundle").getString("MainFrame.title") + ((view.getCurrentProfile() != null && view.getCurrentProfile().getName() != null) ? " - " + view.getCurrentProfile().getName() : ""));
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/icon.png")).getImage());
         setName("Form"); // NOI18N
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
