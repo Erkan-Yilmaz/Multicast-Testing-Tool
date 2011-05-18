@@ -1,8 +1,8 @@
 package com.spam.mctool.controller;
 
 /**
- * @author David Hildenbrand
  * This interface has to be implemented by all classes which want to receiver Error Events later on.
+ * @author David Hildenbrand
  */
 public interface ErrorEventListener {
 

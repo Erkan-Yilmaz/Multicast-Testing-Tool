@@ -1,8 +1,8 @@
 package com.spam.mctool.controller;
 
 /**
- * @author David Hildenbrand
  * This interface provides the basic function for Error-reporting and the management of the reported errors.
+ * @author David Hildenbrand
  */
 public interface ErrorEventManager {
 

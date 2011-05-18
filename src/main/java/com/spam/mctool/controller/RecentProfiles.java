@@ -6,8 +6,8 @@ import java.util.List;
 import com.thoughtworks.xstream.XStream;
 
 /**
- * @author David Hildenbrand
  * This class manages the recent profiles list for the controller.
+ * @author David Hildenbrand
  */
 public final class RecentProfiles {
 

@@ -1,8 +1,8 @@
 package com.spam.mctool.controller;
 
 /**
- * @author David Hildenbrand
  * This class represents the Error Event, that is reported by all parts of the program to the ErrorEventManager.
+ * @author David Hildenbrand
  */
 public final class ErrorEvent {
 

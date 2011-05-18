@@ -51,9 +51,9 @@ import com.spam.mctool.view.GraphicalView;
 import com.spam.mctool.view.MctoolView;
 
 /**
- * @author David Hildenbrand
  * This Class is the Controller for the MCTOOL. It is implemented as a Singleton.
  * The entry point for the program(main function) is places in this class.
+ * @author David Hildenbrand
  */
 public final class Controller implements ProfileManager, StreamManager, ErrorEventManager, LanguageManager {
 

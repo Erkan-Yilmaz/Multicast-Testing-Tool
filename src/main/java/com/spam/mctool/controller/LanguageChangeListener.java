@@ -1,8 +1,8 @@
 package com.spam.mctool.controller;
 
 /**
- * @author David Hildenbrand
  * This interface must be implemented by all classes wanting to receiver updates about the language after suscribing to the LanguageManager.
+ * @author David Hildenbrand
  */
 public interface LanguageChangeListener {
 

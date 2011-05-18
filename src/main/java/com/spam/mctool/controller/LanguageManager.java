@@ -1,9 +1,9 @@
 package com.spam.mctool.controller;
 
 /**
- * @author David Hildenbrand
  * This interface is implemented by the controller and provides the functionality to
- * change the global language and inform all listeners
+ * change the global language and inform all listeners.
+ * @author David Hildenbrand
  */
 public interface LanguageManager {
 
