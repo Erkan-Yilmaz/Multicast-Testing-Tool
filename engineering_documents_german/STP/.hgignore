@@ -1,0 +1,5 @@
+
+syntax: regexp
+^tmp$
+syntax: regexp
+^STP-Team1\.pdf$

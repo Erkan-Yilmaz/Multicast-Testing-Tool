@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg height="404" version="1.1" width="564" xmlns="http://www.w3.org/2000/svg">
+<rect fill="#00ff" height="32" stroke="#00ff" stroke-width="1" width="536" x="14" y="358"/>
+<rect fill="#c0c0c0" height="32" stroke="#c0c0c0" stroke-width="1" width="536" x="14" y="358"/>
+<rect fill="none" height="32" stroke="#000000" stroke-width="1" width="536" x="14" y="358"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="23" x2="71" y1="372" y2="372"/>
+<text font-family="Dialog" font-size="12" x="23" y="371">
+Network</text>
+<rect fill="#c0c0c0" height="292" stroke="#c0c0c0" stroke-width="1" width="236" x="14" y="34"/>
+<rect fill="none" height="292" stroke="#000000" stroke-width="1" width="236" x="14" y="34"/>
+<polygon fill="#c0c0c0" points="14,34 34,14 270,14 250,34" stroke="#c0c0c0" stroke-width="1"/>
+<polygon fill="none" points="14,34 34,14 270,14 250,34" stroke="#000000" stroke-width="1"/>
+<polygon fill="#c0c0c0" points="270,14 270,306 250,326 250,34" stroke="#c0c0c0" stroke-width="1"/>
+<polygon fill="none" points="270,14 270,306 250,326 250,34" stroke="#000000" stroke-width="1"/>
+<text font-family="Dialog" font-size="12" x="22" y="48">
+Machine A</text>
+<rect fill="#00ff" height="28" stroke="#00ff" stroke-width="1" width="184" x="38" y="270"/>
+<rect fill="#c0c0c0" height="28" stroke="#c0c0c0" stroke-width="1" width="184" x="38" y="270"/>
+<rect fill="none" height="28" stroke="#000000" stroke-width="1" width="184" x="38" y="270"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="47" x2="148" y1="284" y2="284"/>
+<text font-family="Dialog" font-size="12" x="47" y="283">
+Operating System</text>
+<rect fill="#00ff" height="40" stroke="#00ff" stroke-width="1" width="183" x="40" y="142"/>
+<rect fill="#ffffff" height="40" stroke="#ffffff" stroke-width="1" width="183" x="40" y="142"/>
+<rect fill="none" height="40" stroke="#000000" stroke-width="1" width="183" x="40" y="142"/>
+<text font-family="Dialog" font-size="12" x="59" y="156">
+com::spam::mctool::model</text>
+<rect fill="#ffffff" height="10" stroke="#ffffff" stroke-width="1" width="20" x="30" y="150"/>
+<rect fill="none" height="10" stroke="#000000" stroke-width="1" width="20" x="30" y="150"/>
+<rect fill="#ffffff" height="10" stroke="#ffffff" stroke-width="1" width="20" x="30" y="163"/>
+<rect fill="none" height="10" stroke="#000000" stroke-width="1" width="20" x="30" y="163"/>
+<rect fill="#c0c0c0" height="40" stroke="#c0c0c0" stroke-width="1" width="187" x="40" y="70"/>
+<rect fill="none" height="40" stroke="#00ff" stroke-width="1" width="187" x="40" y="70"/>
+<rect fill="#c0c0c0" height="40" stroke="#c0c0c0" stroke-width="1" width="187" x="40" y="70"/>
+<rect fill="none" height="40" stroke="#000000" stroke-width="1" width="187" x="40" y="70"/>
+<rect fill="#c0c0c0" height="0" stroke="#c0c0c0" stroke-width="1" width="175" x="51" y="71"/>
+<text font-family="Dialog" font-size="12" x="76" y="84">
+com::spam::mctool::*</text>
+<rect fill="#c0c0c0" height="10" stroke="#c0c0c0" stroke-width="1" width="20" x="30" y="78"/>
+<rect fill="none" height="10" stroke="#000000" stroke-width="1" width="20" x="30" y="78"/>
+<rect fill="#c0c0c0" height="10" stroke="#c0c0c0" stroke-width="1" width="20" x="30" y="91"/>
+<rect fill="none" height="10" stroke="#000000" stroke-width="1" width="20" x="30" y="91"/>
+<rect fill="#c0c0c0" height="180" stroke="#c0c0c0" stroke-width="1" width="200" x="318" y="146"/>
+<rect fill="none" height="180" stroke="#000000" stroke-width="1" width="200" x="318" y="146"/>
+<polygon fill="#c0c0c0" points="318,146 338,126 538,126 518,146" stroke="#c0c0c0" stroke-width="1"/>
+<polygon fill="none" points="318,146 338,126 538,126 518,146" stroke="#000000" stroke-width="1"/>
+<polygon fill="#c0c0c0" points="538,126 538,306 518,326 518,146" stroke="#c0c0c0" stroke-width="1"/>
+<polygon fill="none" points="538,126 538,306 518,326 518,146" stroke="#000000" stroke-width="1"/>
+<text font-family="Dialog" font-size="12" x="326" y="160">
+Different Machine</text>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="126" x2="126" y1="270" y2="246"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="126" x2="126" y1="142" y2="110"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="422" x2="422" y1="358" y2="326"/>
+<rect fill="#00ff" height="28" stroke="#00ff" stroke-width="1" width="184" x="38" y="222"/>
+<rect fill="#c0c0c0" height="28" stroke="#c0c0c0" stroke-width="1" width="184" x="38" y="222"/>
+<rect fill="none" height="28" stroke="#000000" stroke-width="1" width="184" x="38" y="222"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="47" x2="163" y1="236" y2="236"/>
+<text font-family="Dialog" font-size="12" x="47" y="235">
+Java Virtual Machine</text>
+<polyline fill="none" points="126,358 126,298" stroke="#000000" stroke-width="1"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="126" x2="126" y1="222" y2="182"/>
+</svg>

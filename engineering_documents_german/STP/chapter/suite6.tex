@@ -1,0 +1,329 @@
+\chapter{Testsuite /TS60/}
+    
+    Dieser Anhang enthält die Testfälle der Testsuite /TS60/.\\
+    Die zugehörige Requirement ID lautet /UC40/.\\
+    \newline
+    Die Testfälle dieser Testsuite sollen die korrekte Analyse der
+    übertragenen/empfangenen Multicast-Pakete und deren Anzeige in der GUI
+    sicherstellen.\\
+    Dazu zählt die Auswertung der Messdaten pro Sender-Stream und pro
+    Empfänger-Stream, für alle Sender und für alle Empfänger.
+
+    \begin{table}[h]
+        \caption{/TC6001/}
+        \label{tab:TC6001}
+        \begin{center}
+            \begin{tabular}{|p{3.5cm}|p{12cm}|}
+                \hline
+                    \textbf{Testfall Id} & /TC6001/\\
+                \hline
+                    \textbf{Testfall Name} & Sendestatistik eines Sender\\
+                \hline
+                    \textbf{Requirement ID} & /VA1000/, /VA1200/, /OA0300/\\
+                \hline
+                    \textbf{Beschreibung} & Dieser Testfall verifiziert die
+                    korrekte Erstellung von Statistiken für einen einzelnen
+                    Sender.\\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|p{2.5cm}|p{5cm}|p{7.55cm}|}
+                \multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+                \hline
+                    \textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+                \hline
+                    Test-Setup & Installieren und Starten des MC-TOOL & Das Tool
+                    wird ausgeführt und ist bereit zum Starten von Sendern. \\
+                \hline
+                    Sender starten & Anlegen eines Senders mit niedriger
+                    Senderate, 10 PPS, und Aktivieren des Senders & Der Sender
+                    sendet und wird angezeigt. Die maximale, minimale und
+                    durchschnittliche Senderate liegt bei 10 PPS. \\
+                \hline
+                    Erhöhen der Senderate & Die Senderate wird über
+                    "`Editieren"' auf 1000 PPS erhöht. &  Die minimale Senderate
+                    liegt bei 10 PPS, die maximale bei 1000 PPS, die
+                    durchschnittliche bei 1000 PPS.\\
+                \hline
+                    Pausieren des Senders & Der Sender wird deaktiviert. & Die
+                    Statistiken bleiben erhalten. Die minimale Senderate wird
+                    nicht verändert. \\
+                \hline
+                    Aktivieren des Senders & Der Sender wird aktiviert. & Die
+                    Statistiken bleiben erhalten. \\
+                \hline
+                    Hinzufügen eines neuen Senders & Hinzufügen eines Senders
+                    mit 1000 PPS. & Die durchschnittliche, maximale und minimale
+                    Senderate liegen bei 1000 PPS. \\
+                \hline
+                    Überlasten von Sendern & Schrittweises Hinzufügen von
+                    Sendern mit 1000 PPS, bis die durchschnittliche Senderate
+                    einzelner Sender unter die maximale gemessene Senderate
+                    fällt. & Die minimale Senderate wird jeweils bei niedrigerer
+                    durchschnittlicher Senderate angepasst.\\
+                \hline
+                    Detailansicht & Öffnen der Detailansicht eines Senders mit
+                    schwankender Senderate. & Die angezeigten Statistiken
+                    stimmen mit den Statistiken der Tabelle überein. Der Graph
+                    wird um die jeweilige durchschnittliche Senderate ergänzt.\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+    
+    \begin{table}[h]
+        \caption{/TC6002/}
+        \label{tab:TC6002}
+        \begin{center}
+            \begin{tabular}{|p{3.5cm}|p{12cm}|}
+                \hline
+                    \textbf{Testfall Id} & /TC6002/\\
+                \hline
+                    \textbf{Testfall Name} & Globale Sender-Statistiken\\
+                \hline
+                    \textbf{Requirement ID} & /VA1000/\\
+                \hline
+                    \textbf{Beschreibung} & Dieser Testfall verifiziert die
+                    korrekte Erstellung von globalen Sender-Statistiken.\\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|p{2.5cm}|p{5cm}|p{7.55cm}|}
+                \multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+                \hline
+                    \textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+                \hline
+                    Test-Setup & Installieren und Starten des MC-TOOL & Das Tool
+                    wird ausgeführt und ist bereit zum Starten von Sendern. \\
+                \hline
+                    Sender starten & Anlegen eines Senders mit niedriger
+                    Senderate, 10 PPS und Aktivieren des Senders & Der Sender
+                    sendet und wird angezeigt. Die Senderate liegt bei 10 PPS.
+                    Die globale Senderate ist identisch. Der Zähler für die
+                    Anzahl insgesamt gesendeter Pakete erhöht sich pro Sekunde
+                    im Schnitt um 10 Pakete.\\
+                \hline
+                    Sender hinzufügen & Anlegen eines Senders mit 90 PPS
+                    Senderate und Aktivieren des Senders & Die globale Senderate
+                    liegt bei 100 PPS. Der Zähler für die Anzahl insgesamt
+                    gesendeter Pakete erhöht sich pro Sekunde im Schnitt um 100
+                    Pakete.\\
+                \hline
+                    Sender hinzufügen & Anlegen eines Senders mit 900 PPS
+                    Senderate und Aktivieren des Senders & Die globale Senderate
+                    liegt bei 1000 PPS. Der Zähler für die Anzahl insgesamt
+                    gesendeter Pakete erhöht sich pro Sekunde im Schnitt um 1000
+                    Pakete.\\
+                \hline
+                    Sender pausieren & Deaktivieren des Senders mit 900 PPS
+                    Senderate. & Die globale Senderate liegt bei 100 PPS. Der
+                    Zähler für die Anzahl insgesamt gesendeter Pakete erhöht
+                    sich pro Sekunde im Schnitt um 100 Pakete.\\
+                \hline
+                    Sender löschen & Löschen des Senders mit 90 PPS Senderate. &
+                    Die globale Senderate liegt bei 10 PPS. Der Zähler für die
+                    Anzahl insgesamt gesendeter Pakete erhöht sich pro Sekunde
+                    im Schnitt um 100 Pakete.\\
+                \hline
+                    Sender pausieren & Deaktivieren des Senders mit 10 PPS
+                    Senderate. & Die globale Senderate liegt bei 0 PPS. Der
+                    Zähler für die Anzahl insgesamt gesendeter Pakete erhöht
+                    sich nicht.\\
+                \hline
+                    Sender hinzufügen & Anlegen eines Senders mit 500 PPS
+                    Senderate und Aktivieren des Senders & Die globale Senderate
+                    liegt bei 500 PPS. Der Zähler für die Anzahl insgesamt
+                    gesendeter Pakete erhöht sich pro Sekunde im Schnitt um 500
+                    Pakete.\\
+                \hline
+                    Sender überlasten & Hinzufügen von Sendern mit 1000 PPS
+                    Senderate und Aktivieren der Senders, bis die
+                    durchschnittliche Senderate einzelner Sender schwankt. & Die
+                    globale Senderate schwankt um einen Wert.\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+    
+    \begin{table}[h]
+        \caption{/TC6003/}
+        \label{tab:TC6003}
+        \begin{center}
+            \begin{tabular}{|p{3.5cm}|p{12cm}|}
+                \hline
+                    \textbf{Testfall Id} & /TC6003/\\
+                \hline
+                    \textbf{Testfall Name} & Paketraten-Statistik auf
+                    Empfängerseite\\
+                \hline
+                    \textbf{Requirement ID} & /VA1000/, /VA1200/, /VA1300/\\
+                \hline
+                    \textbf{Beschreibung} & Dieser Testfall verifiziert die
+                    korrekte Erstellung von Statistiken über die
+                    gemessene Paketrate für einen empfangenen Datenstrom.\\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|p{2.5cm}|p{5cm}|p{7.55cm}|}
+                \multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+                \hline
+                    \textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+                \hline
+                    Test-Setup & Installieren und Starten des MC-TOOL & Das Tool
+                    wird ausgeführt und ist bereit zum Starten von Sendern. \\
+                \hline
+                    Sender starten & Anlegen eines Senders mit Senderate 100
+                    PPS auf Loopback-Interface und Aktivieren des Senders & Der
+                    Sender sendet und wird angezeigt.\\
+                \hline
+                    Empfänger hinzufügen & Anlegen eines Empfängers
+                    auf Loopback-Interface mit selber Gruppen-Adresse und Port &
+                    Der Empfänger empfängt einen Datenstrom mit 100 PPS.\\
+                \hline
+                    Sender hinzufügen & Anlegen eines Senders mit Senderate
+                    1000 PPS auf Loopback-Interface mit selber Gruppen-Adresse
+                    und Port und Aktivieren des Senders & Der Empfänger
+                    empfängt die Datenströme zweier Sender mit 100 bzw. 1000
+                    PPS (jeweils konfigurierte und gemessene Paketrate).\\
+                \hline
+                    Verändern der Senderate & Verändern der Senderate von 1000
+                    PPS auf 100 PPS. & Der Empfänger empfängt die Datenströme
+                    zweier Sender mit je 100 PPS als konfigurierte und
+                    gemessene Paketrate.\\
+                \hline
+                    Sender pausieren & Pausieren eines Senders & Der Empfänger
+                    zeigt den Datenstrom als pausiert an. Die Statistiken
+                    bleiben erhalten.\\
+                \hline
+                    Sender aktivieren & Aktivieren des deaktivierten Senders &
+                    Der Empfänger zeigt den Sender als aktiv an. Die Statistiken
+                    werden fortgesetzt.\\
+                \hline
+                    Überlasten der Sender & Hinzufügen und aktivieren von
+                    Sendern auf selber Multicast-Adresse und Port, bis die
+                    Senderate der Sender beginnt zu schwanken. & Pakete gehen
+                    verloren. Die Empfangsrate der Datenströme schwankt analog
+                    zu den Sendern.\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+    
+    \begin{table}[h]
+        \caption{/TC6004/}
+        \label{tab:TC6004}
+        \begin{center}
+            \begin{tabular}{|p{3.5cm}|p{12cm}|}
+                \hline
+                    \textbf{Testfall Id} & /TC6004/\\
+                \hline
+                    \textbf{Testfall Name} & Globale Empfänger-Statistiken\\
+                \hline
+                    \textbf{Requirement ID} & /VA1000/, /VA1300/\\
+                \hline
+                    \textbf{Beschreibung} & Dieser Testfall verifiziert die
+                    korrekte Erstellung globaler Empfänger-Statistiken.\\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|p{2.5cm}|p{5cm}|p{7.55cm}|}
+                \multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+                \hline
+                    \textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+                \hline
+                    Test-Setup & Installieren und Starten des MC-TOOL & Das Tool
+                    wird ausgeführt und ist bereit zum Starten von Sendern. \\
+                \hline
+                    Sender Starten & Anlegen eines Senders mit Senderate von 100
+                    PPS auf Loopback-Interface und Aktivieren des Senders & Der
+                    Sender sendet und wird angezeigt.\\
+                \hline
+                    Empfänger hinzufügen & Anlegen eines Empfängers
+                    auf Loopback-Interface mit selber Gruppen-Adresse und Port &
+                    Der Empfänger empfängt einen Datenstrom mit 100 PPS. Die
+                    globale Empfangsrate liegt bei 100 PPS. Der Zähler für
+                    insgesamt empfangene Pakete wird pro Sekunde um 100
+                    Pakete erhöht.\\
+                \hline
+                    Sender hinzufügen & Anlegen eines Senders mit Senderate von
+                    900 PPS auf Loopback-Interface mit selber Gruppen-Adresse
+                    und Port und Aktivieren des Senders & Der Empfänger
+                    empfängt zwei Datenströme mit 100 bzw. 900 PPS. Die
+                    globale Empfangsrate liegt bei 1000 PPS. Der Zähler für
+                    insgesamt empfangene Pakete wird pro Sekunde im Schnitt um
+                    1000 Pakete erhöht.\\
+                \hline
+                    Sender pausieren & Pausieren des Senders mit 900 PPS. & Die
+                    globale Empfangsrate liegt bei 100 PPS. Der Zähler für
+                    insgesamt empfangene Pakete wird pro Sekunde im Schnitt um
+                    1000 Pakete erhöht.\\
+                \hline
+                    Sender aktivieren & Aktivieren des deaktivierten Senders & 
+                    Die globale Empfangsrate liegt bei 1000 PPS. Der Zähler für
+                    insgesamt empfangene Pakete wird pro Sekunde im Schnitt um
+                    1000 Pakete erhöht.\\
+                \hline
+                    Überlasten der Sender & Hinzufügen und Aktivieren von
+                    Sendern auf selber Gruppen-Adresse und Port, bis die
+                    Senderate der Sender beginnt zu schwanken. & Pakete gehen
+                    verloren. Die Summe der verlorenen Pakete der einzelnen
+                    Datenströme stimmt mit den global verlorenen Paketen
+                    überein.\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+    
+    \begin{table}[h]
+        \caption{/TC6005/}
+        \label{tab:TC6005}
+        \begin{center}
+            \begin{tabular}{|p{3.5cm}|p{12cm}|}
+                \hline
+                    \textbf{Testfall Id} & /TC6005/\\
+                \hline
+                    \textbf{Testfall Name} & Detaillierte Statistik eines
+                    empfangenen Datenstromes\\
+                \hline
+                    \textbf{Requirement ID} & /VA1000/, /VA1200/, /VA1300/,
+                    /OA0300/\\
+                \hline
+                    \textbf{Beschreibung} & Dieser Testfall verifiziert die
+                    korrekte Erstellung von Statistiken für einen einzelnen
+                    empfangenen Datenstrom sowie für den einzelnen Empfänger,
+                    der diesen Datenstrom empfängt.\\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|p{2.5cm}|p{5cm}|p{7.55cm}|}
+                \multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+                \hline
+                    \textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+                \hline
+                    Test-Setup & Installieren und Starten des MC-TOOL auf zwei
+                    Rechnern im Netzwerk & Das Tool wird auf beiden Rechnern
+                    ausgeführt und ist bereit zum Starten von Sendern. \\
+                \hline
+                    Zeit Synchronisierung & Synchronisieren der Systemzeit auf
+                    beiden Computern mit dem selben NTP-Server & Die Zeiten
+                    beider Computer sind hinreichend synchron.\\
+                \hline
+                    Sender Starten & Anlegen eines Senders mit Senderate von 100
+                    PPS und Aktivieren des Senders & Der Sender sendet und wird
+                    angezeigt.\\
+                \hline
+                    Empfänger anlegen & Anlegen des Empfängers auf dem
+                    anderen Computer mit entsprechender Gruppen-Adresse und
+                    Port. & Der Empfänger empfängt den Sender aus dem Netzwerk.\\
+                \hline
+                    Detailansicht Paketraten & Die Detailansicht des Empfängers
+                    wird geöffnet.& Die konfigurierte und gemessene Senderate
+                    stimmen mit den Daten des Senders überein. Die gemessene
+                    Empfangsrate stimmt mit der Tabellenangabe überein.\\
+                \hline
+                    Detailansicht Übertragungszeit & Messen der Ping-Zeit zum
+                    anderen Computer. & Die angezeigte Übetragungszeit stimmt
+                    mit der Hälfte der Ping-Zeit überein.\\
+                \hline
+                    Detailansicht maximaler Versatz & Korrektheit des Wertes
+                    kann nicht verifiziert werden. & Maximaler Versatz wird
+                    angezeigt.\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{table}

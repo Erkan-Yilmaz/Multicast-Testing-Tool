@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?><configuration>
+   <profile>
+      <name>Profil</name>
+      <creationTime>16-05-2011 17:34:33</creationTime>
+   </profile>
+   <senders>
+      <sender>
+         <psize>400</psize>
+         <port>12345</port>
+         <pps>1000</pps>
+         <ninf>127.0.0.1</ninf>
+         <abeh>lazy</abeh>
+         <ptype>SPAM</ptype>
+         <ttl>60</ttl>
+         <payload>Default
+
+         with newline
+         </payload>
+         <group>225.1.1.1</group>
+         <active>true</active>
+      </sender>
+      <sender>
+         <psize>200</psize>
+         <port>12350</port>
+         <pps>100</pps>
+         <ninf>192.168.3.44</ninf>
+         <abeh>default</abeh>
+         <ptype>SPAM</ptype>
+         <ttl>32</ttl>
+         <payload>Default</payload>
+         <group>225.1.1.7</group>
+         <active>false</active>
+      </sender>
+      <sender>
+         <psize>400</psize>
+         <port>12345</port>
+         <pps>1000</pps>
+         <ninf>127.0.0.1</ninf>
+         <abeh>lazy</abeh>
+         <ptype>SPAM</ptype>
+         <ttl>60</ttl>
+         <payload>Default
+
+         with newline
+         </payload>
+         <group>225.1.1.1</group>
+         <active>true</active>
+      </sender>
+      <sender>
+         <psize>200</psize>
+         <port>12350</port>
+         <pps>100</pps>
+         <ninf>192.168.3.44</ninf>
+         <abeh>default</abeh>
+         <ptype>SPAM</ptype>
+         <ttl>32</ttl>
+         <payload>Default</payload>
+         <group>225.1.1.7</group>
+         <active>false</active>
+      </sender>
+      <sender>
+         <psize>400</psize>
+         <port>12345</port>
+         <pps>1000</pps>
+         <ninf>127.0.0.1</ninf>
+         <abeh>lazy</abeh>
+         <ptype>SPAM</ptype>
+         <ttl>60</ttl>
+         <payload>Default
+
+         with newline
+         </payload>
+         <group>225.1.1.1</group>
+         <active>true</active>
+      </sender>
+      <sender>
+         <psize>200</psize>
+         <port>12350</port>
+         <pps>100</pps>
+         <ninf>192.168.3.44</ninf>
+         <abeh>default</abeh>
+         <ptype>SPAM</ptype>
+         <ttl>32</ttl>
+         <payload>Default</payload>
+         <group>225.1.1.7</group>
+         <active>false</active>
+      </sender>
+      <sender>
+         <psize>400</psize>
+         <port>12345</port>
+         <pps>1000</pps>
+         <ninf>127.0.0.1</ninf>
+         <abeh>lazy</abeh>
+         <ptype>SPAM</ptype>
+         <ttl>60</ttl>
+         <payload>Default
+
+         with newline
+         </payload>
+         <group>225.1.1.1</group>
+         <active>true</active>
+      </sender>
+      <sender>
+         <psize>200</psize>
+         <port>12350</port>
+         <pps>100</pps>
+         <ninf>192.168.3.44</ninf>
+         <abeh>default</abeh>
+         <ptype>SPAM</ptype>
+         <ttl>32</ttl>
+         <payload>Default</payload>
+         <group>225.1.1.7</group>
+         <active>false</active>
+      </sender>
+      <sender>
+         <psize>400</psize>
+         <port>12345</port>
+         <pps>1000</pps>
+         <ninf>127.0.0.1</ninf>
+         <abeh>lazy</abeh>
+         <ptype>SPAM</ptype>
+         <ttl>60</ttl>
+         <payload>Default
+
+         with newline
+         </payload>
+         <group>225.1.1.1</group>
+         <active>true</active>
+      </sender>
+      <sender>
+         <psize>200</psize>
+         <port>12350</port>
+         <pps>100</pps>
+         <ninf>192.168.3.44</ninf>
+         <abeh>default</abeh>
+         <ptype>SPAM</ptype>
+         <ttl>32</ttl>
+         <payload>Default</payload>
+         <group>225.1.1.7</group>
+         <active>false</active>
+      </sender>
+   </senders>
+</configuration>

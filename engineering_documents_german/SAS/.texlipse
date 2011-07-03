@@ -1,0 +1,13 @@
+#TeXlipse project settings
+#Thu Oct 28 16:52:47 CEST 2010
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=SAS-Team1.tex
+outputFile=SAS-Team1.pdf
+langSpell=de
+markDer=true
+srcDir=

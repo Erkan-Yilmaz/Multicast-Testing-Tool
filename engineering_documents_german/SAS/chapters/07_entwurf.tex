@@ -1,0 +1,43 @@
+%El Konno
+%Design Patterson begründen
+%MVC,Factory, Strategy, Observer
+
+\section{Gesamtsystem}
+\label{sec:7:global}
+
+Das Gesamtsystem wird zur besseren Verständlichkeit und zur Vermeidung von Abhängigkeiten 
+in logische Komponenten unterteilt. \\
+Auf höchster Abstraktionsebene ist das strukturgebende Element der Anwendung ein Model-View-Controller Pattern.
+Dieses Pattern gliedert die Applikation in drei Untermodule, das Model, die View und den Controller.
+Die Entscheidung dieses Pattern zu benutzen fiel auf Grund der vielen architektonischen Vorteile.
+So herrscht zwischen den einzelnen Komponenten eine strenge Hierarchie. Das Model weiß von keinem Controller und
+der Controller kennt keine View. Durch diese Trennung besteht eine sehr schwache Kopplung zwischen den einzelnen
+Komponenten. Zudem lässt sich die View sehr flexibel gestalten und es können sogar mehrere Views zur gleichen
+Zeit aktiv sein, ohne sich gegenseitig zu stören. Diese Flexibilität der View ist ausschlaggebend für 
+die Anpassungsfähigkeit der Applikation an ein sich änderndes Umfeld. Die tatsächliche Lösung des Problems 
+behält nämlich meistens über einen relativ langen Zeitraum seine Berechtigung, während sich die Anforderungen
+an die Visualisierung und Bedienung der eigentlichen Programmlogik viel schneller ändern. 
+Aber der wohl wichtigste Grund ist die Bewährtheit des Patterns. So wird er von den meisten modernen Applikationen
+umgesetzt und findet sich auch in jeder modernen GUI Library wieder. Der einzige Nachteil des Patterns sind
+Performance Einbusen, wie sie bei den meisten Ansätzen der architektonischen Strukturierung anfallen.
+
+\section{Paket Protokolle}
+\label{sec:7:packet}
+Um die relevanten Daten aus den UDP Paketen zu extrahieren wird ein Strategy Pattern verwendet.
+Dieses Pattern verbirgt den Algorithmus zum parsen des Pakets aus dem UDP Bitstream hinter einem von der
+Implementierung unabhängigen Interface.
+
+\section{Serialisierung}
+\label{sec:7:serial}
+An die aspektorientierte Programmierung angelehnt, ist die gesamte
+Serialisierung von Daten, welche persistent gemacht werden müssen, in einen Teil des Controllers ausgelagert.
+
+\section{Benutzer Interaktion}
+\label{sec:7:user}
+Das Model und der Controller bilden zusammen eine vollständige Lösung um ein
+Netzwerk auf Multicastfähigkeit zu testen. Die View soll nur die Interaktion eines Benutzers mit der Lösung vereinfachen. Dieser Ansatz führt zu einem
+hohen Wiederverwendungsgrad der Lösung des tatsächlichen Problems. Man könnte einfach mit den Komponenten des
+Controllers und des Models linken und so die komplette Lösung in eine eigene Applikation integrieren. 
+Da Sprache nur bei der Bedienung von Menschen von Relevanz ist, ist die Komponente zur Internationalisierung 
+auch nur in der View implementiert.
+

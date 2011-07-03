@@ -1,0 +1,75 @@
+\chapter{Testsuite /TS70/}
+Dieser Anhang enthält die Testfälle der Testsuite /TS70/.\\
+Die zugehörige Requirement ID lautet /QP30/.\\
+\newline
+Die Testfälle dieser Testsuite sollen die korrekte und einfache Installation der Applikation sowohl unter Windows als auch unter Linux sicherstellen.\\
+
+\begin{table}[h]
+\caption{/TC7001/}
+\label{tab:TC7001}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{12cm}|}
+\hline
+\textbf{Testfall Id} & /TC7001/\\
+\hline
+\textbf{Testfall Name} & Installation unter Windows\\
+\hline
+\textbf{Requirement ID} & /QP30/\\
+\hline
+\textbf{Beschreibung} & Dieser Testfall verifiziert die, für einen erfahrenen Benutzer, einfache Installation der Applikation.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{7.55cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+\hline
+Installer herunterladen & Herunterladen des Installers & Die URL ist valide und der Download startet. Der Download muss auch ohne eine Anmeldung auf der Seite funktionieren.\\
+\hline
+Installation starten & Ausführen des heruntergeladenen Installers. & Ein Dialog öffnet sich. \\
+\hline
+Konfiguration der Installation & Der Installationswizzard wird verwendet. & Wenn Konfigurationsmöglichkeiten vorhanden sind, so beschränken sie sich nur auf allgemein bekannte Einstellungen, wie das Angeben eines Installationspfads.\\
+\hline
+Installation & Die Applikation wird installiert. & Der Fortschritt der Installation wird angezeigt. \\
+\hline
+Starten der Applikation & Die nun installierte Applikation wird über das Start Menü gestartet. & Die Applikation startet. \\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC7002/}
+\label{tab:TC7002}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{12cm}|}
+\hline
+\textbf{Testfall Id} & /TC7002/\\
+\hline
+\textbf{Testfall Name} & Installation unter Linux (Ubuntu)\\
+\hline
+\textbf{Requirement ID} & /QP30/\\
+\hline
+\textbf{Beschreibung} & Dieser Testfall verifiziert die korrekte Installation unter Linux (Ubuntu).\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{7.55cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+\hline
+Debian Paket herunterladen & Herunterladen des Debian Pakets. & Die URL ist valide und der Download startet. Der Download muss auch ohne eine Anmeldung auf der Seite funktionieren.\\
+\hline
+Debian Paket installieren (GUI) & Ein Doppelklick auf das Icon der heruntergeladenen Datei. & Start eines Installationsdialogs. \\
+\hline
+Debian Paket installieren (CLI) & Ausführen des Befehls sudo dpkg -i [file] & Installation der Applikation.\\
+\hline
+Installation & Die Applikation wird installiert. & Der Fortschritt der Installation wird angezeigt. \\
+\hline
+Starten der Applikation & Die nun installierte Applikation wird über das Start Menü gestartet. & Die Applikation startet. \\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}

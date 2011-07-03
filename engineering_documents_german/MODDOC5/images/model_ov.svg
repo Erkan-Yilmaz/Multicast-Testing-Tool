@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg height="656" version="1.1" width="1006" xmlns="http://www.w3.org/2000/svg">
+<rect fill="#ffffff" height="43" stroke="#ffffff" stroke-width="1" width="284" x="95" y="14"/>
+<rect fill="none" height="43" stroke="#000000" stroke-width="1" width="284" x="95" y="14"/>
+<text font-family="Dialog" font-size="12" x="100" y="46">
+com::spam::mctool::model::SenderManager---</text>
+<text font-family="Dialog" font-size="12" x="192" y="28">
+&lt;&lt;interface&gt;&gt;</text>
+<rect fill="#ffffff" height="43" stroke="#ffffff" stroke-width="1" width="313" x="415" y="14"/>
+<rect fill="none" height="43" stroke="#000000" stroke-width="1" width="313" x="415" y="14"/>
+<text font-family="Dialog" font-size="12" x="420" y="46">
+com::spam::mctool::model::ReceiverManager------</text>
+<text font-family="Dialog" font-size="12" x="526" y="28">
+&lt;&lt;interface&gt;&gt;</text>
+<rect fill="#ffffff" height="24" stroke="#ffffff" stroke-width="1" width="245" x="551" y="102"/>
+<rect fill="none" height="24" stroke="#000000" stroke-width="1" width="245" x="551" y="102"/>
+<text font-family="Dialog" font-size="12" x="556" y="115">
+com::spam::mctool::model::ReceiverPool</text>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="728" x2="728" y1="102" y2="97"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="728" x2="728" y1="92" y2="87"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="728" x2="728" y1="82" y2="77"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="728" x2="728" y1="72" y2="67"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="728" x2="728" y1="62" y2="57"/>
+<polygon fill="#ffffff" points="728,57 735,69 721,69" stroke="#ffffff" stroke-width="1"/>
+<polygon fill="none" points="728,57 735,69 721,69" stroke="#000000" stroke-width="1"/>
+<text font-family="Dialog" font-size="12" x="699" y="73">
+ReceiverPool -&gt; ReceiverManager</text>
+<text font-family="Dialog" font-size="12" x="703" y="90">
+&lt;&lt;realize&gt;&gt;</text>
+<rect fill="#ffffff" height="24" stroke="#ffffff" stroke-width="1" width="237" x="87" y="102"/>
+<rect fill="none" height="24" stroke="#000000" stroke-width="1" width="237" x="87" y="102"/>
+<text font-family="Dialog" font-size="12" x="92" y="115">
+com::spam::mctool::model::SenderPool</text>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="179" x2="179" y1="102" y2="97"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="179" x2="179" y1="92" y2="87"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="179" x2="179" y1="82" y2="77"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="179" x2="179" y1="72" y2="67"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="179" x2="179" y1="62" y2="57"/>
+<polygon fill="#ffffff" points="179,57 186,69 172,69" stroke="#ffffff" stroke-width="1"/>
+<polygon fill="none" points="179,57 186,69 172,69" stroke="#000000" stroke-width="1"/>
+<text font-family="Dialog" font-size="12" x="25" y="75">
+SenderPool -&gt; SenderManager</text>
+<text font-family="Dialog" font-size="12" x="29" y="92">
+&lt;&lt;realize&gt;&gt;</text>
+<rect fill="#ffffff" height="24" stroke="#ffffff" stroke-width="1" width="265" x="327" y="166"/>
+<rect fill="none" height="24" stroke="#000000" stroke-width="1" width="265" x="327" y="166"/>
+<text font-family="Dialog" font-size="12" font-style="italic" x="333" y="179">
+com::spam::mctool::model::MulticastStream</text>
+<rect fill="#ffffff" height="43" stroke="#ffffff" stroke-width="1" width="212" x="95" y="214"/>
+<rect fill="none" height="43" stroke="#000000" stroke-width="1" width="212" x="95" y="214"/>
+<text font-family="Dialog" font-size="12" x="100" y="246">
+com::spam::mctool::model::Sender</text>
+<text font-family="Dialog" font-size="12" x="164" y="228">
+&lt;&lt;active&gt;&gt;</text>
+<polyline fill="none" points="307,214 327,190" stroke="#000000" stroke-width="1"/>
+<polygon fill="#ffffff" points="327,190 324,203 313,194" stroke="#ffffff" stroke-width="1"/>
+<polygon fill="none" points="327,190 324,203 313,194" stroke="#000000" stroke-width="1"/>
+<rect fill="#ffffff" height="43" stroke="#ffffff" stroke-width="1" width="257" x="583" y="214"/>
+<rect fill="none" height="43" stroke="#000000" stroke-width="1" width="257" x="583" y="214"/>
+<text font-family="Dialog" font-size="12" x="588" y="246">
+com::spam::mctool::model::ReceiverGroup</text>
+<text font-family="Dialog" font-size="12" x="675" y="228">
+&lt;&lt;active&gt;&gt;</text>
+<polyline fill="none" points="583,214 583,190" stroke="#000000" stroke-width="1"/>
+<polygon fill="#ffffff" points="583,190 590,202 576,202" stroke="#ffffff" stroke-width="1"/>
+<polygon fill="none" points="583,190 590,202 576,202" stroke="#000000" stroke-width="1"/>
+<rect fill="#ffffff" height="24" stroke="#ffffff" stroke-width="1" width="221" x="655" y="310"/>
+<rect fill="none" height="24" stroke="#000000" stroke-width="1" width="221" x="655" y="310"/>
+<text font-family="Dialog" font-size="12" x="660" y="323">
+com::spam::mctool::model::Receiver</text>
+<polyline fill="none" points="815,257 815,310" stroke="#000000" stroke-width="1"/>
+<polygon fill="#000000" points="815,257 820,267 815,277 810,267" stroke="#000000" stroke-width="1"/>
+<polygon fill="none" points="815,257 820,267 815,277 810,267" stroke="#000000" stroke-width="1"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="808" x2="815" y1="298" y2="310"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="822" x2="815" y1="298" y2="310"/>
+<text font-family="Dialog" font-size="12" x="829" y="282">
+1</text>
+<text font-family="Dialog" font-size="12" x="793" y="295">
+*</text>
+<polyline fill="none" points="119,126 119,214" stroke="#000000" stroke-width="1"/>
+<polygon fill="#000000" points="119,126 124,136 119,146 114,136" stroke="#000000" stroke-width="1"/>
+<polygon fill="none" points="119,126 124,136 119,146 114,136" stroke="#000000" stroke-width="1"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="112" x2="119" y1="202" y2="214"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="126" x2="119" y1="202" y2="214"/>
+<text font-family="Dialog" font-size="12" x="96" y="138">
+1</text>
+<text font-family="Dialog" font-size="12" x="96" y="206">
+*</text>
+<polyline fill="none" points="796,126 796,214" stroke="#000000" stroke-width="1"/>
+<polygon fill="#000000" points="796,126 801,136 796,146 791,136" stroke="#000000" stroke-width="1"/>
+<polygon fill="none" points="796,126 801,136 796,146 791,136" stroke="#000000" stroke-width="1"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="789" x2="796" y1="202" y2="214"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="803" x2="796" y1="202" y2="214"/>
+<text font-family="Dialog" font-size="12" x="772" y="146">
+1</text>
+<text font-family="Dialog" font-size="12" x="773" y="203">
+*</text>
+<polygon fill="#c0c0c0" points="327,286 539,286 539,309 588,309 588,339 327,339 327,286" stroke="#c0c0c0" stroke-width="1"/>
+<rect fill="none" height="23" stroke="#000000" stroke-width="1" width="212" x="327" y="286"/>
+<text font-family="Dialog" font-size="12" x="332" y="299">
+com::spam::mctool::model::packet</text>
+<rect fill="none" height="30" stroke="#000000" stroke-width="1" width="261" x="327" y="309"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="307" x2="309" y1="257" y2="261"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="312" x2="315" y1="265" y2="269"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="318" x2="321" y1="273" y2="277"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="324" x2="327" y1="281" y2="286"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="314" x2="327" y1="280" y2="286"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="325" x2="327" y1="272" y2="286"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="307" x2="309" y1="257" y2="261"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="312" x2="315" y1="265" y2="269"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="318" x2="321" y1="273" y2="277"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="324" x2="327" y1="281" y2="286"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="314" x2="327" y1="280" y2="286"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="325" x2="327" y1="272" y2="286"/>
+<text font-family="Dialog" font-size="12" x="307" y="252">
+&lt;&lt;use&gt;&gt;</text>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="655" x2="650" y1="334" y2="334"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="645" x2="640" y1="334" y2="334"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="635" x2="630" y1="334" y2="334"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="625" x2="620" y1="334" y2="334"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="615" x2="610" y1="334" y2="334"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="605" x2="600" y1="334" y2="334"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="595" x2="590" y1="334" y2="334"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="601" x2="589" y1="327" y2="334"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="601" x2="589" y1="341" y2="334"/>
+<text font-family="Dialog" font-size="12" x="578" y="314">
+&lt;&lt;use&gt;&gt;</text>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="589" x2="589" y1="257" y2="262"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="589" x2="589" y1="267" y2="272"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="589" x2="589" y1="277" y2="282"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="589" x2="589" y1="287" y2="292"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="589" x2="589" y1="297" y2="302"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="589" x2="589" y1="307" y2="309"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="582" x2="589" y1="297" y2="309"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="596" x2="589" y1="297" y2="309"/>
+<text font-family="Dialog" font-size="12" x="592" y="288">
+&lt;&lt;use&gt;&gt;</text>
+<rect fill="#c8ffff" height="60" stroke="#c8ffff" stroke-width="1" width="329" x="143" y="374"/>
+<rect fill="none" height="60" stroke="#000000" stroke-width="1" width="329" x="143" y="374"/>
+<text font-family="Dialog" font-size="12" x="149" y="423">
+com::spam::mctool::model::SenderDataChangeListener</text>
+<text font-family="Dialog" font-size="12" x="262" y="388">
+&lt;&lt;interface&gt;&gt;</text>
+<text font-family="Dialog" font-size="12" x="262" y="405">
+&lt;&lt;observer&gt;&gt;</text>
+<rect fill="#c8ffff" height="60" stroke="#c8ffff" stroke-width="1" width="364" x="71" y="470"/>
+<rect fill="none" height="60" stroke="#000000" stroke-width="1" width="364" x="71" y="470"/>
+<text font-family="Dialog" font-size="12" x="76" y="519">
+com::spam::mctool::model::SenderAddedOrRemovedListener</text>
+<text font-family="Dialog" font-size="12" x="208" y="484">
+&lt;&lt;interface&gt;&gt;</text>
+<text font-family="Dialog" font-size="12" x="207" y="501">
+&lt;&lt;observer&gt;&gt;</text>
+<rect fill="#c8ffff" height="60" stroke="#c8ffff" stroke-width="1" width="400" x="39" y="582"/>
+<rect fill="none" height="60" stroke="#000000" stroke-width="1" width="400" x="39" y="582"/>
+<text font-family="Dialog" font-size="12" x="46" y="631">
+com::spam::mctool::model::OverallSenderStatisticsUpdatedListener</text>
+<text font-family="Dialog" font-size="12" x="194" y="596">
+&lt;&lt;interface&gt;&gt;</text>
+<text font-family="Dialog" font-size="12" x="193" y="613">
+&lt;&lt;observer&gt;&gt;</text>
+<polyline fill="none" points="175,257 175,374" stroke="#000000" stroke-width="1"/>
+<polygon fill="#000000" points="175,257 180,267 175,277 170,267" stroke="#000000" stroke-width="1"/>
+<polygon fill="none" points="175,257 180,267 175,277 170,267" stroke="#000000" stroke-width="1"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="168" x2="175" y1="362" y2="374"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="182" x2="175" y1="362" y2="374"/>
+<text font-family="Dialog" font-size="12" x="172" y="357">
+&lt;&lt;inform&gt;&gt;</text>
+<text font-family="Dialog" font-size="12" x="151" y="277">
+1</text>
+<text font-family="Dialog" font-size="12" x="152" y="346">
+*</text>
+<polyline fill="none" points="87,126 87,470" stroke="#000000" stroke-width="1"/>
+<polygon fill="#000000" points="87,126 92,136 87,146 82,136" stroke="#000000" stroke-width="1"/>
+<polygon fill="none" points="87,126 92,136 87,146 82,136" stroke="#000000" stroke-width="1"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="80" x2="87" y1="458" y2="470"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="94" x2="87" y1="458" y2="470"/>
+<text font-family="Dialog" font-size="12" x="67" y="374">
+&lt;&lt;inform&gt;&gt;</text>
+<text font-family="Dialog" font-size="12" x="63" y="146">
+1</text>
+<text font-family="Dialog" font-size="12" x="64" y="442">
+*</text>
+<rect fill="#c8ffff" height="60" stroke="#c8ffff" stroke-width="1" width="338" x="511" y="374"/>
+<rect fill="none" height="60" stroke="#000000" stroke-width="1" width="338" x="511" y="374"/>
+<text font-family="Dialog" font-size="12" x="517" y="423">
+com::spam::mctool::model::ReceiverDataChangeListener</text>
+<text font-family="Dialog" font-size="12" x="635" y="388">
+&lt;&lt;interface&gt;&gt;</text>
+<text font-family="Dialog" font-size="12" x="634" y="405">
+&lt;&lt;observer&gt;&gt;</text>
+<rect fill="#c8ffff" height="60" stroke="#c8ffff" stroke-width="1" width="373" x="487" y="470"/>
+<rect fill="none" height="60" stroke="#000000" stroke-width="1" width="373" x="487" y="470"/>
+<text font-family="Dialog" font-size="12" x="492" y="519">
+com::spam::mctool::model::ReceiverAddedOrRemovedListener</text>
+<text font-family="Dialog" font-size="12" x="628" y="484">
+&lt;&lt;interface&gt;&gt;</text>
+<text font-family="Dialog" font-size="12" x="628" y="501">
+&lt;&lt;observer&gt;&gt;</text>
+<rect fill="#c8ffff" height="60" stroke="#c8ffff" stroke-width="1" width="409" x="479" y="582"/>
+<rect fill="none" height="60" stroke="#000000" stroke-width="1" width="409" x="479" y="582"/>
+<text font-family="Dialog" font-size="12" x="486" y="631">
+com::spam::mctool::model::OverallReceiverStatisticsUpdatedListener</text>
+<text font-family="Dialog" font-size="12" x="638" y="596">
+&lt;&lt;interface&gt;&gt;</text>
+<text font-family="Dialog" font-size="12" x="638" y="613">
+&lt;&lt;observer&gt;&gt;</text>
+<polyline fill="none" points="840,254 879,254 879,374 849,374" stroke="#000000" stroke-width="1"/>
+<polygon fill="#000000" points="840,254 850,249 860,254 850,259" stroke="#000000" stroke-width="1"/>
+<polygon fill="none" points="840,254 850,249 860,254 850,259" stroke="#000000" stroke-width="1"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="861" x2="849" y1="367" y2="374"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="861" x2="849" y1="381" y2="374"/>
+<text font-family="Dialog" font-size="12" x="840" y="268">
+&lt;&lt;inform&gt;&gt;</text>
+<text font-family="Dialog" font-size="12" x="863" y="231">
+1</text>
+<text font-family="Dialog" font-size="12" x="869" y="389">
+*</text>
+<polyline fill="none" points="796,110 943,110 943,510 860,510" stroke="#000000" stroke-width="1"/>
+<polygon fill="#000000" points="796,110 806,105 816,110 806,115" stroke="#000000" stroke-width="1"/>
+<polygon fill="none" points="796,110 806,105 816,110 806,115" stroke="#000000" stroke-width="1"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="872" x2="860" y1="503" y2="510"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="872" x2="860" y1="517" y2="510"/>
+<text font-family="Dialog" font-size="12" x="908" y="205">
+&lt;&lt;inform&gt;&gt;</text>
+<text font-family="Dialog" font-size="12" x="815" y="125">
+1</text>
+<text font-family="Dialog" font-size="12" x="880" y="525">
+*</text>
+<polyline fill="none" points="796,110 887,110 887,582" stroke="#000000" stroke-width="1"/>
+<polygon fill="#000000" points="796,110 806,105 816,110 806,115" stroke="#000000" stroke-width="1"/>
+<polygon fill="none" points="796,110 806,105 816,110 806,115" stroke="#000000" stroke-width="1"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="880" x2="887" y1="570" y2="582"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="894" x2="887" y1="570" y2="582"/>
+<text font-family="Dialog" font-size="12" x="861" y="408">
+&lt;&lt;inform&gt;&gt;</text>
+<text font-family="Dialog" font-size="12" x="815" y="125">
+1</text>
+<text font-family="Dialog" font-size="12" x="864" y="554">
+*</text>
+<polyline fill="none" points="95,38 47,38 47,582" stroke="#000000" stroke-width="1"/>
+<polygon fill="#000000" points="95,38 85,43 75,38 85,33" stroke="#000000" stroke-width="1"/>
+<polygon fill="none" points="95,38 85,43 75,38 85,33" stroke="#000000" stroke-width="1"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="40" x2="47" y1="570" y2="582"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="54" x2="47" y1="570" y2="582"/>
+<text font-family="Dialog" font-size="12" x="19" y="348">
+&lt;&lt;inform&gt;&gt;</text>
+<text font-family="Dialog" font-size="12" x="76" y="33">
+1</text>
+<text font-family="Dialog" font-size="12" x="27" y="556">
+*</text>
+</svg>

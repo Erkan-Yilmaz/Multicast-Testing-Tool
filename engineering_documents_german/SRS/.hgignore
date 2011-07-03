@@ -1,0 +1,15 @@
+
+syntax: regexp
+^CRS-Team1\.aux$
+syntax: regexp
+^chapter/funktionaleanforderungen\.tex\.new$
+syntax: regexp
+^tmp$
+syntax: regexp
+^tmp$
+syntax: regexp
+\.aux$
+syntax: regexp
+^tmp$
+syntax: regexp
+^tmp/chapter$

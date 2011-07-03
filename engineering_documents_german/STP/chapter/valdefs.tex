@@ -1,0 +1,113 @@
+\chapter{Definitionen}
+\section{Wertebereiche}
+Die folgenden Wertebereiche werden in diesem Dokument benutzt:\\
+
+\subsection{IP-Addressen}
+$ V4 := \{ p_0.p_1.p_2.p_3 | p_i \in [0|_{10},255|_{10}] , i=0,\ldots,3 \} $\\
+$ V6 := \{ p_0:p_1:p_2:p_3:p_4:p_5:p_6:p_7 | p_i \in [0|_{16},ffff|_{16}] ,
+i=0,\ldots,7 \} $\\
+$ V4MC := \{ p_0.p_1.p_2.p_3 | p_0 \in [224|_{10},239|_{10}] \wedge p_{1,2} \in
+[0|_{10},255|_{10}] \wedge p_3 \in [1|_{10},254|_{10}] \} $
+$ V6MC := \{ p_0:p_1:p_2:p_3:p_4:p_5:p_6:p_7 | p_0 \in [ff00|_{16},ffff|_{16}]
+\wedge p_{1,\ldots,6} \in [0|_{16},ffff|_{16}] \wedge p_7 \in
+[1|_{16},fffe|_{16}] \} $\\
+
+\subsection{Ports}
+$ PORTS := [0,65535] $
+
+\subsection{Analyze-Granularitäten}
+$ABEHAVIOURS := \{ 'lazy', 'default', 'eager' \} $
+
+\subsection{Sender-Spezifisch}
+$PACKETSIZES := [0,9000]$\\
+$PACKETRATES := [1,1000]$\\
+$PACKETRATES_{reachable} := \{ x \in PACKETRATES | \frac{1000}{x} \in \mathbb{N}
+\} $\\
+$PACKETTYPES := \{ 'spam', 'hmann' \}$
+$TTLS := [1,255]$
+
+\section{Testwerte}
+\subsection{IP Multicast Groups}
+
+\begin{table}[H]
+\center
+\begin{tabular}{l | l | l}
+\textbf{Wert} & \textbf{Bezeichnung} & \textbf{Klasse}\\
+\hline \hline
+224.0.0.1 & V4 Infimum & $\in IPV4$\\
+239.255.255.254 & V4 Supremum & $\in IPV4$\\
+225.1.1.1 & Standard-GUI-Wert & $\in IPV4$\\
+ff00:::::::1 & V6 Infimum & $\in IPV6$\\
+ffff:ffff:ffff:ffff:ffff:ffff:ffff:fffe & V6 Supremum & $\in IPV6$\\
+\end{tabular}
+\caption{Valide IP Multicast-Group Testwerte}
+\end{table}
+
+\begin{table}[H]
+\center
+\begin{tabular}{l | l | l}
+\textbf{Wert} & \textbf{Bezeichnung} & \textbf{Klasse} \\
+\hline \hline
+223.255.255.254 & Keine Multicast Addresse & $\in \frac{V4}{V4MC} $\\
+224.0.0.0 & Supremum des ersten invaliden IP-Bereichs & $\in \frac{V4}{V4MC}$\\
+239.255.255.255 & Infimum des zweiten invaliden IP Bereichs & $\in
+\frac{V4}{V4MC}$\\
+240.0.0.1 & Keine Multicast Address & $\in \frac{V4}{V4MC}$\\
+feff:::::::1 & Keine Multicast Addresse & $\in \frac{V6}{V6MC} $\\
+ff00:::::::0 & Supremum des ersten invaliden IP-Bereichs & $\in
+\frac{V6}{V6MC}$\\
+ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff & Infimum des zweiten invaliden IP
+Bereichs & $\in \frac{V6}{V6MC}$\\
+:::::: & Keine IP Addresse & $\ni V4 \cup V6$\\
+0.0.0 & Keine IP Addresse & $\ni V4 \cup V6$\\
+'totallywrong' & Keine IP Addresse & $\ni V4 \cup V6$
+\end{tabular}
+\caption{Invalide IP Multicast-Group Testwerte}
+\end{table}
+
+\subsection{Ports}
+
+\begin{table}[H]
+\center
+\begin{tabular}{l | l | l}
+\textbf{Wert} & \textbf{Bezeichnung} & \textbf{Klasse}\\
+\hline \hline
+0 & Infimum & $\in PORTS$\\
+65535 & Supremum & $\in PORTS$\\
+1025 & User-Mode Infimum & $\in PORTS$
+\end{tabular}
+\caption{Valide Port Testwerte}
+\end{table}
+
+\begin{table}[H]
+\center
+\begin{tabular}{l | l | l}
+\textbf{Wert} & \textbf{Bezeichnung} & \textbf{Klasse} \\
+\hline \hline
+-1 & Kein Port & $\ni PORTS $\\
+65536 & Kein Port & $\ni PORTS $\\
+'einszwei' & Kein Port & $\ni PORTS $
+\end{tabular}
+\caption{Invalide Port Testwerte}
+\end{table}
+
+\section{CLI Befehle}
+
+\begin{table}[H]
+\center
+\begin{tabular}{p{5cm} | p{10cm}}
+\textbf{Befehl} & \textbf{Beschreibung}\\
+\hline \hline
+-nogui & Startet das Tool ohne GUI\\
+-cli & Startet den Logger mit\\
+-profile <PROFILNAME> & Läd ein oder mehrere Profile anhand des
+Profilnamens (getrennt durch Leerzeichen)\\
+-path <PATH> & Läd ein oder mehrere Profile anhand eines Pfades (getrennt durch
+Leerzeichen)\\
+-startall & Startet alle Sender/Empfänger der geladenen Konfigurationen\\
+-startnone & Startet keine der Sender/Empfänger der geladenen Konfigurationen\\
+-restore & Startet alle Sender/Empfänger in dem Status (aktiv/inaktiv), wie im
+Profil gespeichert (default)\\
+\end{tabular}
+\caption{Startparamter des Programms}
+\end{table}

@@ -1,0 +1,5 @@
+
+syntax: regexp
+^tmp$
+syntax: regexp
+^\.settings/org\.eclipse\.mylyn\.tasks\.ui\.prefs$

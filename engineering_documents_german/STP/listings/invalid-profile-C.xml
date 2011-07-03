@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <profile>
+        <name>Test Profile &lt;xml /&gt;</name>
+        <creationTime>30-04-2011 00:00:41</creationTime>
+    </profile>
+    <senders>
+        <sender>
+            <port>80</port>
+            <abeh>lazy</abeh>
+            <ninf>141.70.156.3</ninf>
+            <psize>300</psize>
+            <payload>You suck</payload>
+            <pps>999</pps>
+            <ttl>12</ttl>
+            <group>225.1.1.2</group>
+            <ptype>HMANN</ptype>
+            <active>false</active>
+        </sender>
+    </senders>
+    <senders>
+        <sender>
+            <port>80</port>
+            <abeh>lazy</abeh>
+            <ninf>141.70.156.3</ninf>
+            <psize>300</psize>
+            <payload>You suck</payload>
+            <pps>999</pps>
+            <ttl>12</ttl>
+            <group>225.1.1.2</group>
+            <ptype>HMANN</ptype>
+            <active>false</active>
+        </sender>
+    </senders>
+</configuration>

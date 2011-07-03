@@ -1,0 +1,266 @@
+% Moduldokumentation GUI-Desgin
+
+% Klassendeklaration
+\documentclass[
+		fontsize=12pt,		% Schriftgröße 12pt
+		toc=listof,		% Schreibt Tabellen/Abbildungs-Verzeichnisse auch mit ins Inhaltsverzeichnis
+		%toc=bib,		% Literaturverzeichnis im Inhaltsverzeichnis aufführen
+		%bibliography=openstyle	% Literaturverzeichnis etwas auflockern
+		headsepline,		% Linie unter Kolumnentitel
+		twoside=false,		% Layout für einseitigen Druck
+		BCOR=12mm,		% Bindekorrektur: bei Buch normalerweise 12mm
+		DIV=14,			% DIV-Wert fuer die Erstellung des Satzspiegels, siehe scrguide
+		parskip=false,		% Absatzeinzug (Standard), half: kein Einzug, Halber Zeilenabstand, ...
+		captions=tableheading,	% korrekte Abstände bei Tabellenüberschriften
+		draft=false,		% true: Kennzeichnung von Absätzen, die manuell bearbeitet werden müssen, false: aus
+		paper=A4,		% A4 Seite
+		pagesize=automedia,	% Setzen der korrektern Papiergröße für Ausgabemedien
+		numbers=noendperiod	% Auch wenn \appendix genutzt wird, keine Punkte hinter der Nummerierung (Regel im Duden sieht allerdings Punkt vor)
+	]{scrbook}			% aus Komascript für Bücher
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% Pakete
+\usepackage{cmap}		% to make the PDF files "searchable and copyable" in pdf viewer
+\usepackage[ngerman]{babel}	% deutschsprachig
+\usepackage[utf8]{inputenc}	% utf8 encoding
+\usepackage[T1]{fontenc}	% Schriftkodierung
+\usepackage{lmodern}		% skalierbare Schriftfamilie "Latin Modern" (default: bitmapped "Computer Modern")
+\usepackage{parskip}
+\usepackage{graphicx}		% Einbinden von Grafiken
+\usepackage{booktabs}		% weitere Linien zur Strukturierung von Tabellen (\toprule, ...)
+\usepackage{multirow}		% mehrere Zeilen in einer Tabelle zusammenfassen
+\usepackage{ltxtable}		% longtable und tabularx vereint in einer Tabelle, lädt automatisch beide Pakete
+\usepackage{rotating}		% Text drehen
+\usepackage{amsmath}		% Matheumgebung
+\usepackage{amssymb}		% Zusatzsymbole zB Square Vartriangle etc
+\usepackage{moreverb}		% erweiterte verbatim Umgebung
+\usepackage{listings}		% Listings -> Quellcodedarstellung für viele verschiedene Sprachen
+\usepackage{subfigure}		% Unterbilder
+\usepackage{xcolor}		% Farbdefinitionen möglich
+\usepackage{pdfpages}		% Einbinden von PDF Seiten aus PDF Dokument
+\usepackage{nicefrac}		% Darstellung eines Bruchs im Fließtext; Aussehen zB 1/4
+\usepackage{acronym}		% Abkürzungsverzeichnis --> nur verwendete Abkürzungen listen [printonlyused]
+%\usepackage{bibgerm}		% deutsches Literaturverzeichnis
+\usepackage{caption}		% viele caption Formatierungsmöglichkeiten
+\usepackage{setspace}		% Zeilenabstand festlegen
+\usepackage{microtype}		% Verbessert Textsatz
+\usepackage{fixltx2e}		% Verbessert einige Kernkompetenzen von LaTeX2e
+\usepackage{ellipsis}		% Korrigiert den Weißraum um Auslassungspunkte
+\usepackage{units}		% Einheiten komfortabel darstellen \unit[Zahlenwert]{Einheit}
+\usepackage{textcomp}		% einige Text-Mode Mathe Symbole, wie zB Mal-Zeichen x (siehe The Comprehensive LaTeX Symbol List)
+\usepackage{gensymb}		% celsius, micro, ohm, perthousand, degree in Mathe und Textmodus
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Einbindung von allen Grafikformaten möglich
+\usepackage{pst-pdf} % pstricks und ps grafiken in pdflatex
+\usepackage{pst-all}
+\usepackage{pstricks-add}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% für Fließumgebungen
+% Platzierung H zwingt LaTeX Fließumgebungen genau an diese Stelle zu setzen
+\usepackage{float}
+\usepackage{wrapfig}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Kopf- und Fußzeilen
+\usepackage[headsepline]{scrpage2}	% Paket, Linie unter Kopfangabe
+\clearscrheadfoot			% löscht alle bisherigen Kopf- und Fußzeilen
+\pagestyle{scrheadings}			% selbstgebastelte Kopf-/Fußzeilen
+\automark{chapter}			% \automark[<rechte seite>]{<linke seite>}
+\chead[Multicast Test Tool - Moduldokumentation GUI-Design - SPAM Software Programming And More]{Multicast Test Tool - Moduldokumentation GUI-Design - SPAM Software Programming And More} \cfoot[-\,\pagemark\,-]{-\,\pagemark\,-}% setzt Fußzeile [] -> chapterseiten; {} -> alle anderen Seiten
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% Schusterjungen und Hurenkinder vermeiden
+\clubpenalty = 10000
+\widowpenalty = 10000
+\displaywidowpenalty = 10000
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% Farbdefinitionen
+\definecolor{fill}{rgb}{1,1,0.73}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+% Workaround eines Bugs des wrapfig Paketes
+% Entfernen wenn neue Version den Pakets verfügbar ist
+% wenn ein umflossenes Bild nicht vollständig umflossen wird
+% muss der Absatz geschlossen werden: dazu dann den Befehl
+% \wrapfill hinter dem Absatz notieren
+\usepackage{blindtext,wrapfig}
+\makeatletter
+\newcommand\wrapfill{\par
+    \ifx\parshape\WF@fudgeparshape
+    \nobreak
+    \vskip-\baselineskip
+    \vskip\c@WF@wrappedlines\baselineskip
+    \allowbreak
+    \WFclear
+    \fi
+}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% interne und externe Links werden als Hyperlinks übersetzt
+% viele andere Optionen für pdf viewer möglich
+% pdf metadaten
+\usepackage{hyperref}
+\hypersetup{pdftitle={Moduldokumentation GUI-Design},
+	pdfauthor={Team 1},
+	pdfsubject={Moduldokumentation GUI-Design},
+	pdfcreator={LaTeX (TexLive 2008)},
+	pdfproducer={LaTeX (TexLive 2008)},
+	pdfkeywords={},
+	colorlinks=true,
+	urlcolor=black,
+	linkcolor=black,
+	citecolor=black,
+	unicode=true
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% caption setup
+% hang: bereich unter dem bezeichner bleibt frei;
+% figurename: Bezeichner umdefinieren;
+% margin: Einzug links und rechts
+\captionsetup{format=hang,margin=30pt}
+\captionsetup[lstlisting]{skip=13pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%% Listings-Formatierung
+\lstset{%
+	language=Java, %
+	basicstyle=\tiny,%\scriptsize,
+	frame=trbl,%
+	numbers=left,%
+	breaklines=true,
+	prebreak=\mbox{$\hookleftarrow$},
+	postbreak=\mbox{$\longrightarrow$},
+	breakatwhitespace=true,
+	captionpos=t,%
+	showstringspaces=false,
+	numberstyle=\tiny,%
+	commentstyle=\color{red},%
+	keywordstyle=\bfseries\color{blue},%
+	backgroundcolor=\color{fill},%
+	rulecolor=\color{gray}%
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+
+% Tabellen
+% neuer Spaltentyp C --> zentrierte X Spalten
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+% Größere Höhe von Tabellenzellen
+\renewcommand{\arraystretch}{1.3}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% chapterüberschriften ohne Abstand zum Kopf festlegen
+% \renewcommand*{\chapterheadstartvskip}{\vspace*{-\topskip}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% 1,5-Zeilenabstand (Paket setspace erforderlich)
+\onehalfspacing
+% Neuberechnung des Satzspiegels für neuen Zeilenabstand (DIV Angabe aus der
+% Klassendeklartion übernommen)
+\KOMAoptions{DIV=last}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% Befehle für Hoch und Tiefstellen innerhalb eines Textes
+\newcommand{\up}[2]{#1\textsuperscript{#2}}
+\newcommand{\down}[2]{#1\textsubscript{#2}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% Beginn des Dokuments
+\begin{document}
+
+	%Vorspann
+	\frontmatter
+
+	% große römische Ziffern für die Seitennummern im Vorspann (Standard sind kleine römische Ziffern)
+	\pagenumbering{Roman}
+
+	% Includes Vorspann
+	% Titelseite
+	\include{./chapter/title}
+	% Includes Verantwortliche
+	% Titelseite
+	%\include{./chapter/persons}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% offizielle Aufgabenstellung
+%	\include{./chapter/aufgabenstellung}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% Selbstständigkeitserklärung
+	%\include{./chapter/declaration_of_primary_authorship}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% Inhaltsverzeichnis
+	\tableofcontents
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% Abbildungsverzeichnis
+	\listoffigures
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% Tabellenverzeichnis
+	\listoftables
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% Listings-Verzeichnis
+%	\renewcommand{\lstlistlistingname}{Quelltexte}
+%	\lstlistoflistings
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% Abkürzungsverzeichnis/Formelzeichen
+	%\include{./chapter/acronym}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	% Hauptteil
+	\mainmatter
+
+	\include{./chapter/main}	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	\begin{appendix}
+	
+	%\include{./chapter/literatur}	
+
+	%\include{./chapter/standards}	
+
+	\include{./chapter/diagramme}	
+
+	%\include{./chapter/schnittstellendefinitionen}	
+
+	%\include{./chapter/testfaelle}	
+
+	\end{appendix}
+
+	% Literaturverzeichnis
+	%\nocite*{}
+	%\bibliographystyle{gerplain}
+	%\bibliography{literatur}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Dokumentende
+\end{document}

@@ -1,0 +1,269 @@
+\chapter{Testsuite /TS40/}
+Dieses Kapitel enthält die Testergebnisse der Testsuite /TS40/.\\
+Die zugehörige Requirement ID lautet /UC20/.
+
+\begin{table}[h]
+    \caption{/TC4001/}
+    \label{tab:TC4001}
+    \begin{center}
+        \begin{tabular}{|p{3.5cm}|p{11cm}|}
+            \hline
+                \textbf{Testfall ID} & /TC4001/\\
+            \hline
+                \textbf{Testfall Name} & CLI-Konfiguration\\
+            \hline
+                \textbf{Requirement ID} & VA0900 \& VA0600\\
+            \hline
+                \textbf{Testfall Setup} & Installiere das MC-Tool.\\
+            \hline
+        \end{tabular}
+        \begin{tabular}{|p{2cm}|p{3.9cm}|p{3.9cm}|p{3.8cm}|}
+            \multicolumn{4}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+            \hline
+                \textbf{Schritt} & \textbf{Aktion} & \textbf{Erwartetes
+                Ergebnis} & \textbf{Ergebnis}\\
+            \hline
+                Starten und Konfiguration laden - korrekte Pfadangabe & Eingabe
+                des Befehls zum Starten und Laden einer Konfiguration mit
+                korrekter Pfadangabe zu einer Konfigurationsdatei & Anlegen
+                aller Sender und Empfänger im selben Zustand, wie zum Zeitpunkt
+                des Speicherns \& Ausgabe auf der Commandline, die den Erfolg
+                des Ladens bestätigt. & PASS \\
+            \hline
+                Konfiguration laden - fehlerhafte Pfadangabe & Eingabe des
+                Befehls zum Starten und Laden einer Konfiguration mit
+                fehlerhafter Pfadangabe zu einer Konfigurationsdatei & Ausgabe
+                einer Fehlermeldung, dass keine Datei gefunden wurde &
+                PASS \\
+            \hline
+                Konfiguration laden - fehlerhafte Datei & Eingabe des Befehls
+                zum Starten und Laden einer Konfiguration mit Pfadangabe zu
+                einer fehlerhaften/nicht kompatiblen Datei & Ausgabe einer
+                Fehlermeldung, dass die gelesene Datei fehlerhaft ist &
+                PASS \\
+            \hline
+        \end{tabular}
+        \begin{tabular}{|p{3.5cm}|p{11cm}|}
+                \textbf{Tester} & TST\\
+            \hline
+                \textbf{Datum} & 14.05.2011\\
+            \hline
+                \textbf{Ergebnis} & PASS\\
+            \hline
+        \end{tabular}
+    \end{center}
+\end{table}
+
+\begin{table}[h]
+    \caption{/TC4002/}
+    \label{tab:TC4002}
+    \begin{center}
+        \begin{tabular}{|p{3.5cm}|p{11cm}|}
+            \hline
+                \textbf{Testfall ID} & /TC4002/\\
+            \hline
+                \textbf{Testfall Name} & Starten aller Sender und Empfänger per
+                CLI\\
+            \hline
+                \textbf{Requirement ID} & VA0900 \& VA0600\\
+            \hline
+                \textbf{Testfall Setup} & Installiere das MC-Tool\\
+            \hline
+        \end{tabular}
+        \begin{tabular}{|p{2cm}|p{3.9cm}|p{3.9cm}|p{3.8cm}|}
+            \multicolumn{4}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+            \hline
+                \textbf{Schritt} & \textbf{Aktion} & \textbf{Erwartetes
+                Ergebnis} & \textbf{Ergebnis}\\
+            \hline
+                Eingabe des gültigen Start-Befehls & Eingabe des Befehls zum
+                Starten des Programms, sowie zum Laden und Starten aller Sender
+                und Empfänger & Ausgabe auf der Commandline, die den Erfolg des
+                Startens bestätigt & PASS \\
+            \hline
+                Eingabe eines ungültigen Start-Befehls & Eingabe eines
+                ungültigen Befehls zum Starten des Programms, sowie zum Laden
+                und Starten aller Empfänger & Ausgabe auf CLI, die die ungültige
+                Eingabe quittiert & PASS \\
+            \hline
+        \end{tabular}
+        \begin{tabular}{|p{3.5cm}|p{11cm}|}
+                \textbf{Tester} & TST\\
+            \hline
+                \textbf{Datum} & 14.05.2011\\
+            \hline
+                \textbf{Ergebnis} & PASS\\
+            \hline
+        \end{tabular}
+    \end{center}
+\end{table}
+
+\begin{table}[h]
+    \caption{/TC4003/}
+    \label{tab:TC4003}
+    \begin{center}
+        \begin{tabular}{|p{3.5cm}|p{11cm}|}
+            \hline
+                \textbf{Testfall ID} & /TC4003/\\
+            \hline
+                \textbf{Testfall Name} & Starten des Programms ohne Starten der
+                Sender und Empfänger per CLI \\
+            \hline
+                \textbf{Requirement ID} & VA0900 \& VA0600\\
+            \hline
+                \textbf{Testfall Setup} & Installiere das MC-Tool\\
+            \hline
+        \end{tabular}
+        \begin{tabular}{|p{2cm}|p{3.9cm}|p{3.9cm}|p{3.8cm}|}
+            \multicolumn{4}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+            \hline
+                \textbf{Schritt} & \textbf{Aktion} & \textbf{Erwartetes
+                Ergebnis} & \textbf{Ergebnis}\\
+            \hline
+                Eingabe des gültigen Start-Befehls & Eingabe des Befehls zum
+                Starten des Programms, sowie zum Laden und Starten keiner Sender
+                und Empfänger & Ausgabe auf der Commandline, die den Erfolg des
+                Startens des Programms bestätigt & PASS\\
+            \hline
+                Eingabe eines ungültigen Start-Befehls & Eingabe eines ungültigen
+                Befehls zum Starten des Programms, sowie zum Laden und Starten
+                keiner Sender und Empfänger & Ausgabe auf CLI, die die ungültige
+                Eingabe quittiert & PASS \\
+            \hline
+        \end{tabular}
+        \begin{tabular}{|p{3.5cm}|p{11cm}|}
+                \textbf{Tester} & TST\\
+            \hline
+                \textbf{Datum} & 14.05.2011\\
+            \hline
+                \textbf{Ergebnis} & PASS\\
+            \hline
+        \end{tabular}
+    \end{center}
+\end{table}
+
+\begin{table}[h]
+    \caption{/TC4004/}
+    \label{tab:TC4004}
+    \begin{center}
+        \begin{tabular}{|p{3.5cm}|p{11cm}|}
+            \hline
+                \textbf{Testfall ID} & /TC4004/\\
+            \hline
+                \textbf{Testfall Name} & Ausgabe der Daten im CLI\\
+            \hline
+                \textbf{Requirement ID} & VA0900 \& VA0600\\
+            \hline
+                \textbf{Testfall Setup} & Installiere das MC-Tool\\
+            \hline
+        \end{tabular}
+        \begin{tabular}{|p{2cm}|p{3.9cm}|p{3.9cm}|p{3.8cm}|}
+            \multicolumn{4}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+            \hline
+                \textbf{Schritt} & \textbf{Aktion} & \textbf{Erwartetes
+                Ergebnis} & \textbf{Ergebnis}\\
+            \hline
+                Test-Setup Teil 2 & Starten des MC-Tools mit gültigem Pfad und
+                Start-Befehl & Bestätigung auf CLI & PASS\\
+            \hline
+                Beobachten der Ausgabe & Auf Update der Ausgabe warten & Ausgabe
+                der Statistik auf dem CLI & PASS\\
+            \hline
+        \end{tabular}
+        \begin{tabular}{|p{3.5cm}|p{11cm}|}
+                \textbf{Tester} & TST\\
+            \hline
+                \textbf{Datum} & 14.05.2011\\
+            \hline
+                \textbf{Ergebnis} & PASS\\
+            \hline
+        \end{tabular}
+    \end{center}
+\end{table}
+
+\begin{table}[h]
+    \caption{/TC4005/}
+    \label{tab:TC4005}
+    \begin{center}
+        \begin{tabular}{|p{3.5cm}|p{11cm}|}
+            \hline
+                \textbf{Testfall ID} & /TC4005/\\
+            \hline
+                \textbf{Testfall Name} & Loggen der Statistik\\
+            \hline
+                \textbf{Requirement ID} & VA0900 \& VA0600\\
+            \hline
+                \textbf{Testfall Setup} &Installiere das MC-Tool\\
+            \hline
+        \end{tabular}
+        \begin{tabular}{|p{2cm}|p{3.9cm}|p{3.9cm}|p{3.8cm}|}
+            \multicolumn{4}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+            \hline
+                \textbf{Schritt} & \textbf{Aktion} & \textbf{Erwartetes
+                Ergebnis} & \textbf{Ergebnis}\\
+            \hline
+                Test-Setup Teil 2 & Starten des MC-Tool via Commandline mit
+                gültigem Start-Befehl und gestarteten Sendern/Receivern &
+                Bestätigung in Commandline Interface & PASS\\
+            \hline
+                Korrekte Log-Daten & Öffnen der Log-Datei und Vergleich mit
+                Ausgabe auf dem CLI & Logger funktioniert fehlerfrei -
+                geloggte Daten sind korrekt & PASS\\
+            \hline
+                Inkorrekte Log-Daten & Öffnen der Log-Datei und Vergleich mit
+                Ausgabe auf dem CLI & Logger funktioniert fehlerhaft - geloggte
+                Daten stimmen nicht mit dem CLI überein & 
+                PASS\\
+            \hline
+                Inkorrektes Log-Format & Öffnen der Log-Datei und betrachten des
+                Log-Formats & Daten werden nicht als XML gespeichert. &
+                PASS\\
+            \hline
+        \end{tabular}
+        \begin{tabular}{|p{3.5cm}|p{11cm}|}
+                \textbf{Tester} & TST\\
+            \hline
+                \textbf{Datum} & 14.05.2011\\
+            \hline
+                \textbf{Ergebnis} & PASS\\
+            \hline
+        \end{tabular}
+    \end{center}
+\end{table}
+
+\begin{table}[h]
+    \caption{/TC4006/}
+    \label{tab:TC4006}
+    \begin{center}
+        \begin{tabular}{|p{3.5cm}|p{11cm}|}
+            \hline
+                \textbf{Testfall ID} & /TC4006/\\
+            \hline
+                \textbf{Testfall Name} & Starten des MC-Tools ohne GUI\\
+            \hline
+                \textbf{Requirement ID} & VA0900 \& VA0600\\
+            \hline
+                \textbf{Testfall Setup} & Installiere das MC-Tool\\
+            \hline
+        \end{tabular}
+        \begin{tabular}{|p{2cm}|p{3.9cm}|p{3.9cm}|p{3.8cm}|}
+            \multicolumn{4}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+            \hline
+                \textbf{Schritt} & \textbf{Aktion} & \textbf{Erwartetes
+                Ergebnis} & \textbf{Ergebnis}\\
+            \hline
+                Starten des MC-Tools & Starten des MC-Tool via Commandline mit
+                gültigem Start-Befehl und nogui Parameter & Programm wird ohne
+                GUI gestartet. & PASS\\
+            \hline
+        \end{tabular}
+        \begin{tabular}{|p{3.5cm}|p{11cm}|}
+                \textbf{Tester} & TST\\
+            \hline
+                \textbf{Datum} & 14.05.2011\\
+            \hline
+                \textbf{Ergebnis} & \cellcolor{green} PASS \\
+            \hline
+        \end{tabular}
+    \end{center}
+\end{table}

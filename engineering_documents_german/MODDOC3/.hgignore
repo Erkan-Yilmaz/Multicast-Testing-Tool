@@ -1,0 +1,13 @@
+
+syntax: regexp
+^tmp$
+syntax: regexp
+^tmp$
+syntax: regexp
+^uml$
+syntax: regexp
+^tmp$
+syntax: regexp
+^tmp$
+syntax: regexp
+^tmp$

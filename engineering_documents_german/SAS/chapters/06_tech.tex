@@ -1,0 +1,72 @@
+%TODO Faseln
+\section{Persistenz}
+\label{sec:6:pers}
+\subsection{Konfiguration}
+Gemäß VA0050 und VA0060 (siehe SRS) muss das System alle konfigurierbaren
+Parameter in einer XML-Datei sichern. Für diese XML-Datei wird ein eigener DTD
+erstellt. Die Semanthik muss ausdrucksstark genug sein, um eine einfache,
+manuelle Bearbeitung zu ermöglichen.
+
+\subsection{Logging}
+Hinsichtlich VA0900 und VA1300 (siehe SRS) bietet das System die Möglichkeit
+eine Logger-Komponente zu aktivieren, die alle definierten Statistiken über die
+Datenströme in einer XML-Datei speichert.
+
+\section{Nutzeroberfläche}
+\label{sec:6:ober}
+\subsection{Graphisch}
+Nach VA0700 und VA0800 muss das gesamte System über eine graphische
+Nutzeroberfläche gesteuert werden können. Diese wird in Swing entweder manuell
+oder mit GUI-Buildern wie Mantisse erstellt. Ein Prototyp mit den minimalen
+Anforderungen ist in Anhang \ref{a:gui} ersichtlich.
+
+\subsection{Textuell}
+Das System muss nach VA0900 die Möglichkeit bieten, über die Kommandozeile eine
+Konfigurationsdatei zu laden und im Hintergrund zu arbeiten.
+
+\section{Ergonomie}
+\label{sec:6:ergo}
+\subsection{Performanz}
+Keine Nutzerinteraktion darf mehr als 100ms benötigen, bis dass der Nutzer eine
+Rückmeldung vom System bekommt.\\
+Beim gleichzeitigen Betrieb von 30 Datenströmen dürfen
+bei einem handelsüblichen Rechner mit 2,4GHz Intel Core 2 Duo Prozessor und 2GB RAM nicht mehr als 80\%
+des Systems ausgelastet werden.
+
+\subsection{Benutzerfreundlichkeit}
+Die graphische Nutzeroberfläche muss es ermöglichen, mehre Datenströme
+gleichzeitig zu aktivieren, zu deaktiveren und in sinnvollen (nicht
+Datenstrom-spezifischen wie Port, Gruppe, \ldots) Attributen zu ändern.\\
+Die definierten Daten, die über jeden Datenstrom erhoben werden, müssen auf
+einen Blick ersichtlich sein.
+
+\subsection{Automatisierbarkeit}
+Das System muss per Kommandozeilenschnittstelle in Skripten eingebunden werden
+und im Hintergrund arbeiten können.
+
+\section{Verteilung, Kommunikation mit anderen Systemen, Migration}
+\label{sec:6:komm}
+Mehrere, voneinander funktional-unabhängige Instanzen des Systems können auf
+vielen verschiedenen Knoten eines Netzwerks in Betrieb genommen werden können. Diese
+kommunizieren dabei untereinander oder mit dem alten
+System der Hirschmann Automation GmbH.
+
+\section{Parallelisierung}
+\label{sec:6:para}
+Die einzelnen Datenströme werden mit den Mitteln der Java-Plattform
+parallelisiert. Die Java-Virtual-Machine entscheidet weiterführend, wie die
+Parallelisierung auf Rechner-Ebene umgesetzt wird.
+
+\section{Internationalisierung}
+\label{sec:6:inter}
+Die Nutzeroberflächen und Ausgaben müssen international betextbar sein. Mit der
+Endversion der Software werden die Sprachen Deutsch und Englisch ausgeliefert.
+Weiter Sprachen müssen einfach mit Klartext-Dateien hinzugefügt werden können.
+
+\section{Codeverwaltung, Build-Management und Testing}
+\label{sec:6:bm}
+Der Quelltext des Projektes wird auf dem Unternehmensserver in einem zentralen
+Mercurial-Repository verwaltet. Gebaut wird nach Continuous-Integration Prinzip
+mit Apache Maven und Apache Continuum als Weboberfläche. Komponententests
+werden automatisch mit jedem Build per JUnit V4.8.* durchgeführt, ebenfalls
+durch Maven.

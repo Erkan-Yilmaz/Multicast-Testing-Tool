@@ -1,0 +1,106 @@
+% This documents structure is based on a template from the following website
+% http://www.arc42.de/
+
+\section{Aufgabenstellung}
+\label{sec:1:aufg}
+
+
+Da die Multicast-Fähigkeit nur optional im weit verbeiteten IP-Standard
+verankert ist, wird sie von vielen Hard- und Softwarekomponenten nicht richtig
+implementiert.\\
+Das Multicast-Test-Tool wird es ermöglichen, die Multicasting-Fähigkeiten eines
+Netzwerks über IPv4 und IPv6 hinsichtlich Funktionalität, Synchronizität und
+Traversierungsdauer auf einen Blick mess- und verifizierbar zu machen.\\
+Zu diesem Zweck bietet das Werkzeug die Fähigkeit, mindestens 30
+Multicast-Datenströme gleichzeitig zu senden und zu empfangen. Zu jedem dieser
+Streams sollen Statistiken über folgende Daten erhoben und verfügbar gemacht
+werden:
+\begin{itemize}
+  \item Empfangene Pakete
+  \item Intervalle zwischen dem Empfang zweier aufeinander
+folgender Pakete
+\item Verlorene Pakete
+\item Verzögerungen mit maximaler und
+durchschnittlicher Verzögerungszeit
+\item Optional: Traversierungszeit von Sender zu Empfänger mit NTP
+Synchronisierung
+\end{itemize}
+Außerdem können geringe Menge von Nutzdaten in Form einer Zeichenkette
+übertragen werden.\\
+
+\section{Architekturziele}
+\label{sec:1:arch}
+
+Die hier vorgestellte Architektur der Software ist ausschlaggebend für die
+folgenden Merkmale:
+
+\paragraph{Effizienz} Das Programm stellt die geforderte Funktionalität durch
+lineare und direkte Datenverarbeitungswege ohne unverhältsnismäßig hohe
+Rechnerbelastung zur Verfügung. Zur Verhältnismäßigkeit muss beachtet werden,
+dass das Senden und Empfangen von vielen Datenströmen speziell mit hohen
+Frequenzen durchaus viel Rechenleistung erfordern kann.
+
+\paragraph{Benutzbarkeit} Obwohl sich der Kontext des Programms eher an den
+Fachanwender richtet, wird es einfach und übersichtlich zu verwenden sein.
+
+\paragraph{Migrierbarkeit} Um eine schnelle Einführung des Tools zu ermöglichen,
+wird zum einen für Kompatibilität mit dem alten Tool der Hirschmann Automation
+GmbH gesorgt, zum anderen eine einfache Deployment-Methode gewählt.
+
+\paragraph{Stabilität} Die Architektur beachtet die Tatsache, dass in einem
+offenen Netzwerk nicht nur wohlgeformte Pakete an den Empfänger gelangen können.
+Das Paket-Dekodierungs System wird diese, nicht dem Protokoll
+entsprechenden Pakete erkennen und verwerfen ohne das es zu Fehlern im System
+kommt.
+
+\paragraph{Wartbarkeit} Jeder Teil der Architektur strebt hohe
+Kohäsion und geringe Kopplung an. Somit sind alle wichtigen Komponenten
+individuell austausch- und testbar. Durch häufige Verwendung des
+Beobachter-Entwurfsmusters wird eine sehr einfache Erweiterbarkeit des Systems
+ermöglicht.
+
+\paragraph{Portabilität} Um das Tool auf allen großen Plattformen verfügbar zu
+machen, wird als Implementierungssprache Java in der Version 6 gewählt. Das Tool
+basiert komplett auf der Java API sowie Java-nativen, externen Bibliotheken.
+Dadurch müssen keine plattform-spezifischen Anpassungen durchgeführt werden.
+
+\clearpage
+
+\section{Stakeholder}
+\label{sec:1:stake}
+
+Die folgenden Stakeholder wurden während der Analyse- und Designphase
+identifiziert.
+
+\begin{table}[htdp]
+\caption{Stakeholder}
+\label{tab:stakeholder}
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Name} & \textbf{Kurzbeschreibung}\\
+\hline
+Andreas Stuckert & Mitarbeiter Fa. Net-Tools \\
+\hline
+Markus Rentschler & Mitarbeiter Fa. Net-Tools \\
+\hline
+Fa. Net-Tools & Auftraggebende Firma \\
+\hline
+Fa. SPAM & Entwickelnde Firma \\
+\hline
+Hildenbrand, David (DH) & Projekt Manager\\
+\hline
+Jedele, Jeffrey (JJ) & Leitender Ingenieur\\
+\hline
+Safarpour, Ramin (RS) & Systemtest\\
+\hline
+Schoknecht, Tobias (TSC) & Dokumentation\\
+\hline
+Stöckel, Tobias (TST) & Produkt Manager\\
+\hline
+Weitz, Konstantin (KW) & Leitender Ingenieur\\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}

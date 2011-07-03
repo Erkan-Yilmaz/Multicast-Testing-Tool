@@ -1,0 +1,331 @@
+\chapter{Testsuite /TS60/}
+Dieses Kapitel enthält die Testergebnisse der Testsuite /TS60/.\\
+Die zugehörige Requirement Id lautet /UC40/.
+
+\begin{table}[h]
+        \caption{/TC6001/}
+        \label{tab:TC6001}
+        \begin{center}
+            \begin{tabular}{|p{3.5cm}|p{12cm}|}
+                \hline
+                    \textbf{Testfall Id} & /TC6001/\\
+                \hline
+                    \textbf{Testfall Name} & Sendestatistik eines Sender\\
+                \hline
+                    \textbf{Requirement ID} & /VA1000/, /VA1200/, /OA0300/\\
+                \hline
+                    \textbf{Beschreibung} & Dieser Testfall verifiziert die
+                    korrekte Erstellung von Statistiken für einen einzelnen
+                    Sender.\\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|p{2.5cm}|p{7.55cm}|p{5cm}|}
+                \multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+                \hline
+                    \textbf{Schritt} & \textbf{Erwartetes
+                    Ergebnis} & \textbf{Ergebnis}\\
+                \hline
+                    Test-Setup & Das Tool
+                    wird ausgeführt und ist bereit zum Starten von Sendern. &
+                    Pass
+                    \\
+                \hline
+                    Sender starten & Der Sender
+                    sendet und wird angezeigt. Die maximale, minimale und
+                    durchschnittliche Senderate liegt bei 10 PPS. &
+                    Pass\\
+                \hline
+                    Erhöhen der Senderate & Die minimale Senderate
+                    liegt bei 10 PPS, die maximale bei 1000 PPS, die
+                    durchschnittliche bei 1000 PPS. &
+                    Pass\\
+                \hline
+                    Pausieren des Senders & Die Statistiken bleiben erhalten.
+                    Die minimale Senderate wird nicht verändert. &
+                    Pass\\
+                \hline
+                    Aktivieren des Senders & Die
+                    Statistiken bleiben erhalten. &
+                    Pass\\
+                \hline
+                    Hinzufügen eines neuen Senders & Die durchschnittliche, maximale und minimale
+                    Senderate liegen bei 1000 PPS. &
+                    Pass\\
+                \hline
+                    Überlasten von Sendern & Die minimale Senderate wird jeweils bei niedrigerer
+                    durchschnittlicher Senderate angepasst. &
+                    Pass\\
+                \hline
+                    Detailansicht & Die angezeigten Statistiken
+                    stimmen mit den Statistiken der Tabelle überein. Der Graph
+                    wird um die jeweilige durchschnittliche Senderate ergänzt.
+                    & Pass\\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|p{3.5cm}|p{11cm}|}
+                \textbf{Tester} & RS\\
+                \hline
+                \textbf{Datum} & 13.05.2011\\
+                \hline
+                \textbf{Ergebnis} & PASS\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+    
+    \begin{table}[h]
+        \caption{/TC6002/}
+        \label{tab:TC6002}
+        \begin{center}
+            \begin{tabular}{|p{3.5cm}|p{12cm}|}
+                \hline
+                    \textbf{Testfall Id} & /TC6002/\\
+                \hline
+                    \textbf{Testfall Name} & Globale Sender-Statistiken\\
+                \hline
+                    \textbf{Requirement ID} & /VA1000/\\
+                \hline
+                    \textbf{Beschreibung} & Dieser Testfall verifiziert die
+                    korrekte Erstellung von globalen Sender-Statistiken.\\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|p{2.5cm}|p{5cm}|p{7.55cm}|}
+                \multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+                \hline
+                    \textbf{Schritt} &  & \textbf{Ergebnis}\\
+                \hline
+                    Test-Setup & Das Tool
+                    wird ausgeführt und ist bereit zum Starten von Sendern. \\
+                \hline
+                    Sender starten & Der Sender
+                    sendet und wird angezeigt. Die Senderate liegt bei 10 PPS.
+                    Die globale Senderate ist identisch. Der Zähler für die
+                    Anzahl insgesamt gesendeter Pakete erhöht sich pro Sekunde
+                    im Schnitt um 10 Pakete. & Pass\\
+                \hline
+                    Sender hinzufügen & Die globale Senderate
+                    liegt bei 100 PPS. Der Zähler für die Anzahl insgesamt
+                    gesendeter Pakete erhöht sich pro Sekunde im Schnitt um 100
+                    Pakete. & Pass\\
+                \hline
+                    Sender hinzufügen & Die globale Senderate
+                    liegt bei 1000 PPS. Der Zähler für die Anzahl insgesamt
+                    gesendeter Pakete erhöht sich pro Sekunde im Schnitt um 1000
+                    Pakete. & Pass\\
+                \hline
+                    Sender pausieren & Die globale Senderate liegt bei 100 PPS. Der
+                    Zähler für die Anzahl insgesamt gesendeter Pakete erhöht
+                    sich pro Sekunde im Schnitt um 100 Pakete. & Pass\\
+                \hline
+                    Sender löschen & Die globale Senderate liegt bei 10 PPS. Der Zähler für die
+                    Anzahl insgesamt gesendeter Pakete erhöht sich pro Sekunde
+                    im Schnitt um 100 Pakete.  & Pass\\
+                \hline
+                    Sender pausieren & Die globale Senderate liegt bei 0 PPS. Der
+                    Zähler für die Anzahl insgesamt gesendeter Pakete erhöht
+                    sich nicht. & Pass\\
+                \hline
+                    Sender hinzufügen & Die globale Senderate
+                    liegt bei 500 PPS. Der Zähler für die Anzahl insgesamt
+                    gesendeter Pakete erhöht sich pro Sekunde im Schnitt um 500
+                    Pakete. & Pass\\
+                \hline
+                    Sender überlasten & Die
+                    globale Senderate schwankt um einen Wert. & Pass\\
+                \hline
+            \end{tabular}
+             \begin{tabular}{|p{3.5cm}|p{11cm}|}
+                \textbf{Tester} & RS\\
+                \hline
+                \textbf{Datum} & 13.05.2011\\
+                \hline
+                \textbf{Ergebnis} & PASS\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+    
+    \begin{table}[h]
+        \caption{/TC6003/}
+        \label{tab:TC6003}
+        \begin{center}
+            \begin{tabular}{|p{3.5cm}|p{12cm}|}
+                \hline
+                    \textbf{Testfall Id} & /TC6003/\\
+                \hline
+                    \textbf{Testfall Name} & Paketraten-Statistik auf
+                    Empfängerseite\\
+                \hline
+                    \textbf{Requirement ID} & /VA1000/, /VA1200/, /VA1300/\\
+                \hline
+                    \textbf{Beschreibung} & Dieser Testfall verifiziert die
+                    korrekte Erstellung von Statistiken über die
+                    gemessene Paketrate für einen empfangenen Datenstrom.\\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|p{2.5cm}|p{7.55cm}|p{5cm}|}
+                \multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+                \hline
+                    \textbf{Schritt} & \textbf{Erwartetes Ergebnis} &
+                    \textbf{Ergebnis}\\
+                \hline
+                    Test-Setup & Das Tool
+                    wird ausgeführt und ist bereit zum Starten von Sendern. &
+                    Pass\\
+                \hline
+                    Sender starten & Der
+                    Sender sendet und wird angezeigt. & Pass\\
+                \hline
+                    Empfänger hinzufügen & Der Empfänger empfängt einen Datenstrom mit 100 PPS.\\
+                \hline
+                    Sender hinzufügen & Der Empfänger empfängt die Datenströme zweier Sender mit 100 bzw. 1000
+                    PPS (jeweils konfigurierte und gemessene Paketrate). &
+                    Pass\\
+                \hline
+                    Verändern der Senderate & Der Empfänger empfängt die Datenströme
+                    zweier Sender mit je 100 PPS als konfigurierte und
+                    gemessene Paketrate. & Pass\\
+                \hline
+                    Sender pausieren & Der Empfänger
+                    zeigt den Datenstrom als pausiert an. Die Statistiken
+                    bleiben erhalten. & Pass\\
+                \hline
+                    Sender aktivieren & Der Empfänger zeigt den Sender als aktiv an. Die Statistiken
+                    werden fortgesetzt. & Pass\\
+                \hline
+                    Überlasten der Sender & Pakete gehen verloren. Die Empfangsrate der Datenströme schwankt analog
+                    zu den Sendern. & Pass\\
+                \hline
+            \end{tabular}
+        \begin{tabular}{|p{3.5cm}|p{11cm}|}
+                \textbf{Tester} & RS\\
+                \hline
+                \textbf{Datum} & 13.05.2011\\
+                \hline
+                \textbf{Ergebnis} & PASS\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+    
+    \begin{table}[h]
+        \caption{/TC6004/}
+        \label{tab:TC6004}
+        \begin{center}
+            \begin{tabular}{|p{3.5cm}|p{12cm}|}
+                \hline
+                    \textbf{Testfall Id} & /TC6004/\\
+                \hline
+                    \textbf{Testfall Name} & Globale Empfänger-Statistiken\\
+                \hline
+                    \textbf{Requirement ID} & /VA1000/, /VA1300/\\
+                \hline
+                    \textbf{Beschreibung} & Dieser Testfall verifiziert die
+                    korrekte Erstellung globaler Empfänger-Statistiken.\\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|p{2.5cm}|p{7.55cm}|p{5cm}|}
+                \multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+                \hline
+                    \textbf{Schritt} &  & \textbf{Ergebnis}\\
+                \hline
+                    Test-Setup & Das Tool
+                    wird ausgeführt und ist bereit zum Starten von Sendern. &
+                    Pass\\
+                \hline
+                    Sender Starten & Der
+                    Sender sendet und wird angezeigt. & Pass\\
+                \hline
+                    Empfänger hinzufügen &
+                    Der Empfänger empfängt einen Datenstrom mit 100 PPS. Die
+                    globale Empfangsrate liegt bei 100 PPS. Der Zähler für
+                    insgesamt empfangene Pakete wird pro Sekunde um 100
+                    Pakete erhöht. & Pass\\
+                \hline
+                    Sender hinzufügen & Der Empfänger empfängt zwei Datenströme
+                    mit 100 bzw. 900 PPS. Die globale Empfangsrate liegt bei 1000 PPS. Der Zähler für
+                    insgesamt empfangene Pakete wird pro Sekunde im Schnitt um
+                    1000 Pakete erhöht. & Pass\\
+                \hline
+                    Sender pausieren & Die globale Empfangsrate liegt bei 100 PPS. Der Zähler für
+                    insgesamt empfangene Pakete wird pro Sekunde im Schnitt um
+                    1000 Pakete erhöht. & Pass\\
+                \hline
+                    Sender aktivieren & Die globale Empfangsrate liegt bei 1000 PPS. Der Zähler für
+                    insgesamt empfangene Pakete wird pro Sekunde im Schnitt um
+                    1000 Pakete erhöht. & Pass\\
+                \hline
+                    Überlasten der Sender Pakete gehen verloren. Die Summe der verlorenen Pakete der einzelnen
+                    Datenströme stimmt mit den global verlorenen Paketen
+                    überein. & Pass\\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|p{3.5cm}|p{11cm}|}
+                \textbf{Tester} & RS\\
+                \hline
+                \textbf{Datum} & 13.05.2011\\
+                \hline
+                \textbf{Ergebnis} & PASS\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+    
+    \begin{table}[h]
+        \caption{/TC6005/}
+        \label{tab:TC6005}
+        \begin{center}
+            \begin{tabular}{|p{3.5cm}|p{12cm}|}
+                \hline
+                    \textbf{Testfall Id} & /TC6005/\\
+                \hline
+                    \textbf{Testfall Name} & Detaillierte Statistik eines
+                    empfangenen Datenstromes\\
+                \hline
+                    \textbf{Requirement ID} & /VA1000/, /VA1200/, /VA1300/,
+                    /OA0300/\\
+                \hline
+                    \textbf{Beschreibung} & Dieser Testfall verifiziert die
+                    korrekte Erstellung von Statistiken für einen einzelnen
+                    empfangenen Datenstrom sowie für den einzelnen Empfänger,
+                    der diesen Datenstrom empfängt.\\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|p{2.5cm}|p{5cm}|p{7.55cm}|}
+                \multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+                \hline
+                    \textbf{Schritt} & \textbf{Ergebnis}\\
+                \hline
+                    Test-Setup & Das Tool wird auf beiden Rechnern
+                    ausgeführt und ist bereit zum Starten von Sendern. & Pass\\
+                \hline
+                    Zeit Synchronisierung & Die Zeiten
+                    beider Computer sind hinreichend synchron. & Pass\\
+                \hline
+                    Sender Starten & Der Sender sendet und wird
+                    angezeigt. & PAss\\
+                \hline
+                    Empfänger anlegen & Der Empfänger empfängt den Sender aus
+                    dem Netzwerk. & Pass\\
+                \hline
+                    Detailansicht Paketraten & Die konfigurierte und gemessene Senderate
+                    stimmen mit den Daten des Senders überein. Die gemessene
+                    Empfangsrate stimmt mit der Tabellenangabe überein. & Pass\\
+                \hline
+                    Detailansicht Übertragungszeit & Die angezeigte Übetragungszeit stimmt
+                    mit der Hälfte der Ping-Zeit überein. & Pass\\
+                \hline
+                    Detailansicht maximaler Versatz & Maximaler Versatz wird
+                    angezeigt. & Pass\\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|p{3.5cm}|p{11cm}|}
+                \textbf{Tester} & RS\\
+                \hline
+                \textbf{Datum} & 13.05.2011\\
+                \hline
+                \textbf{Ergebnis} & PASS\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{table}

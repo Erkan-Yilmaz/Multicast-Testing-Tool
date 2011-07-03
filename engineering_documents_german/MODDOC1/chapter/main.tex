@@ -1,0 +1,469 @@
+
+\chapter{Scope}
+Die Moduldokumentation beschreibt die Architektur, die Schnittstellen 
+und die Hauptmerkmale des Moduls. Außerdem werden die Modul bzw. Komponententests 
+einschließlich der Ergebnisse beschrieben und dokumentiert. 
+Die MOD dient bei Bedarf auch als Programmier- oder Integrationshandbuch für das 
+Modul. Wenn bestimmte Risiken direkt mit der Verwendung des Moduls verknüpft sind,
+so sind sie in diesem Dokument zu benennen und zu kommentieren.
+
+\chapter{Definitionen}
+
+    Auf der Empfängerseite der Anwendung herrscht eine gewisse Diskrepanz der
+    Begrifflichkeiten zwischen Benutzer- und Entwicklersicht, die in Tabelle
+    \ref{tab:receiver_vs_group} klargestellt wird. In diesem Dokument wird
+    in der Regel auf die Benutzersicht Bezug genommen
+    
+    \begin{table}[h]
+        \caption{ReceiverGroup/Empfänger vs. Receiver/Datenstrom}
+        \label{tab:receiver_vs_group}
+        \begin{center}
+            \begin{tabular}{|p{3.2cm}|p{3.5cm}|p{7.5cm}|}
+                \hline
+                    \textbf{Entwicklersicht} &
+                    \textbf{Benutzersicht} &
+                    \textbf{Definition}\\
+                \hline
+                    ReceiverGroup & Empfänger & Ein auf Empfängerseite
+                    eröffneter Multicast-Socket, der genau einer Gruppe
+                    beigetreten ist und an einem bestimmten Port lauscht.\\
+                \hline
+                    Receiver & (eingehender) Datenstrom & Das Gegenstück zu
+                    einem von \emph{einem} Sender ausgehenden Datenstrom. Ein
+                    Empfänger kann mehrere Datenströme empfangen, da ja
+                    meherere Sender in die selbe Gruppe senden können.\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+%\section{Abkürzungen}
+
+%\section{Definitionen}
+    %Wichtige Begriffe und Worte
+
+\section{Terminologien}
+    %Besondere Begrifflichkeiten und deren Verwendung.
+    %Festgelegte Terminologien und Regeln für Schreibweise z.B. Notationsegeln
+    % für CLI Kommandos
+    
+    \begin{description}
+        \item[View-Controller] Der View-Controller ist die GraphicalView-Klasse
+        und wird in Moduldokumentation "`GUI-Logik"' näher beschrieben.
+    \end{description}
+
+
+\chapter{Analyse}
+    %Dieses Kapitel muss alles beinhalten, was noch nicht in anderen Dokumenten
+    % enthalten ist.
+
+    Die grafische Oberfläche (GUI) stellt die wichtigste Schnittstelle des
+    Multicast Test Tools zum Endanwender dar. Die wahrgenommene Qualität der
+    gesamten Anwendung hängt in hohem Maß von der Bedienbarkeit über die GUI ab.
+    Alle vom Endanwender formulierten Use Cases müssen auf möglichst intuitive
+    Weise abgebildet werden.
+    
+    Der Analyse der Designanforderungen an das Multicast Test Tools lagen die in
+    CRS und SRS explizit spezifizierten Use Cases zugrunde. Um die
+    Praxistauglichkeit der Anwendung zu maximieren, lag hierbei ein besonderers
+    Augenmerk auf der übersichtlichen Darstellung von Messergebnissen.
+    
+    Die hier vorgestellten Voruntersuchungen bauen größtenteils auf die
+    im Dokument ``Moduldokumentation GUI-Logik'' vorgestellten Voruntersuchungen
+    auf.
+
+    \section{Voruntersuchungen}
+        %Müssen/mussten Prototypen gemacht werden?
+        %Versuche, Test und Abschätzungen 
+        
+        Die grafische Oberfläche wurde mithilfe des Swing-Toolkits umgesetzt.
+        Besonders die Funktionsweise und der korrekte Einsatz der
+        Swing-Layout-Manager erforderte gründliche Voruntersuchungen und
+        Analysen. Layout-Manager sind dafür verantwortlich, GUI-Komponenten
+        anzuordnen. Dazu gehört insbesondere, dass die grafische Oberfläche auch
+        bei Größenänderungen der Fenster ein korrektes und ausgewogenenes
+        Erscheinungsbild beibehält.
+        
+        Für das GUI-Prototyping und die Erzeugung eines Großteils des GUI-Codes
+        wurde der Netbeans GUI-Designer eingesetzt. Dessen Funktionsweise und
+        Einsatzpotential war ebenfalls Objekt gründlicher Voruntersuchungen.
+        Insbesondere die Fähigkeit, den generierten Code automatisch zu
+        internationalisieren, führte zur Entscheidung, den Netbeans GUI-Designer
+        einzusetzen.
+        
+        Um die oben erwähnte übersichtliche Anzeige der Datenströme zu
+        gewährleisten, wurde ein Großteil der Voruntersuchungen auf die
+        Arbeitsweise und Anpassungsmöglichkeiten der Swing-JTable verwendet.
+     
+    \section{Systemanalyse}
+    
+        \subsection{Rahmenbedingungen}
+        
+            Die zentrale GUI-Logik wurde in die GraphicalView-Klasse
+            ausgelagert. Diese Klasse ist auch die Schnittstelle zwischen den
+            Design-Elementen und der Funktionalität der Anwendung.
+            
+            Die Struktur des Codes für die grafische Oberfläche ist weitgehendst
+            durch den Netbeans GUI-Designer vorgegeben. Große Teile dieses Codes
+            dürfen auch von Hand gar nicht geänder werden, um die Kompatibilität
+            mit dem Designer aufrechtzuerhalten.
+            
+            Besonders beim Code für die visuellen Komponenten der Oberfläche,
+            ist die Plattformunabhängigkeit zu beachten. Im Allgemeinen kann
+            nicht von einer einheitlichen Darstellung der Komponenten auf
+            verschiedenen Betriebssystemen ausgegangen werden. Dies gilt
+            besonders dann, wenn jeweils das systemeigene ``Look-and-Feel''
+            verwendet wird. Für eine ausführliche Diskussion der
+            Swing-Look-and-Feels sei hier auf die offizielle Java-Dokumentation
+            verwiesen.
+        
+        \subsection{Problemstellung}
+    
+            %Analyse der Problemstellung 
+            
+            \subsubsection{Grundsätzliche Anforderungen}
+            
+                Hauptaufgabe der GUI ist die übersichtliche Darstellung von
+                Sende- und Empfangsströmen. Dazu kommt die Darstellung globaler
+                Statistikdaten.
+                
+                Neben der korrekten Darstellung ist auch die Bedienbarkeit der
+                GUI ein entscheidendes Erfolgskriterium. Die Oberfläche muss von
+                einem technisch orientierten Anwender intuitiv bedienbar sein.
+                
+                Auch plattformübergreifend muss eine angemessene Darstellung
+                erreicht werden.
+                
+            \subsubsection{Tabellen}
+            
+                Das Kernstück der GUI sind die beiden Tabellen, die jeweils
+                Sende- und Empfangsströme darstellen. Gemäß CRS muss hier der
+                Status, sowohl eines einzelnen Senders oder Empfängers, als auch
+                im groben Überblick der des gesamten Systems, auf einen Blick
+                erkennbar sein.
+                
+                Beide Tabellen müsse sich nahtlos in die restlichen,
+                ``einfachen'' Swing-Komponenten eingliedern.
+            
+            \subsubsection{Dialoge}
+           
+           		Eine Erweiterung zum Hauptfenster der GUI stellen die Dialoge dar,
+           		die Teilaufgaben (z.B. Speichern/Laden einer Konfiguration)
+           		übernehmen und diese Übersichtlich darstellen müssen.
+
+        %Architektur und Gliederung der Komponente 
+        
+        \subsection{Abhängigkeiten}
+            %Interaktionsanalyse / Abhängigkeiten 
+            Der gesamte GUI-Design-Code ist stark von der GUI-Logik abhängig und
+            verschmilzt an vielen Stellen auch damit. Direkte Abhängigkeiten zum
+            Model wurden aber durch das Zwischenschalten eines View-Controllers
+            deutlich gesenkt. In der Funktionalität spiegelt sich diese
+            Abhängigkeit dann aber naturgemäß wieder, da die View ja den
+            gesamten Funktionsumfang des Models abzudecken hat.
+            
+        
+ 
+
+
+\chapter{Design}
+    %Folgerungen aus der Analyse 
+        
+    \section{Lösungen für den Problembereich der Analyse}
+        %Lösungen für den Problembereich der Analyse 
+        
+        \subsection{Hauptfenster}
+        
+            Um die geforderte Übersicht zu gewährleisten, ist das Hauptfenster
+            eindeutig zweigeteilt. Die obere Hälfte dient der Darstellung der
+            Sendefunktionalität der Anwendung, die Untere der Darstellung der
+            Empfangsfunktionalität. Diese logische Trennung wird durch optische
+            Merkmale (ein-/ausgehender Pfeil, JSeparator) unterstrichen.
+            
+            Jeder der beiden Bereich ist wiederum zweigeteilt: Eine große
+            Tabelle zur Darstellung der Datenströme und ein Teilbereich am Rand,
+            der globale Statistiken anzeigt.
+            
+            Um die Ergonomie zu verbessern werden für einzelne Benutzeraktionen
+            verschiedene Zugriffsmöglichkeiten bereitgestellt. So ist
+            beispielsweise das Entfernen eines Datenstroms je nach
+            Benutzervorliebe entweder über Buttons im Hauptfenster, über einen
+            Kontextmenüeintrag, oder durch Druck der Entf-Taste möglich.
+            Zusätzlich kann die Oberfläche des Hauptfensters auch an den
+            momentanen Einsatzzweck angepasst werden, indem z.B. die
+            Sendertabelle komplett ausgeblendet wird, wenn die Anwendung nur als
+            Empfänger fungiert.
+            
+            Um die Plattformunabhängigkeit der Darstellung sicherzustellen, wird
+            auf die ``Look-and-Feel''-Mechanismen des Swing-Toolkits
+            zurückgegriffen. Mit Einbinden des jeweils plattformspezifischen
+            System-Look-and-Feel wird zwar eine hundertprozentig einheitliche
+            Darstellungen auf allen Zielsystemen bewusst verhindert, dafür fügt
+            sich das Tool dann ergonomisch besser in das jeweilige
+            Betriebssystem ein. Das Swing-Toolkit sorgt dabei für eine
+            eindeutige und verlustfreie  Übertragung der Bedeutung einzelner
+            GUI-Komponenten auf die jweilige Plattform.
+            
+            Um die intuitive Bedienbarkeit der Oberfläche aufzuwerten, wurde
+            allen wichtigen Steuerelementen ein erläuternder Tooltip
+            hinzugefügt. Ebenso wurden die Spaltenköpfe der Tabellen mit
+            Tooltips versorgt, da sich deren Bedeutung nicht immer eindeutig,
+            aus dem Spaltentitel erschließt.
+        
+        \subsection{Tabellen}
+        
+            Um eine möglichst intuitive Darstellung der Datenströme zu
+            gewährleisten, werden in beiden Tabellen Icons verwendet, die den
+            Status eines Datenstromes widerspiegeln. Zur besseren Lesbarkeit
+            werden außerdem die Zeilen mit alternierenden Hintergrundfarben
+            dargestellt. Beide Tabellen werden durch ihre Data Models regelmäßig
+            mit aktuellen Daten versorgt.
+            
+            Als Besonderheit bietet die Empfängertabelle die Möglichkeit ganze
+            Empfänger ``einzuklappen'', also die Datenströme, die ein Empfänger
+            empfängt, auszublenden. Der Mechanismus, der für den konsistenten
+            Zustand der Tabellendaten, auch bei eingeklappten Zeilen, sorgt,
+            wird größtenteils vom Data Model umgesetzt. 
+        
+        \subsection{Dialoge}
+        
+        	Zur Gewährleistung einer übersichtlichen und intuitiven Darstellung
+        	werden Teilfunktionen des Programms in Dialog-Fenster ausgelagert.
+        	Dies beinhaltet z.B. Sender oder Empfänger hinzufügen, entfernen oder
+        	bearbeiten.
+        	Dabei werden in dem entsprechenden Fenster nur die relevanten
+        	Textfelder angezeigt, die sich z.B. zwischen Sender und Empfänger
+        	unterscheiden, da Sender eine größe Anzahl an
+        	Konfigurationsmöglichkeiten bieten.
+        	
+        	Im Falle der Statistik-Dialog-Fenster werden dann nur die Informationen
+        	angezeigt, die zu dem entsprechenden Datenstrom gehören.
+        	Weiterhin ist anzumerken, dass die Statistik-Fenster zur visuellen
+        	Darstellung zusätzlich eine Box enthalten, auf der ein Graph der
+        	aktuell gemessenen Paketrate dargestellt wird.
+
+\chapter{Implementierung}
+
+    \section{Hauptfenster}
+    
+        Das Hauptfenster wurde als vom Swing-JFrame abgeleitete Klasse
+        implementiert. Die Layout-Manager wurden im Fall des Hauptfensters nicht
+        vom Netbeans GUI-Designer, sondern von Hand konfiguriert. Durch diese
+        Vorgehensweise konnte eine höhere Präzision in der Darstellung
+        hinsichtlich Größenänderungen und Plattformunabhängigkeit erreicht
+        werden.
+        
+        Alle ActionListener der GUI-Komponenten wurden als anonyme innere
+        Klassen implementiert. Dadurch bleibt der Code kompakt und der
+        Eventfluss kann besser nachvollzogen werden. Alle Benutzerereignisse
+        werden somit zunächst in der Hauptfensterklasse selbst behandelt und
+        gegebenenfalls an den View-Controller, oder die Dialoge weitergeleitet.
+        
+        Die zentralen Komponenten des Hauptfensters sind die Sender- und
+        Empfängertablle, die aufgrund ihrer Komplexität jeweils in ein eigenes
+        Package ausgelagert wurden.
+        
+        Das Hauptfenster stellt auch das Datei- und Hilfe-Menü, sowie das
+        Kontextmenü von Sender- und Empfängertabelle zur Verfügung.
+    
+    \section{Sendertabelle}
+    
+        Die Sendertabelle ist die einfachere der beiden Tabellen. Sie beerbt die
+        JTable-Klasse, um die spezielle Konfiguration der Tabelle zu kapseln.
+        Dazu gehört das Setzen des Zellen-Renderers für die Icon-Darstellung der
+        Status-Spalte und für die alternierenden Hintergrundfarben der
+        Tabellenzeilen.
+        
+        Auch die Spaltendefinitionen und deren internationalisierte Spaltentitel
+        und Tooltips sind in diesem Package als Enum-Typ hinterlegt.
+        
+        Der Sendertabelle liegt ein eigenes TableModel zugrunde, welches die
+        Verwaltung der anzuzeigenden Sendeströme vornimmt.
+        
+        Die Sendertabelle ermöglicht das Auswählen eines oder mehrerer Sender,
+        wovon dann auch die im Hauptfenster zur Verfügung stehenden Aktionen
+        abhängen (Sender de-/aktivieren/löschen/\ldots).
+        
+        Eine Übersicht über die Architektur der Sendertabelle liefert Diagramm
+        \ref{jsendertable}.
+    
+    \section{Empfängertabelle}
+    
+        Als größere Herausforderung stellte sich die Implementierung der
+        Empfängertabelle dar. Auch sie ist von der JTable-Klasse abgeleitet, vor
+        Allem um zeilenweise unterschiedliche Renderer definieren zu können.
+        Dies ist notwendig, um eine Empfängerzeile anders darstellen zu können,
+        als eine Datenstromzeile.
+        
+        Auch in der Empfängertabelle wird die Datenhaltung von einem eigenen
+        TableModel verwaltet. Dieses ist in diesem Fall von der
+        AbstractTableModel-Klasse abgeleitet, um eine größere Flexibilität in
+        der Umsetzung zu erreichen. Das TableModel verwaltet sowohl die Daten
+        der dargestellten Empfänger, als auch die Ein- und
+        Ausklappfunktionalität. Sämtliche Logik (bis auf das Durchreichen von
+        Mausklicks) wurde damit aus der darstellenden Komponente entfernt und in
+        das TableModel verlagert. Die JReceiverTable greift damit transparent
+        per Spalten- und Zeilenangaben auf des TableModel zu und entscheidet je
+        nach zurückgegebenem Zeilentyp, welcher Renderer zum Einsatz kommt.
+        
+        Wie bei der Sendertabelle sind auch hier die Spaltendefinitionen und deren internationalisierte Spaltentitel
+        und Tooltips sind in diesem Package als Enum-Typ hinterlegt.
+        
+        Etwas tiefer in die Swing-Trickkiste greift der Renderer für die
+        Empfängerzeile (ReceiverGroupRow). Er manipuliert gezielt die
+        Swing-Zeichenmethode, um ein Spaltenübergreifendes Aussehen zu
+        erreichen.
+        
+        Auch die Empfängertabelle ermöglicht das Auswählen einer oder mehrerer
+        Zeilen. Abhängig davon, ob nach einer Selektion, nur Empfänger, nur
+        Datenströme, oder beides markiert ist, werden die entsprechenden
+        Aktionen im Hauptfenster und im Kontextmenü de-/aktiviert.
+        
+        Eine Übersicht über die Architektur der Empfängertabelle liefert
+        Diagramm \ref{jreceivertable}.
+    
+    \section{Dialoge}
+    
+    	Die Dialoge sind von der JDialog-Klasse abgeleitet und erhalten die
+    	angezeigten Daten (sofern es sich nicht um Standarderte handelt) bei
+    	erstellen des jeweiligen Dialogs über eine Referenz zum gewünschten Objekt
+    	(Sender/Empfänger).
+    	
+    	Die "`Bearbeiten"'- und "`Hinzufügen"'-Dialoge zeigen die Daten dabei
+    	in Textfeldern oder aufklappbaren Listen an um eine Bearbeitung der Daten
+    	zu ermöglichen, wohin gegen die Statistik-Dialoge lediglich eine
+    	Anzeige-Funktion mittels JLabels besitzen. 
+    	
+    	Gesondert hierzu muss der "`Traffic-Graph"' erwähnt werden, der eine
+    	grafische Darstellung der gemessenen Paketraten darstellt.
+    	Der "`Traffic-Graph"' ist von JPanel abgeleitet und überschreibt darin die
+    	paintComponent-Methode zum Zeichnen eines grauen Rasters, eines schwarzen
+    	Hintergrundes und eines grünen Graphs.
+    	Die aktuellen Messdaten werden hierbei über das
+    	Statistik-Fenster übergeben, wenn dieser ein DataChanged-Event erhält und
+    	damit die Felder auf der GUI aktualisiert.
+    	
+    	Der Optionen-Dialog bietet die Möglichkeit die Sprache umzustellen. Nach
+    	Bestätigen der Auswahl wird die Benutzeroberfläche dann mit der
+    	ausgewählten Sprache neu geladen.
+    	
+    	Weiterhin gibt es Dialoge zum Laden und Speichern von Konfigurationen, die
+    	über einen einfachen oder einen (zum Speichern mit Profilnamen) erweiterten
+    	JFileChooser umgesetzt wurden. Außerdem existiert ein AboutDialog, der das
+    	MCTOOL als Software von SPAM ausweist.
+    	
+    	Eine Besonderheit im Vergleich zu den anderen Dialogen stellt der
+    	Error-Dialog dar. Dieser wird nicht wie die anderen Dialoge durch den
+    	Benutzer geöffnet, sondern resultierend z.B. durch die Eingabe eines
+    	Benutzers vom Programm selbst im Fehlerfall aufgerufen. Hierbei wird der
+    	aktuelle Fehler in einer Liste angezeigt. Sollten weitere Fehler während
+    	des Ausführens des Dialogs auftreten, so werden diese an die Liste
+    	angehängt ohne einen weiteren Dialog zu öffnen.
+    
+    \section{Codedokumentation}
+    
+        Mit Ausnahme der automatisch generierten Methoden, sind die
+        Design-Komponenten nach Javadoc-Konvention dokumentiert.
+
+% \chapter{Komponententest}
+%     
+%     Die korrekte Funktionsweise der Design-Komponenten wurde im Rahmen der
+%     Continouus Integration projektbegleitend von Hand getestet. Automatisierte
+%     Testverfahren wurden zwar evaluiert, deren konsequenter Einsatz erwies sich
+%     jedoch als nicht wirtschaftlich.
+%     
+% \section{Komponententestplan}
+% 
+% \begin{table}[h]
+% \caption{Komponententestplan}
+% \label{tab:ktp}
+% \begin{center}
+% \begin{tabular}{|p{2cm}|p{3cm}|p{9cm}|}
+% \hline
+% \textbf{Test Nr.} & \textbf{Feature ID} & \textbf{Test Spezifikation}\\
+% \hline
+%  & & \\
+% \hline
+%  & & \\
+% \hline
+%  & & \\
+% \hline
+%  & & \\
+% \hline
+% \end{tabular}
+% \end{center}
+% \end{table}
+% 
+% \section{Komponententestreport}
+% 
+% \begin{table}[h]
+% \caption{Komponententestreport}
+% \label{tab:ktr}
+% \begin{center}
+% \begin{tabular}{|p{2cm}|p{2cm}|p{6cm}|p{1.5cm}|p{1.5cm}|}
+% \hline
+% \textbf{Test Nr.} & \textbf{Pass/Fail} & \textbf{Test Ergebnis (wenn Fail)} & \textbf{Datum} & \textbf{Tester}\\
+% \hline
+%  & & & &\\
+% \hline
+%  & & & &\\
+% \hline
+%  & & & &\\
+% \hline
+%  & & & &\\
+% \hline
+% \end{tabular}
+% \end{center}
+% \end{table}
+
+\chapter{Zusammenfassung}
+
+\section{Beurteilung der Komponente}
+
+    %Hat die Komponente Schwächen und Stärken, 
+    Der Einsatz eines Code-Generators bringt naturgemäß einen großen Umfang an
+    häufig unübersichtlichen und schlecht wartbaren Code mit sich. Auch in
+    diesem Fall leidet die Komponente sichtbar unter diesem Problem. Zusätzlich
+    dazu ist der Entwickler auch in seiner Flexibilität eingeschränkt, da große
+    Codepassagen nicht von Hand nachgebessert werden können. Das den im Moment
+    verwendeten Listener-Methoden überlegene Konzept der Java-Actions wurde vom
+    Entwickler leider zu spät "`entdeckt"'. Gerade Benutzeraktionen, die an
+    mehereren Stellen der grafischen Oberfläche ausgelöst werden können, hätten
+    damit sehr elegant umgesetzt werden können.
+    
+    Auf der anderen Seite hat sich der Einsatz des Netbeans GUI-Designers aber
+    eindeutig bezahlt gemacht. Trotz der oben genannten Einschränkung erwies er
+    sich als sehr flexibles Werkzeug. An vielen Stellen kann in die
+    Codegenerierung eingegriffen werden, das Refactoring gestaltet sich sehr
+    angenehm und auch eigene, komplexe Komponenten, wie die Sender- oder
+    Empfängertabellen, lassen sich ohne Probleme in das Design integrieren. Auch
+    die automatische Internationalisierungsfunktion hat den Entwicklungsprozess
+    deutlich effizienter gemacht.
+    
+    Auch wenn die Empfängertabelle nun auf die Darstellung von Multicaststreams
+    zugeschnitten wurde, so ist das mit ihr entwickelte Konzepte einer Tabelle
+    mit ein- und ausklappbaren Untergruppen doch mit Sicherheit auch auf
+    zukünftige Komponenten übertragbar.
+    
+    
+    
+
+\section{Ausblick für die Weiterentwicklung}
+%Sind schon Dinge vorbereitet?
+%Erweiterungsmöglichkeiten?
+
+    Im Gesamtkonzept ist die View und vor Allem ihr Design eine
+    Anwendungskomponente, die auf komplette Austauschbarkeit setzt. Wenn nur
+    gerfingfügige Änderungen vorgenommen werden sollen, ist es aber dennoch
+    wichtig, dass der Code trotzdem wart- und erweiterbar bleibt. Vor diesem
+    Hintergrund ist positiv zu vermerken, dass der gesamte
+    Design-Code nach wie vor Netbeans-GUI-Designer-tauglich ist. Eine eventuelle
+    Weiterentwicklung des Designs wird damit deutlich vereinfacht, da eine
+    aufwändige Einarbeitung in den GUI-Code nahezu komplett entfällt.
+    
+    Deutlich aufgewertet würde die Verknüpfung zwischen GUI-Design und -Logik
+    durch eine Umstellung der anonymen ActionListener auf ein Action-basiertes
+    System.
+
+
+%\chapter{Referenzen und Standards}

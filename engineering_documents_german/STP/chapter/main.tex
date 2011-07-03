@@ -1,0 +1,126 @@
+
+\chapter{Scope}
+Der Systemtestplan spezifiziert die Teststrategie und den Testumfang zur
+Verifikation des Pflichtenheftes (SRS). Testfälle werden referenziert.
+Er bildet die Basis für den Systemtestbericht (STR) der zusätzlich noch die
+Testergebnisse auflistet.
+\newline
+Damit setzt er die Qualitätsanforderung /QW20/ (/LQW20/) um.
+Danach muss jedes einzelne Module testbar, sowie Fehlerzustände
+analysierbar sein. Ein Testplan, sowie die Testergebnisse sind schriftlich vorzulegen.
+
+\input{chapter/valdefs.tex}
+
+\chapter{Produktname und weitere Eigenschaften}
+Dieser System Test Plan bezieht sich einzig und allein auf das Programm "`Multicast Test Tool"'
+, welches von der Firma SPAM Software Programming And More für die Firma Net-Tools entwickelt wird.
+
+\chapter{Zu testende Funktionen, Qualitätsanforderungen und Features}
+Die folgenden, tabellarisch aufgelisteten Funktionen, Qualitätsanforderungen und
+Features müssen getestet werden, soweit sie nicht als "`nicht zu testen"' markiert sind.
+
+\begin{table}[h]
+\caption{Funktionen, Qualitätsanforderungen und Features}
+\label{tab:features}
+\begin{center}
+\begin{tabular}{|c|p{7cm}|c|c|}
+\hline
+\textbf{Requirement ID} & \textbf{Funktionalität} & \textbf{Priorität} & \textbf{Testsuite Id}\\
+\hline
+/UC10/ & Konf. des MC Senders & A & /TS10/\\
+\hline
+/UC10/ & Konf. des MC Empfängers & A & /TS20/\\
+\hline
+/UC10/ & Laden und Speichern der Konfiguration & B & /TS30/\\
+\hline
+/UC20/ & Laden einer Konfiguration und Starten von Streams über CLI & B & /TS40/\\
+\hline
+/UC30/ & Fehlerfreier Austausch von MC Paketen & A & /TS50/\\
+\hline
+/UC40/ & Analyse und Anzeige von Messdaten & A & /TS60/\\
+\hline
+/QP30/ & Installation der Applikation & B & /TS70/\\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}
+
+\chapter{Test-Vorbereitungs-Strategie}
+Um Testsuiten und damit verbundene Testfälle zu erstellen werden die Use-Cases aus der SRS aufgegriffen.\\
+Zu jedem Use-Case wird mindestens eine Testsuite erstellt. Je nach Umfang des Use-Cases können auch mehrere Testsuiten entstehen.\\
+Bei der anschließenden Erstellung der Testfälle wird versucht zu dem jeweiligen Use-Cases zugehörige Funktionale Anforderungen zu finden.\\
+Diese werden bei der Erstellung der Testfälle berücksichtigt. Dies ermöglicht ein tiefgreifendes Testen der Use-Cases.\\
+\newline
+Die Testsuiten werden zunächst erstellt, anschließend überprüft und zuletzt getestet.\\
+Zum Testen muss zunächst alles Testequipment angeschafft werden. Weitere Vorbereitungen sind nicht nötig.\\
+Es wird davon ausgegangen, dass alle Test-Ersteller und Tester mit dem Produkt und deren Funktionen vertraut sind.
+
+\chapter{Test-Durchführungs-Strategie}
+Bei der Durchführung der Tests muss nicht viel berücksichtigt werden.
+Da es in etwa gleich viele Tester wie Testsuiten gibt übernimmt jeder Tester genau eine Testsuite. Testsuite 7 ist recht klein und wird zusätzlich vom Testmanager übernommen.
+Jede Testsuite besteht im Schnitt aus 5-6 Testfällen, was keine Priorisierung nötig macht.\\
+Die Testfälle werden von dem jeweiligen Tester in beliebiger Reihenfolge ausgeführt. Schlägt ein Testfall fehl, so wird das Problem sofort
+an den zuständigen Entwickler gemeldet und von diesem behoben. Nach Behebung des Fehlers wird erneut der Testfall getestet.
+Sobald dieser Testfall Positiv ist, werden erneut alle bisher getesteten Testfälle innerhalb der Testsuite getestet, um
+eine eventuell aufgedeckte "`Fehlermaskierung"' zu erkennen. Ist die Testsuite erfolgreich getestet wird der Erfolg an den Test-Manager, RS,
+gemeldet. Sind alle Testsuiten als positiv gemeldet, werden erneut alle Testsuiten in einem Zug getestet. Treten Fehler auf,
+so werden diese behoben und so lange der Schritt "`Korrigieren-Alle Testen"' wiederholt, bis keine Fehler mehr auftreten.
+Alle Testsuiten sind nun fehlerfrei. Die Testfortschritte bzw. Testergebnisse werden in dem STR festgehalten.
+
+\chapter{Test-Equipment}
+Als Test Equipment werden 2 Rechner mit sowohl Linux als auch Windows Betriebsystem benötigt. Hardwareanforderungen finden sich in der SRS bzw. im PP.
+Für Linux wird Ubuntu 10.10 x86 bzw. 11.04 x86 gewählt. Als Windows Vertreter wird Windows XP und Windows 7 in der 32 Bit Variante verwendet.\\
+Zum Testen der Netzwerk-Infrastruktur werden vom Auftraggeber entsprechende Multicast-fähige Router/Switches und Kabel bereit gestellt.\\
+Als Testsoftware wird zusätzlich nur das Programm "`Wireshark"' benötigt. Weiteres Equipment ist nicht vorgesehen.
+
+\chapter{Test-Zeitplanung und -Budget}
+Das Budget für die Testphase wurde bereits im Projektplan mit eingerechnet und ist daher an dieser Stelle nicht von Relevanz.\\
+Für die Testplan-Erstellung wird eine Woche veranschlagt.\\ Der Review der Testpläne wird ebenfalls auf eine Dauer von einer Woche veranschlagt.\\
+Für das Testen wird ebenfalls eine Woche eingeplant. Die Arbeit der Ersteller
+erfolgt hierbei parallel zu ihrer normalen Tätigkeit.\\ An einem abschließenden
+Testtag (14.05.2011) werden alle Testsuiten erneut getestet, bis keine Testsuite mehr fehlschlägt.\\
+
+\chapter{Test-Planung}
+\begin{table}[h]
+\caption{Funktionen, Qualitätsanforderungen und Features}
+\label{tab:features}
+\begin{center}
+\begin{tabular}{|c|p{6cm}|c|c|c|}
+\hline
+\textbf{Testsuite Id} & \textbf{Test Ziel} & \textbf{Ersteller} & \textbf{Reviewer} & \textbf{Tester}\\
+\hline
+/TS10/ & Senderkonfiguration sicherstellen & RS & DH & JJ\\
+\hline
+/TS20/ & Empfängerkonfiguration sicherstellen & JJ & RS & DH\\
+\hline
+/TS30/ & Konfigurationsverwaltung sicherstellen & KW & JJ & TSC\\
+\hline
+/TS40/ & Automatisierung per CLI sicherstellen & TSC & KW & TST\\
+\hline
+/TS50/ & Multicast-Fähigkeit sicherstellen & TST & TSC & KW\\
+\hline
+/TS60/ & Auswertung der Daten sicherstellen & DH & TST & RS\\
+\hline
+/TS70/ & Installation der Applikation & KW & DH & RS\\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}
+\chapter{Referenzen, Standards}
+PP - Projektplan\\
+SRS - System Requirement Specification
+
+\begin{appendix}
+
+\input{chapter/suite1.tex}
+\input{chapter/suite2.tex}
+\input{chapter/suite3.tex}
+\input{chapter/suite4.tex}
+\input{chapter/suite5.tex}
+\input{chapter/suite6.tex}
+\input{chapter/suite7.tex}
+\input{chapter/test-value-appendix.tex}
+
+\end{appendix}

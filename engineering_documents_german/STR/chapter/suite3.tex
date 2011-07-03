@@ -1,0 +1,218 @@
+\chapter{Testsuite /TS30/}
+Dieses Kapitel enthält die Testergebnisse der Testsuite /TS30/.\\
+Die zugehörige Requirement ID lautet /UC10/.
+
+\begin{table}[h]
+\caption{/TC3001/}
+\label{tab:TC3001}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\hline
+\textbf{Testfall ID} & /TC3001/\\
+\hline
+\textbf{Testfall Name} & Laden valider Konfigurationsdateien\\
+\hline
+\textbf{Requirement ID} & /VA0500/ (/LVA0600/), /VA0600/ (/LVA0800/)\\
+\hline
+\textbf{Testfall Setup} & Starten des Computers unter Linux. Durchführen des Tests.
+Anschließendes Starten des Computers unter Windows XP. Erneutes Durchführen des Tests. Schlägt ein Testschritt unter mindestens einem System fehl, wird er als 'FAIL' markiert.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{4cm}|p{7.8cm}|p{2.3cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Erwartetes Ergebnis} & \textbf{Ergebnis}\\
+\hline
+Test Setup & Das Tool ist erfolgreich installiert. & PASS\\
+\hline
+Konfigurationen laden &  Das Tool lädt die Konfiguration ohne Probleme. &
+PASS\\
+\hline
+Überprüfen geladener Werte & In der GUI des Tools werden alle Daten aus der
+Konfiguration richtig angezeigt. & PASS\\
+\hline
+\end{tabular}
+
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\textbf{Tester} & TSC\\
+\hline
+\textbf{Datum} & 13.05.2011\\
+\hline
+\textbf{Ergebnis} & PASS\\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC3002/}
+\label{tab:TC3002}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\hline
+\textbf{Testfall ID} & /TC3002/\\
+\hline
+\textbf{Testfall Name} & Laden invalider Konfigurationsdateien\\
+\hline
+\textbf{Requirement ID} & /VA0600/ (/LVA0800/), /QZ10/ (/LQZ10/)\\
+\hline
+\textbf{Testfall Setup} & Starten des Computers unter Linux. Durchführen des Tests.
+Anschließendes Starten des Computers unter Windows XP. Erneutes Durchführen des Tests. Schlägt ein Testschritt unter mindestens einem System fehl, wird er als 'FAIL' markiert.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{4cm}|p{7.8cm}|p{2.3cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Erwartetes Ergebnis} & \textbf{Ergebnis}\\
+\hline
+Test-Setup &  Das Tool ist erfolgreich installiert. & PASS\\
+\hline
+Konfigura- tionen laden & Das Tool lädt die Konfiguration und gibt eine
+Fehlermeldung aus die mindestens eines der Probleme in der Konfiguration wieder
+spiegelt. & PASS\\
+\hline
+Reaktion des Programms & Das Tool startet und geht sinnvoll mit Fehlern um. Das
+Tool kann entscheiden wie viele Informationen es aus der Konfiguration In der
+GUI des Tools werden entweder sinnvollen Daten aus der Konfiguration richtig
+angezeigt oder das Tool beendet sich. & PASS\\
+\hline
+\end{tabular}
+
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\textbf{Tester} & TSC\\
+\hline
+\textbf{Datum} & 13.05.2011\\
+\hline
+\textbf{Ergebnis} & PASS\\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC3003/}
+\label{tab:TC3003}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\hline
+\textbf{Testfall ID} & /TC3003/\\
+\hline
+\textbf{Testfall Name} & Profil Lebenszyklus Test\\
+\hline
+\textbf{Requirement ID} & /VA0500/ (/LVA0600/), /AVA0600/ (/VA0600/), /VA0700/ (/LVA0900/)\\
+\hline
+\textbf{Testfall Setup} & Starten des Computers unter Linux. Durchführen des Tests.
+Anschließendes Starten des Computers unter Windows XP. Erneutes Durchführen des Tests. Schlägt ein Testschritt unter mindestens einem System fehl, wird er als 'FAIL' markiert.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{4cm}|p{7.8cm}|p{2.3cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Erwartetes Ergebnis} & \textbf{Ergebnis}\\
+\hline
+                    Test-Setup &
+                    Das Tool ist bereit für das Anlegen von Datenströmen &
+                    PASS\\
+                \hline
+                    Konfigurationen Anlegen &
+                    Sender und Receiver werden angelegt &
+                    PASS\\
+                \hline
+                    Speichern des Profiles &
+                    Profil wird gespeichert.&
+                    PASS\\
+                \hline
+                    Tool beenden &
+                    Tool wird beenden, der java Prozess wird beendet &
+                    PASS\\
+                \hline
+                    Tool erneut starten & 
+                    Das Tool ist bereit für das Anlegen von Datenströmen &
+                    PASS\\
+                \hline
+                    Startzustand überprüfen & 
+                    Es ist kein Sender oder Receiver angelegt &
+                    PASS\\
+                \hline
+                    Profil laden & 
+                    Das Profil wird erfolgreich geladen. Der Fenstertitel der 
+                    Applikation spiegelt den Namen des Profils wieder. &
+                    PASS\\
+                 \hline
+                    Konfigurationen überprüfen & 
+                    In der Liste des Senders und Receivers ist jeweils ein Eintrag.
+                    Die Werte in den Edit Dialogen sind korrekt. &
+                    PASS\\
+\hline
+\end{tabular}
+
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\textbf{Tester} & TSC\\
+\hline
+\textbf{Datum} & 13.05.2011\\
+\hline
+\textbf{Ergebnis} & PASS\\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC3004/}
+\label{tab:TC3004}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\hline
+\textbf{Testfall ID} & /TC3004/\\
+\hline
+\textbf{Testfall Name} & Laden einer zuletzt verwendeten Konfigurationsdatei \\
+\hline
+\textbf{Requirement ID} & \\
+\hline
+\textbf{Testfall Setup} & Starten des Computers unter Linux. Durchführen des Tests.
+Anschließendes Starten des Computers unter Windows XP. Erneutes Durchführen des Tests. Schlägt ein Testschritt unter mindestens einem System fehl, wird er als 'FAIL' markiert.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{4cm}|p{7.8cm}|p{2.3cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Erwartetes Ergebnis} & \textbf{Ergebnis}\\
+\hline
+Test-Setup & Das Tool ist erfolgreich installiert. & PASS\\
+\hline
+Konfigura- tionen speichern & Konfiguration wird gespeichert. & PASS\\
+\hline
+Applikation beenden & Applikation beendet sich. & PASS\\
+\hline
+Applikation starten & Applikation startet & PASS\\
+\hline
+Letzte Konfiguration laden & Letzte Konfiguration wird geladen. & PASS\\
+\hline
+Letzte Konfiguration überprüfen & Die letzte Konfiguration wurde erfolgreich
+geladen. & PASS\\
+\hline
+Konfiguration speichern & Konfiguration wird gespeichert. & PASS\\
+\hline
+Applikation beenden & Applikation beendet sich. & PASS\\
+\hline
+Applikation starten & Applikation startet & PASS\\
+\hline
+Letzte Konfigurationen überprüfen & Letzte Konfiguration und vorletzte
+Konfiguration stehen zur Auswahl. & PASS\\
+\hline
+\end{tabular}
+
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\textbf{Tester} & TSC\\
+\hline
+\textbf{Datum} & 13.05.2011\\
+\hline
+\textbf{Ergebnis} & PASS\\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}

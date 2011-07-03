@@ -1,0 +1,42 @@
+\chapter{Test Eingabewerte}
+
+Dieser Anhang enthält Eingabewerte für Testfälle, die zu umfangreich sind, um sie direkt mit den Testfällen zu speichern.\\
+
+\paragraph{Valide XML Konfiguration A}
+~\\Konfiguration ohne Sender und Receiver\\
+\lstinputlisting[language=XML]{./listings/valid-profile-A.xml}
+\newpage 
+
+\paragraph{Valide XML Konfiguration B}
+~\\Konfiguration mit Newline in der Payload\\
+\lstinputlisting[language=XML]{./listings/valid-profile-B.xml}
+\newpage 
+
+\paragraph{Valide XML Konfiguration C}
+~\\Konfiguration mit mehreren Sendern und Receivern und vielen Werten\\
+\lstinputlisting[language=XML]{./listings/valid-profile-C.xml}
+\newpage 
+
+
+\paragraph{Invalide XML Konfiguration A}
+~\\Konfiguration mit invalidem XML\\
+\lstinputlisting[language=XML]{./listings/invalid-profile-A.xml}
+\newpage 
+
+\paragraph{Invalide XML Konfiguration B}
+~\\Konfiguration mit invalider Gruppe\\
+\lstinputlisting[language=XML]{./listings/invalid-profile-B.xml}
+\newpage 
+
+\paragraph{Invalide XML Konfiguration C}
+~\\Konfiguration mit doppeltem <senders> Element \\
+\lstinputlisting[language=XML]{./listings/invalid-profile-C.xml}
+\newpage 
+
+\paragraph{Invalide XML Konfiguration D}
+~\\Konfiguration mit invalidem Packet Typ. Es werden nur so wenige 
+Werte für Elemente getestet, da man davon ausgehen kann, dass Fehler die hier auftreten schon bei GUI Tests
+gefunden wurden.\\
+\lstinputlisting[language=XML]{./listings/invalid-profile-D.xml}
+\newpage 
+

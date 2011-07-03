@@ -1,0 +1,371 @@
+\chapter{Testsuite /TS50/}
+
+    Dieses Kapitel enthält die Testergebnisse der Testsuite /TS50/.\\
+    Die zugehörige Requirement ID lautet /UC30/.\\
+    \newline
+    Die Testfälle dieser Testsuite sollen die korrekte Übermittlung von
+    Multicast-Paketen sicherstellen. Dazu zählen zum Einen die fehlerfreie
+    Übermittlung der Pakete (ohne Störquellen) und die korrekte Übertragung der
+    in den Paketen enthaltenen Nutzdaten (Payload).\\
+    \newline
+    Alle Tests dieser Suite arbeiten mit mindestens zwei Instanzen des
+    MC-Test-Tools. Dadurch werden Verfälschungen des Ergebnisses durch eine
+    innerprogrammliche Kommunikation von Sender- und Empfängerseite
+    ausgeschlossen. Bei Verwendung eines physischen Netzwerks
+    zwischen Sender und Empfänger ist dessen Multicastfähigkeit im Vorfeld zu
+    verifizieren (z.B. durch das Hirschmann-Tool). Sie wird in den folgenden
+    Testfällen als gegeben vorausgesetzt.\\
+    \newline
+    Die folgenden Testfälle verwenden die Formulierung "`im selben Netzwerk"'
+    und "`der gewählte Netzwerkadapter"'. Damit ist gemeint:
+    Alle Tesfälle, die mit mehreren Instanzen des Multicast Test Tools arbeiten,
+    sind mit Option a) durchzuführen. Zusätzlich sind alle diese Testfälle
+    entweder mit Option b) oder c) durchzuführen.
+
+    \begin{table}[h]
+        \caption{/TC5001/}
+        \label{tab:TC5001}
+        \begin{center}
+           \begin{tabular}{|p{3.5cm}|p{11cm}|}
+                \hline
+                    \textbf{Testfall ID} & /TC5001/\\
+                \hline
+                    \textbf{Testfall Name} & Multicast-Pakete senden\\
+                \hline
+                    \textbf{Requirement ID} & /VA0100/\\
+                \hline
+                    \textbf{Beschreibung} & Dieser Test verifiziert, dass das
+                    Tool in der Lage ist, UDP-Pakete an eine
+                    IP-Multicast-Gruppe addressiert zu verschicken.\\
+                \hline
+            \end{tabular}
+\begin{tabular}{|p{4cm}|p{7.8cm}|p{2.3cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+                \hline
+                    \textbf{Schritt} & \textbf{Erwartetes Ergebnis} & \textbf{Ergebnis}\\
+                \hline
+                    Test-Setup 1 & 
+                    Das Tool ist bereit für das Anlegen von Datenströmen & Pass\\
+                \hline
+                    Test-Setup 2 &
+                    Wireshark ist bereit für Benutzereingaben & Pass\\
+                \hline
+                    Wireshark aktivieren
+                    lauschen lassen & 
+                    Wireshark zeigt diversen Netzwerkverkehr am gewählten
+                    Adapter an& Pass\\
+                \hline
+                    Multicast-Sender aktivieren &
+                    Der neu erstellte Datenstrom erscheint in der Liste, wird
+                    als aktiviert und mit einer Senderate größer null
+                    angezeigt& Pass\\
+                \hline
+                    Wireshark-Output überprüfen &
+                    Es werden Pakete registriert, die an die im Sender
+                    angegebene Multicast-Gruppe adressiert sind. Die Pakete
+                    sind anhand des 1337-/x0539-Headers im Datenblock als
+                    SPAM-Pakete identifizierbar.& Pass\\
+                \hline
+            \end{tabular}     
+                   \begin{tabular}{|p{3.5cm}|p{11cm}|}
+                \textbf{Tester} & KW\\
+                \hline
+                \textbf{Datum} & 13.05.2011\\
+                \hline
+                \textbf{Ergebnis} & PASS\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[h]
+        \caption{/TC5002/}
+        \label{tab:TC5002}
+        \begin{center}
+            \begin{tabular}{|p{3.5cm}|p{11cm}|}
+                \hline
+                    \textbf{Testfall ID} & /TC5002/\\
+                \hline
+                    \textbf{Testfall Name} & Einfacher Datenstrom mit
+                                             Nutzdaten und Jumbo-Paketen\\
+                \hline
+                    \textbf{Requirement ID} & /VA0100/, /VA0200/, /VA0500/,
+                    /OA0400/\\
+                \hline
+                    \textbf{Beschreibung} & Dieser Test verifiziert, dass ein
+                                            einzelner, von einem Sender
+                                            verschickter Datenstrom, bei einem
+                                            Empfänger ankommt. Außerdem wird
+                                            überprüft, dass im Sender
+                                            konfigurierte Nutzdaten
+                                            unverfälscht beim Empfänger
+                                            ankommen und dass auch
+                                            Jumbo-Pakete mit einer Größe von
+                                            9000 Byte versendet und empfangen
+                                            werden können.\\
+                \hline
+            \end{tabular}
+\begin{tabular}{|p{4cm}|p{7.8cm}|p{2.3cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+                \hline
+                    \textbf{Schritt} & \textbf{Erwartetes Ergebnis} & \textbf{Ergebnis}\\
+                \hline
+                    Test-Setup &
+                    Das Tool wird zwei Mal ausgeführt und ist jeweils bereit zum
+                    Anlegen von Sendern und Empfängern.& Pass\\
+                \hline
+                    Sender starten 
+                    & Der Sender erscheint in
+                    der Liste und wird als aktiviert und mit einer Senderate
+                    größer null angezeigt.& Pass\\
+                \hline
+                    Empfänger starten &
+                    Der Empfänger erscheint in der Liste und wird als
+                    aktiviert angezeigt.& Pass\\
+                \hline
+                    Datenstrom identifizieren &
+                    Ein Datenstrom, der dieselbe Sender ID, wie der vorher
+                    gestartete Sender aufweist, erscheint als Unterpunkt des
+                    erstellten Empfängers.& Pass\\
+                \hline
+                    Nutzdaten überprüfen &
+                    In der empfangenden Instanz werden dieselben Nutzdaten, die
+                    beim Anlegen des Senders angegeben wurden ("`Hallo Welt"')
+                    beim entsprechenden Datenstrom angezeigt.& Pass\\
+                \hline
+                    Jumbo-Pakete versenden &
+                    Der Datenstrom wird weiterhin mit den korrekten Nutzdaten
+                    beim Empfänger angezeigt.& Pass\\
+                \hline
+            \end{tabular}
+                   \begin{tabular}{|p{3.5cm}|p{11cm}|}
+                \textbf{Tester} & KW\\
+                \hline
+                \textbf{Datum} & 13.05.2011\\
+                \hline
+                \textbf{Ergebnis} & PASS\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[h]
+        \caption{/TC5003/}
+        \label{tab:TC5003}
+        \begin{center}
+            \begin{tabular}{|p{3.5cm}|p{11cm}|}
+                \hline
+                    \textbf{Testfall ID} & /TC5003/\\
+                \hline
+                    \textbf{Testfall Name} & Datenstrom an mehrere Empfänger\\
+                \hline
+                    \textbf{Requirement ID} & /VA0100/, /VA0200/\\
+                \hline
+                    \textbf{Beschreibung} & Dieser Test verifiziert, dass das
+                    Tool echte Multicasts verschickt, in dem Sinne, dass sie
+                    von mehreren Empfängern empfangen werden können.\\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|p{4cm}|p{7.8cm}|p{2.3cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+                \hline
+                    \textbf{Schritt} & \textbf{Erwartetes Ergebnis} & \textbf{Ergebnis}\\
+                \hline
+                    Test-Setup 1 &
+                    Die sendende Instanz ist bereit für Benutzereingaben. & Pass\\
+                \hline
+                    Test-Setup 2 & 
+                    Die empfangenden Instanzen sind bereit für
+                    Benutzereingaben.& Pass\\
+                \hline
+                    Sender anlegen &
+                    Ein neuer Sender erscheint in der Liste.& Pass\\
+                \hline
+                    Empfänger anlegen &
+                    In jeder empfangenden Instanz erscheint ein Empfänger.& Pass\\
+                \hline
+                    Empfänger starten &
+                    Die Empfänger werden als aktiv in der Liste angezeigt.& Pass\\
+                \hline
+                    Sender starten &
+                    Der Sender wird als aktiv und mit einer Senderate größer
+                    null angezeigt.& Pass\\
+                \hline
+                    Empfänger-Output prüfen &
+                    Jede der empfangenden Instanzen zeigt als Unterpunkt der
+                    zuvor angelegten Empfänger einen Datenstrom mit der Sender ID
+                    des zuvor angelegten Senders an.& Pass\\
+                \hline
+            \end{tabular}
+                   \begin{tabular}{|p{3.5cm}|p{11cm}|}
+                \textbf{Tester} & KW\\
+                \hline
+                \textbf{Datum} & 13.05.2011\\
+                \hline
+                \textbf{Ergebnis} & PASS\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[h]
+        \caption{/TC5004/}
+        \label{tab:TC5004}
+        \begin{center}
+            \begin{tabular}{|p{3.5cm}|p{11cm}|}
+                \hline
+                    \textbf{Testfall ID} & /TC5004/\\
+                \hline
+                    \textbf{Testfall Name} & Lasttest\\
+                \hline
+                    \textbf{Requirement ID} & /VA0100/, /VA0200/, /VA0300/\\
+                \hline
+                    \textbf{Beschreibung} & Dieser Test verifiziert, dass das
+                    Tool mindestens 30 Sendeströme gleichzeitig senden, bzw.
+                    empfangen kann. Außerdem wird geprüft, dass das Tool auch
+                    unter diesen Bedingungen noch ohne Einschränkungen
+                    bedienbar ist.\\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|p{4cm}|p{7.8cm}|p{2.3cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+                \hline
+                    \textbf{Schritt} & \textbf{Erwartetes Ergebnis} & \textbf{Ergebnis}\\
+                \hline
+                    Test-Setup & 
+                    Beide Instanzen sind bereit für Benutzereingaben.& Pass\\
+                \hline
+                    Sender starten &
+                    Alle 30 Ströme werden als aktiv und mit einer
+                    eingestellten und gemessenen Senderate von jeweils 10
+                    Pakten pro Sekunde angezeigt.& Pass\\
+                \hline
+                    Empfänger starten &
+                    Der erstellte Empfänger erscheint als aktiv in der Liste.
+                    Ihm untergeordnet erscheinen 30 Sendeströme mit einer
+                    gemessenen Paketrate von jeweils 10 Paketen pro Sekunde.& Pass\\
+                \hline
+                    Senderperformance prüfen &
+                    Die grafische Oberfläche reagiert weiterhin ohne merkliche
+                    Verzögerung auf Benutzereingaben.& Pass\\
+                \hline
+                    Empfängerperformance prüfen &
+                    Die grafische Oberfläche reagiert weiterhin ohne merkliche
+                    Verzögerung auf Benutzereingaben.& Pass\\
+                \hline
+            \end{tabular}
+                   \begin{tabular}{|p{3.5cm}|p{11cm}|}
+                \textbf{Tester} & KW\\
+                \hline
+                \textbf{Datum} & 13.05.2011\\
+                \hline
+                \textbf{Ergebnis} & PASS\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[h]
+        \caption{/TC5005/}
+        \label{tab:TC5005}
+        \begin{center}
+            \begin{tabular}{|p{3.5cm}|p{11cm}|}
+                \hline
+                    \textbf{Testfall ID} & /TC5005/\\
+                \hline
+                    \textbf{Testfall Name} & Empfang von Hirschmann-Paketen\\
+                \hline
+                    \textbf{Requirement ID} & /VA0200/, /VA0400/\\
+                \hline
+                    \textbf{Beschreibung} & Dieser Test verifiziert die
+                    Fähigkeit des Tools, Pakete des Hirschmann Tools zu
+                    empfangen und zu verarbeiten.\\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|p{4cm}|p{7.8cm}|p{2.3cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+                \hline
+                    \textbf{Schritt} & \textbf{Erwartetes Ergebnis} & \textbf{Ergebnis}\\
+                \hline
+                    Test-Setup 1 &
+                    Das Tool ist bereit für Benutzereingaben& Pass\\
+                \hline
+                    Test-Setup 2 &
+                    Das Hirschmann Tool ist bereit für Benutzereingaben. & Pass\\
+                \hline
+                    Empfänger starten &
+                    Der angelegte Empfänger wird in der Liste als aktiv
+                    angezeigt.& Pass\\
+                \hline
+                    Sender starten &
+                    Der Sender wird als aktiv in der Liste angezeigt.& Pass\\
+                \hline
+                    Empfang verifizieren &
+                    Der Datenstrom des Hirschmann Tools erscheint als
+                    Unterpunkt des zuvor angelegten Empfängers. Die
+                    gemessene Datenrate entspricht weitgehend der im Hirschmann
+                    Tool angegebenen.& Pass\\
+                \hline
+            \end{tabular}
+                   \begin{tabular}{|p{3.5cm}|p{11cm}|}
+                \textbf{Tester} & KW\\
+                \hline
+                \textbf{Datum} & 13.05.2011\\
+                \hline
+                \textbf{Ergebnis} & PASS\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[h]
+        \caption{/TC5006/}
+        \label{tab:TC5006}
+        \begin{center}
+            \begin{tabular}{|p{3.5cm}|p{11cm}|}
+                \hline
+                    \textbf{Testfall ID} & /TC5006/\\
+                \hline
+                    \textbf{Testfall Name} & Abonnierte Gruppen empfangen
+                    \\
+                \hline
+                    \textbf{Requirement ID} & /VA0100/, /VA0200/\\
+                \hline
+                    \textbf{Beschreibung} &  Dieser Test verifiziert die
+                    korrekte Umsetzung des Multicast-Protokolls. Er überprüft
+                    den Gruppen-Abonnement-Mechanismus und stellt sicher, dass
+                    tatsächlich nur die Abonnierten Gruppen empfangen und
+                    ausgewertet werden.\\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|p{4cm}|p{7.8cm}|p{2.3cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+                \hline
+                    \textbf{Schritt} & \textbf{Erwartetes Ergebnis} & \textbf{Ergebnis}\\
+                \hline
+                    Test-Setup 1 &
+                    Die Tools sind bereit für Benutzereingaben.& Pass\\
+                \hline
+                    Sender erzeugen &
+                    Die drei Datenströme werden als aktiv und mit einer
+                    Senderate größer null in der Liste angezeigt.& Pass\\
+                \hline
+                    Empfänger anlegen &
+                    Beide Empfänger werden als aktiv in der Liste angezeigt.& Pass\\
+                \hline
+                    Empfangende Datenströme verifizieren &
+                    Es werden nur die Datenströme in Gruppe 225.1.1.1 und
+                    225.1.1.2 empfangen und angezeigt. Gruppe 225.1.1.3 wird
+                    nicht empfangen.& Pass\\
+                \hline
+            \end{tabular}
+                   \begin{tabular}{|p{3.5cm}|p{11cm}|}
+                \textbf{Tester} & KW\\
+                \hline
+                \textbf{Datum} & 13.05.2011\\
+                \hline
+                \textbf{Ergebnis} & PASS\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{table}

@@ -1,0 +1,13 @@
+#TeXlipse project settings
+#Sat Mar 26 14:19:38 CET 2011
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=STP-Team1.tex
+outputFile=STP-Team1.pdf
+langSpell=de
+markDer=true
+srcDir=

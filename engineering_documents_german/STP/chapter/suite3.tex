@@ -1,0 +1,204 @@
+\chapter{Testsuite /TS30/}
+
+Dieser Anhang enthält die Testfälle der Testsuite /TS30/.\\
+Die zugehörige Requirement ID lautet /UC10/.\\
+\\
+Die Testfälle dieser Testsuite sollen die korrekte Konfigurationsmöglichkeit mit Hilfe von Profilen über die GUI sicherstellen.\\
+Dazu zählen zum einen das Abspeichern von Profilen, das Laden von Profilen und der Zugriff auf zuletzt verwendete Profile von dem Programm aus.\\
+\\
+Spezifiziert im Anhang sind valide und invalide Konfigurationsdateien.
+
+\begin{table}[h]
+\caption{/TC3001/}
+\label{tab:TC3001}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{9cm}|}
+\hline
+\textbf{Testfall Id} & /TC3001/\\
+\hline
+\textbf{Testfall Name} & Laden valider Konfigurationsdateien \\
+\hline
+\textbf{Requirement ID} & /VA0500/ (/LVA0600/), /VA0600/ (/LVA0800/) \\
+\hline
+\textbf{Beschreibung} & Testen des Ladens und Verarbeiten valider Konfigurationsdateien. \\
+\hline
+\end{tabular}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{4.55cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+\hline
+Test-Setup & Das Multicast-Test-Tool installieren & Das Tool ist erfolgreich
+installiert. \\
+\hline
+Konfigura- tionen laden & Für jede valide Konfiguration (wie oben spezifiziert) wird das Tool gestartet. & Das Tool lädt die Konfiguration ohne Probleme. \\
+\hline
+Überprüfen geladener Werte & Überprüfen der Anzeigen in der GUI um zu sehen ob alle Daten richtig geladen wurden. & In der GUI des Tools werden alle Daten aus der Konfiguration richtig angezeigt. \\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC3002/}
+\label{tab:TC3002}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{9cm}|}
+\hline
+\textbf{Testfall Id} & /TC3002/\\
+\hline
+\textbf{Testfall Name} & Laden invalider Konfigurationsdateien \\
+\hline
+\textbf{Requirement ID} & /VA0600/ (/LVA0800/), /QZ10/ (/LQZ10/) \\
+\hline
+\textbf{Beschreibung} & Testen des Ladens und Verarbeiten invalider Konfigurationsdateien. 
+Die Software darf bei fehlerhafter Konfiguration durch den
+Benutzer nicht abstürzen. Darunter fallen ungültige Multicast-
+Adressen, ungültige Netzwerkgeräte oder Syntaxfehler in Konfigurationsdateien.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{4.55cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+\hline
+Test-Setup & Das Multicast-Test-Tool installieren & Das Tool ist erfolgreich installiert. \\
+\hline
+Konfigura- tionen laden & Für jede invalide Konfiguration (wie oben spezifiziert) wird das Tools gestartet. & Das Tool lädt die Konfiguration und gibt eine Fehlermeldung aus die mindestens eines der Probleme in der Konfiguration wieder spiegelt.\\
+\hline
+Reaktion des Programms & Überprüfen ob das Tool sinnvoll auf den Fehler reagiert. & Das Tool startet und geht sinnvoll mit Fehlern um. Das Tool kann entscheiden wie viele Informationen es aus der Konfiguration In der GUI des Tools werden entweder sinnvollen Daten aus der Konfiguration richtig angezeigt oder das Tool beendet sich.\\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}
+
+\begin{table}[h]
+        \caption{/TC3003/}
+        \label{tab:TC3003}
+        \begin{center}
+            \begin{tabular}{|p{3.5cm}|p{12cm}|}
+                \hline
+                    \textbf{Testfall Id} & /TC3003/\\
+                \hline
+                    \textbf{Testfall Name} & Profil Lebenszyklus Test\\
+                \hline
+                    \textbf{Requirement ID} & /VA0500/ (/LVA0600/), /AVA0600/ (/VA0600/), /VA0700/ (/LVA0900/)\\
+                \hline
+                    \textbf{Beschreibung} & Dieser Test verifiziert, dass das
+                    Tool in der Lage ist, ein Profil zu erstellen und dann wieder
+                    zu laden. Dazu konfiguriert der User im laufenden Multicast-Tool Gruppen. Darauf folgend klickt der Benutzer auf den Speichern-Button. Danach wird das Tool neu gestartet und
+die gespeicherte Datei wird geladen. Erwartetes Ergebnis:
+Nach dem speichern muss eine Datei im XML-Format vorhanden sein. Nach dem laden
+der Datei müssen alle Gruppen mit den Einstellungen wieder hergestellt sein.\\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|p{3.5cm}|p{5cm}|p{6.55cm}|}
+                \multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+                \hline
+                    \textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+                \hline
+                    Test-Setup &
+                    Das Multicast-Test-Tool mit grafischer Oberfläche starten & 
+                    Das Tool ist bereit für das Anlegen von Datenströmen \\
+                \hline
+                    Konfigurationen Anlegen &
+                    Anlegen eines Senders und dann eines Receivers.
+                    Hierbei sollte sichergestellt werden, dass alle eingegebenen
+                    Werte nicht den Standardwerten entsprechen. &
+                    Sender und Receiver werden angelegt \\
+                \hline
+                    Speichern des Profiles & 
+                    Profil über das Menü 'Speicher Als ...' speichern und Angeben eines 
+                    Profil Namens und Speicherorts. & Profil wird gespeichert.
+                    \\
+                \hline
+                    Tool beenden &
+                    Tool beenden &
+                    Tool wird beenden, der java Prozess wird beendet\\
+                \hline
+                    Tool erneut starten &
+                    Das Multicast-Test-Tool mit grafischer Oberfläche starten & 
+                    Das Tool ist bereit für das Anlegen von Datenströmen \\
+                \hline
+                    Startzustand überprüfen &
+                    Es ist kein Sender oder Receiver angelegt & 
+                    Es ist kein Sender oder Receiver angelegt \\
+                \hline
+                    Profil laden &
+                    Profil über das Menü 'Profil laden ...' laden und Angabe des 
+                    vorherigen Speicherorts. & 
+                    Das Profil wird erfolgreich geladen. Der Fenstertitel der 
+                    Applikation spiegelt den Namen des Profils wieder.\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+    
+    \begin{table}[h]
+        \begin{center}
+           \begin{tabular}{|p{3.5cm}|p{5cm}|p{6.55cm}|}
+                \hline
+                    Konfigurationen überprüfen &
+                    Prüfen der Einträge in den Listen.
+                    Durch klicken auf Edit überprüfen ob der Sender und Receiver
+                    die korrekten Werte haben (die Werte die beim Anlegen vor
+                    dem speichern des Profils definiert wurden) & 
+                    In der Liste des Senders und Receivers ist jeweils ein Eintrag.
+                    Die Werte in den Edit Dialogen sind korrekt.\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+
+
+\begin{table}[h]
+\caption{/TC3004/}
+\label{tab:TC3004}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{9cm}|}
+\hline
+\textbf{Testfall Id} & /TC3004/\\
+\hline
+\textbf{Testfall Name} & Laden einer zuletzt verwendeten Konfigurationsdatei \\
+\hline
+\textbf{Requirement ID} &  \\
+\hline
+\textbf{Beschreibung} & Testen des Ladens einer zuletzt verwendeten Konfigurationsdatei.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{4.55cm}|}
+
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+\hline
+Test-Setup & Das Multicast-Test-Tool installieren & Das Tool ist erfolgreich installiert. \\
+\hline
+Konfigura- tionen speichern & Einige Einstellungen werden vorgenommen und die Konfiguration gespeichert & Konfiguration wird gespeichert.\\
+\hline
+Applikation beenden & Applikation wird beendet & Applikation beendet sich.\\
+\hline
+Applikation starten & Applikation starten & Applikation startet\\
+\hline
+Letzte Konfiguration laden & Menü nach letzter Konfiguration durchsuchen und laden & Letzte Konfiguration wird geladen.\\
+\hline
+Letzte Konfiguration überprüfen & Überprüfen ob alle Werte der Konfiguration erfolgreich geladen wurden. & Die letzte Konfiguration wurde erfolgreich geladen.\\
+\hline
+Konfigura- tion speichern & Konfiguration unter neuem Namen speichern. & Konfiguration wird gespeichert. \\
+\hline
+Applikation beenden & Applikation wird beendet & Applikation beendet sich.\\
+\hline
+Applikation starten & Applikation starten & Applikation startet\\
+\hline
+Letzte Konfigurationen überprüfen & Menü nach letzten Konfiguration durchsuchen & Letzte Konfiguration und vorletzte Konfiguration stehen zur Auswahl.\\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+
+
+\end{table}
+

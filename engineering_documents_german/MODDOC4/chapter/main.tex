@@ -1,0 +1,146 @@
+
+\chapter{Scope}
+Die Moduldokumentation beschreibt die Architektur, die Schnittstellen 
+und die Hauptmerkmale des Moduls. Außerdem werden die Modul bzw. Komponententests 
+einschließlich der Ergebnisse beschrieben und dokumentiert. 
+Die MOD dient bei Bedarf auch als Programmier- oder Integrationshandbuch für das 
+Modul. Wenn bestimmte Risiken direkt mit der Verwendung des Moduls verknüpft sind,
+so sind sie in diesem Dokument zu benennen und zu kommentieren.
+
+\section{Abkürzungen}
+
+	\begin{description}
+	\item[GUI] Graphical User Interface
+	\item[CLI] Command Line Interface
+	\end{description}
+
+\chapter{Analyse}
+%Dieses Kapitel muss alles beinhalten, was noch nicht in anderen Dokumenten enthalten ist.
+Die CLI wird verwendet um automatisiert tests durchführen zu können. Dies
+bedeutet, dass der User des Testtool wahrscheinlich mittels Skripten startet und
+diese dann mithilfe vordefinierter Profile Tests durchführen. Um die Ergebnisse
+nachzuvollziehen müssen diese in die Konsole ausgegeben werden. Außerdem werdeen
+zur Fehleranalyse die Ereignisse (insbesondere Fehler) und Statistiken geloggt.\\
+\\
+Das Modul reagiert lediglich auf Ereignisse des Controllers(Exceptions,
+Statistik Updates) und schreibt die Ergebnisse in ein Logfile sowie in die
+Konsole. 
+
+\section{Voruntersuchungen}
+%Müssen/mussten Prototypen gemacht werden?
+%Versuche, Test und Abschätzungen 
+
+\subsection{Buffered Writer + Standardoutput}
+Der erste Versuch war eine Kombination der BufferedWriter Klasse, welche zum
+loggen der Ereignisse zuständig war und des Standardoutputs zur Ausgabe in die
+Konsole. Diese Kombination hat sich als äußerst ungünstig herausgestellt, da
+z.B. die Formatierung der Ausgaben jedes mal erneut in einen String geschrieben
+werden muss. Außerdem muss je Ausgabe (hier in Log-File und Konsole) ein
+Funktionsaufruf getätigt werden, was zu schlechtem Code führt.
+
+\subsection{Log4J}
+Log4J ist ein Logging-Framework der Apache Foundation und eine sehr elegante
+Lösung für die Aufgaben des Moduls. Jede Ausgabe kann über Appender hinzugefügt
+werden. Diese werden dann alle durch den Aufruf einer Methode geschrieben.
+Durch Angabe eines Pattern Layouts ist die Ausgabe auch immer Einheitlich
+formatiert. Dies führt zu übersichtlicheren Log-Files.
+
+\subsection{Internationalisierung}
+Für die Internationalisierung greift der Logger auf denselben Mechanismus
+zurück, auf den auch die GUI zugreift. Dies geschieht zum einen um
+Einheitlichkeit zu gewährleisten aber auch, da der Mechanismus für das Modul
+optimal ist.
+
+\section{Systemanalyse}
+
+\subsection{Rahmenbedingung}
+Das Modul ist Schnittstelle zum User, indem es Ausgaben bereitstellt. Die
+Ereignisse, welche augegeben werden müssen erhält das Modul als Observer vom
+Controller, welche auch Nutzereingaben umsetzt. Das Modul muss über alle
+wichtigen Ereignisse, besonders Fehler Auskunft geben. Zur Fehlerbehebung gibt
+das Tool auch exakten Zeitpunkt und die zugehörige Session an.
+
+\subsection{Problemstellung}
+Die einzige Funktion des Moduls ist das Ausgeben der Ereignisse an den User. Die
+Verarbeitung von Usereingaben ist Aufgabe des Controllers. Dies kann sowohl in
+deutscher Sprache als auch auf Englisch erfolgen. Mögliche Eingaben werden vom
+Controller bearbeitet und vom Logger/CLI ausgegeben.
+
+\subsection{Abhängigkeiten}
+Die Funktionalität des Moduls ist abhängig von den Ereignissen, welche der
+Controller kommuniziert. Es ist das einzige Modul, mit dem der Logger/CLI in
+Verbindung steht.
+
+\chapter{Design}
+
+\subsubsection{Folgerungen aus der Analyse}
+Für die Ausgaben wird Log4J verwendet, was eine übersichtliche Implementierung
+der Fähigkeiten des Modus ermöglicht.
+
+\subsubsection{Systemarchitektur}
+Die Architektur besteht aus einer einzigen Klasse, welche die durch den
+Controller gemeldeten Events ausgibt. Sie kontrolliert die Ausgabe in den
+Log-File und in die Konsole.
+
+\subsection{Schnittstellen}
+Die Klasse hat zwei Methoden, welche
+vom Controller aufgerufen werden um das CLI zu starten/beenden. Damit
+registriert sich die Klasse als Observer bzw. entfernt sich als Observer.
+Außerdem gibt es für jedes festzuhaltende Ereignis eine Methode, welche die
+entsprechenden Informationen ausgibt.
+
+\chapter{Implementierung}
+
+\subsection{Initializing}
+Die init Methode registriert die Klasse als Observer für alle wichtigen Events.
+Dies geschieht über dafür vorhergesehene Methoden des Controllers. Bereits hier
+gibt das Modul die erste Nachricht aus.
+
+\subsection{Event Listener}
+Für alle relevanten Ereignisse existiert ein Event Listener, welcher die Art des
+Events und eine Nachricht bzw. Verursacherobjekt (z.B. hinzugefügten Sender)
+ausgibt.
+
+\subsection{Statistic Update}
+Hierbei handelt es sich eigentlich ebenfalls um Listener. Der Unterschied zu den
+anderen Listenern ist, dass die Ausgabe nur in festen Zeitintervallen erfolgt,
+also nicht bei jedem Aufruf. Grund hierfür ist, dass die Updates nahezu
+sekündlich eintreffen und eine so hohe Auflösung eher störend als hilfreich ist.
+
+\subsection{Beenden}
+Die Kill Methode dient dazu den Logger/CLI geordnet zu beenden. Dies ist zum
+einen das entfernen als Listener im Controller über dafür vorgesehene Methoden
+und andererseits das loggen des Sessionendes.
+
+\subsection{Codedokumentation}
+Die Klasse wurde mittels Javadocs dokumentiert.
+
+\chapter{Komponententest}
+
+Das Modul wurde mittels JUnit Tests und manueller Kontrolle getestet. Hierbei
+wurden Ereignisse im Controller über JUnit simuliert und anschließend der
+Logfile und die Konsle überprüft.
+
+\chapter{Zusammenfassung}
+
+\section{Beurteilung der Komponente}
+%Hat die Komponente Schwächen und Stärken, 
+%Besonderheiten?
+%Übertragbarkeit der Komponente und Lösungen
+%Was ist verbesserungswürdig?
+Das CLI/Logger Modul ist ein kleines Modul. Dadurch und, da es ausschließlich
+mit dem Controller kommuniziert ist der Code automatisch sehr übersichtlich
+geblieben. 
+
+Dennoch ist das Modul stark erweiterungsfähig. (s. Ausblick für die
+Weiterentwicklung)
+
+
+
+\section{Ausblick für die Weiterentwicklung}
+%Sind schon Dinge vorbereitet?
+%Erweiterungsmöglichkeiten?
+Bisher nicht betrachtet aber dennoch relativ einfach zu Implementieren wären
+mehr Angaben in Fehlerfällen bzw. zu den Ereignissen. Diese Informationen stehen
+dem Modul größtenteils zur Verfügung müssten aber noch konsequenter und in
+Übersichtlicher Form ausgegeben werden.

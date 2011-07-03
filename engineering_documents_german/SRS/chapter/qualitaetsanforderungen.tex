@@ -1,0 +1,152 @@
+\chapter{Qualit"atsanforderungen}
+\label{cha:qual}
+
+
+\begin{table}[htdp]
+\caption{Definition der Qualit"atsanforderungen}
+\label{tab:quality}
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Systemqualit"at} & \textbf{sehr gut} & \textbf{gut} & \textbf{normal} & \textbf{nicht relevant} \\
+\hline
+Funktionalit"at & & x & & \\
+\hline
+Zuverl"assigkeit & & x & & \\
+\hline
+Benutzbarkeit & & x & & \\
+\hline
+Effizienz & & x & & \\
+\hline
+Wartbarkeit & & & x & \\
+\hline
+Portabilit"at & x & & &  \\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}
+
+\section{Funktionalit"at}
+
+\paragraph{/QF10/ (/LQF10/)} Die Funktionalität des Systems soll in einer
+einzelnen Programmdatei zusammengefasst werden.
+
+\paragraph{/QF20/ (/LQF20/)} Die vollständige Funktionalität des
+Multicast Test Tool der Hirschmann Automation GmbH soll auch im neuen
+Produkt verfügbar sein.
+
+\paragraph{/QF30/ (/LQF30/)} Die vollständige Funktionalität des Systems muss
+auch über die Kommandozeile erreichbar sein.
+
+\paragraph{/QF40/ (/LQF40/)} Das Produkt soll empfangsseitig kompatibel zum
+Multicast Test Tool der Hirschmann Automation GmbH sein. Siehe hierzu auch /VA0500/
+ 
+\section{Zuverl"assigkeit}
+
+\paragraph{/QZ10/ (/LQZ10/)} Die Software darf bei fehlerhafter Konfiguration
+durch den Benutzer nicht abstürzen. Darunter fallen doppelt vergebene Ports, ungültige
+Multicast-Adressen, ungültige Absenderadressen oder Syntaxfehler in
+Konfigurationsdateien.
+
+\paragraph{/QZ20/ (/LQZ20/)} Die Software darf nicht durch fehlerhafte
+Implementation von Multicasting-Protokollen in den Netzwerkkomponenten zum Absturz gebracht werden.
+Es muss damit gerechnet werden, dass Pakete nicht, oder beim falschen Empfänger
+ankommen. Außerdem muss die Anwendung damit zurecht kommen, dass Pakete oder
+deren Header unterwegs verändert werden.
+
+\paragraph{/QZ30/ (/LQZ30/)} Alle gesendeten Datenpakete müssen unter allen
+Umständen dem Protokoll der Anwendung gehorchen. Dies muss mit Anwendungen, wie
+Wireshark belegt werden können. Analog müssen alle unbeschädigt empfangenen
+Datenpakete korrekt nach dem Protokoll der Anwendung weiterverarbeitet werden.
+Das Protokoll sollte hierfür keinen Interpretationsspielraum lassen.
+
+\paragraph{/QZ40/ (/LQZ40/)} Beschädigte Pakete, oder solche, die dem
+Anwendungsprotokoll nicht gehorchen, sollen trotzdem, soweit es die enthaltenen Daten noch zulassen,
+weiterverarbeitet und ausgewertet werden. Unter keinen Umständen darf hierbei
+aber die Stabilität oder gar Sicherheit der Anwendung gefährdet werden.
+Pufferüberläufe durch korrumpierte
+Pakete sind dringend zu vermeiden.
+
+\paragraph{/QZ50/ (/LQZ50/)} Innerhalb der Messdatenverarbeitung dürfen keine
+Rundungs- und Berechnungsfehler auftreten, die eine Messgenauigkeit von 5
+Millisekunden beeinträchtigen.
+
+\section{Benutzbarkeit}
+
+\paragraph{/QU10/ (/LQU10/)} Die grafische Oberfläche soll sich an das
+Multicast Test Tool der Hirschmann Automation GmbH anlehnen.
+
+\paragraph{/QU20/ (/LQU20/)} Die Multicasting-Ströme sollen übersichtlich in
+einer Liste angezeigt werden.
+
+\paragraph{/QU30/ (/LQU30/)} Ein Multicasting-Strom soll mit einem Mausklick
+direkt in der Liste aus /LQU20/ aktiviert und deaktiviert werden können.
+
+\paragraph{/QU40/ (/LQU40/)} Die grafische Oberfläche soll gesendete
+und empfangene Multicast-Strömen eindeutig optisch trennen. Unabhängig von der
+konkreten Darstellung der einzelnen Ströme muss \emph{auf einen Blick}
+ersichtlich sein, welche davon gerade senden und welche empfangen werden.
+
+\paragraph{/QU50/ (/LQU50/)} Die Parameter der Datenströme sollen intuitiv
+direkt bearbeitbar sein. Dies soll auch für mehrere Datenströme gleichzeitig möglich
+sein.
+
+\paragraph{/QU60/ (/LQU60/)} Messergebnisse und ihr Zweck müssen eindeutig
+präsentiert werden. Eine numerische, wenn auch klar beschriftete, Anzeige ist hierfür
+vorerst ausreichend.
+
+\paragraph{/QU70/ (/LQU70/)} Das Produkt soll von einem Anwender, der mit dem
+Netzwerkhintergrund vertraut ist, schnell erlernbar sein. Eine logisch
+strukturierte Menüführung, sowie eindeutige Befehlsbeschriftungen sind hierfür
+ausschlaggebend. Mindestens für komplexere Befehle sollten auch erläuternde
+Tooltips eingeblendet werden. Fachbegriffe sollten nicht künstlich vermieden
+werden, da einem erfahrenen Nutzer sonst die wahren Auswirkungen eines Befehls
+unnötig verschleiert werden.
+
+\section{Effizienz}
+
+\paragraph{/QE10/ (/LQE10/)} Auf einem gewöhnlichen Arbeitsrechner (CPU-Takt >
+1GHz, RAM-Kapazität > 1GB, 100Mbit-Netzwerkadapter) müssen mindestens 30
+Multicast-Ströme zeitgleich gesendet und empfangen werden können.
+
+\section{Wartbarkeit}
+
+\paragraph{/QW10/ (/LQW10/)} Die Software soll klar modularisiert sein.
+Modulgrenzen müssen eindeutig definiert und die Module selbst austauschbar sein. Als
+verbindliches Dokument wird hierfür eine detaillierte Moduldokumentation
+geliefert.
+
+\paragraph{/QW20/ (/LQW20/)} Die Module müssen einzeln testbar, sowie
+Fehlerzustände analysierbar sein. Ein Testplan, sowie die Testergebnisse sind schriftlich
+vorzulegen. Bei einem Fehlerzustand, der im laufenden Betrieb auftritt, ist
+abzuwägen, ob es sinnvoll ist, den Benutzer direkt mit einer Meldung zu
+konfrontieren, oder ob ein Eintrag ins Protokoll zur späteren Analyse
+ausreichend ist.
+
+\paragraph{/QW30/ (/LQW30/)} Schnittstellen zwischen Modulen sind als Interfaces
+zu definieren und nach Javadoc-Konventionen zu dokumentieren.
+
+\paragraph{/QW40/ (/LQW40/)} Schnittstellen für spätere Erweiterungen sollen im
+Produkt vorhanden und dokumentiert sein.
+
+\section{Portabilität}
+
+\paragraph{/QP10/ (/LQP10/)} Die Software muss sowohl unter Linux, als auch
+unter Windows (ab Windows XP) funktionieren.
+
+\paragraph{/QP20/ (/LQP20/)} Die Software soll das Netzwerk von verschiedenen
+Knoten aus analysierbar machen, darum muss sie auch auf unterschiedlicher Hardware ihre
+volle Funktionalität bereitstellen. Vor Allem sollte die Software mit gängigen
+Netzwerkkarten kompatibel sein.
+
+\paragraph{/QP30/ (/LQP30/)} Das Programm soll von einem erfahrenen Benutzer
+ohne besondere Vorbereitungen installierbar sein. Hierfür wird ein
+Installationsskript oder ein Installer zur Verfügung gestellt. (<-- ist das
+noch im Zeitplan?)
+
+\paragraph{/QP40/ (/LQP40/)} Die Software darf, wenn sie gemeinsam mit anderen
+Programmen auf demselben Gerät betrieben wird, keine Konflikte erzeugen. Dies gilt
+insbesondere dann, wenn die Fremdsoftware ähnliche Aufgaben, wie das Produkt
+erfüllt. Namentlich dürfen keine Konflikte mit Wireshark oder dem
+Hirschmann-Tool auftreten.

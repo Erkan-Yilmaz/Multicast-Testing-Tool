@@ -1,0 +1,268 @@
+\chapter{Testsuite /TS20/}
+Dieser Anhang enthält die Testfälle der Testsuite /TS20/.\\
+Die zugehörige Requirement ID lautet /UC10/.\\
+\newline
+Die Testfälle dieser Testsuite sollen die korrekte Konfigurationsmöglichkeit der Empfänger über die GUI sicherstellen.\\
+Dazu zählen zum Einen die korrekte Übernahme der eingegebenen Werte, die Fehlerbehandlung, sowie die Zusammenarbeit mit dem Rest des Programms während dem Betrieb.
+Zur Konfiguration gehört das Anlegen und Löschen bestehender Sender, das Aktivieren und Deaktivieren von Streams, sowie das Bearbeiten von bereits angelegten Streams.
+
+\begin{table}[h]
+\caption{/TC2001/}
+\label{tab:TC2001}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{12cm}|}
+\hline
+\textbf{Testfall Id} & /TC2001/\\
+\hline
+\textbf{Testfall Name} & Anlegen eines Empfängers\\
+\hline
+\textbf{Requirement ID} & /VA0700/, /VA0800/, /VA0200/\\
+\hline
+\textbf{Beschreibung} & Dieser Testfall stellt die Funktionalität sicher, mit
+der GUI einen korrekt konfigurierten Empfänger erstellen zu können.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{7.55cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+\hline
+Programmstart (0)& Das Multicast-Test-Tool auf üblichem Wege starten. & GUI
+erscheint.\\
+\hline
+Dialog öffnen (1) & Den 'Hinzufügen' Knopf im Empfängerbereich des Hauptfensters
+betätigen. & Dialog zum Hinzufügen eines neuen Empfängers öffnet sich.\\
+\hline
+IP-Adfressen-Test (2) & Eine valide Test-Gruppen-Addresse (wie in 'Definitionen'
+beschrieben) wählen und eintragen, alle anderen Werte auf Standardzuweisungen
+belassen, mit 'OK' betätigen. & Neuer Empfänger auf gewählter Gruppe erscheint im
+Hauptfenster im Empfängerbereich.\\
+\hline
+Alle validen Gruppen prüfen (3) & Wiederhole 1-2 für alle validen Testwerte. & Die Empfänger werden korrekt angelegt.\\
+\hline
+Dialog öffnen (4) & Den 'Hinzufügen' Knopf im Empfängerbereich des Hauptfensters
+betätigen & Dialog zum Hinzufügen eines neuen Empfängers öffnet sich.\\
+\hline
+Port-Test (5) & Einen validen Test-Port (wie in 'Definitionen'
+beschrieben) wählen und eintragen, alle anderen Werte auf Standardzuweisungen
+belassen, mit 'OK' betätigen. & Neuer Empfänger auf gewähltem Port erscheint im
+Hauptfenster im Empfängerbereich.\\
+\hline
+Alle validen Ports prüfen (3) & Wiederhole 4-5 für alle validen Testwerte. & Die Empfänger werden korrekt angelegt.\\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC2002/}
+\label{tab:TC2002}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{12cm}|}
+\hline
+\textbf{Testfall Id} & /TC2002/\\
+\hline
+\textbf{Testfall Name} & Aktivieren von Empfängern\\
+\hline
+\textbf{Requirement ID} & /VA0700/, /VA0800/, /VA0200/\\
+\hline
+\textbf{Beschreibung} & Dieser Testfall stellt die Funktionalität sicher, mit
+der GUI bestehende Empfänger aktivieren zu können.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{7.55cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+\hline
+TC2001 (1)& Alle Schritte aus TC2001 wiederholen. & Hauptfenster mit angelegten,
+deaktivierten Empfänger befindet sich auf dem Bildschirm.\\
+\hline
+Einzelne Aktivierung (2) & Den obersten Empfänger markieren, 'Aktivieren'-Knopf
+des Empfängerbereichs betätigen. & Empfänger wird aktiv, erkennbar am
+Wechsel des roten Vierecks zu einem grünen Pfeil.\\
+\hline
+Multiple Aktivierung (3) & Die restlichen Empfänger markieren,
+'Aktivieren'-Knopf des Empfängerbereichs betätigen. & Empfänger werden aktiv,
+erkennbar am Wechsel des roten Vierecks zu einem grünen Pfeil.\\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC2003/}
+\label{tab:TC2003}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{12cm}|}
+\hline
+\textbf{Testfall Id} & /TC2003/\\
+\hline
+\textbf{Testfall Name} & Bearbeiten von Empfängern\\
+\hline
+\textbf{Requirement ID} & /VA0700/, /VA0800/, /VA0200/\\
+\hline
+\textbf{Beschreibung} & Dieser Testfall stellt die Funktionalität sicher, mit
+der GUI bestehende Empfänger bearbeiten zu können.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{7.55cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+\hline
+TC2001 (1)& Alle Schritte aus TC2001 wiederholen. & Hauptfenster mit angelegten,
+deaktivierten Empfänger befindet sich auf dem Bildschirm.\\
+\hline
+Öffnen des Bearbeiten-Dialogs (2) & Einen der inaktiven Empfänger markieren,
+'Bearbeiten'-Schaltfläche betätigen. & Bearbeiten Dialog erscheint.\\
+\hline
+Bearbeiten eines inaktiven Empfängers (3) & Analyse-Verhalten auf 'lazy' ändern,
+'OK' betätigen. & Fenster schließt sich.\\
+\hline
+Öffnen des Bearbeiten-Dialogs & Einen der inaktiven Empfänger markieren,
+'Bearbeiten'-Schaltfläche betätigen. & Bearbeiten Dialog erscheint.\\
+\hline
+Änderung überprüfen (4) & & Analyse Verhalten ist auf 'lazy' eingestellt.\\
+\hline
+Öffnen des Bearbeiten-Dialogs (5) & Nun einen der aktiven Empfänger markieren,
+'Bearbeiten'-Schaltfläche betätigen. & Bearbeiten Dialog erscheint.\\
+\hline
+Bearbeiten eines aktiven Empfängers (6) & Analyse-Verhalten auf 'eager' ändern,
+'OK' betätigen. & Fenster schliesst sich.\\
+\hline
+Wiederhole (5) & Bearbeiten Fenster erneut öffnen. & Bearbeiten Dialog erscheint.\\
+\hline
+Überprüfen (7) & & Analyse Verhalten ist 'eager'.\\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC2004/}
+\label{tab:TC2004}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{12cm}|}
+\hline
+\textbf{Testfall Id} & /TC2004/\\
+\hline
+\textbf{Testfall Name} & Deaktivieren von Empfängern\\
+\hline
+\textbf{Requirement ID} & /VA0700/, /VA0800/, /VA0200/\\
+\hline
+\textbf{Beschreibung} & Dieser Testfall stellt die Funktionalität sicher, mit
+der GUI bestehende Empfänger deaktivieren zu können.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{7.55cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+\hline
+TC2002& Alle Schritte aus TC2002 wiederholen. & Hauptfenster mit angelegten,
+aktiven Empfängern befindet sich auf dem Bildschirm.\\
+\hline
+Einzelne Deaktivierung (1) & Den obersten Empfänger markieren,
+'Deaktivieren'-Knopf des Empfängerbereichs betätigen. & Empfänger wird inaktiv,
+erkennbar am Wechsel des grünen Pfeils zu einem roten Viereck.\\
+\hline
+Multiple Deaktivierung (2) & Die restlichen Empfänger markieren,
+'Deaktivieren'-Knopf des Empfängerbereichs betätigen. & Empfänger werden
+inaktiv, erkennbar am Wechsel des grünen Pfeils zu einem roten Viereck.\\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC2005/}
+\label{tab:TC2005}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{12cm}|}
+\hline
+\textbf{Testfall Id} & /TC2005/\\
+\hline
+\textbf{Testfall Name} & Entfernen von Empfängern\\
+\hline
+\textbf{Requirement ID} & /VA0700/, /VA0800/,/VA0200/\\
+\hline
+\textbf{Beschreibung} & Dieser Testfall stellt die Funktionalität sicher, mit
+der GUI bestehende Empfänger entfernen zu können.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{7.55cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+\hline
+TC2001& Alle Schritte aus TC2001 wiederholen. & Hauptfenster mit angelegten,
+inaktiven Empfängern befindet sich auf dem Bildschirm.\\
+\hline
+Einzelnes Entfernen (1) & Den obersten Empfänger markieren,
+'Entfernen'-Knopf des Empfängerbereichs betätigen. & Empfänger ist nicht mehr
+in der Liste vorhanden.\\
+\hline
+Multiples Entfernen (2) & Die restlichen Empfänger markieren,
+'Entfernen'-Knopf des Empfängerbereichs betätigen. & Empfänger sind nicht mehr
+in der Liste vorhanden.\\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC2006/}
+\label{tab:TC2006}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{12cm}|}
+\hline
+\textbf{Testfall Id} & /TC2006/\\
+\hline
+\textbf{Testfall Name} & Abfangen invalider Angaben\\
+\hline
+\textbf{Requirement ID} & /VA0700/, /VA0800/,/VA0200/\\
+\hline
+\textbf{Beschreibung} & Dieser Testfall stellt die Funktionalität sicher, mit
+der GUI falsche Wertangaben abfangen zu können.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{7.55cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+\hline
+Programmstart (0)& Das Multicast-Test-Tool auf üblichem Wege starten. & GUI
+erscheint.\\
+\hline
+Dialog öffnen (1) & Den 'Hinzufügen' Knopf im Empfängerbereich des Hauptfensters
+betätigen. & Dialog zum Hinzufügen eines neuen Empfängers öffnet sich.\\
+\hline
+IP-Adressen Test (2) & Eine invalide Test-Gruppen-Addresse (wie in
+'Definitionen' beschrieben) wählen und eintragen, alle anderen Werte auf Standardzuweisungen
+belassen, mit 'OK' betätigen. & Dialog bleibt offen und Fehlermeldung über falsche
+Gruppen-Adresse wird angezeigt.\\
+\hline
+Alle validen Gruppen prüfen (3) & Wiederhole 1-2 für alle invaliden Testwerte. & Dialog bleibt offen und Fehlermeldung über falsche
+Gruppen-Adresse wird angezeigt.\\
+\hline
+Dialog öffnen (4) & Den 'Hinzufügen' Knopf im Empfängerbereich des Hauptfensters
+betätigen. & Dialog zum Hinzufügen eines neuen Empfängers öffnet sich.\\
+\hline
+Port-Test (5) & Einen invaliden Test-Port (wie in 'Definitionen'
+beschrieben) wählen und eintragen, alle anderen Werte auf Standardzuweisungen
+belassen, mit 'OK' betätigen. & Dialog bleibt offen und Fehlermeldung über falschen
+Port erscheint.\\
+\hline
+Alle invaliden Ports prüfen (3) & Wiederhole 4-5 für alle invaliden Testwerte. & Dialog bleibt offen und Fehlermeldung über falschen
+Port erscheint.\\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}

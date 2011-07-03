@@ -1,0 +1,260 @@
+\chapter{Abnahmekriterien}
+\label{cha:abna}
+%TODO Abnahmekriterien f�r funktionale und Qualit�tsanforderungen
+% -> Baltzer Seite 471-473!
+
+\section{Abnahmekriterien f"ur funktionale Anforderungen}
+
+%------
+%\paragraph{/A0100/ (/VA0100/)}
+%\texttt{Beschreibung:} %entspricht titel
+%\texttt{Abnahmekriterium:} %abstrakt->ohne zahlen, konkret->mit zahlen
+%\texttt{Ausgangssituation:} %Situation vor dem Test, was muss gegeben sein?
+%\texttt{Ereignis:} %Wie verl�uft der test?
+%\texttt{Erwartetes Ergebnis:} %Wie soll das System reagieren?
+
+\paragraph{/AVA0100/ (/VA0100/)} Multicast-Sendefähigkeit\\% Komponententest der Sendekomponente%
+\texttt{Abnahmekriterium:} \\(abstrakt)
+\texttt{Ausgangssituation:} \\Im Netzwerk laufen mehrere Multicast-Tools auf
+verschiedenen Hosts.
+\texttt{Ereignis:} Es wird in einem laufenden Tool eine Multicast-Gruppe
+angelegt.In dieser werden Pakete an die restlichen Hosts verschickt. Dieser Test
+wird mit  verschiedenen Paketgrößen und in unterschiedlichen Intervallen
+wiederholt. 
+\texttt{Erwartetes Ergebnis:} Die anderen Tools zeigen das Eingehen von Paketen
+mit den eingestellten Parametern an.
+
+\paragraph{/AVA0200/ (/VA0200/)} Multicast-Empfangsfähigkeit\\% Komponententest der Empfangskomponente %
+\texttt{Abnahmekriterium:} \\ (abstrakt)
+\texttt{Ausgangssituation:} Ein Sender im funktionsfähigen
+Netzwerk der Pakete als Multicast (über IGMP Protokoll) an einen bestimmten
+Port schicken kann. Auf einem anderen Host läuft der zu testende Empfänger, der
+die Pakete auf dem definierten Port empfängt. 
+\texttt{Ereignis:} \\Der Sender wird aktiviert. 
+\texttt{Erwartetes Ergebnis:}\\Der Empfänger zeigt auf der Benutzeroberfläche und in den Statistiken an, dass er Pakete empfangen hat.
+
+\paragraph{/AVA0300/ (/VA0300/)} Gleichzeitigkeit\\  %Komponententest der Empfangs- und Sendekomponente%
+\texttt{Abnahmekriterium:} \\(abstrakt)
+zahlen \texttt{Ausgangssituation:} \\Im funktionsfähigen Netzwerk laufen mehrere
+Multicast-Tools auf verschiedenen Hosts. Es sind 30 Streams in einem
+Sender angelegt. 
+\texttt{Ereignis:} \\Die Streams werden gestartet.
+und empfangen. 
+\texttt{Erwartetes Ergebnis:} \\Die Empfänger erhalten Pakete von allen Streams.
+
+\paragraph{/AVA0400/ (/VA0400/)} Kompatibilität\\ %Test der Sende- und Empfangskomponenten in Verbindung mit dem ursprünglichen Software-System.%
+\texttt{Abnahmekriterium:} \\(abstrakt)
+\texttt{Ausgangssituation:} \\Im funktionsfähigen Netzwerk existiert ein altes
+Hirschmann-Tool, welches als Sender fungiert. Auf einem anderen Host
+läuft das neue Multicast-Tool. 
+\texttt{Ereignis:} \\Der Sender wird aktiviert.
+\texttt{Erwartetes Ergebnis:} \\Das neue Multicast-Tool zeigt auf der
+Benutzeroberfläche und in den Statistiken an, dass es Pakete empfangen hat.
+
+\paragraph{/AVA0500/ (/VA0500/)} Konfigurierbarkeit\\ % Komponententest der Sendekomponente%
+\texttt{Abnahmekriterium:} \\ %abstrakt->ohne zahlen, konkret->mit zahlen
+\texttt{Ausgangssituation:} \\Es laufen 2 Tools auf 2 verschiedenen Hosts. 
+Es sind  Paketgröße, Paket-Senderate, Time-to-live,
+Multicast-Gruppe, Port, Nutzdaten, Paketformat festgelegt. Es läuft ein Stream
+zwischen Sender und einem Empfänger. Der Empfänger zeigt die Eingestellten Daten
+an. 
+\texttt{Ereignis:} \\Der Stream wird gestoppt. Die festgelegten Parameter werden
+verändert. Der Sender wird wieder gestartet.
+\texttt{Erwartetes Ergebnis:} \\Der Empfänger zeigt die Veränderungen der
+Parameter an.
+
+\paragraph{/AVA0600/ (/VA0600/)}  Konfigurationsdatei\\ %Komponententest der Konfigurations-Persistierungs-Komponente.%
+\texttt{Abnahmekriterium:} \\ (abstrakt)
+\texttt{Ausgangssituation:} \\In dem laufenden Multicast-Tool sind konfigurierte
+Gruppen vorhanden?
+\texttt{Ereignis:} \\Der Benutzer klickt auf den Speichern-Button. Danach wird
+das Tool neu gestartet und die gespeicherte Datei wird geladen.
+\texttt{Erwartetes Ergebnis:} \\Nach dem speichern muss eine Datei im XML-Format
+vorhanden sein. Nach dem laden der Datei müssen alle Gruppen mit den
+Einstellungen wiederhergestellt sein.
+
+\paragraph{/AVA0700/ (/VA0700/)} Grafische Nutzeroberfläche\\%Verteiltes Testen der Nutzeroberfläche.%
+\texttt{Abnahmekriterium:} \\(abstrakt)
+\texttt{Ausgangssituation:} \\Auf einem Linux-Rechner und einem Windows-Rechner
+ist jeweils ein Multicast-Tool installiert.  
+ \texttt{Ereignis:} \\Es werden über die grafische Oberfläche alle Einstellungen
+ für die Streams geändert.
+ \texttt{Erwartetes Ergebnis:} \\Es lassen sich alle Funktionen über die GUI
+ erreichen und alle Einstellungen (Paketrate,TTL \ldots) der Streams verändern.
+
+\paragraph{/AVA0900/ (/VA0900/)} Textbasierte Nutzeroberfläche\\%Verteiltes Testen, Testeinbindung in Skripten.%
+\texttt{Abnahmekriterium:} \\(abstrakt)
+\texttt{Ausgangssituation:} \\Das Multicast-Tool ist auf 2 verschiedenen Hosts
+installiert und läuft auf einem Host. Außerdem existieren auf dem anderen Host
+ein Testskript, das alle Befehle (starten,Konfiguration laden, Streams starten)
+enthält und eine Konfigurationsdatei. Die Konfiguratiosdatei enthält einen
+Stream auf den ersten Host 
+\texttt{Ereignis:}\\Das Testskript wird ausgeführt. 
+\texttt{Erwartetes Ergebnis:} \\Das System soll die Befehle des Skriptes
+ausführen, dies kann mithilfe des anderen Hosts überprüft werden. Es ist
+außerdem eine Logdatei vorhanden.
+
+\paragraph{/AVA1000/ (/VA1000/)} Sendestatistik\\ %Komponententest der Sende-, Logging- und Oberflächenkomponente%
+\texttt{Abnahmekriterium:} \\%abstrakt->ohne zahlen, konkret->mit zahlen
+\texttt{Ausgangssituation:} \\Es existiert ein Datenstrom zwischen 2
+Multicast-Tools.
+\texttt{Ereignis:} \\Die Sendestatistik wird geöffnet.
+\texttt{Erwartetes Ergebnis:} \\Es werden Azahl der empfangenen Pakete,
+Paketrate (beides sowohl pro Sendegruppe als auch insgesamt) und die Sender-ID
+angezeigt.
+
+\paragraph{/AVA1100/ (/VA1100/)} Darstellung der Sendeströme\\%Verteiltes Testen der Nutzeroberfläche.%
+\texttt{Abnahmekriterium:} \\(abstrakt)
+\texttt{Ausgangssituation:} \\Es laufen mehrere Empfänger im Netzwerk. Die
+Testinstanz ist so konfiguriert, dass es für jeden Empfänger einen Stream gibt.
+\texttt{Ereignis:} \\Die Streams werden gestartet. 
+\texttt{Erwartetes Ergebnis:} 
+\\ Die Daten der Streams werden auf der Benutzeroberfläche angezeigt und
+aktualisiert.
+
+\paragraph{/AVA1200/ (/VA1200/)} Messwertanzeige\\%Verteiltes Testen der Nutzeroberfläche.%
+\texttt{Abnahmekriterium:} \\(abstrakt)
+\texttt{Ausgangssituation:} \\ Es laufen mehrere Empfänger im Netzwerk. Die
+Testinstanz ist so konfiguriert, dass es für jeden Empfänger einen Stream gibt.
+\texttt{Ereignis:} \\Die Streams werden gestartet.
+\texttt{Erwartetes Ergebnis:} \\Die Empfänger zeigen Messwerte für die
+empfangenen Streams an.
+
+\paragraph{/AVA1300/ (/VA1300/)} Datenauswertung\\%Komponententest der Empfangskomponente%
+\texttt{Abnahmekriterium:} \\(abstrakt)
+\texttt{Ausgangssituation:} \\Im Netzwerk existiert ein Sender und ein
+Empfänger. 
+\texttt{Ereignis:} \\Der Sender wird aktiviert, sodass ein Datenstrom zwischen
+beiden Tools vorhanden ist. 
+\texttt{Erwartetes Ergebnis:} \\Der Empfänger zeigt Anzahl und Dauer von Unterbrechungen, Paketrate , Anzahl empfangener Pakete (gesamt, pro MC-Gruppe), Anzahl verlorener
+der Pakete und die Anzahl fehlerhafter Pakete an.
+
+\section{Abnahmekriterien f"ur Qualitätsanforderungen}
+
+%------
+\paragraph{/ALQF10/ (/LQF10/)} Programm besteht aus einer Datei\\ 
+\texttt{Abnahmekriterium:} Die Programmdatei wird auf ein
+weiteres System kopiert. Das Programm ist auf dem
+Zielsystem weiterhin voll Funktionsfähig.\\
+
+\paragraph{/ALQF20/ (/LQF20/)} Hirschmann-Funktionalität\\ 
+\texttt{Abnahmekriterium:} Es werden einige oder alle Funktionalitäten des
+Hirschmann-Tools ausgewählt und es wird dann überprüft ob diese auch im
+Multicast-Tool vorhanden sind. \\
+
+\paragraph{/ALQF30/ (/LQF30/)} Volle Funktionalität via Kommandozeile\\
+\texttt{Abnahmekriterium:} Es werden einige oder alle Funktionalitäten des
+Multicast-Tools im GUI-Modus ausgewählt und es wird dann überprüft ob diese auch
+im CLI-Modus vorhanden sind.\\
+
+\paragraph{/ALQF40/ (/LQF40/)} Empfangen von Hirschmann-Paketen\\
+\texttt{Abnahmekriterium:} Es werden Datenpankete von der
+Sendekomponente des Hirschmann-Tools gesendet. Diese Pakete
+werden nach Empfang vom Multicast-Tool korrekt erkannt und
+verarbeitet.\\
+
+\paragraph{/ALQZ10/ (/LQZ10/)} Absturzsicherheit\\
+\texttt{Abnahmekriterium:} Das Programm wird wissentlich
+fehlerhaft konfiguriert und läuft dabei trotzdem weiter.\\
+
+\paragraph{/ALQZ20/ (/LQZ20/)} Unabhängigkeit der Programmstabilität von den
+Netzwerkkomponenten\\
+\texttt{Abnahmekriterium:} Das Multicast-Tool sendet oder empfängt Datenströme
+in einem belieben Netzwerk. Das Programm stürzt nicht ab.\\
+
+\paragraph{/ALQZ30/ (/LQZ30/)} Protokollabhängigkeit der Pakete\\
+\texttt{Abnahmekriterium:} Es werden gesendete Pakete
+stichprobenartig mittels eines entsprechenden Tools betrachtet.
+Dabei muss Protokollkonformität herrschen.\\
+
+\paragraph{/ALQZ40/ (/LQZ40/)} Verarbeitung beschädigter Pakete\\
+\texttt{Abnahmekriterium:} Es werden wissentlich
+beschädigte/nicht-Protokoll-konforme Pakete an das Multicast-Tool
+gesendet. Das Multicast-Tool verarbeitet diese bei hinreichender
+Ähnlichkeit.\\
+
+\paragraph{/ALQZ50/ (/LQZ50/)} Messgenauigkeit\\
+\texttt{Abnahmekriterium:} Es werden Messergebnisse ausgewertet. Die
+Messergebnisse sind mit hinreichend genauen Zeitangaben aufgeführt.\\
+
+\paragraph{/ALQU10/ (/LQU10/)} Anlehnung der grafischen Oberfläche an das
+Hirschmann-Tool\\ %SRS Verweis!
+\texttt{Abnahmekriterium:} Es werden die GUI des Multicast-Tools
+sowie die GUI des Hirschmann-Tools gleichzeitig betrachtet. Dabei
+erkennt der Betrachter eine hinreichende Ähnlichkeit.\\
+
+\paragraph{/ALQU20/ (/LQU20/)} Darstellung der Multicast-Ströme in einer Liste\\
+\texttt{Abnahmekriterium:} Es wird die GUI des Multicast-Tools
+betrachtet. Dabei erkennt der  Betrachter eine Auflistung der
+Multicast-Ströme.\\
+
+\paragraph{/ALQU30/ (/LQU30/)} De-/Aktivierung der Datenströme per Mausklick\\
+\texttt{Abnahmekriterium:} Der Benutzer benötigt nur einen Klick
+zur De- bzw. Aktivierung eines Datenstroms\\
+
+\paragraph{/ALQU40/ (/LQU40/)} Optische Trennung Senden/Empfangen\\
+\texttt{Abnahmekriterium:} Es wird die GUI des Multicast-Tools
+betrachtet. Dabei erkennt der Betrachter eindeutig eine Trennung
+zwischen den empfangenen und den gesendeten Multicast-Strömen.\\
+
+\paragraph{/ALQU50/ (/LQU50/)} Intuitive Bearbeitbarkeit einzelner und mehrerer
+Datenstromparameter\\
+\texttt{Abnahmekriterium:} Der Benutzer kann ohne langes Suchen
+die Parameter eines oder mehrerer Datenströme bearbeiten.\\
+
+\paragraph{/ALQU60/ (/LQU60/)} Zweckmäßige Darstellung der Messergebnisse\\
+\texttt{Abnahmekriterium:} Der Benutzer betrachtet die
+Messergebnisse. Hierbei erkennt der Benutzer hinreichend schnell,
+welches Messergebnis welchen Zweck erfüllt.\\
+
+\paragraph{/ALQU70/ (/LQU70/)} Schnelle Erlernbarkeit für erfahrene Benutzer\\
+\texttt{Abnahmekriterium:} Ein Benutzer besitzt Wissen zum Netzwerkhintergrund.
+Solch ein Benutzer kann sich ohne große Schwierigkeiten mit dem
+Programm vertraut machen.\\
+
+\paragraph{/ALQE10/ (/LQE10/)} Auslastung des Arbeitssystems\\
+\texttt{Abnahmekriterium:} Es werden 30 Multicast-Ströme zeitgleich
+gesendet und empfangen. Dabei darf sich das Arbeitssystem nicht
+so langsam verhalten, dass Daten eventuell verloren gehen.\\
+
+\paragraph{/ALQW10/ (/LQW10/)} Modularisierung der Software\\
+\texttt{Abnahmekriterium:} Es liegt eine Moduldokumentation vor.\\
+
+\paragraph{/ALQW20/ (/LQW20/)} Modultestbarkeit\\
+\texttt{Abnahmekriterium:} Es liegen Modultestberichte vor.\\
+
+\paragraph{/ALQW30/ (/LQW30/)} Definition von Schnittstellen via Interfaces
+und Dokumentation in Javadoc-Konvention\\
+\texttt{Abnahmekriterium:} Es liegt eine Dokumentation der
+Schnittstellen in Javadoc-Konvention vor. Der Quellcode des
+Multicast-Tools beinhaltet Interfaces zur
+Schnittstellendefinition\\
+
+\paragraph{/ALQW40/ (/LQW40/)} Erweiterbarkeit des Produkts\\
+\texttt{Abnahmekriterium:} Es wird eine weitere Funktionalität für das Produkt
+gewünscht. Zur Erweiterung wird der Grundaufbau des Programmes nicht
+verändert.\\
+
+\paragraph{/ALQP10/ (/LQP10/)} Systemunabhängigkeit\\
+\texttt{Abnahmekriterium:} Ein Transfer der Programmdatei
+zwischen Windows (ab Windows XP) und Linux findet statt. Die
+Programmdatei ist auf dem Quell- sowie auf dem Zielsystem
+ausführbar.\\
+
+\paragraph{/ALQP20/ (/LQP20/)} Hardwareunabhängigkeit\\
+\texttt{Abnahmekriterium:} Ein Transfer der Programmdatei
+zwischen Systemen mit unterschiedlicher Hardwareausstattung
+findet statt. Die Programmdatei ist auf beiden Systemen
+gleichermaßen ausführbar.\\
+
+\paragraph{/ALQP30/ (/LQP30/)} Einfache Installierbarkeit\\ 
+\texttt{Abnahmekriterium:} Die Installation des Tools kann ohne
+zusätzliche Software erfolgen. (Java Runtime Environment ausgenommen)\\
+
+\paragraph{/ALQP40/ (/LQP40/)} Konfliktvermeidung mit Software gleicher oder
+anderer Funktionalität\\
+\texttt{Abnahmekriterium:} Das Multicast-Tool läuft mit anderer
+Software auf dem gleichen System. Die andere Software erfüllt
+eventuell ähnliche oder gleiche Aufgaben wie das Multicast-Tool.
+Keines der beiden Softwareprodukte wird an der Ausführung seiner
+Aufgabe durch das andere Softwareprodukt gehindert.\\

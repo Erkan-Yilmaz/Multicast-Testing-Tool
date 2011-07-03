@@ -1,0 +1,110 @@
+\section{Technische Randbedingungen}
+\label{sec:2:tr}
+
+\paragraph{Software:} Die Software unterstützt Windows (ab XP) und Linux. 
+Verwendung unter anderen Betriebssystemen mit kompatiblem Java
+Runtime Environment und IP-Stack ist prinzipiell möglich, wird aber nicht
+garantiert. Ein Java Runtime Environment der Version 6 muss verfügbar sein. Für
+die Nutzung der graphischen Nutzeroberfläche ist ebenfalls eines der
+Standardfenstersysteme der unterstützen Betriebssysteme notwendig (Windows
+Fenstersystem, X.org, Qwartz).
+
+\paragraph{Hardware:} Minimale Anforderung ist ein handels"ublicher Desktop
+Computer bzw. Notebook mit Netzwerkkarte (mind. 100mbit/s). Der Computer muss
+lokal oder per Netzwerk steuerbar sein.
+
+\paragraph{Orgware:} Ein Anwender kann sowohl Client als auch Server zur selben
+Zeit darstellen. Eine Netzwerkverbindung zum selben LAN von Sender und
+Empf"anger ist f"ur das Testen erforderlich.
+
+\section{Organisatorische Randbedingungen}
+\label{sec:2:or}
+
+\subsection{Organisation und Struktur}
+Der Hauptentscheidungsträger ist der Projektleiter David Hildenbrand. 
+Zusätzlich hat der Produktmanager Tobias Stöckel in bestimmten Gebieten nach Rücksprache 
+Entscheidungsauthorität. Alle anderen Projektmitglieder haben keine Entscheidungsgewalt.
+\\
+In der Analysephase wurde entschieden, alle Komponenten des Systems selbst zu entwickeln und keine Teile an externe Hersteller auszulagern.
+\\
+Die Entwicklung des Systems erfolgt als Produkt für die Firma Net-Tools, mit der
+ein längeres Geschäftsverhältnis angestrebt wird. Das Produkt stellt hierbei
+eine Verbesserung einer bereits exisitierenden Software dar. Direkter Konkurrent
+zu dem Produkt ist das "`Multicast Test Tool"' der Firma Hirschmann Automation GmbH. Das zu entwickelnde Produkt soll dem Konkurrenten vor allem in Usability und Performance überlegen sein.\\ Nähere Informationen zur Projektorganisation sind dem Projektplan zu entnehmen.
+
+\subsection{Ressourcen}
+
+\paragraph{Budget}
+
+Die geschätzten Gesamtkosten des Projekts belaufen sich auf 112.150€ (alle
+Kosten inkl. Gewinn und Personalkosten). Dem Kunde wurde ein Angebot für
+125.000€ unterbreitet. Die gesamten Kosten des Projekts dürfen daher 112.150€
+nicht überschreiten.\\ Die Entwicklung erfolgt somit nach einem Festpreis von 125.000€. \\ Nähere Informationen zur Kostenabschätzung sind dem Business-Case zu entnehmen.
+
+\paragraph{Zeit}
+Grundlegend ist der Zeitplan höher priorisiert als der Funktionsumfang. 
+Da die Weiterentwicklung des Programms nach erfolgreichem Projekt ansteht, können optionale Anforderungen auch noch zu späterem Zeitpunkt implementiert werden.\\
+Es ist ein fester Endtermin vorgegeben, welcher nur unter Einignung beider beteiligter Firmen verschoben werden kann.
+Der Projektzeitraum ist von dem 21.09.2010 bis zum 06.05.2010 angelegt. Die Produktübergabe findet somit am 06.05.2010 statt.
+\\
+Nähere Informationen zur Projektzeiteinteilung sind dem Projektplan zu entnehmen.
+
+\paragraph{Personal}
+
+An dem Projekt sind insgesamt 6 Personn beteiligt. Die Personen und ihre Aufgabe innerhalb des Projekts sind tabellarisch aufgelistet.
+
+\begin{table}[htdp]
+\caption{Beteiligte und Rollenverteilung}
+\label{tab:beteiligte}
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Name} & \textbf{Rolle}\\
+\hline
+Hildenbrand, David (DH) & Projekt Manager\\
+\hline
+Jedele, Jeffrey (JJ) & Leitender Ingenieur\\
+\hline
+Safarpour, Ramin (RS) & Systemtest\\
+\hline
+Schoknecht, Tobias (TSC) & Dokumentation\\
+\hline
+Stöckel, Tobias (TST) & Produkt Manager\\
+\hline
+Weitz, Konstantin (KW) & Leitender Ingenieur\\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}
+
+\subsection{Organisatorische Standards}
+
+Das Vorgehensmodell bzw. Entwicklungsmodell, das in diesem Projekt Verwendung
+findet, ist das Wasserfallmodell. Es sind keine Qualitätsstandards zu beachten.
+Sonstige verwendeten Standards sind unter \ref{sec:2:konv} beschrieben.
+\\
+Als Entwicklungsumgebung wird einheitlich im Projekt Eclipse verwendet.
+Codeverwaltung und Build-Management erfolgen mit Apache Maven V2-3 sowie
+Continuum und Archiva. Im Hintergrund wird Selenic Mercurial als
+Versionierungssystem und Zentralarchiv verwendet. Zur Projektverwaltung kommen
+Microsoft Project und Redmine zum Einsatz. Diagramme werden mit Visual Paradigm erstellt.\\ Nähere Informationen zur Projektorganisation und der verwendeten Software sind dem Projektplan zu entnehmen.
+
+
+\section{Konventionen}
+\label{sec:2:konv}
+
+Für dieses Projekt werden die Standard Java Coding Convetions verwendet.
+Diese wurden 1997 von Sun veröffentlicht und empfohlen. Sie spezifizieren
+wie Dateinamen zu wählen sind, wie Einrückung geschehen muss,wie und wo
+weitere Whitespaces verwendet werden können und wie man Kommentare schreibt, 
+Namenskonventionen für Klassen, Funktionen und Variablen so wie bewährte Programmiermethoden. Die Datei kann im Anhang \ref{a:code} gefunden oder direkt von der Oracle Website
+heruntergeladen werden. In diesem Dokument wird es dem Projekt freigestellt Leerzeichen oder Tabs für die
+Einrückung zu wählen. Dieses Projekt verwendet genau 4 Leerzeichen als Einheit der Einrückung.
+\\
+\clearpage
+Das folgende Code-Beispiel fasst alle Namenskonventionen auf einen Blick
+zusammen.
+
+\lstinputlisting[language=Java]{./listings/convention.java}
+

@@ -1,0 +1,282 @@
+\chapter{Testsuite /TS20/}
+Dieses Kapitel enthält die Testergebnisse der Testsuite /TS20/.\\
+Die zugehörige Requirement ID lautet /UC10/.
+
+\begin{table}[h]
+\caption{/TC2001/}
+\label{tab:TC2001}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\hline
+\textbf{Testfall Id} & /TC2001/\\
+\hline
+\textbf{Testfall Name} & Anlegen eines Empfängers\\
+\hline
+\textbf{Requirement ID} & /VA0700/, /VA0800/, /VA0200/\\
+\hline
+\textbf{Testfall Setup} & Starten des Computers unter Linux. Durchführen des Tests.
+Anschließendes Starten des Computers unter Windows XP. Erneutes Durchführen des Tests. Schlägt ein Testschritt unter mindestens einem System fehl, wird er als 'FAIL' markiert.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{4cm}|p{7.8cm}|p{2.3cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Erwartetes Ergebnis} & \textbf{Ergebnis}\\
+\hline
+Programmstart (0) & GUI erscheint. & PASS\\
+\hline
+Dialog öffnen (1) & Dialog zum Hinzufügen eines neuen Empfängers öffnet sich. & PASS\\
+\hline
+IP-Adressen-Test (2) & Neuer Empfänger auf gewählter Gruppe erscheint im
+Hauptfenster im Empfängerbereich. & PASS\\
+\hline
+Alle validen Gruppen prüfen (3) & Die Empfänger werden korrekt angelegt. & PASS\\
+\hline
+Dialog öffnen (4) & Dialog zum Hinzufügen eines neuen Empfängers öffnet sich. & PASS\\
+\hline
+Port-Test (5) & Neuer Empfänger auf gewähltem Port erscheint im
+Hauptfenster im Empfängerbereich. & PASS\\
+\hline
+Alle validen Ports prüfen (3) & Die Empfänger werden korrekt angelegt. & PASS\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\textbf{Tester} & DH\\
+\hline
+\textbf{Datum} & 13.05.2011\\
+\hline
+\textbf{Ergebnis} & PASS\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC2002/}
+\label{tab:TC2002}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\hline
+\textbf{Testfall Id} & /TC2002/\\
+\hline
+\textbf{Testfall Name} & Aktivieren von Empfängern\\
+\hline
+\textbf{Requirement ID} & /VA0700/, /VA0800/, /VA0200/\\
+\hline
+\textbf{Testfall Setup} & Starten des Computers unter Linux. Durchführen des Tests.
+Anschließendes Starten des Computers unter Windows XP. Erneutes Durchführen des Tests. Schlägt ein Testschritt unter mindestens einem System fehl, wird er als 'FAIL' markiert.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{4cm}|p{7.8cm}|p{2.3cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Erwartetes Ergebnis} & \textbf{Ergebnis}\\
+\hline
+TC2001 (1)& Hauptfenster mit angelegten,
+deaktivierten Empfänger befindet sich auf dem Bildschirm. & PASS\\
+\hline
+Einzelne Aktivierung (2) & Empfänger wird aktiv, erkennbar am
+Wechsel des roten Vierecks zu einem grünen Pfeil. & PASS\\
+\hline
+Multiple Aktivierung (3) & Empfänger werden aktiv,
+erkennbar am Wechsel des roten Vierecks zu einem grünen Pfeil. & PASS\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\textbf{Tester} & DH\\
+\hline
+\textbf{Datum} & 13.05.2011\\
+\hline
+\textbf{Ergebnis} & FAIL\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC2003/}
+\label{tab:TC2003}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\hline
+\textbf{Testfall Id} & /TC2003/\\
+\hline
+\textbf{Testfall Name} & Bearbeiten von Empfängern\\
+\hline
+\textbf{Requirement ID} & /VA0700/, /VA0800/, /VA0200/\\
+\hline
+\textbf{Testfall Setup} & Starten des Computers unter Linux. Durchführen des Tests.
+Anschließendes Starten des Computers unter Windows XP. Erneutes Durchführen des Tests. Schlägt ein Testschritt unter mindestens einem System fehl, wird er als 'FAIL' markiert.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{4cm}|p{7.8cm}|p{2.3cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Erwartetes Ergebnis} & \textbf{Ergebnis}\\
+\hline
+TC2001 (1)& Hauptfenster mit angelegten,
+deaktivierten Empfänger befindet sich auf dem Bildschirm. & PASS\\
+\hline
+Öffnen des Bearbeiten-Dialogs (2) & Bearbeiten Dialog erscheint. & PASS\\
+\hline
+Bearbeiten eines inaktiven Empfängers (3) & Fenster schließt sich. & PASS\\
+\hline
+Öffnen des Bearbeiten-Dialogs & Bearbeiten Dialog erscheint. & PASS\\
+\hline
+Änderung überprüfen (4) & Analyse Verhalten ist auf 'lazy' eingestellt. & PASS\\
+\hline
+Öffnen des Bearbeiten-Dialogs (5) & Bearbeiten Dialog erscheint. & PASS\\
+\hline
+Bearbeiten eines aktiven Empfängers (6) & Fenster schliesst sich. & PASS\\
+\hline
+Wiederhole (5) & Bearbeiten Dialog erscheint. & PASS\\
+\hline
+Überprüfen (7) & Analyse Verhalten ist 'eager'. & PASS\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\textbf{Tester} & DH\\
+\hline
+\textbf{Datum} & 13.05.2011\\
+\hline
+\textbf{Ergebnis} & PASS\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC2004/}
+\label{tab:TC2004}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\hline
+\textbf{Testfall Id} & /TC2004/\\
+\hline
+\textbf{Testfall Name} & Deaktivieren von Empfängern\\
+\hline
+\textbf{Requirement ID} & /VA0700/, /VA0800/, /VA0200/\\
+\hline
+\textbf{Testfall Setup} & Starten des Computers unter Linux. Durchführen des Tests.
+Anschließendes Starten des Computers unter Windows XP. Erneutes Durchführen des Tests. Schlägt ein Testschritt unter mindestens einem System fehl, wird er als 'FAIL' markiert.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{4cm}|p{7.8cm}|p{2.3cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Erwartetes Ergebnis} & \textbf{Ergebnis}\\
+\hline
+TC2002 & Hauptfenster mit angelegten,
+aktiven Empfängern befindet sich auf dem Bildschirm. & PASS\\
+\hline
+Einzelne Deaktivierung (1) & Empfänger wird inaktiv,
+erkennbar am Wechsel des grünen Pfeils zu einem roten Viereck. & PASS\\
+\hline
+Multiple Deaktivierung (2) & Empfänger werden
+inaktiv, erkennbar am Wechsel des grünen Pfeils zu einem roten Viereck. & PASS\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\textbf{Tester} & DH\\
+\hline
+\textbf{Datum} & 13.05.2011\\
+\hline
+\textbf{Ergebnis} & PASS\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC2005/}
+\label{tab:TC2005}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\hline
+\textbf{Testfall Id} & /TC2005/\\
+\hline
+\textbf{Testfall Name} & Entfernen von Empfängern\\
+\hline
+\textbf{Requirement ID} & /VA0700/, /VA0800/, /VA0200/\\
+\hline
+\textbf{Testfall Setup} & Starten des Computers unter Linux. Durchführen des Tests.
+Anschließendes Starten des Computers unter Windows XP. Erneutes Durchführen des Tests. Schlägt ein Testschritt unter mindestens einem System fehl, wird er als 'FAIL' markiert.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{4cm}|p{7.8cm}|p{2.3cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Erwartetes Ergebnis} & \textbf{Ergebnis}\\
+\hline
+TC2001 & Hauptfenster mit angelegten,
+inaktiven Empfängern befindet sich auf dem Bildschirm. & PASS\\
+\hline
+Einzelnes Entfernen (1) & Empfänger ist nicht mehr
+in der Liste vorhanden. & PASS\\
+\hline
+Multiples Entfernen (2) & Empfänger sind nicht mehr
+in der Liste vorhanden. & PASS\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\textbf{Tester} & DH\\
+\hline
+\textbf{Datum} & 13.05.2011\\
+\hline
+\textbf{Ergebnis} & PASS\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC2006/}
+\label{tab:TC2006}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\hline
+\textbf{Testfall Id} & /TC2004/\\
+\hline
+\textbf{Testfall Name} & Abfangen invalider Angaben\\
+\hline
+\textbf{Requirement ID} & /VA0700/, /VA0800/, /VA0200/\\
+\hline
+\textbf{Testfall Setup} & Starten des Computers unter Linux. Durchführen des Tests.
+Anschließendes Starten des Computers unter Windows XP. Erneutes Durchführen des Tests. Schlägt ein Testschritt unter mindestens einem System fehl, wird er als 'FAIL' markiert.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{4cm}|p{7.8cm}|p{2.3cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Erwartetes Ergebnis} & \textbf{Ergebnis}\\
+\hline
+Programmstart (0) & GUI
+erscheint. & PASS\\
+\hline
+Dialog öffnen (1) & Dialog zum Hinzufügen eines neuen Empfängers öffnet sich. & PASS\\
+\hline
+IP-Adressen-Test (2) & Dialog bleibt offen und Fehlermeldung über falsche
+Gruppen-Adresse wird angezeigt. & PASS\\
+\hline
+Alle validen Gruppen prüfen (3) & Dialog bleibt offen und Fehlermeldung über falsche
+Gruppen-Adresse wird angezeigt. & PASS\\
+\hline
+Dialog öffnen (4) & Dialog zum Hinzufügen eines neuen Empfängers öffnet sich. & PASS\\
+\hline
+Port-Test (5) & Dialog bleibt offen und Fehlermeldung über falschen
+Port erscheint. & PASS\\
+\hline
+Alle invaliden Ports prüfen (3) & Dialog bleibt offen und Fehlermeldung über falschen
+Port erscheint. & PASS\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\textbf{Tester} & DH\\
+\hline
+\textbf{Datum} & 13.05.2011\\
+\hline
+\textbf{Ergebnis} & PASS\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}

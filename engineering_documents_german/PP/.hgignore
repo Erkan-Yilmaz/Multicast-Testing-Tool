@@ -1,0 +1,7 @@
+
+syntax: regexp
+^tmp$
+syntax: regexp
+^chapter/\.title\.tex\.properties\.xml$
+syntax: regexp
+^\.settings/org\.eclipse\.mylyn\.tasks\.ui\.prefs$

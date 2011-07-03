@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg height="312" version="1.1" width="648" xmlns="http://www.w3.org/2000/svg">
+<rect fill="#ffffff" height="24" stroke="#ffffff" stroke-width="1" width="265" x="222" y="14"/>
+<rect fill="none" height="24" stroke="#000000" stroke-width="1" width="265" x="222" y="14"/>
+<text font-family="Dialog" font-size="12" font-style="italic" x="228" y="27">
+com::spam::mctool::model::MulticastStream</text>
+<rect fill="#ffffff" height="43" stroke="#ffffff" stroke-width="1" width="212" x="110" y="86"/>
+<rect fill="none" height="43" stroke="#000000" stroke-width="1" width="212" x="110" y="86"/>
+<text font-family="Dialog" font-size="12" x="115" y="118">
+com::spam::mctool::model::Sender</text>
+<text font-family="Dialog" font-size="12" x="179" y="100">
+&lt;&lt;active&gt;&gt;</text>
+<polyline fill="none" points="222,86 222,38" stroke="#000000" stroke-width="1"/>
+<polygon fill="#ffffff" points="222,38 229,50 215,50" stroke="#ffffff" stroke-width="1"/>
+<polygon fill="none" points="222,38 229,50 215,50" stroke="#000000" stroke-width="1"/>
+<rect fill="#ffffff" height="43" stroke="#ffffff" stroke-width="1" width="256" x="358" y="86"/>
+<rect fill="none" height="43" stroke="#000000" stroke-width="1" width="256" x="358" y="86"/>
+<text font-family="Dialog" font-size="12" x="363" y="118">
+com::spam::mctool::model::ReceiverGroup</text>
+<text font-family="Dialog" font-size="12" x="449" y="100">
+&lt;&lt;active&gt;&gt;</text>
+<polyline fill="none" points="486,86 486,38" stroke="#000000" stroke-width="1"/>
+<polygon fill="#ffffff" points="486,38 493,50 479,50" stroke="#ffffff" stroke-width="1"/>
+<polygon fill="none" points="486,38 493,50 479,50" stroke="#000000" stroke-width="1"/>
+<rect fill="#ffffff" height="24" stroke="#ffffff" stroke-width="1" width="221" x="374" y="182"/>
+<rect fill="none" height="24" stroke="#000000" stroke-width="1" width="221" x="374" y="182"/>
+<text font-family="Dialog" font-size="12" x="379" y="195">
+com::spam::mctool::model::Receiver</text>
+<polyline fill="none" points="542,129 542,182" stroke="#000000" stroke-width="1"/>
+<polygon fill="#000000" points="542,129 547,139 542,149 537,139" stroke="#000000" stroke-width="1"/>
+<polygon fill="none" points="542,129 547,139 542,149 537,139" stroke="#000000" stroke-width="1"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="535" x2="542" y1="170" y2="182"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="549" x2="542" y1="170" y2="182"/>
+<text font-family="Dialog" font-size="12" x="519" y="148">
+1</text>
+<text font-family="Dialog" font-size="12" x="519" y="172">
+*</text>
+<polygon fill="#c0c0c0" points="14,198 226,198 226,221 275,221 275,297 14,297 14,198" stroke="#c0c0c0" stroke-width="1"/>
+<rect fill="none" height="23" stroke="#000000" stroke-width="1" width="212" x="14" y="198"/>
+<text font-family="Dialog" font-size="12" x="19" y="211">
+com::spam::mctool::model::packet</text>
+<rect fill="none" height="76" stroke="#000000" stroke-width="1" width="261" x="14" y="221"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="118" x2="118" y1="129" y2="134"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="118" x2="118" y1="139" y2="144"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="118" x2="118" y1="149" y2="154"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="118" x2="118" y1="159" y2="164"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="118" x2="118" y1="169" y2="174"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="118" x2="118" y1="179" y2="184"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="118" x2="118" y1="189" y2="194"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="111" x2="118" y1="186" y2="198"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="125" x2="118" y1="186" y2="198"/>
+<text font-family="Dialog" font-size="12" x="121" y="168">
+&lt;&lt;use&gt;&gt;</text>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="374" x2="370" y1="206" y2="206"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="365" x2="360" y1="207" y2="208"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="355" x2="350" y1="209" y2="209"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="345" x2="340" y1="210" y2="211"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="335" x2="330" y1="212" y2="212"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="325" x2="320" y1="213" y2="214"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="315" x2="310" y1="215" y2="215"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="305" x2="300" y1="216" y2="217"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="295" x2="290" y1="218" y2="218"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="285" x2="280" y1="219" y2="220"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="286" x2="276" y1="212" y2="221"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="288" x2="276" y1="226" y2="221"/>
+<text font-family="Dialog" font-size="12" x="316" y="234">
+&lt;&lt;use&gt;&gt;</text>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="358" x2="355" y1="129" y2="132"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="352" x2="348" y1="136" y2="140"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="345" x2="342" y1="143" y2="147"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="338" x2="335" y1="151" y2="155"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="332" x2="328" y1="158" y2="162"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="325" x2="322" y1="166" y2="170"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="318" x2="315" y1="173" y2="177"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="312" x2="308" y1="181" y2="185"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="305" x2="302" y1="188" y2="192"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="298" x2="295" y1="196" y2="200"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="292" x2="288" y1="203" y2="207"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="285" x2="282" y1="211" y2="215"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="278" x2="276" y1="218" y2="221"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="278" x2="276" y1="207" y2="221"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="289" x2="276" y1="216" y2="221"/>
+<text font-family="Dialog" font-size="12" x="232" y="169">
+&lt;&lt;use&gt;&gt;</text>
+</svg>

@@ -1,0 +1,32 @@
+% owner: jeff
+\chapter{Kontext und "Uberblick}
+\label{cha:kont}
+
+\paragraph{Systemumgebung}
+Das System wird in einem bereits bestehenden Computer-Netzwerk verwendet. Zu
+diesem gehören sowohl die einzelnen Computer als Netzwerkknoten, als auch
+sämtliche Peripherie zum Verbinden dieser Knoten untereinander. Das System
+ist auf Empfangsseite mit älteren Versionen
+der MultiCast-Testing-Software kompatibel.
+
+\paragraph{Systemgrenze}
+Das System ist klar auf die Anwendungsschicht beschränkt. Es sollen weder auf
+Hardware- noch Betriebssystemebene neue Multicasting-Fähigkeiten implementiert, sondern ausschließlich bereits vorhande Implementierungen genutzt und
+getestet werden. Interaktion mit anderen Softwarekomponenten auf
+Schnittstellenebene ist nich vorgesehen.
+
+\paragraph{Kontext}
+\begin{figure}
+\includegraphics[width=10cm]{images/kontext-usecase.png}
+\centering
+\caption{Grundsätzlicher Anwendungsfall}
+\end{figure}
+Das System wird auschließlich in lokalen Netzwerken (LAN) verwendet - eine
+Verwendung über Internetverbindungen hinweg ist nicht vorgesehen.
+Empfangsintervall- und Traversierungszeiten sind in Auflösung von Millisekunden
+zu ermitteln. Da Multicast fest im IP-Protokoll spezifiziert ist, wird davon
+ausgegangen, dass alle am Netzwerk beteiligten Komponenten dessen Methoden
+vollständig unterstützen. Dazu gehört auch auch das
+Multicast-Gruppenverwaltungsprotokoll IGMP. Auch bei diesem wird davon
+ausgegangen, dass alle beteiligten Netzwerkkomponenten es unterstützen. Sollte
+dies nicht der Fall sein, wird kein Mutlicastverkehr stattfinden.

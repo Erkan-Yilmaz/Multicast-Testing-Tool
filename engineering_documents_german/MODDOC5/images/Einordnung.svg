@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg height="432" version="1.1" width="808" xmlns="http://www.w3.org/2000/svg">
+<polygon fill="#c0c0c0" points="14,14 197,14 197,37 246,37 246,113 14,113 14,14" stroke="#c0c0c0" stroke-width="1"/>
+<rect fill="none" height="23" stroke="#000000" stroke-width="1" width="183" x="14" y="14"/>
+<text font-family="Dialog" font-size="12" x="19" y="27">
+com::spam::mctool::controller</text>
+<rect fill="none" height="76" stroke="#000000" stroke-width="1" width="232" x="14" y="37"/>
+<polygon fill="#ffffff" points="310,158 475,158 475,181 524,181 524,257 310,257 310,158" stroke="#ffffff" stroke-width="1"/>
+<rect fill="none" height="23" stroke="#000000" stroke-width="1" width="165" x="310" y="158"/>
+<text font-family="Dialog" font-size="12" x="315" y="171">
+com::spam::mctool::model</text>
+<rect fill="none" height="76" stroke="#000000" stroke-width="1" width="214" x="310" y="181"/>
+<polygon fill="#c0c0c0" points="310,318 522,318 522,341 571,341 571,417 310,417 310,318" stroke="#c0c0c0" stroke-width="1"/>
+<rect fill="none" height="23" stroke="#000000" stroke-width="1" width="212" x="310" y="318"/>
+<text font-family="Dialog" font-size="12" x="315" y="331">
+com::spam::mctool::model::packet</text>
+<rect fill="none" height="76" stroke="#000000" stroke-width="1" width="261" x="310" y="341"/>
+<polygon fill="#c0c0c0" points="590,14 744,14 744,37 793,37 793,113 590,113 590,14" stroke="#c0c0c0" stroke-width="1"/>
+<rect fill="none" height="23" stroke="#000000" stroke-width="1" width="154" x="590" y="14"/>
+<text font-family="Dialog" font-size="12" x="595" y="27">
+com::spam::mctool::view</text>
+<rect fill="none" height="76" stroke="#000000" stroke-width="1" width="203" x="590" y="37"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="247" x2="252" y1="102" y2="102"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="257" x2="262" y1="102" y2="102"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="267" x2="272" y1="102" y2="102"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="277" x2="282" y1="102" y2="102"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="287" x2="292" y1="102" y2="102"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="297" x2="302" y1="102" y2="102"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="307" x2="312" y1="102" y2="102"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="317" x2="322" y1="102" y2="102"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="326" x2="326" y1="102" y2="107"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="326" x2="326" y1="112" y2="117"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="326" x2="326" y1="122" y2="127"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="326" x2="326" y1="132" y2="137"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="326" x2="326" y1="142" y2="147"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="326" x2="326" y1="152" y2="157"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="319" x2="326" y1="146" y2="158"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="333" x2="326" y1="146" y2="158"/>
+<text font-family="Dialog" font-size="12" x="253" y="92">
+&lt;&lt;create, control&gt;&gt;</text>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="590" x2="585" y1="102" y2="102"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="580" x2="575" y1="102" y2="102"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="570" x2="565" y1="102" y2="102"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="560" x2="555" y1="102" y2="102"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="550" x2="545" y1="102" y2="102"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="540" x2="535" y1="102" y2="102"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="530" x2="525" y1="102" y2="102"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="520" x2="515" y1="102" y2="102"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="510" x2="505" y1="102" y2="102"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="500" x2="495" y1="102" y2="102"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="490" x2="485" y1="102" y2="102"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="480" x2="475" y1="102" y2="102"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="470" x2="470" y1="102" y2="107"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="470" x2="470" y1="112" y2="117"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="470" x2="470" y1="122" y2="127"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="470" x2="470" y1="132" y2="137"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="470" x2="470" y1="142" y2="147"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="470" x2="470" y1="152" y2="157"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="463" x2="470" y1="146" y2="158"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="477" x2="470" y1="146" y2="158"/>
+<text font-family="Dialog" font-size="12" x="458" y="93">
+&lt;&lt;conrol&gt;&gt;</text>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="525" x2="530" y1="198" y2="198"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="535" x2="540" y1="198" y2="198"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="545" x2="550" y1="198" y2="198"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="555" x2="560" y1="198" y2="198"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="565" x2="570" y1="198" y2="198"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="575" x2="580" y1="198" y2="198"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="585" x2="590" y1="198" y2="198"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="595" x2="600" y1="198" y2="198"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="605" x2="610" y1="198" y2="198"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="615" x2="620" y1="198" y2="198"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="622" x2="622" y1="198" y2="193"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="622" x2="622" y1="188" y2="183"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="622" x2="622" y1="178" y2="173"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="622" x2="622" y1="168" y2="163"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="622" x2="622" y1="158" y2="153"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="622" x2="622" y1="148" y2="143"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="622" x2="622" y1="138" y2="133"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="622" x2="622" y1="128" y2="123"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="622" x2="622" y1="118" y2="114"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="629" x2="622" y1="126" y2="114"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="615" x2="622" y1="126" y2="114"/>
+<text font-family="Dialog" font-size="12" x="571" y="216">
+&lt;&lt;inform&gt;&gt;</text>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="406" x2="406" y1="258" y2="263"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="406" x2="406" y1="268" y2="273"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="406" x2="406" y1="278" y2="283"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="406" x2="406" y1="288" y2="293"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="406" x2="406" y1="298" y2="303"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="406" x2="406" y1="308" y2="313"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="399" x2="406" y1="306" y2="318"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="413" x2="406" y1="306" y2="318"/>
+<text font-family="Dialog" font-size="12" x="409" y="293">
+&lt;&lt;use&gt;&gt;</text>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="310" x2="305" y1="190" y2="190"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="300" x2="295" y1="190" y2="190"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="290" x2="285" y1="190" y2="190"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="280" x2="275" y1="190" y2="190"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="270" x2="265" y1="190" y2="190"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="260" x2="255" y1="190" y2="190"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="250" x2="245" y1="190" y2="190"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="240" x2="235" y1="190" y2="190"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="230" x2="225" y1="190" y2="190"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="220" x2="215" y1="190" y2="190"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="210" x2="205" y1="190" y2="190"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="200" x2="195" y1="190" y2="190"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="190" x2="185" y1="190" y2="190"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="180" x2="175" y1="190" y2="190"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="170" x2="166" y1="190" y2="190"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="166" x2="166" y1="190" y2="185"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="166" x2="166" y1="180" y2="175"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="166" x2="166" y1="170" y2="165"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="166" x2="166" y1="160" y2="155"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="166" x2="166" y1="150" y2="145"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="166" x2="166" y1="140" y2="135"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="166" x2="166" y1="130" y2="125"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="166" x2="166" y1="120" y2="115"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="173" x2="166" y1="126" y2="114"/>
+<line fill="#000000" stroke="#000000" stroke-width="1" x1="159" x2="166" y1="126" y2="114"/>
+<text font-family="Dialog" font-size="12" x="103" y="208">
+&lt;&lt;report errors&gt;&gt;</text>
+</svg>

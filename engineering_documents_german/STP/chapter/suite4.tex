@@ -1,0 +1,244 @@
+\chapter{Testsuite /TS40/}
+Dieser Anhang enthält die Testfälle der Testsuite /TS40/.\\
+Die zugehörige Requirement ID lautet /UC20/.\\
+\newline
+Die Testfälle dieser Testsuite sollen die Automatisierung des Programms über die CLI sicherstellen.\\
+Dazu zählen zum einen das Laden von Profilen anhand eines Pfades oder dem Namen eines zuletzt verwendeten Profils und der Automatisierte Start aller geladenen Sender und Empfänger.
+Zusätzlich soll das Programm zum einen mit CLI und ohne GUI oder mit CLI und GUI startbar sein.
+Das Testen der Ausgabe von Logging Daten auf der CLI und in eine Datei ist implizit gefordert.
+
+\begin{table}[h]
+\caption{/TC4001/}
+\label{tab:TC4001}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{9cm}|}
+\hline
+\textbf{Testfall Id} & /TC4001/\\
+\hline
+\textbf{Testfall Name} & CLI-Konfiguration\\
+\hline
+\textbf{Requirement ID} & VA0900 \& VA0600\\
+\hline
+\textbf{Beschreibung} & Dieser Testfall verifiziert die korrekte
+Funktionsweise der "`Konfiguration Laden"-Funktion des Commandline Interfaces.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{4.55cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+\hline
+Test-Setup & Installiere das MC-Tool &  MC-Tool ist per
+Commandline aufrufbar\\
+\hline
+Starten und Konfiguration laden - korrekte Pfadangabe & Eingabe des Befehls zum
+Starten und Laden einer Konfiguration mit korrekter Pfadangabe zu einer
+Konfigurationsdatei & Anlegen aller Sender und Empfänger im selben Zustand, wie
+zum Zeitpunkt des Speicherns \& Ausgabe auf der Commandline, die den Erfolg des
+Ladens bestätigt.
+\\
+\hline
+Konfiguration laden - fehlerhafte Pfadangabe & Eingabe des Befehls zum
+Starten und Laden einer Konfiguration mit fehlerhafter Pfadangabe zu einer
+Konfigurationsdatei & Ausgabe einer Fehlermeldung, dass keine Datei gefunden wurde\\
+\hline
+Konfiguration laden - fehlerhafte Datei & Eingabe des Befehls zum Starten
+und Laden einer Konfiguration mit Pfadangabe zu einer fehlerhaften/nicht
+kompatiblen Datei & Ausgabe einer Fehlermeldung, dass die gelesene Datei fehlerhaft ist\\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC4002/}
+\label{tab:TC4002}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{9cm}|}
+\hline
+\textbf{Testfall Id} & /TC4002/\\
+\hline
+\textbf{Testfall Name} & Starten aller Sender und Empfänger per CLI\\
+\hline
+\textbf{Requirement ID} & VA0900 \& VA0600\\
+\hline
+\textbf{Beschreibung} & Dieser Testfall verifiziert die korrekte
+Funktionsweise des Startens aller Sender und Empfänger via CLI.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{4.55cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+\hline
+Test-Setup & Installiere das MC-Tool & MC-Tool ist via
+Commandline startbar\\
+\hline
+Eingabe des gültigen Start-Befehls & Eingabe des Befehls zum Starten des
+Programms, sowie zum Laden und Starten aller Sender Empfänger & Ausgabe auf der
+Commandline, die den Erfolg des Startens bestätigt
+\\
+\hline
+Eingabe des ungültigen Start-Befehls & Eingabe eines ungültigen Befehls zum
+Starten des Programms, sowie zum Laden und Starten aller Empfänger & Ausgabe auf
+CLI, die die ungültige Eingabe quittiert
+\\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC4003/}
+\label{tab:TC4003}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{9cm}|}
+\hline
+\textbf{Testfall Id} & /TC4003/\\
+\hline
+\textbf{Testfall Name} & Starten des Programms ohne Starten der Sender und
+Empfänger per CLI\\
+\hline
+\textbf{Requirement ID} & VA0900 \& VA0600\\
+\hline
+\textbf{Beschreibung} & Dieser Testfall verifiziert die korrekte
+Funktionsweise des Startens des Programms ohne Starten der Sender und
+Empfänger via CLI.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{4.55cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+\hline
+Test-Setup & Installiere das MC-Tool & MC-Tool ist via
+Commandline startbar\\
+\hline
+Eingabe des gültigen Start-Befehls & Eingabe des Befehls zum Starten des
+Programms, sowie zum Laden und Starten keiner Sender und Empfänger & Ausgabe auf
+der Commandline, die den Erfolg des Startens des Programms bestätigt
+\\
+\hline
+Eingabe des ungültigen Start-Befehls & Eingabe eines ungültigen Befehls zum
+Starten des Programms, sowie zum Laden und Starten keiner Sender und Empfänger &
+Ausgabe auf CLI, die die ungültige Eingabe quittiert
+\\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC4004/}
+\label{tab:TC4004}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{9cm}|}
+\hline
+\textbf{Testfall Id} & /TC4004/\\
+\hline
+\textbf{Testfall Name} & Ausgabe der Daten im CLI\\
+\hline
+\textbf{Requirement ID} & VA0900 \& VA0600\\
+\hline
+\textbf{Beschreibung} & Dieser Testfall verifiziert die korrekte
+Funktionsweise der Datenausgabe auf dem Commandline Interface.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{4.55cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+\hline
+Test-Setup & Installiere das MC-Tool & MC-Tool ist via
+Commandline startbar\\
+\hline
+Test-Setup Teil 2 & Starten des MC-Tools mit gültigem Pfad und Start-Befehl &
+Bestätigung auf CLI\\
+\hline
+Beobachten der Ausgabe & Auf Update der Ausgabe warten & Ausgabe der Statistik
+auf dem CLI
+\\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC4005/}
+\label{tab:TC4005}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{9cm}|}
+\hline
+\textbf{Testfall Id} & /TC4005/\\
+\hline
+\textbf{Testfall Name} & Loggen der Statistik\\
+\hline
+\textbf{Requirement ID} & VA0900 \& VA0600\\
+\hline
+\textbf{Beschreibung} & Dieser Testfall verifiziert die korrekte
+Funktionsweise der Logger-Funktionalität.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{4.55cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+\hline
+Test-Setup & Installiere das MC-Tool & MC-Tool Commandline Interface mit Bestätigung wird angezeigt\\
+\hline
+Test-Setup Teil 2 & Starten des MC-Tool via Commandline mit gültigem
+Start-Befehl und gestarteten Sendern/Receivern & Bestätigung in Commandline
+Interface\\
+\hline
+Korrekte Log-Daten & Öffnen der Log-Datei und Vergleich mit Ausgabe auf dem
+CLI & Logger funktioniert fehlerfrei - geloggte Daten sind korrekt
+\\
+\hline
+Inkorrekte Log-Daten & Öffnen der Log-Datei und Vergleich mit Ausgabe auf dem
+CLI & Logger funktioniert fehlerhaft - geloggte Daten stimmen nicht mit dem CLI
+überein
+\\
+\hline
+Inkorrektes Log-Format & Öffnen der Log-Datei und betrachten des Log-Formats &
+Daten werden nicht als XML gespeichert.
+\\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC4006/}
+\label{tab:TC4006}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{9cm}|}
+\hline
+\textbf{Testfall Id} & /TC4006/\\
+\hline
+\textbf{Testfall Name} & Starten des MC-Tools ohne GUI\\
+\hline
+\textbf{Requirement ID} & VA0900 \& VA0600\\
+\hline
+\textbf{Beschreibung} & Dieser Testfall verifiziert die korrekte
+Funktionsweise des Startens des MC-Tools ohne GUI.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{4.55cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+\hline
+Test-Setup & Installiere das MC-Tool & MC-Tool Commandline Interface mit Bestätigung wird angezeigt\\
+\hline
+Starten des MC-Tools 2 & Starten des MC-Tool via Commandline mit gültigem
+Start-Befehl und -nogui Parameter & Programm wird ohne GUI gestartet.\\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}

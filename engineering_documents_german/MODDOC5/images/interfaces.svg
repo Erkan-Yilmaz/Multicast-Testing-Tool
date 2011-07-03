@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg height="672" version="1.1" width="1180" xmlns="http://www.w3.org/2000/svg">
+<rect fill="#ffffff" height="227" stroke="#ffffff" stroke-width="1" width="558" x="14" y="14"/>
+<rect fill="none" height="227" stroke="#000000" stroke-width="1" width="558" x="14" y="14"/>
+<text font-family="Dialog" font-size="12" x="156" y="46">
+com::spam::mctool::model::SenderManager---</text>
+<text font-family="Dialog" font-size="12" x="248" y="28">
+&lt;&lt;interface&gt;&gt;</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="558" x="14" y="56"/>
+<text font-family="Dialog" font-size="12" x="18" y="70">
+create(params : Map&lt;String, String&gt;) : Sender</text>
+<text font-family="Dialog" font-size="12" x="18" y="86">
+remove(sender : Sender) : void</text>
+<text font-family="Dialog" font-size="12" x="18" y="102">
+getSenders() : Sender&gt;</text>
+<text font-family="Dialog" font-size="12" x="18" y="118">
+killAll() : void</text>
+<text font-family="Dialog" font-size="12" x="18" y="134">
+addSenderAddedOrRemovedListener(l : SenderAddedOrRemovedListener) : void</text>
+<text font-family="Dialog" font-size="12" x="18" y="150">
+removeSenderAddedOrRemovedListener(l : SenderAddedOrRemovedListener) : void</text>
+<text font-family="Dialog" font-size="12" x="18" y="166">
+addOverallSenderStatisticsUpdatedListener(l : OverallSenderStatisticsUpdatedListener-) : void</text>
+<text font-family="Dialog" font-size="12" x="18" y="182">
+removeOverallSenderStatisticsUpdatedListener(l : OverallSenderStatisticsUpdatedListener-) : void</text>
+<text font-family="Dialog" font-size="12" x="18" y="198">
+getOverallSentPackets() : long</text>
+<text font-family="Dialog" font-size="12" x="18" y="214">
+getOverallSentPPS() : long</text>
+<text font-family="Dialog" font-size="12" x="18" y="230">
+setThreadPoolSize(size : int) : void</text>
+<rect fill="#ffffff" height="259" stroke="#ffffff" stroke-width="1" width="576" x="590" y="14"/>
+<rect fill="none" height="259" stroke="#000000" stroke-width="1" width="576" x="590" y="14"/>
+<text font-family="Dialog" font-size="12" x="726" y="46">
+com::spam::mctool::model::ReceiverManager------</text>
+<text font-family="Dialog" font-size="12" x="833" y="28">
+&lt;&lt;interface&gt;&gt;</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="576" x="590" y="56"/>
+<text font-family="Dialog" font-size="12" x="594" y="70">
+create(params : Map&lt;String, String&gt;) : ReceiverGroup</text>
+<text font-family="Dialog" font-size="12" x="594" y="86">
+remove(receiver : ReceiverGroup) : void</text>
+<text font-family="Dialog" font-size="12" x="594" y="102">
+getReceiverGroups() : ReceiverGroup&gt;</text>
+<text font-family="Dialog" font-size="12" x="594" y="118">
+killAll() : void</text>
+<text font-family="Dialog" font-size="12" x="594" y="134">
+addReceiverAddedOrRemovedListener(l : ReceiverAddedOrRemovedListener) : void</text>
+<text font-family="Dialog" font-size="12" x="594" y="150">
+removeReceiverAddedOrRemovedListener(l : ReceiverAddedOrRemovedListener) : void</text>
+<text font-family="Dialog" font-size="12" x="594" y="166">
+addOverallReceiverStatisticsUpdatedListener(l : OverallReceiverStatisticsUpdatedListener) : void</text>
+<text font-family="Dialog" font-size="12" x="594" y="182">
+removeOverallReceiverStatisticsUpdatedListener(l : OverallReceiverStatisticsUpdatedListener) : void</text>
+<text font-family="Dialog" font-size="12" x="594" y="198">
+getOverallReceivedPackets() : long</text>
+<text font-family="Dialog" font-size="12" x="594" y="214">
+getOverallReceivedPPS() : long</text>
+<text font-family="Dialog" font-size="12" x="594" y="230">
+getOverallLostPackets() : long</text>
+<text font-family="Dialog" font-size="12" x="594" y="246">
+getOverallFaultyPackets() : long</text>
+<text font-family="Dialog" font-size="12" x="594" y="262">
+setThreadPoolSize(size : int) : void</text>
+<rect fill="#ffffff" height="100" stroke="#ffffff" stroke-width="1" width="394" x="646" y="438"/>
+<rect fill="none" height="100" stroke="#000000" stroke-width="1" width="394" x="646" y="438"/>
+<text font-family="Dialog" font-size="12" x="661" y="487">
+com::spam::mctool::model::ReceiverAddedOrRemovedListener</text>
+<text font-family="Dialog" font-size="12" x="798" y="452">
+&lt;&lt;interface&gt;&gt;</text>
+<text font-family="Dialog" font-size="12" x="797" y="469">
+&lt;&lt;observer&gt;&gt;</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="394" x="646" y="497"/>
+<text font-family="Dialog" font-size="12" x="650" y="511">
+receiverGroupAdded(e : ReceiverAddedOrRemovedEvent) : void</text>
+<text font-family="Dialog" font-size="12" x="650" y="527">
+receiverGroupRemoved(e : ReceiverAddedOrRemovedEvent) : void</text>
+<rect fill="#ffffff" height="100" stroke="#ffffff" stroke-width="1" width="364" x="102" y="438"/>
+<rect fill="none" height="100" stroke="#000000" stroke-width="1" width="364" x="102" y="438"/>
+<text font-family="Dialog" font-size="12" x="107" y="487">
+com::spam::mctool::model::SenderAddedOrRemovedListener</text>
+<text font-family="Dialog" font-size="12" x="239" y="452">
+&lt;&lt;interface&gt;&gt;</text>
+<text font-family="Dialog" font-size="12" x="238" y="469">
+&lt;&lt;observer&gt;&gt;</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="364" x="102" y="497"/>
+<text font-family="Dialog" font-size="12" x="106" y="511">
+senderAdded(e : SenderAddedOrRemovedEvent) : void</text>
+<text font-family="Dialog" font-size="12" x="106" y="527">
+senderRemoved(e : SenderAddedOrRemovedEvent) : void</text>
+<rect fill="#ffffff" height="84" stroke="#ffffff" stroke-width="1" width="336" x="678" y="574"/>
+<rect fill="none" height="84" stroke="#000000" stroke-width="1" width="336" x="678" y="574"/>
+<text font-family="Dialog" font-size="12" x="683" y="623">
+com::spam::mctool::model::ReceiverDataChangeListener</text>
+<text font-family="Dialog" font-size="12" x="801" y="588">
+&lt;&lt;interface&gt;&gt;</text>
+<text font-family="Dialog" font-size="12" x="800" y="605">
+&lt;&lt;observer&gt;&gt;</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="336" x="678" y="633"/>
+<text font-family="Dialog" font-size="12" x="682" y="647">
+dataChanged(e : ReceiverDataChangedEvent) : void</text>
+<rect fill="#ffffff" height="84" stroke="#ffffff" stroke-width="1" width="327" x="118" y="574"/>
+<rect fill="none" height="84" stroke="#000000" stroke-width="1" width="327" x="118" y="574"/>
+<text font-family="Dialog" font-size="12" x="123" y="623">
+com::spam::mctool::model::SenderDataChangeListener</text>
+<text font-family="Dialog" font-size="12" x="236" y="588">
+&lt;&lt;interface&gt;&gt;</text>
+<text font-family="Dialog" font-size="12" x="236" y="605">
+&lt;&lt;observer&gt;&gt;</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="327" x="118" y="633"/>
+<text font-family="Dialog" font-size="12" x="122" y="647">
+dataChanged(e : SenderDataChangedEvent) : void</text>
+<rect fill="#ffffff" height="84" stroke="#ffffff" stroke-width="1" width="461" x="54" y="326"/>
+<rect fill="none" height="84" stroke="#000000" stroke-width="1" width="461" x="54" y="326"/>
+<text font-family="Dialog" font-size="12" x="88" y="375">
+com::spam::mctool::model::OverallSenderStatisticsUpdatedListener-</text>
+<text font-family="Dialog" font-size="12" x="239" y="340">
+&lt;&lt;interface&gt;&gt;</text>
+<text font-family="Dialog" font-size="12" x="239" y="357">
+&lt;&lt;observer&gt;&gt;</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="461" x="54" y="385"/>
+<text font-family="Dialog" font-size="12" x="58" y="399">
+overallSenderStatisticsUpdated(e : OverallSenderStatisticsUpdatedEvent) : void</text>
+<rect fill="#ffffff" height="84" stroke="#ffffff" stroke-width="1" width="476" x="590" y="326"/>
+<rect fill="none" height="84" stroke="#000000" stroke-width="1" width="476" x="590" y="326"/>
+<text font-family="Dialog" font-size="12" x="630" y="375">
+com::spam::mctool::model::OverallReceiverStatisticsUpdatedListener</text>
+<text font-family="Dialog" font-size="12" x="783" y="340">
+&lt;&lt;interface&gt;&gt;</text>
+<text font-family="Dialog" font-size="12" x="782" y="357">
+&lt;&lt;observer&gt;&gt;</text>
+<rect fill="#000000" height="1" stroke="#000000" stroke-width="1" width="476" x="590" y="385"/>
+<text font-family="Dialog" font-size="12" x="594" y="399">
+overallReceiverStatisticsUpdated(e : OverallReceiverStatisticsUpdatedEvent) : void</text>
+</svg>

@@ -1,0 +1,401 @@
+\chapter{Testsuite /TS50/}
+
+    Dieser Anhang enthält die Testfälle der Testsuite /TS50/.\\
+    Die zugehörige Requirement ID lautet /UC30/.\\
+    \newline
+    Die Testfälle dieser Testsuite sollen die korrekte Übermittlung von
+    Multicast-Paketen sicherstellen. Dazu zählen zum Einen die fehlerfreie
+    Übermittlung der Pakete (ohne Störquellen) und die korrekte Übertragung der
+    in den Paketen enthaltenen Nutzdaten (Payload).\\
+    \newline
+    Alle Tests dieser Suite arbeiten mit mindestens zwei Instanzen des
+    MC-Test-Tools. Dadurch werden Verfälschungen des Ergebnisses durch eine
+    innerprogrammliche Kommunikation von Sender- und Empfängerseite
+    ausgeschlossen. Bei Verwendung eines physischen Netzwerks
+    zwischen Sender und Empfänger ist dessen Multicastfähigkeit im Vorfeld zu
+    verifizieren (z.B. durch das Hirschmann-Tool). Sie wird in den folgenden
+    Testfällen als gegeben vorausgesetzt.\\
+    \newline
+    Die folgenden Testfälle verwenden die Formulierung "`im selben Netzwerk"'
+    und "`der gewählte Netzwerkadapter"'. Damit ist gemeint:
+    \begin{enumerate}[a)]
+        \item in der selben Instanz eines Betriebssystems. Der gewählte
+              Netzwerkadapter ist das Loopback-Interface.
+        \item in verschiedenen Betriebssysteminstanzen, die aber per
+              Virtualisierung auf der selben physischen Maschine laufen. Die
+              Verbindung wird über ein ebenfalls virtualisiertes Netzwerk
+              hergestellt. Bei Einsatz von Virtualbox empfiehlt sich z.B. der
+              Einsatz von entweder "`internal networking"' oder "`Host-only
+              networking"'. Der gewählte Netzwerkadapter ist der
+              Host-only-Adapter (Host) bzw. der Ethernet-Adapter (Gast).
+        \item in verschiedenen, physisch getrennten Betriebssysteminstanzen. Die
+              Verbindung wird per Ethernet hergestellt. Die Verbindung darf
+              keine Router-Hops voraussetzen. Der gewählte Netzwerkadapter ist
+              jeweils der Ethernet-Adapter, der mit dem genutzten Netzwerk
+              verbunden ist.
+    \end{enumerate}
+    Alle Tesfälle, die mit mehreren Instanzen des Multicast Test Tools arbeiten,
+    sind mit Option a) durchzuführen. Zusätzlich sind alle diese Testfälle
+    entweder mit Option b) oder c) durchzuführen.
+
+    \begin{table}[h]
+        \caption{/TC5001/}
+        \label{tab:TC5001}
+        \begin{center}
+            \begin{tabular}{|p{3.5cm}|p{12cm}|}
+                \hline
+                    \textbf{Testfall Id} & /TC5001/\\
+                \hline
+                    \textbf{Testfall Name} & Multicast-Pakete senden\\
+                \hline
+                    \textbf{Requirement ID} & /VA0100/\\
+                \hline
+                    \textbf{Beschreibung} & Dieser Test verifiziert, dass das
+                    Tool in der Lage ist, UDP-Pakete an eine
+                    IP-Multicast-Gruppe adressiert zu verschicken.\\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|p{3.5cm}|p{5cm}|p{6.55cm}|}
+                \multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+                \hline
+                    \textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+                \hline
+                    Test-Setup 1 &
+                    Das Multicast-Test-Tool mit grafischer Oberfläche starten & 
+                    Das Tool ist bereit für das Anlegen von Datenströmen \\
+                \hline
+                    Test-Setup 2 &
+                    Wireshark in derselben Betriebssystemsinstanz starten &
+                    Wireshark ist bereit für Benutzereingaben \\
+                \hline
+                    Wireshark aktivieren & Wireshark an einem Ethernet-Adapter
+                    lauschen lassen & 
+                    Wireshark zeigt diversen Netzwerkverkehr am gewählten
+                    Adapter an\\
+                \hline
+                    Multicast-Sender aktivieren &
+                    Im Multicast Test Tool einen Sender am für Wireshark
+                    gewählten Netzwerk-Adapter, aber ansonsten mit
+                    Standardwerten, anlegen und aktivieren &
+                    Der neu erstellte Datenstrom erscheint in der Liste, wird
+                    als aktiviert und mit einer Senderate größer null
+                    angezeigt\\
+                \hline
+                    Wireshark-Output überprüfen &
+                    Den von Wireshark aufgezeichneten Netzwerkverkehr auf
+                    korrekt adressierte Multicastpakete überprüfen &
+                    Es werden Pakete registriert, die an die im Sender
+                    angegebene Multicast-Gruppe adressiert sind. Die Pakete
+                    sind anhand des 1337-/x0539-Headers im Datenblock als
+                    SPAM-Pakete identifizierbar.\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[h]
+        \caption{/TC5002/}
+        \label{tab:TC5002}
+        \begin{center}
+            \begin{tabular}{|p{3.5cm}|p{12cm}|}
+                \hline
+                    \textbf{Testfall Id} & /TC5002/\\
+                \hline
+                    \textbf{Testfall Name} & Einfacher Datenstrom mit
+                                             Nutzdaten und Jumbo-Paketen\\
+                \hline
+                    \textbf{Requirement ID} & /VA0100/, /VA0200/, /VA0500/,
+                    /OA0400/\\
+                \hline
+                    \textbf{Beschreibung} & Dieser Test verifiziert, dass ein
+                                            einzelner, von einem Sender
+                                            verschickter Datenstrom, bei einem
+                                            Empfänger ankommt. Außerdem wird
+                                            überprüft, dass im Sender
+                                            konfigurierte Nutzdaten
+                                            unverfälscht beim Empfänger
+                                            ankommen und dass auch
+                                            Jumbo-Pakete mit einer Größe von
+                                            9000 Byte versendet und empfangen
+                                            werden können.\\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|p{3.5cm}|p{5cm}|p{6.55cm}|}
+                \multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+                \hline
+                    \textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+                \hline
+                    Test-Setup &
+                    Zwei Instanzen des Multicast Test Tools im selben
+                    Netzwerk starten &
+                    Das Tool wird zwei Mal ausgeführt und ist jeweils bereit zum
+                    Anlegen von Sendern und Empfängern.\\
+                \hline
+                    Sender starten &
+                    In der sendenden Instanz einen Sender mit Standardwerten am
+                    gewählten Netzwerkadapter und mit den Nutzdaten
+                    "`Hallo Welt" anlegen und starten & Der Sender erscheint in
+                    der Liste und wird als aktiviert und mit einer Senderate
+                    größer null angezeigt.\\
+                \hline
+                    Empfänger starten &
+                    In der empfangenden Instanz einen Empfänger mit
+                    Standardwerten am gewählten Netzwerkadapter anlegen und
+                    starten &
+                    Der Empfänger erscheint in der Liste und wird als
+                    aktiviert angezeigt.\\
+                \hline
+                    Datenstrom identifizieren &
+                    In der Empfängerliste den vom Sender gesendeten Datenstrom
+                    identifizieren & 
+                    Ein Datenstrom, der dieselbe Sender ID, wie der vorher
+                    gestartete Sender aufweist, erscheint als Unterpunkt des
+                    erstellten Empfängers.\\
+                \hline
+                    Nutzdaten überprüfen &
+                    Die in der Empfängerliste angezeigten Nutzdaten mit den im
+                    Sender eingestellten vergleichen &
+                    In der empfangenden Instanz werden dieselben Nutzdaten, die
+                    beim Anlegen des Senders angegeben wurden ("`Hallo Welt"')
+                    beim entsprechenden Datenstrom angezeigt.\\
+                \hline
+                    Jumbo-Pakete versenden &
+                    In der senden Instanz die Paketgröße des Senders auf den
+                    Maximalwert erhöhen &
+                    Der Datenstrom wird weiterhin mit den korrekten Nutzdaten
+                    beim Empfänger angezeigt.\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[h]
+        \caption{/TC5003/}
+        \label{tab:TC5003}
+        \begin{center}
+            \begin{tabular}{|p{3.5cm}|p{12cm}|}
+                \hline
+                    \textbf{Testfall Id} & /TC5003/\\
+                \hline
+                    \textbf{Testfall Name} & Datenstrom an mehrere Empfänger\\
+                \hline
+                    \textbf{Requirement ID} & /VA0100/, /VA0200/\\
+                \hline
+                    \textbf{Beschreibung} & Dieser Test verifiziert, dass das
+                    Tool echte Multicasts verschickt, in dem Sinne, dass sie
+                    von mehreren Empfängern empfangen werden können.\\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|p{3.5cm}|p{5cm}|p{6.55cm}|}
+                \multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+                \hline
+                    \textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+                \hline
+                    Test-Setup 1 &
+                    Eine Instanz des Mutlicast Test Tools
+                    starten, die als Sender fungieren soll &
+                    Die sendende Instanz ist bereit für Benutzereingaben. \\
+                \hline
+                    Test-Setup 2 & 
+                    Mindestens zwei weitere Instanzen des Multicast Test Tools
+                    im selben Netzwerk starten, die als Empfänger fungieren
+                    sollen &
+                    Die empfangenden Instanzen sind bereit für
+                    Benutzereingaben.\\
+                \hline
+                    Sender anlegen &
+                    In der sendenden Instanz einen Sender mit Standardwerten am
+                    gewählten Netzwerk-Adapter anlegen &
+                    Ein neuer Sender erscheint in der Liste.\\
+                \hline
+                    Empfänger anlegen &
+                    In jeder der empfangenden Instanzen jeweils einen Empfänger
+                    mit Standardwerten am gewählten Netzwerkadapter anlegen &
+                    In jeder empfangenden Instanz erscheint ein Empfänger.\\
+                \hline
+                    Empfänger starten &
+                    In jeder der empfangenden Instanzen den zuvor angelegten
+                    Empfänger aktivieren &
+                    Die Empfänger werden als aktiv in der Liste angezeigt.\\
+                \hline
+                    Sender starten &
+                    In der sendenden Instanz den zuvor angelegen Sender
+                    aktivieren &
+                    Der Sender wird als aktiv und mit einer Senderate größer
+                    null angezeigt.\\
+                \hline
+                    Empfänger-Output prüfen &
+                    Die Listen der empfangenden Instanzen auf eingehende
+                    Datenströme überprüfen &
+                    Jede der empfangenden Instanzen zeigt als Unterpunkt der
+                    zuvor angelegten Empfänger einen Datenstrom mit der Sender ID
+                    des zuvor angelegten Senders an.\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[h]
+        \caption{/TC5004/}
+        \label{tab:TC5004}
+        \begin{center}
+            \begin{tabular}{|p{3.5cm}|p{12cm}|}
+                \hline
+                    \textbf{Testfall Id} & /TC5004/\\
+                \hline
+                    \textbf{Testfall Name} & Lasttest\\
+                \hline
+                    \textbf{Requirement ID} & /VA0100/, /VA0200/, /VA0300/\\
+                \hline
+                    \textbf{Beschreibung} & Dieser Test verifiziert, dass das
+                    Tool mindestens 30 Sendeströme gleichzeitig senden, bzw.
+                    empfangen kann. Außerdem wird geprüft, dass das Tool auch
+                    unter diesen Bedingungen noch ohne Einschränkungen
+                    bedienbar ist.\\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|p{3.5cm}|p{5cm}|p{6.55cm}|}
+                \multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+                \hline
+                    \textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+                \hline
+                    Test-Setup & Zwei Instanzen des Multicast Testtools im
+                    selben Netzwerk starten &
+                    Beide Instanzen sind bereit für Benutzereingaben.\\
+                \hline
+                    Sender starten &
+                    In der sendenden Instanz 30 Sender mit Standardwerten am
+                    gewählten Netzwerkadapter anlegen und aktivieren &
+                    Alle 30 Ströme werden als aktiv und mit einer
+                    eingestellten und gemessenen Senderate von jeweils 10
+                    Pakten pro Sekunde angezeigt.\\
+                \hline
+                    Empfänger starten &
+                    In der empfangenden Instanz 30 Empfänger mit Standardwerten
+                    am gewählten Netzwerkadatper anlegen und aktivieren &
+                    Der erstellte Empfänger erscheint als aktiv in der Liste.
+                    Ihm untergeordnet erscheinen 30 Sendeströme mit einer
+                    gemessenen Paketrate von jeweils 10 Paketen pro Sekunde.\\
+                \hline
+                    Senderperformance prüfen &
+                    Responsiveness der grafischen Oberfläche der sendenden
+                    Instanz überprüfen &
+                    Die grafische Oberfläche reagiert weiterhin ohne merkliche
+                    Verzögerung auf Benutzereingaben.\\
+                \hline
+                    Empfängerperformance prüfen &
+                    Responsiveness der grafischen Oberfläche der empfangenden
+                    Instanz überprüfen &
+                    Die grafische Oberfläche reagiert weiterhin ohne merkliche
+                    Verzögerung auf Benutzereingaben.\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[h]
+        \caption{/TC5005/}
+        \label{tab:TC5005}
+        \begin{center}
+            \begin{tabular}{|p{3.5cm}|p{12cm}|}
+                \hline
+                    \textbf{Testfall Id} & /TC5005/\\
+                \hline
+                    \textbf{Testfall Name} & Empfang von Hirschmann-Paketen\\
+                \hline
+                    \textbf{Requirement ID} & /VA0200/, /VA0400/\\
+                \hline
+                    \textbf{Beschreibung} & Dieser Test verifiziert die
+                    Fähigkeit des Tools, Pakete des Hirschmann Tools zu
+                    empfangen und zu verarbeiten.\\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|p{3.5cm}|p{5cm}|p{6.55cm}|}
+                \multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+                \hline
+                    \textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+                \hline
+                    Test-Setup 1 &
+                    Das Multicast Test Tool mit grafischer Oberfläche starten & 
+                    Das Tool ist bereit für Benutzereingaben\\
+                \hline
+                    Test-Setup 2 &
+                    Das Hirschmann Tool im selben Netzwerk starten &
+                    Das Hirschmann Tool ist bereit für Benutzereingaben. \\
+                \hline
+                    Empfänger starten &
+                    Im Multicast Test Tool einen Empfänger mit Standarddaten am
+                    gewählten Netzwerk-Adapter anlegen und aktivieren &
+                    Der angelegte Empfänger wird in der Liste als aktiv
+                    angezeigt.\\
+                \hline
+                    Sender starten &
+                    Im Hirschmann Tool einen Sender an die Gruppe "`225.1.1.1"'
+                    und den Port "`12345"' am gewählten Netzwerkadapter anlegen
+                    und aktivieren. &
+                    Der Sender wird als aktiv in der Liste angezeigt.\\
+                \hline
+                    Empfang verifizieren &
+                    Im Multicast Test Tool den Empfang des Datenstroms
+                    verifizieren &
+                    Der Datenstrom des Hirschmann Tools erscheint als
+                    Unterpunkt des zuvor angelegten Empfängers. Die
+                    gemessene Datenrate entspricht weitgehend der im Hirschmann
+                    Tool angegebenen.\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{table}
+
+    \begin{table}[h]
+        \caption{/TC5006/}
+        \label{tab:TC5006}
+        \begin{center}
+            \begin{tabular}{|p{3.5cm}|p{12cm}|}
+                \hline
+                    \textbf{Testfall Id} & /TC5006/\\
+                \hline
+                    \textbf{Testfall Name} & Abonnierte Gruppen empfangen
+                    \\
+                \hline
+                    \textbf{Requirement ID} & /VA0100/, /VA0200/\\
+                \hline
+                    \textbf{Beschreibung} &  Dieser Test verifiziert die
+                    korrekte Umsetzung des Multicast-Protokolls. Er überprüft
+                    den Gruppen-Abonnement-Mechanismus und stellt sicher, dass
+                    tatsächlich nur die Abonnierten Gruppen empfangen und
+                    ausgewertet werden.\\
+                \hline
+            \end{tabular}
+            \begin{tabular}{|p{3.5cm}|p{5cm}|p{6.55cm}|}
+                \multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+                \hline
+                    \textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+                \hline
+                    Test-Setup 1 &
+                    Zwei Instanzen des Multicast Test Tools mit grafischer
+                    Oberfläche starten &
+                    Die Tools sind bereit für Benutzereingaben.\\
+                \hline
+                    Sender erzeugen &
+                    In der sendenden Instanz drei Sender mit aufsteigenden
+                    Gruppen- und Portnummern (225.1.1.1-225.1.1.3, 12345-12347)
+                    anlegen und aktivieren &
+                    Die drei Datenströme werden als aktiv und mit einer
+                    Senderate größer null in der Liste angezeigt.\\
+                \hline
+                    Empfänger anlegen &
+                    In der empfangenden Instanz einen Empfänger für die Gruppe
+                    225.1.1.1 und den Port 12345, sowie einen für die Gruppe
+                    225.1.1.2 und den Port 12346 anlegen &
+                    Beide Empfänger werden als aktiv in der Liste angezeigt.\\
+                \hline
+                    Empfangende Datenströme verifizieren &
+                    Die tatsächlich empfangenden Datenströme identifizieren & 
+                    Es werden nur die Datenströme in Gruppe 225.1.1.1 und
+                    225.1.1.2 empfangen und angezeigt. Gruppe 225.1.1.3 wird
+                    nicht empfangen.\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{table}

@@ -1,0 +1,370 @@
+\chapter{Testsuite /TS10/}
+Dieses Kapitel enthält die Testergebnisse der Testsuite /TS10/.\\
+Die zugehörige Requirement ID lautet /UC10/.
+
+\begin{table}[h]
+\caption{/TC1001/}
+\label{tab:TC1001}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\hline
+\textbf{Testfall ID} & /TC1001/\\
+\hline
+\textbf{Testfall Name} & Testen auf valide Werte\\
+\hline
+\textbf{Requirement ID} & /VA0100/, /VA0500/, /VA0700/\\
+\hline
+\textbf{Beschreibung} & Der Test stellt sicher, dass ein Sender mit validen
+Werten über die GUI erstellt werden kann. \\
+\hline
+\end{tabular}
+\begin{tabular}{|p{4cm}|p{7.8cm}|p{2.3cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Erwartetes Ergebnis} & \textbf{Ergebnis}\\
+\hline
+Programm starten (0) & GUI erscheint & PASS
+ \\
+\hline
+Dialog öffnen (1) & Der Dialog
+ zum Hinzufügen eines Senders erscheint. & PASS
+\\
+\hline
+IP-Adressen-Test (2) & Ein neuer Sender mit den zuvor eingestellten Werten erscheint im Bereich
+ Empfänger. & PASS
+ \\
+\hline
+Alle validen Gruppen testen (3) & & PASS
+\\
+\hline
+Dialog öffnen (4) & Der Dialog
+ zum Hinzufügen eines Senders erscheint. & PASS
+\\
+\hline
+Port Test (5) & Ein neuer Sender mit den eingestellten Werten erscheint im
+ Senderbereich. & PASS
+\\
+\hline
+Testen aller validen Ports & & PASS
+\\
+\hline
+Dialog öffnen (6) & Der Dialog
+ zum Hinzufügen eines Senders erscheint. & PASS
+\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\textbf{Tester} & JJ\\
+\hline
+\textbf{Datum} & 13.05.2011\\
+\hline
+\textbf{Ergebnis} & PASS\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC1002/}
+\label{tab:TC1002}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\hline
+\textbf{Testfall ID} & /TC1002/\\
+\hline
+\textbf{Testfall Name} & Testen Aktivierung der Sender.
+\\
+\hline
+\textbf{Requirement ID} & /VA0100/, /VA0500/, /VA0700/\\
+\hline
+\textbf{Beschreibung} & Der Test stellt sicher, dass angelegte Sender aktiviert
+werden können.
+\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{4cm}|p{7.8cm}|p{2.3cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Erwartetes Ergebnis} & \textbf{Ergebnis}\\
+\hline
+TC1001 (1) & Die angelegten Sender
+ erscheinen. & PASS
+\\
+\hline
+Aktivieren eines Senders (2) & Das rote Viereck wird mit einem grünen Dreieck
+ ersetzt, was bedeutet, dass der Sender aktiv ist. & PASS
+\\
+\hline
+Aktivieren mehrerer Sender gleichzeitig (3) & Die Sender werden aktiviert,
+was die GUI durch das Ersetzen des roten Vierecks mit einem grünen Dreieck
+anzeigt. & PASS
+\\
+\hline
+Aktivieren bei Erstellung (4) & Ein bereits
+ aktivierter Sender erscheint neu in der Senderliste. Dies ist an dem grünen
+ Dreieck vor der Zeile des Senders zu erkennen. & PASS\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\textbf{Tester} & JJ\\
+\hline
+\textbf{Datum} & 13.05.2011\\
+\hline
+\textbf{Ergebnis} & PASS\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC1003/}
+\label{tab:TC1003}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\hline
+\textbf{Testfall ID} & /TC1003/\\
+\hline
+\textbf{Testfall Name} & Testen auf Veränderbarkeit der Werte
+\\
+\hline
+\textbf{Requirement ID} & /VA0100/, /VA0500/, /VA0700/\\
+\hline
+\textbf{Beschreibung} & Der Test stellt sicher, dass die Eigenschaften der
+Sender verändert werden können.
+\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{4cm}|p{7.8cm}|p{2.3cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Erwartetes Ergebnis} & \textbf{Ergebnis}\\
+\hline
+Wiederholen von TC1002 Schritte 1-3 & 
+Eine Liste von Sendern ist
+ angelegt. Der erste Sender ist aktiviert, alle anderen sind deaktiviert. & PASS
+\\
+\hline
+Öffnen des Bearbeiten-Dialogs (1) & Der Dialog zum Bearbeiten erscheint. & PASS
+ \\
+\hline
+Bearbeiten eines inaktiven Senders (2) & Der Dialog schließt sich. & PASS
+ \\
+\hline
+Wiederhole 1 & & PASS.
+\\
+\hline
+Änderung überprüfen (3) & Das Analyseverhalten ist 'lazy'. & PASS
+\\
+\hline
+Öffnen des Bearbeiten-Dialogs (4) & Der Dialog zum Bearbeiten erscheint. & PASS
+\\
+\hline
+Bearbeiten eines aktiven Senders (5) & Der Dialog schließt sich. & PASS
+\\
+\hline
+Wiederhole 4 & & PASS
+\\
+\hline
+Änderung überprüfen (6) & Das Analyseverhalten ist 'eager'. & PASS
+\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\textbf{Tester} & JJ\\
+\hline
+\textbf{Datum} & 13.05.2011\\
+\hline
+\textbf{Ergebnis} & PASS\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC1004/}
+\label{tab:TC1004}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\hline
+\textbf{Testfall ID} & /TC1004/\\
+\hline
+\textbf{Testfall Name} & Testen auf Deaktivieren von Sendern.
+\\
+\hline
+\textbf{Requirement ID} & /VA0100/, /VA0500/, /VA0700/\\
+\hline
+\textbf{Beschreibung} & Der Test stellt sicher, dass aktive Sender deaktiviert
+werden können.
+\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{4cm}|p{7.8cm}|p{2.3cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Erwartetes Ergebnis} & \textbf{Ergebnis}\\
+\hline
+TC1001 (1) & Eine Liste
+ mit aktiven Sendern liegt vor. & PASS
+\\
+\hline
+Deaktivieren eines Senders & Das grüne Dreieck wird mit einem roten Viereck
+ ersetzt, was bedeutet, dass der Sender inaktiv ist. & PASS
+ \\
+\hline
+Deaktivieren mehrerer Sender gleichzeitig (3) & Die Sender werden
+deaktiviert, was die GUI durch das Ersetzen des grünen Dreiecks mit einem roten
+Viereck anzeigt. & PASS
+ \\
+\hline
+\end{tabular}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\textbf{Tester} & JJ\\
+\hline
+\textbf{Datum} & 13.05.2011\\
+\hline
+\textbf{Ergebnis} & PASS\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC1005/}
+\label{tab:TC1005}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\hline
+\textbf{Testfall ID} & /TC1005/\\
+\hline
+\textbf{Testfall Name} & Testen auf Entfernen von Sendern
+\\
+\hline
+\textbf{Requirement ID} & /VA0100/, /VA0500/, /VA0700/\\
+\hline
+\textbf{Beschreibung} & Der Test stellt sicher, dass Sender aus der Senderliste
+entfernt werden können.
+\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{4cm}|p{7.8cm}|p{2.3cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+\hline
+TC1001 (1) & Eine Liste
+ von Sendern liegt vor. & PASS
+\\
+\hline
+Entfernen eines Senders & Der entsprechende Sender ist nicht mehr in der Liste
+ vorhanden. & PASS
+\\
+\hline
+Entfernen mehrerer Sender gleichzeitig (3) & Die Sender
+werden entfernt und die Senderliste ist leer. & PASS
+\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\textbf{Tester} & JJ\\
+\hline
+\textbf{Datum} & 13.05.2011\\
+\hline
+\textbf{Ergebnis} & PASS\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC1006/}
+\label{tab:TC1006}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\hline
+\textbf{Testfall ID} & /TC1006/\\
+\hline
+\textbf{Testfall Name} & Testen auf invalide Eingaben
+\\
+\hline
+\textbf{Requirement ID} & /VA0100/, /VA0500/, /VA0700/\\
+\hline
+\textbf{Beschreibung} & Der Test stellt sicher, dass das Programm invalide
+Eingaben erkennt und abfängt.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{4cm}|p{7.8cm}|p{2.3cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+\hline
+Programm starten (0) & GUI erscheint & PASS
+\\
+\hline
+Dialog öffnen (1) & Der Dialog
+ zum Hinzufügen eines Senders erscheint. & PASS
+\\
+\hline
+IP Adressen Test (2) & Es erscheint zusätzlich ein Dialog, welcher auf eine Fehleingabe hinweist.
+ Der 'Erstellen'-Dialog bleibt offen. & PASS
+\\
+\hline
+Weitere invaliden Adressen testen (3) & Es erscheint zusätzlich ein Dialog, welcher auf eine Fehleingabe hinweist.
+ Der 'Erstellen'-Dialog bleibt offen. & PASS
+\\
+\hline
+Dialog öffnen (4) & Der Dialog
+ zum Hinzufügen eines Senders erscheint. & PASS
+\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|p{4cm}|p{7.8cm}|p{2.3cm}|}
+\hline
+Port Test (5) & Es erscheint zusätzlich ein Dialog, welcher auf eine Fehleingabe
+ hinweist. Der Erstellen Dialog bleibt offen. & PASS
+\\
+\hline
+Testen weiterer invalider Ports & & PASS
+\\
+\hline
+Dialog öffnen (6) & Der Dialog
+ zum Hinzufügen eines Senders erscheint. & PASS
+\\
+\hline
+Paketraten Test (7) & Es erscheint zusätzlich ein Dialog, welcher auf eine Fehleingabe
+ hinweist. Der Erstellen Dialog bleibt offen. & PASS
+\\
+\hline
+Testen weiterer invalider Paketraten & & PASS
+\\
+\hline
+Dialog öffnen (8) & Der Dialog
+ zum Hinzufügen eines Senders erscheint. & PASS
+\\
+\hline
+Paketgrößentest (9) & Es erscheint zusätzlich ein Dialog, welcher auf eine Fehleingabe
+ hinweist. Der Erstellen Dialog bleibt offen. & PASS
+\\
+\hline
+Testen weiterer invalider Paketgrößen & & PASS
+\\
+\hline
+Dialog öffnen (10) & Der Dialog
+ zum Hinzufügen eines Senders erscheint. & PASS
+\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{3.5cm}|p{11cm}|}
+\textbf{Tester} & JJ\\
+\hline
+\textbf{Datum} & 13.05.2011\\
+\hline
+\textbf{Ergebnis} & PASS\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}

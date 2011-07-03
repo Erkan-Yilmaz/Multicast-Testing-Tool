@@ -1,0 +1,64 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \titlehead	Kopfzeile der Titelseite
+% \subject	Thema des Dokumentes
+% \title	Titel des Dokumentes
+% \subtitle	Untertitel
+% \author	Autor des Dokumentes
+% \date	Datum der Veröffentlichung
+% \dedication	Widmung ;-)
+% \publishers	Herausgeber
+% \thanks	Fußnote
+% \begin{abstract}
+%   ...
+% \end{abstract}
+
+\newcommand{\mytitle}{}
+\newcommand{\setmytitle}[1]{\renewcommand{\mytitle}{#1}}
+
+\newcommand{\myauthor}{}
+\newcommand{\setmyauthor}[1]{\renewcommand{\myauthor}{#1}}
+
+\newcommand{\mysubject}{}
+\newcommand{\setmysubject}[1]{\renewcommand{\mysubject}{#1}}
+
+\setmytitle{"`Multicast Test Tool"'}
+\setmyauthor{Tobias Schoknecht, Tobias St"ockel}
+\setmysubject{Manual}
+
+\titlehead{%
+	\fontsize{14pt}{12} \selectfont%
+	\textbf{Fakultät:} \\%
+	\\%
+	\includegraphics[width=5cm]{images/dhbw.jpg}
+
+}
+
+\title{}
+\subject{\vspace{0.1cm}%
+	\mysubject \\
+	\vspace{0.5cm}%
+	\mytitle%
+	\vspace{-1.5cm}%
+}
+\author{%
+	{
+	\renewcommand{\arraystretch}{1}
+	\fontsize{12pt}{12} \selectfont%
+	\begin{tabular}{lcl}%
+		Vorgelegt von & : & Team 1 \\%
+		Bestehend aus & : & David Hildenbrand \\%
+		& : & Jeffrey Jedele \\
+		& : & Ramin Safarpour \\
+		& : & Tobias Schoknecht \\
+		& : & Tobias St"ockel \\
+		& : & Konstantin Weitz \\
+	 \end{tabular}%
+	}
+}
+\date{
+\includegraphics[height=3cm]{images/Logo.jpg}\\
+12.05.2011
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\maketitle

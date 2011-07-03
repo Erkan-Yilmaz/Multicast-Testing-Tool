@@ -1,0 +1,434 @@
+\chapter{Testsuite /TS10/}
+Dieser Anhang enthält die Testfälle der Testsuite /TS10/.\\
+Die zugehörige Requirement Id lautet /UC10/.\\
+\newline
+Die Testfälle dieser Testsuite sollen die korrekte Konfigurationsmöglichkeit der Sender über die GUI sicherstellen.\\
+Dazu zählt zum Einen die korrekte Übernahme der eingegebenen Werte, die Fehlerbehandlung, sowie die Zusammenarbeit mit dem Rest des Programms im Betrieb.
+Zur Konfiguration gehört das Anlegen und Löschen bestehender Sender, das Aktivieren und Deaktivieren von Streams, sowie das Bearbeiten von bereits angelegten Streams.
+
+\begin{table}[h]
+\caption{/TC1001/}
+\label{tab:TC1001}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{9cm}|}
+\hline
+\textbf{Testfall Id} & /TC1001/\\
+\hline
+\textbf{Testfall Name} & Testen auf valide Werte\\
+\hline
+\textbf{Requirement Id} & /VA0100/, /VA0500/, /VA0700/\\
+\hline
+\textbf{Beschreibung} & Der Test stellt sicher, dass ein Sender mit validen
+Werten über die GUI erstellt werden kann. \\
+\hline
+\end{tabular}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{4.55cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+\hline
+Programm starten (0) & Das Programm starten & GUI erscheint
+ \\
+\hline
+Dialog öffnen (1) & Betätigen des 'Neu' Buttons im Senderbereich. & Der Dialog
+ zum Hinzufügen eines Senders erscheint.
+\\
+\hline
+IP Adressen Test (2) & Eine valide Testgruppen Adresse wird eingestellt, die
+ restlichen Einstellungen behalten die Standardwerte bei. Anschließend wird 'OK' betätigt.
+ & Ein neuer Sender mit den zuvor eingestellten Werten erscheint im Bereich
+ Empfänger.
+ \\
+\hline
+Alle validen Gruppen testen (3) & Wiederholen von 1 und 2 mit allen validen
+Testwerten. &
+\\
+\hline
+Dialog öffnen (4) & Betätigen des 'Neu' Buttons im Senderbereich & Der Dialog
+ zum Hinzufügen eines Senders erscheint.
+\\
+\hline
+Port Test (5) & Den Port auf einen validen Port setzen und den Dialog mit 'OK'
+ beenden. & Ein neuer Sender mit den Eingestellten Werten erscheint im
+ Senderbereich.
+\\
+\hline
+Testen aller validen Ports & Wiederhole 4 und 5 mit allen validen
+ Konfigurationen. &
+\\
+\hline
+Dialog öffnen (6) & Betätigen des 'Neu' Buttons im Senderbereich & Der Dialog
+ zum Hinzufügen eines Senders erscheint.
+\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{4.55cm}|}
+\hline
+Paketraten Test (7) & Die Packetrate auf einen validen Wert setzen und den
+ Dialog mit 'OK' beenden. & Ein neuer Sender mit den eingestellten Werten
+ erscheint im Senderbereich.
+\\
+\hline
+Testen aller validen Paketraten & Wiederhole 6 und 7 mit allen validen
+ Konfigurationen. &
+\\
+\hline
+Dialog öffnen (8) & Betätigen des 'Neu'-Buttons im Senderbereich & Der Dialog
+ zum hHinzufügen eines Senders erscheint.
+\\
+\hline
+Paketgrößentest (9) & Die Paketgröße auf einen validen Wert setzen und den
+ Dialog mit OK beenden. & Ein neuer Sender mit den eingestellten Werten erscheint im
+ Senderbereich.
+\\
+\hline
+ Testen aller validen Paketgrößen & Wiederhole 8 und 9 mit allen validen
+ Konfigurationen. &
+\\
+\hline
+Dialog öffnen (10) & Betätigen des 'Neu' Buttons im Senderbereich & Der Dialog
+ zum Hinzufügen eines Senders erscheint.
+\\
+\hline
+TTL Test (11) & Die 'Time To Live' auf einen validen Wert setzen und den Dialog
+ mit OK beenden. & Ein neuer Sender mit den Eingestellten Werten erscheint im
+ Senderbereich.
+\\
+\hline
+Testen aller validen TTLs & Wiederhole 10 und 11 mit allen validen
+ Konfigurationen. &
+\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC1002/}
+\label{tab:TC1002}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{9cm}|}
+\hline
+\textbf{Testfall Id} & /TC1002/\\
+\hline
+\textbf{Testfall Name} & Testen Aktivierung der Sender.
+\\
+\hline
+\textbf{Requirement Id} & /VA0100/, /VA0500/, /VA0700/\\
+\hline
+\textbf{Beschreibung} & Der Test stellt sicher, dass angelegte Sender aktiviert
+werden können.
+\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{4.55cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+\hline
+TC1001 (1) & Anlegen von Sendern nach TC1001 (1) & Die angelegten Sender
+ erscheinen.
+\\
+\hline
+Aktivieren eines Senders (2) & Der erste Sender wird ausgewählt und mittels
+ 'Aktivieren'-Button gestartet. & Das rote Viereck wird mit einem grünen Dreieck
+ ersetzt, was bedeutet, dass der Sender aktiv ist.
+\\
+\hline
+Aktivieren mehrerer Sender gleichzeitig (3) & Die restlichen Sender werden
+markiert und über die 'Aktivieren'-Schaltfläche gestartet. & Die Sender werden aktiviert,
+was die GUI durch das Ersetzen des roten Vierecks mit einem grünen Dreieck
+anzeigt.
+\\
+\hline
+Aktivieren bei Erstellung (4) & Der Erstellen Dialog wird über die 'Neu'
+ Schaltfläche geöffnet. Die Standardwerte werden beibehalten und die 'Aktivieren'
+ Checkbox gesetzt. Dann wir der Dialog über OK geschlossen. & Ein bereits
+ aktivierter Sender erscheint neu in der Senderliste. Dies ist an dem grünen
+ Dreieck vor der Zeile des Senders zu erkennen.
+\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC1003/}
+\label{tab:TC1003}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{9cm}|}
+\hline
+\textbf{Testfall Id} & /TC1003/\\
+\hline
+\textbf{Testfall Name} & Testen auf Veränderbarkeit der Werte
+\\
+\hline
+\textbf{Requirement Id} & /VA0100/, /VA0500/, /VA0700/\\
+\hline
+\textbf{Beschreibung} & Der Test stellt sicher, dass die Eigenschaften der
+Sender verändert werden können.
+\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{4.55cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+\hline
+Wiederholen von TC1002 Schritte 1-3 & & Eine Liste von Sendern ist
+ angelegt. Der erste Sender ist aktiviert, alle anderen sind deaktiviert.
+\\
+\hline
+Öffnen des Bearbeiten-Dialogs (1) & Ein inaktiver Sender wird markiert und die
+ 'Bearbeiten'-Schaltfläche betätigt. & Der Dialog zum Bearbeiten erscheint.
+ \\
+\hline
+Bearbeiten eines inaktiven Senders (2) & Das Analyseverhalten wird auf lazy 
+gesetzt und OK betätigt. & Der Dialog schließt sich.
+ \\
+\hline
+Wiederhole 1 & &.
+\\
+\hline
+Änderung überprüfen (3) &  & Das Analyseverhalten ist 'lazy'.
+\\
+\hline
+Öffnen des Bearbeiten-Dialogs (4) & Der aktive Sender wird markiert und die
+ Bearbeiten Schaltfläche betätigt. & Der Dialog zum Bearbeiten erscheint.
+\\
+\hline
+Bearbeiten eines aktiven Senders (5) & Das Analyseverhalten wird auf eager
+gesetzt und mit 'OK' betätigt. & Der Dialog schließt sich.
+\\
+\hline
+Wiederhole 4 & &.
+\\
+\hline
+Änderung überprüfen (6) &  & Das Analyseverhalten ist 'eager'.
+\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{4.55cm}|}
+\hline
+Öffnen des Bearbeiten-Dialogs (7) & Ein inaktiver Sender wird markiert und die
+ 'Bearbeiten'-Schaltfläche betätigt. & Der Dialog zum Bearbeiten erscheint.
+\\
+\hline
+Bearbeiten eines inaktiven Senders (8) & Der Packettype wird auf 'Hirschmann
+Packet Format' gesetzt und mit 'OK' betätigt. & Der Dialog schließt sich.
+\\
+\hline
+Wiederhole 7 & &.
+\\
+\hline
+Änderung überprüfen (9) &  & Der Packettype ist 'Hirschmann
+Packet Format'.
+\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC1004/}
+\label{tab:TC1004}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{9cm}|}
+\hline
+\textbf{Testfall Id} & /TC1004/\\
+\hline
+\textbf{Testfall Name} & Testen auf Deaktivieren von Sendern.
+\\
+\hline
+\textbf{Requirement Id} & /VA0100/, /VA0500/, /VA0700/\\
+\hline
+\textbf{Beschreibung} & Der Test stellt sicher, dass aktive Sender deaktiviert
+werden können.
+\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{4.55cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+\hline
+TC1001 (1) & Anlegen und Aktivieren von Sendern nach TC1002 (1) & Eine Liste
+ mit aktiven Sendern liegt vor.
+\\
+\hline
+Deaktivieren eines Senders & Der erste Sender wird ausgewählt und mittels
+ 'Deaktivieren'-Button gestoppt. & Das grüne Dreieck wird mit einem roten Viereck
+ ersetzt, was bedeutet, dass der Sender inaktiv ist.
+ \\
+\hline
+Deaktivieren mehrerer Sender gleichzeitig (3) & Die restlichen Sender werden
+markiert und über die Deaktivieren Schaltfläche gestoppt. & Die Sender werden
+deaktiviert, was die GUI durch das Ersetzen des grünen Dreiecks mit einem roten
+Viereck anzeigt.
+ \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC1005/}
+\label{tab:TC1005}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{9cm}|}
+\hline
+\textbf{Testfall Id} & /TC1005/\\
+\hline
+\textbf{Testfall Name} & Testen auf Entfernen von Sendern
+\\
+\hline
+\textbf{Requirement Id} & /VA0100/, /VA0500/, /VA0700/\\
+\hline
+\textbf{Beschreibung} & Der Test stellt sicher, dass Sender aus der Senderliste
+entfernt werden können.
+\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{4.55cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+\hline
+TC1001 (1) & Anlegen von Sendern nach TC1001 (1) & Eine Liste
+ von Sendern liegt vor.
+\\
+\hline
+Entfernen eines Senders & Der erste Sender wird ausgewählt und mittels
+ 'Löschen'-Button entfernt. & Der entsprechende Sender ist nicht mehr in der Liste
+ vorhanden.
+\\
+\hline
+Entfernen mehrerer Sender gleichzeitig (3) & Die restlichen Sender werden
+markiert und über die 'Löschen'-Schaltfläche gestoppt. & Die Sender
+werden entfernt und die Senderliste ist leer.
+\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[h]
+\caption{/TC1006/}
+\label{tab:TC1006}
+\begin{center}
+\begin{tabular}{|p{3.5cm}|p{9cm}|}
+\hline
+\textbf{Testfall Id} & /TC1006/\\
+\hline
+\textbf{Testfall Name} & Testen auf invalide Eingaben
+\\
+\hline
+\textbf{Requirement Id} & /VA0100/, /VA0500/, /VA0700/\\
+\hline
+\textbf{Beschreibung} & Der Test stellt sicher, dass das Programm invalide
+Eingaben erkennt und abfängt.\\
+\hline
+\end{tabular}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{4.55cm}|}
+\multicolumn{3}{|c|}{\textbf{Einzelschritte des Testfalls}} \\
+\hline
+\textbf{Schritt} & \textbf{Aktion} & \textbf{Ergebnis}\\
+\hline
+Programm starten (0) & Das Programm starten & GUI erscheint
+\\
+\hline
+Dialog öffnen (1) & Betätigen des 'Neu'-Buttons im Senderbereich & Der Dialog
+ zum Hinzufügen eines Senders erscheint.
+\\
+\hline
+IP Adressen Test (2) & Eine invalide Testgruppen Adresse wird eingestellt, die
+ restlichen Einstellungen behalten die Standardwerte bei. Anschließend wird 'OK' betätigt.
+ & Es erscheint zusätzlich ein Dialog, welcher auf eine Fehleingabe hinweist.
+ Der 'Erstellen'-Dialog bleibt offen.
+\\
+\hline
+Alle invaliden IP-Adressen testen (3) & Wiederholen von 1 und 2 mitallen unter
+'Definitionen' definierten invaliden Werten. &
+\\
+\hline
+Dialog öffnen (4) & Betätigen des 'Neu'-Buttons im Senderbereich & Der Dialog
+ zum Hinzufügen eines Senders erscheint.
+\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{4.55cm}|}
+\hline
+Port Test (5) & Den Port auf einen invaliden Port setzen und 'OK'
+ betätigen. & Es erscheint zusätzlich ein Dialog, welcher auf eine Fehleingabe
+ hinweist. Der Erstellen Dialog bleibt offen.
+\\
+\hline
+Alle invaliden Ports testen (3) & Wiederholen
+von 1 und 2 mitallen unter 'Definitionen' definierten invaliden Werten. &
+\\
+\hline
+Dialog öffnen (6) & Betätigen des 'Neu' Buttons im Senderbereich & Der Dialog
+ zum Hinzufügen eines Senders erscheint.
+\\
+\hline
+Paketraten Test (7) & Die Packetrate auf einen invaliden Wert setzen und OK
+ betätigen. & Es erscheint zusätzlich ein Dialog, welcher auf eine Fehleingabe
+ hinweist. Der Erstellen Dialog bleibt offen.
+\\
+\hline
+Alle invaliden Paketraten testen (3) & Wiederholen von 1 und 2 mitallen unter
+'Definitionen' definierten invaliden Werten. &
+\\
+\hline
+Dialog öffnen (8) & Betätigen des 'Neu' Buttons im Senderbereich & Der Dialog
+ zum Hinzufügen eines Senders erscheint.
+\\
+\hline
+Paketgrößentest (9) & Die Paketgröße auf einen invaliden Wert setzen und OK
+ betätigen. &  Es erscheint zusätzlich ein Dialog, welcher auf eine Fehleingabe
+ hinweist. Der Erstellen Dialog bleibt offen.
+\\
+\hline
+Alle invaliden Paketgrößen testen (3) & Wiederholen von 1 und 2 mitallen unter
+'Definitionen' definierten invaliden Werten. &
+\\
+\hline
+Dialog öffnen (10) & Betätigen des 'Neu' Buttons im Senderbereich & Der Dialog
+ zum Hinzufügen eines Senders erscheint.
+\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|p{2.5cm}|p{5cm}|p{4.55cm}|}
+\hline
+TTL Test (11) & Die 'Time To Live' auf einen invaliden Wert setzen und 'OK'
+ betätigen. & Es erscheint zusätzlich ein Dialog, welcher auf eine Fehleingabe
+ hinweist. Der 'Erstellen'-Dialog bleibt offen.
+\\
+\hline
+Alle invaliden TTLs testen (3) & Wiederholen von 1 und 2 mitallen unter
+'Definitionen' definierten invaliden Werten.
+\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}

@@ -1,0 +1,13 @@
+#TeXlipse project settings
+#Sat Apr 09 17:56:11 CEST 2011
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=MODDOC1-Team1.tex
+outputFile=MODDOC1-Team1.pdf
+langSpell=de
+markDer=true
+srcDir=

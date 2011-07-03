@@ -1,0 +1,13 @@
+#TeXlipse project settings
+#Tue Oct 26 16:45:24 CEST 2010
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=SRS-Team1.tex
+outputFile=SRS-Team1.pdf
+langSpell=de
+markDer=true
+srcDir=
