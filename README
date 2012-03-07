@@ -1,10 +1,10 @@
 This is a Java tool for testing the IP-multicasting capabilities of networks. It was developed in the context of a software-engineering course at DHBW Stuttgart, Germany.
 
-It features a graphical as well as a command-line interface an can be operated in scripting contexts. Most important parameters of the produced network traffic (packet size, time to live, packets per second, ...) can be adusted. All settings can be saved in human-readable XML.
+It features a graphical as well as a command-line interface and can be operated in scripting contexts. Most important parameters of the produced network traffic (packet size, time to live, packets per second, ...) can be adjusted. All settings can be saved in human-readable XML.
 
 Requirement is a Java Version >= 1.6 R22.
 
-Use Maven 3 to build the project. The software was developed using a detailed version of te waterfall model. All documents are included, but unfortunately only in German.
+Use Maven 3 to build the project. The software was developed using a detailed version of the waterfall model. All documents are included, but unfortunately only in German.
 
 The core development team consists of:
 
